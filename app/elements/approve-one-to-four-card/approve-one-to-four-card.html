@@ -1,0 +1,93 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="approve-one-to-four-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       .viewdata{
+        margin-top: 5%;
+        /*font-size: 12px;*/
+        cursor: pointer;
+        color:blue;
+      }
+       .outcard{
+        margin-left: 0%;
+        margin-top: 5%;
+      }
+      table{
+        width: 90%;
+
+        /*border-collapse: collapse;*/
+      }
+      .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #dynamicapprovespinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
+      #itemcard:nth-child(odd) {
+        background-color: white;
+       
+      }
+      #itemcard:nth-child(even) {
+        background-color: #f1f1f1;
+      }
+      #itemcard{
+        margin-left: 7%;
+        width: 83%;
+      }
+    </style> 
+    <div class="spinner"><paper-dialog id="dynamicapprovespinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
+     <center><h1>Mount Litera Zee School</h1>
+     <div id="hidetop">
+      <h3>Continuous Comprehensive Evaluation</h3>  
+      </div>
+      </center>
+       <div class="outcard">
+    <table id="Mark">
+     
+      <tr>
+       
+       <th id="tb1">Academic Year</th>
+       <th id="tb1">Term</th>
+       <th id="tb1">Assesment</th>
+       <th id="tb1">Grade</th>
+       <th id="tb1">Section</th>
+       <th id="tb1">Subject</th>
+       <th id="tb1">View</th>
+       <th id="tb1">Revert</th>
+       </tr>
+       </table>
+     
+<template is="dom-repeat" items="{{approvearr}}" as="m">
+<div id="itemcard"><approve-one-to-four-itemcard category="{{m.category}}" academic="{{m.academic_year}}" assesment="{{m.assesment_id}}" term="{{m.term_name}}" grade="{{m.grade}}" section="{{m.section}}" subject="{{m.subject}}" langpref="{{m.langpref}}" subjectid="{{m.subject_id}}"></approve-one-to-four-itemcard></div>
+</template>
+ 
+ </div>
+ </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+    is: 'approve-one-to-four-card',
+    FnSpinnerrActive:function(flag){
+      // alert(flag);
+      if(flag==true)
+      this.$.dynamicapprovespinner.opened=true;
+      if(flag==false)
+      this.$.dynamicapprovespinner.opened=false;
+    }   
+    });
+  })();
+  </script>
+</dom-module>

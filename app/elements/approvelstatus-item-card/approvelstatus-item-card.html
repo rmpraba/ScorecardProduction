@@ -1,0 +1,161 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="approvelstatus-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td{
+        width: 41%;        
+      } 
+      .card{
+        @apply(--layout-horizontal);
+      } 
+      p{
+        width: 25%;
+        margin-left: 10%;
+      } 
+      paper-button{
+        text-transform: none;
+        height: 25px;
+      }
+      .viewdata{
+        margin-top: 5%;
+        cursor: pointer;
+        color:blue;
+      }
+    </style>
+
+        <div class="card">
+          <p class='p1' style="margin-left: 0%;">{{academicyear}}</p>
+          <p class='p2' style="margin-left: 10%;">{{termname}}</p>
+          <p class='p3' style="margin-left: 5%;">{{assesmentid}}</p>
+          <p class='p4' style="margin-left: 5%;">{{grade}}</p>
+          <p class='p5' style="margin-left: 5%;">{{section}}</p>
+          <p class='p6' style="margin-left: 5%;">{{subject}}</p>
+          <p class='p6' style="margin-left: 5%;">{{flag}}</p>
+          <p class='p7'><ahref class="viewdata" on-click="FnRemove"><u>Revert</u></ahref></p>
+        </div>
+
+          <term-assesment-service id="assesmentservice"></term-assesment-service>
+
+          
+
+          <iron-ajax
+          method="post"
+          id="fngetauditlevelajax"
+          url="{{fngetauditlevelurl}}"
+          params="{{fngetauditlevelparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="fngetauditlevelResponse"
+          debounce-duration="300"
+          >
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'approvelstatus-item-card',
+      FnRemove:function()      
+      {
+        // alert('calling');
+        if(this.grade=="Grade-1"||this.grade=="Grade-2"||this.grade=="Grade-3"||this.grade=="Grade-4")
+        {
+          // alert(this.grade);
+
+            var obj={};
+            obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+            obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
+            obj.termname=this.termname;
+            this.fngetauditlevelurl=sessionStorage.getItem("addrinfo")+"/fngetauditlevel-service";
+              obj.grade=this.grade;
+              obj.section=this.section;
+              obj.subject=this.subject;
+            this.fngetauditlevelparam=obj;
+            this.$.fngetauditlevelajax.generateRequest();
+ 
+            if(this.assesmentid=="Assesment3")
+            {
+              this.$.assesmentservice.fnimporttermmarks(this.termname,this.assesmentid,this.grade,this.section,this.subject);
+
+              this.$.assesmentservice.fndeltoverallassesmarks(this.termname,this.assesmentid,this.grade,this.section,this.subject);
+              this.$.assesmentservice.fntermauditmarks(this.termname,this.grade,this.section,this.subject,"Assesment2");
+            }
+             this.$.assesmentservice.FnFetchApprovalStatus();
+          }
+          
+
+       if(this.grade=="Grade-5"||this.grade=="Grade-6"||this.grade=="Grade-7"||this.grade=="Grade-8"||this.grade=="Grade-9"||this.grade=="Grade-10")
+        {
+          //alert(this.assesmentid);
+          // alert('ok');
+          this.$.assesmentservice.fnfaassesmenttermmarks(this.grade,this.section,this.termname,this.assesmentid,this.subject,this.flag);
+        }
+
+        // this.$.assesmentservice.FnFetchApprovalStatus();
+      },
+
+      fngetauditlevelResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        sessionStorage.setItem("curr_sess_loggedauditlevel",res[0].assesment_level2);
+        if(this.assesmentid=="Assesment2")
+        {
+          if(sessionStorage.getItem("curr_sess_loggedauditlevel")=="Assesment3")
+          {
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment3',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fndeltoverallassesmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fndeltoverallassesmarks(this.termname,'Assesment3',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fntermauditmarks(this.termname,this.grade,this.section,this.subject,"Assesment1");
+          }
+       if(sessionStorage.getItem("curr_sess_loggedauditlevel")=="Assesment2")
+          {
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fndeltoverallassesmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fntermauditmarks(this.termname,this.grade,this.section,this.subject,"Assesment1");
+          }
+        }
+
+        if(this.assesmentid=="Assesment1")
+        {
+          if(sessionStorage.getItem("curr_sess_loggedauditlevel")=="Assesment2")
+          {
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment1',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+            this.$.assesmentservice.deleteauditmarks(this.termname,this.grade,this.subject,this.section);
+          }
+      else if(sessionStorage.getItem("curr_sess_loggedauditlevel")=="Assesment3")
+          {
+             this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment1',this.grade,this.section,this.subject);
+             this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+             this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment3',this.grade,this.section,this.subject);
+             this.$.assesmentservice.fndeltoverallassesmarks(this.termname,'Assesment1',this.grade,this.section,this.subject);
+             this.$.assesmentservice.fndeltoverallassesmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+             this.$.assesmentservice.fndeltoverallassesmarks(this.termname,'Assesment3',this.grade,this.section,this.subject);
+             this.$.assesmentservice.deleteauditmarks(this.termname,this.grade,this.subject,this.section);
+           }
+           else {
+            // alert("1");
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment1',this.grade,this.section,this.subject);
+            this.$.assesmentservice.fnimporttermmarks(this.termname,'Assesment2',this.grade,this.section,this.subject);
+            this.$.assesmentservice.deleteauditmarks(this.termname,this.grade,this.subject,this.section);
+            this.$.assesmentservice.fnimporttermmarks11(this.termname,'Assesment1',this.grade,this.section,this.subject);
+
+           }
+         }
+      // this.$.assesmentservice.FnFetchApprovalStatus();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

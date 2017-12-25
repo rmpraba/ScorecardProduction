@@ -1,0 +1,29 @@
+
+
+
+
+  [{"studenttable":"md_class_section","schoolid":"school_id","academicyear":"academic_year","grade_id":"class","gradename":"class","classid":"id","section":"section"},
+ {"studenttable":"md_student","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade_id","gradename":"grade_id","classid":"class_id","section":"class_id"},
+    
+  {"studenttable":"Health","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"},
+	{"studenttable":"tr_beginner_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade_id","gradename":"grade_id","classid":"class_id","section":"section_id"},
+	{"studenttable":"tr_coscholastic_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"},
+    {"studenttable":"tr_student_to_subject","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"},
+
+	{"studenttable":"tr_term_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"},
+	{"studenttable":"tr_term_attendance","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"
+	},
+	{"studenttable":"tr_term_fa_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"
+	},
+	{"studenttable":"tr_term_health","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"class_id","section":"section"},
+    {"studenttable":"tr_term_overallfa_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+   {"studenttable":"md_curriculum_planning_approval","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade_id","gradename":"grade_name","classid":"section_id","section":"section_name"},
+   	{"studenttable":"md_grade_subject_count","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+   			{"studenttable":"mp_grade_section","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade_id","gradename":"grade_id","classid":"class_id","section":"section_id"},
+   		{"studenttable":"tr_coscholastic_sub_category_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+   		{"studenttable":"tr_term_assesment_import_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+   		{"studenttable":"tr_term_health","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+   		{"studenttable":"tr_term_fa_assesment_import_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+   		{"studenttable":"tr_term_overallfa_assesment_marks","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade","gradename":"grade","classid":"section","section":"section"},
+    {"studenttable":"mp_teacher_grade","schoolid":"school_id","academicyear":"academic_year","grade_id":"grade_id","gradename":"grade_id","classid":"class_id","section":"section_id"}
+ ]

@@ -1,0 +1,114 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="student-coordinator-apruval-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+     table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td{
+        width: 41%;        
+      } 
+      .card{
+        @apply(--layout-horizontal);
+      } 
+      p{
+        width: 30%;
+      } 
+      paper-button{
+        text-transform: none;
+        height: 25px;
+      }
+        .viewdata{
+        margin-top: 5%;
+        /*font-size: 12px;*/
+        cursor: pointer;
+        color:blue;
+      }
+      paper-dialog
+      {
+           border-radius: 10px;
+           width: 500px;
+           height: 200px;
+      }
+    </style>
+
+         <p hidden>{{subjectcategory}}</p>
+         <p hidden>{{studentid}}</p>
+         <p hidden>{{termid}}</p>
+        <div class="card">
+          <p style="{{fonts}}" >{{studentname}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{assesmentid}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{grade}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{section}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{subject}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{comments}}</p>
+         
+   <p style="margin-left: 5%;"><ahref hidden$="{{studenthiddenviews1}}" class="viewdata" on-click="Fnaproved"><u>Approve</u></ahref></p>
+   <p > <ahref hidden$="{{studenthiddenviews1}}" class="viewdata" on-click="FnReject"><u>Reject</u></ahref></p>
+     </div>
+       <paper-dialog id="innovationdialog12" modal>
+         
+          <center>
+          <b><h2> Approved successfully</h2></b><br>
+          <paper-button style="background-color: #363636;color: #ffffff;height:34px;" on-click="fnclose">Ok</paper-button>
+         </center>
+      </paper-dialog>
+    <paper-dialog id="innovationdialog131" modal>
+         
+          <center>
+          <b><h2>Reject successfully</h2></b><br>
+          <paper-button style="background-color:black; color:white;height:34px;" on-click="fnclosee">close</paper-button>
+         </center>
+      </paper-dialog>
+    <single-student-markentry-service id="singleservice"></single-student-markentry-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'student-coordinator-apruval-item-card',
+Fnaproved:function(e){
+ 
+ this.$.innovationdialog12.toggle();
+this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"completed");
+
+  },
+FnReject:function(e){
+ // this.dialogvalue1="Reject"+" ";
+this.$.innovationdialog131.toggle();
+ this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"Reject");
+ 
+},
+fnclose:function(e){
+  // if(this.$.innovationdialog12.opened==true)
+  //   this.$.innovationdialog12.toggle();
+  // if(this.$.innovationdialog31.opened==true)
+  //   this.$.innovationdialog31.toggle();
+this.$.innovationdialog12.close();
+this.$.innovationdialog131.close();
+this.$.singleservice.fngetinformationvalue();
+},
+fnclosee:function(e){
+this.$.innovationdialog131.close();
+this.$.singleservice.fngetinformationvalue();
+}
+  });
+  })();
+  </script>
+</dom-module>

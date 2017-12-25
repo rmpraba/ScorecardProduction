@@ -1,0 +1,129 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="dynamic-coscholastic-markentry-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        /*width: 90%;*/
+        border-collapse: collapse;                          
+        margin-left: 1%;
+      }              
+      .studname{
+        width: 20%;
+      }
+      #tb1{
+          width:15%
+      }
+      .button{
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+      }
+      #btn2{
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 25px;
+            border-radius: 2px;
+            font-family: Calibri;
+            font-size: 17px;
+      }
+      .btndiv{
+        @apply(--layout-horizontal);
+        margin-left: 45%;
+      }
+    </style>
+    <div>
+    <center>
+    <div hidden$="{{hideheader}}">
+      <h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
+    </div>
+      <div>
+      <template is="dom-repeat" items="{{studarr}}">
+      <dynamic-coscholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-coscholastic-markentry-itemcard>
+      </template>  
+      </div>
+      </center> 
+    </div>
+    <div class="btndiv">
+      <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
+    </div>  
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <dynamic-coscholastic-subject-service id="subjectservice"></dynamic-coscholastic-subject-service>
+  </template> 
+  <script>
+  (function() {
+    'use strict';
+    var scorearr=[];
+    var gradearr=[];
+    Polymer({
+      is: 'dynamic-coscholastic-markentry-card',
+      ready:function(){
+        this.hideheader=true;      
+        this.$.dynamicsavebtn.hidden=true;
+      },
+      FnSetLabel:function(){
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+        this.btnlabel="Submit for approval";
+        }
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+        this.btnlabel="Approve";
+        }
+      },
+      FnSetGrade:function(arr){
+        gradearr=arr;
+      }, 
+      setDefaultHeaders:function(){
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+        this.assesmentname=localStorage.getItem("curr_sess_assesment");
+        this.$.dynamicsavebtn.hidden=false;
+        this.disablesave=false;
+        this.FnSetLabel();
+      },
+      FnRefresh:function()
+      {
+        this.studarr=[];
+        this.label=[];
+        this.temp=[];
+        scorearr=[];
+        this.disablesave=false;
+        this.hideheader=true;
+        this.$.dynamicsavebtn.hidden=true;
+        this.FnSetLabel();
+      },
+      FnSetMarkEnteredArray:function(arr){
+        var scorearrlen=arr;
+        // alert((this.studarr.length)-1+"  "+scorearrlen);
+        if(((this.studarr.length)-1)==(scorearrlen)){
+          this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+        }
+        else
+        {
+          alert('Please complete markentry for all the students!!');
+        }
+      },
+      FnApprove:function(){
+        // this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+        this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
+        }
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+          // this.$.assesmentservice.Fnauditterm();
+          this.$.assesmentservice.Fnimportmark();
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>
+

@@ -1,0 +1,136 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
+<dom-module id="attendance-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .card{
+        height: 2%;
+      }
+      #tb1{
+        width:15%
+      }
+      #tb2{
+        width:20%
+      }
+      .cmtcard
+      {
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+      #attendancegenericcmnt,#attendancespecificcmnt{
+        border-radius: 10px;
+        width: 40%;
+        height: 30%;
+      }
+    </style>
+    <div class="card">
+        <table border="1"><tr>
+        <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
+        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>
+        <td id="tb2">
+        <paper-item on-click="FnGeneric" style="word-wrap: break-word;" value="{{genericcomment}}">{{genericcomment}}</paper-item>
+        </td>   
+        <td id="tb2"><paper-item style="word-wrap: break-word;" on-click="FnSpecific" value="{{specificcomment}}">{{specificcomment}}</paper-item></td>  
+        <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td></tr></table>
+    </div>
+    <paper-dialog id="attendancegenericcmnt" modal>
+        <h3>Generic Comment</h3>
+        <div class="cmtcard">
+          <paper-textarea value="{{gencomment}}"></paper-textarea>     
+        </div>  
+        <center style="margin-top: 5%;">
+          <paper-button on-click="genericsubmit"  style="background-color:black;color:white">Submit</paper-button>
+         <paper-button on-click="genericclose" style="background-color:black;color:white">Close</paper-button>
+        </center>
+    </paper-dialog>
+    <paper-dialog id="attendancespecificcmnt" modal>
+        <h3>Specific Comment</h3>
+        <div class="cmtcard">
+          <paper-textarea value="{{speccomment}}"></paper-textarea>     
+        </div>  
+        <center style="margin-top: 5%;">
+          <paper-button on-click="specificsubmit"  style="background-color:black;color:white">Submit</paper-button>
+         <paper-button on-click="specificclose" style="background-color:black;color:white">Close</paper-button>
+        </center>
+    </paper-dialog>
+    <co-scholastic-service id="assesmentservice"></co-scholastic-service>
+  </template>  
+  <script>
+  (function() {
+    'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    var generic;
+    Polymer({
+      is: 'attendance-item-card',
+      ready:function(){
+        this.flag=0;
+      },     
+      FnAttendance:function(e)
+      {    
+        if(parseFloat(this.attendance)<=parseFloat(this.workingdays)){
+
+        }
+        else{
+          this.attendance="";
+          alert("Please enter valid attendance!");
+        }
+      },
+      FnSpecific:function()
+      {
+        this.$.attendancespecificcmnt.toggle();
+      },
+      FnGeneric:function(e)
+      { 
+        this.$.attendancegenericcmnt.toggle();
+      },
+      genericsubmit:function(){
+        this.genericcomment=this.gencomment;
+        this.$.attendancegenericcmnt.toggle();
+      },
+      genericclose:function(){
+        this.$.attendancegenericcmnt.toggle();
+      },
+      specificsubmit:function(){
+        this.specificcomment=this.speccomment;
+        this.$.attendancespecificcmnt.toggle();
+      },
+      specificclose:function(){
+        this.$.attendancespecificcmnt.toggle();
+      },
+      FnSave:function(){
+        this.flag=1;
+        this.callService();
+      },
+      callService:function()
+      {           
+        if(this.attendance==""||this.attendance==null||this.attendance=="undefined"){
+          this.attendance="";
+        }
+        if(this.genericcomment==""||this.genericcomment==null||this.genericcomment=="undefined"){
+          this.genericcomment="";
+        }
+        if(this.specificcomment==""||this.specificcomment==null||this.specificcomment=="undefined"){
+          this.specificcomment="";
+        }
+        // alert(this.studid+"  "+this.studname+"  "+this.attendance+"  "+this.workingdays+"  "+this.genericcomment+"  "+this.specificcomment);
+        this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,this.genericcomment,this.specificcomment); 
+        }
+    });
+  })();
+  </script>
+</dom-module>

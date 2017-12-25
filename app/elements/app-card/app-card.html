@@ -1,0 +1,81 @@
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../home-page/home-page.html">
+<link rel="import" href="../login-card/login-card.html">
+<link rel="import" href="../forgotpassword-card/forgotpassword-card.html">
+<link rel="import" href="../bower_components/app-router/app-router.html">
+<!-- <link rel="stylesheet" type="text/css" href="../../styles/styles.css"> -->
+  <dom-module id="app-card">
+  <template>
+  <style>
+  .in
+  {
+  float:right;
+  font-size:12px;
+  }
+  .backbutton
+  {
+    float:left;
+    width: 4%;
+  }
+  </style>
+
+    <div class="content">
+    <!-- <app-router> -->
+    <!-- matches an exact path -->
+    <!-- <app-route path="/login" import="../login-card/login-card.html"></app-route> -->
+
+    <!-- matches using a wildcard -->
+    <!-- <app-route path="/homepage" import="../home-page/home-page.html"></app-route> -->
+
+    <!-- matches using a path variable -->
+    <!-- <app-route path="/order/:id" import="/pages/order-page.html"></app-route> -->
+
+    <!-- matches a pattern like '/word/number' -->
+    <!-- <app-route path="/^\/\w+\/\d+$/i" regex import="/pages/regex-page.html"></app-route> -->
+
+    <!-- matches everything else -->
+    <!-- <app-route path="*" import="/pages/not-found-page.html"></app-route> -->
+  <!-- </app-router> -->
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">
+        <section data-category="logincard">
+          <login-card></login-card>
+        </section>
+        <section data-category="forgotpasswordcard">
+          <forgotpassword-card></forgotpassword-card>
+        </section>
+        <section data-category="homepage">
+          <home-page></home-page>
+        </section>                
+      </iron-pages>
+    </div>
+
+  </template>  
+  <script>
+  // document.querySelector('app-router').go('/login');
+  </script>
+  <script>
+  Polymer({
+  is: "app-card",
+  ready: function() {
+   this.page='logincard';
+   // this.set('route.path', '/login/');
+  },
+  attached:function () {
+    // document.querySelector('app-router').go('/login');
+  },
+  setPage:function(page,title){    
+    this.page=page;
+    this.title=title;
+    localStorage.setItem("curr_sess_page",page);
+    // document.querySelector('app-router').go('/'+page);
+  },
+  signout:function()
+  {
+    window.location.href="../index.html";   
+  } 
+  });
+  </script>
+</dom-module>

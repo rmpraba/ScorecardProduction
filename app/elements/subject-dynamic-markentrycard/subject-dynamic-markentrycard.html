@@ -1,0 +1,165 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="subject-dynamic-markentrycard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        width: 60%;
+        border-collapse: collapse;                          
+        margin-left: 1%;
+      }              
+      .studname{
+        width: 30%;
+      }
+      #tb1{
+          width:15%
+        }
+         .button{
+            /*width: 15%;*/
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+            /*margin-left: 45%;*/
+          }
+      #btn2{
+            /*width: 15%;*/
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 25px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
+      .btndiv{
+        @apply(--layout-horizontal);
+        margin-left: 45%;
+      }
+    </style>
+    <div>
+    <!-- <template is="dom-repeat" items="{{label}}"> -->
+    <center>
+    <div hidden$="{{hideheader}}">
+      <h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
+    </div>
+      <!-- <table border="1" >   -->
+      <!-- <tr><td></td>
+        <template is="dom-repeat" items="{{titlearr}}">
+          <th colspan="{{item.categorycnt}}" style="text-align: center;">{{item.categoryname}}</th>
+        </template>
+      </tr>  --> 
+      <div>
+      <template is="dom-repeat" items="{{studarr}}">
+      <!-- <tr><td> -->
+      <subject-dynamic-markentryitemcard id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-markentryitemcard>
+      <!-- </td></tr> -->
+      </template>  
+      </div>
+
+     
+      <!-- </table> -->
+      </center> 
+    <!-- </template>      -->
+    </div>
+    <div class="btndiv">
+    <!-- <paper-button class="button" id="grade" on-click="FnGenerateGrade">Generate Grade</paper-button> -->
+    <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
+    </div>  
+    <subject-dynamic-service id="subjectservice"></subject-dynamic-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var scorearr=[];
+    var gradearr=[];
+    Polymer({
+      is: 'subject-dynamic-markentrycard',
+      ready:function(){
+        // this.disablesave=true;
+        this.hideheader=true;      
+        this.$.dynamicsavebtn.hidden=true;
+      },
+      FnSetLabel:function(){
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+        this.btnlabel="Submit for approval";
+        }
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+        this.btnlabel="Approve";
+        }
+      },
+      FnSetGrade:function(arr){
+        gradearr=arr;
+      }, 
+      setDefaultHeaders:function(){
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+        this.assesmentname=localStorage.getItem("curr_sess_assesment");
+        this.$.dynamicsavebtn.hidden=false;
+      },
+      FnRefresh:function()
+      {
+        this.studarr=[];
+        this.label=[];
+        this.temp=[];
+        scorearr=[];
+        this.disablesave=false;
+        this.hideheader=true;
+        this.$.dynamicsavebtn.hidden=true;
+        this.FnSetLabel();
+        // this.$.edmeic.FnRefresh();
+      },
+      FnSetMarkEnteredArray:function(arr){
+        var scorearrlen=arr;
+        // alert(scorearr.length);
+        // alert(this.studarr.length);
+        if(((this.studarr.length)-1)==(scorearrlen)){
+          // alert('Approved!!');
+          this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+        }
+        else
+        {
+          alert('Please complete markentry for all the students!!');
+        }
+      },
+      FnApprove:function(){
+        this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
+      }
+      // FnSetAlreadyEnteredMarks:function(arr){
+      //   var temp=[];
+      //   for(var i=0;i<arr.length;i++){
+      //   var obj={};
+      //   obj.studentid=arr[i].student_id;
+      //   obj.studentname=arr[i].student_name;
+      //   obj.classid=arr[i].class_id;
+      //   obj.assesmenttype=arr[i].assesment_type;
+      //   obj.gradeid=arr[i].grade_id;
+      //   obj.gradename=arr[i].grade_name;
+      //   obj.subjectid=arr[i].subject_id;
+      //   obj.subjectname=arr[i].subject_name;
+      //   obj.categoryid=arr[i].category_id;
+      //   obj.categoryname=arr[i].category_name;
+      //   obj.subcategoryid=arr[i].sub_category_id;
+      //   obj.subcategoryname=arr[i].sub_category_name;
+      //   obj.value=arr[i].score;
+      //   obj.grade=arr[i].grade;
+      //   temp.push(obj);
+      //   }
+      //   this.temp=temp;
+      //   this.$.edmeic.FnSetInfoArray(temp);
+      // }
+    });
+  })();
+  </script>
+</dom-module>
+
