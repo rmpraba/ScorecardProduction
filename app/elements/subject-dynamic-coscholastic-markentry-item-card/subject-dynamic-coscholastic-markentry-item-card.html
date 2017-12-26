@@ -40,20 +40,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <tr>          
         <th id="tb1" width="5%">{{serialno}}</th>
         <th width="25%" valign="top"><p>{{studentname}}</p></th>
-        <!-- <td id="tb1"><paper-input  value="{{score}}" on-change="FnActivity"></paper-input></td> -->
+       
         <template is="dom-repeat" items="{{category}}">
           <td valign="top" colspan="{{item.categorycnt}}">
-          <subject-dynamic-coscholastic-markentry-cards id="sdmei" studentnamess="{{studentname}}" categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" weight="{{item.weight}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}" ids="{{item.ids}}"></subject-dynamic-coscholastic-markentry-cards>
+     <subject-dynamic-coscholastic-markentry-cards id="sdmei" studentnamess="{{studentname}}" categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" weight="{{item.weight}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}" ids="{{item.ids}}"></subject-dynamic-coscholastic-markentry-cards>
           </td>
         </template>
-        <!-- <td width="5%"><p style="text-align: center;" hidden$="{{hiddenoutinput}}">{{grade}}</p></td> -->
-    <td width="5%"><paper-icon-button hidden$="{{hiddenoutinput}}" icon="save" on-click="FnSave"></paper-icon-button></td>
+           <td width="5%"><paper-icon-button hidden$="{{hiddenoutinput}}" icon="save" on-click="FnSave"></paper-icon-button></td>
         </tr>
         </table>
     </div>
     <subject-dynamic-service id='subjectservice'></subject-dynamic-service>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
-     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+    <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
    
   </template>
   <script>
@@ -65,10 +64,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'subject-dynamic-coscholastic-markentry-item-card',
     FnSave:function()
      {
+       localStorage.setItem("curr_sess_template_tef","coinactive"); 
+
     this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(subarr1);
     for(var i=0;i<temps.length;i++){
       var t=i+1;
-   this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(temps[i].studid,temps[i].studname,temps[i].category,temps[i].subcategory,temps[i].summark,t);
+  this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(temps[i].studid,temps[i].studname,temps[i].category,temps[i].subcategory,temps[i].summark,t);
          }
      document.querySelector('subject-dynamic-coscholastic-markentry-cards').fnclear();
    

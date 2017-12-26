@@ -10,10 +10,10 @@ var connection = mysql.createConnection({
   // user     : 'root',
   // password : 'admin',
   // database : 'scorecard' 
-  port     : '62631',
-  user     : 'adminM1qnV1d',
-  password : 'HC2bIf7Sk2LD',
-  database : 'scorecarddb'
+  // port     : '62631',
+  user     : 'root',
+  password : '',
+  database : 'reportcardlocal'
 });
 
 var bodyParser = require('body-parser'); 
@@ -15004,7 +15004,7 @@ var mapqur="SELECT * FROM subject_mapping WHERE school_id='"+req.query.schoolid+
 });
 
 
-
+/*
 app.post('/templateincoscolasticsubject-service',  urlencodedParser,function (req, res)
 {
 
@@ -15073,6 +15073,148 @@ var mapqur="SELECT * FROM subject_mapping WHERE  school_id='"+req.query.schoolid
 
   });
 });
+*/
+
+app.post('/templateincoscolasticsubject-service',  urlencodedParser,function (req,res)
+  {  
+    var qur;
+if(req.query.langpref=="Second Language"||req.query.langpref=="Third Language")
+{
+qur="select school_id,student_id as id,student_name,class_id from tr_student_to_subject where class_id="+
+"(select class_id  from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') "+
+"and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and subject_id='"+req.query.subjectid+"' and flag='active' and flag='active' order by student_name";
+ }
+else{
+ qur="select school_id,id,student_name,class_id  from md_student where  class_id="+
+"(select class_id  from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') "+
+"and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'  and flag='active' order by student_name";
+}
+
+
+ 
+  var qur1="SELECT * FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesmenttype+"' order by sub_category_id";
+
+   var qur2="SELECT category_id,category_name,count(sub_category_id) as cnt FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesmenttype+"' group by category_id,category_name";
+
+     var enricharr=[];
+    var studentarr=[]; 
+    var categorycnt=[];
+    console.log("----------------sub-mapping------------");
+    console.log(qur1);
+    console.log(qur2)
+    console.log(qur);
+    console.log("----------------------------------------")
+    connection.query(qur,function(err, rows){
+    if(!err)
+     {  
+     studentarr=rows;
+      connection.query(qur2,function(err, rows){
+     if(!err)
+     {  
+     categorycnt=rows;
+     connection.query(qur1,function(err, rows){
+    if(!err)
+    {  
+
+    enricharr=rows;
+    res.status(200).json({'enricharr': enricharr,'studentarr':studentarr,'categorycnt':categorycnt});
+    }
+    });
+    }
+     });
+    }
+    else
+     res.status(200).json({'': 'no rows'}); 
+  });
+});
+
+
+
+
+
+app.post('/templateincoscolasticsubject1-service',  urlencodedParser,function (req,res)
+  {  
+    var qur;
+if(req.query.langpref=="Second Language"||req.query.langpref=="Third Language")
+{
+qur="select school_id,student_id as id,student_name,class_id from tr_student_to_subject where class_id="+
+"(select class_id  from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') "+
+"and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and subject_id='"+req.query.subjectid+"' and flag='active' and flag='active' order by student_name";
+ }
+else{
+ qur="select school_id,id,student_name,class_id  from md_student where  class_id="+
+"(select class_id  from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') "+
+"and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'  and flag='active' order by student_name";
+}
+
+
+ 
+  var qur1="SELECT * ,(SELECT count(sub_metrics) FROM md_coscholastic_metrics WHERE category_name='"+req.query.subjects+"' order by sub_category) as cmt FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesmenttype+"' order by sub_category_id";
+
+   var qur2="SELECT * FROM md_coscholastic_metrics WHERE category_name='"+req.query.subjects+"' order by sub_category";
+
+   var qur3="SELECT count(sub_metrics)as cmt FROM md_coscholastic_metrics WHERE category_name='"+req.query.subjects+"' order by sub_category";
+
+  
+    var enricharr=[];
+    var studentarr=[]; 
+    var categorycnt=[];
+    var cmtarr=[];
+    console.log("----------------sub-mapping------------");
+    console.log(qur1);
+    console.log(qur2)
+    console.log(qur);
+    console.log("----------------------------------------")
+    connection.query(qur,function(err, rows){
+    if(!err)
+     {  
+     studentarr=rows;
+   connection.query(qur2,function(err, rows){
+     if(!err)
+     {  
+    categorycnt=rows;
+   connection.query(qur3,function(err, rows){
+      if(!err)
+     {  
+    cmtarr=rows;
+    connection.query(qur1,function(err, rows){
+    if(!err)
+    {  
+
+    enricharr=rows;
+    res.status(200).json({'enricharr': enricharr,'studentarr':studentarr,'categorycnt':categorycnt,"cmtarr":cmtarr});
+    }
+    });
+    }
+     });
+    }
+    });
+    }
+   
+    else
+     res.status(200).json({'': 'no rows'}); 
+  });
+});
+
 
 app.post('/fetchdynamicallyenteredscholasticmarks1-service',  urlencodedParser,function (req, res)
 {

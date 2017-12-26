@@ -83,8 +83,9 @@
        this.callService();
       },
       callService:function(){  
-      // alert(this.studid+" "+this.studname+" "+this.height+" "+this.weight+" "+this.bloodgroup+" "+this.visionleft+" "+this.visionright+" "+this.dental);         
-        this.$.assesmentservice.callinserthealthService(this.studid,this.studname,this.height,this.weight,this.bloodgroup,this.visionleft,this.visionright,this.dental); 
+      // alert(this.studid+" "+this.studname+" "+this.height+" "+this.weight+" "+this.bloodgroup+" "+this.visionleft+" "+this.visionright+" "+this.dental);
+   localStorage.setItem("curr_sess_template_tef","inactive"); 
+    this.$.assesmentservice.callinserthealthService(this.studid,this.studname,this.height,this.weight,this.bloodgroup,this.visionleft,this.visionright,this.dental); 
       }
     });
   })();

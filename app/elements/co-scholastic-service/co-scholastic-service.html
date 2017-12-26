@@ -301,6 +301,7 @@
     var co_higher=[];
     var co_grade=[];
     var studentid;
+    var temphealth=0;
     Polymer({
       is: 'co-scholastic-service',
       ready:function(){
@@ -724,8 +725,14 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
          // alert(JSON.stringify(obj));    
          this.$.insertcoassesmentmarkajax.generateRequest();
       },
-      insertcoassesmentmarkResponse:function(e){
-        
+       insertcoassesmentmarkResponse:function(e){
+        tempcnt2++;
+      if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
+       if(localStorage.getItem("curr_sess_lenth")==tempcnt2){
+    document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
+    document.querySelector("coscholastic-assesment-card").callService();
+        }
+       }
       },
        callinsertcoscholasticsubcategorymarkService:function(subcategoryarr){    
        // alert(''+JSON.stringify(subcategoryarr)); 
@@ -763,11 +770,7 @@ insertcosubcategorymarkResponse:function(e){
   }
 },
 
-      insertcoassesmentmarkResponse:function(e){
-        tempcnt2++;
-        if(tempcnt1==tempcnt2)
-        alert('Inserted!');
-      },
+   
       calloverallinsertcoassesmentService:function(studid,studname,category,total,reduction,grade){        
          this.overallinsertcoassesmenturl=sessionStorage.getItem("addrinfo")+"/overallinsertcoassesment-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
@@ -811,10 +814,20 @@ insertcosubcategorymarkResponse:function(e){
       },
       insertattendanceResponse:function(e){
         //alert(e.detail.response.returnval);
-         if(e.detail.response.returnval=="inserted")
+        temphealth++;
+     if(localStorage.getItem("curr_sess_template_tef")=="active"){
+        if(temphealth==(localStorage.getItem("curr_sess_lenth"))){
+        alert("Attendance Saved!");
+        document.querySelector("coscholastic-assesment-card").callService();
+        temphealth=0;
+      }
+     }
+     else{
+       if(e.detail.response.returnval=="inserted")
           alert("Attendance Saved!");
          if(e.detail.response.returnval=="updated")
           alert("Attendance updated!");
+       }
       },
       callinserthealthService:function(studid,studname,height,weight,bloodgroup,visionleft,visionright,dental){
          this.inserthealthurl=sessionStorage.getItem("addrinfo")+"/inserthealth-service";
@@ -838,10 +851,21 @@ insertcosubcategorymarkResponse:function(e){
          this.$.inserthealthajax.generateRequest();
       },
       inserthealthResponse:function(e){        
-         if(e.detail.response.returnval=="inserted")
+         temphealth++;
+     if(localStorage.getItem("curr_sess_template_tef")=="active"){
+        if(temphealth==(localStorage.getItem("curr_sess_lenth"))){
+        alert("Health info Saved!");  
+        document.querySelector("coscholastic-assesment-card").callService();
+        temphealth=0;
+      }
+     }
+     else{
+       if(e.detail.response.returnval=="inserted")
           alert("Health info Saved!");
          if(e.detail.response.returnval=="updated")
           alert("Health info updated!");
+       }
+      
       } ,
 
  callinsertphysicalService:function(studid,studname,interest,talent,membership,competition,prize)

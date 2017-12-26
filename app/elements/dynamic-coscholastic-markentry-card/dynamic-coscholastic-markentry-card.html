@@ -3,7 +3,7 @@
 <dom-module id="dynamic-coscholastic-markentry-card">
   <template>
     <style>
-      :host {
+   :host {
         display: block;
       }
       table{
@@ -36,8 +36,34 @@
         @apply(--layout-horizontal);
         margin-left: 45%;
       }
+.hrspace
+      {
+       padding-left: 87%;
+       @apply(--layout-horizontal);
+      }
+   .exceldiv
+      {
+    @apply(--layout-horizontal);
+    margin-top: 3%;
+     margin-left: 73%;
+      }
     </style>
     <div>
+        <div hidden$="{{hideheader}}">
+            <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
+             id="coscolasticcheckid" on-change="excelmark1">Excel Upload
+             </paper-checkbox>
+       </div>
+    <div id=cosolasticxluplodingid>
+      <div class="hrspace">
+        <input type="button" id="btn2" onclick="tableToExcel('codynamicreporttable', 'Mark Report')" value="Download Template">
+     </div>
+      <div class="exceldiv" >
+         <input id="readfiles" type="file" onchange="loadFiles(event)"/>
+         <xmp id="output"></xmp>
+        <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;" on-click="FnClick1">Upload File</paper-button>    
+      </div>
+   </div>
     <center>
     <div hidden$="{{hideheader}}">
       <h1>{{schoolname}}</h1>
@@ -53,20 +79,76 @@
     </div>
     <div class="btndiv">
       <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
-    </div>  
+    </div> 
+   <div  id="codynamicreporttable" hidden>
+      <div width="{{tabwidth}}">
+       <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
+      <template is="dom-repeat" items="{{studarr1}}">
+      <tr>
+      <th width="5%">{{item.sno}}</th>
+      <th width="15%">{{item.Studentno}}</th>
+      <th width="15%">{{item.studentname}}</th>
+      <template is="dom-repeat" items="{{item.category}}" as="i">
+      <th colspan$="{{i.categorycnt}}" width$="{{i.width}}">{{i.subcategoryname}}</th>
+      </template>
+      </tr>
+      </template>
+      </table> 
+     </div>
+    </div>
+     <paper-input value="{{categorylength}}" hidden ></paper-input>
+ <paper-input value="{{categorylength}}" hidden ></paper-input> 
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <dynamic-coscholastic-subject-service id="subjectservice"></dynamic-coscholastic-subject-service>
-  </template> 
+  </template>
+  <script type="text/javascript">
+  var array=[];
+  var array1=[];
+  var tempstudentarr=[];
+  
+  function loadFiles(event){
+  alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
+    array1=data; 
+   // alert(JSON.stringify(array1));
+     for(var i=0;i<array1.length;i++){
+       for(var j=0;j<tempstudentarr.length;j++){
+       // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
+       if(array1[i].StudentNo==tempstudentarr[j].id){
+          array.push(array1[i]);
+         }      
+    }  
+    }       
+  });
+  }
+  </script>
+  <script type="text/javascript">
+  var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+  })()
+  </script>  
   <script>
   (function() {
     'use strict';
     var scorearr=[];
     var gradearr=[];
+    var detailarr=[];
+    var tempassesmetarr=[];
+     
     Polymer({
       is: 'dynamic-coscholastic-markentry-card',
       ready:function(){
-        this.hideheader=true;      
-        this.$.dynamicsavebtn.hidden=true;
+         this.hideheader=true;      
+         this.$.dynamicsavebtn.hidden=true;
+         this.$.cosolasticxluplodingid.hidden=true;
+        localStorage.setItem("curr_sess_template_tef","coinactive"); 
       },
       FnSetLabel:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
@@ -79,6 +161,132 @@
       FnSetGrade:function(arr){
         gradearr=arr;
       }, 
+       FnClick1:function(){
+       // alert(JSON.stringify(array));
+        var temp=[];
+     
+         if(array.length==0){
+        alert("Pls save the file in EXCEL WORKBOOK extension!");
+        document.getElementById("readfiles").value = "";
+       }
+       else{ 
+        for(var i=0;i<array.length;i++){
+             if(JSON.stringify({})==JSON.stringify(array[i])){
+             }
+         else{
+        var setarr=[];
+           setarr=Object.keys(array[i]);
+             setarr.splice(0,3);
+                  for(var j=0;j<setarr.length;j++){
+                  for(var k=0;k<tempassesmetarr.length;k++){
+            
+  if(this.categorylength==setarr.length){ 
+
+     if(tempassesmetarr[k].sub_category_name==setarr[j]){
+          var m=setarr[j];
+          var obj={};
+          obj.studentid=array[i].StudentNo;
+          obj.studentname=array[i].StudentName;
+          obj.classid=localStorage.getItem("curr_sess_classid");
+          obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
+          obj.gradeid=localStorage.getItem("curr_sess_gradeid");;
+          obj.gradename=localStorage.getItem("curr_sess_grade");
+          obj.subjectid=localStorage.getItem("curr_sess_subjectid");
+          obj.subjectname=localStorage.getItem("curr_sess_subject");
+          obj.categoryid=tempassesmetarr[k].category_id;
+          obj.categoryname=tempassesmetarr[k].category_name;
+          obj.subcategoryid=tempassesmetarr[k].sub_category_id;
+          obj.subcategoryname=tempassesmetarr[k].sub_category_name;
+          obj.seq=tempassesmetarr[k].sub_seq;
+          obj.weight=tempassesmetarr[k].weight;
+          obj.value=array[i][m];
+          obj.grade="";
+          temp.push(obj);
+                  } }
+                 else{
+                     // temp=[];
+                      array=[];
+                      array1=[];
+                      tempstudentarr=[];
+                      setarr=[];
+                     alert("Pls import the corrcet file name");
+                     document.getElementById("readfiles").value = "";
+                     }}}}}
+document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+     //  alert(JSON.stringify(temp));
+    
+      for(var i=0;i<temp.length;i++){
+    
+if(Number.isInteger(parseFloat(temp[i].weight)))
+    {
+
+if(parseFloat(temp[i].value)>=0&&parseFloat(temp[i].value)<=parseFloat(temp[i].weight)){
+        temp[i].values=temp[i].value;
+        }
+        else{
+        temp[i].value="";
+        temp[i].values=temp[i].value;
+        }
+    }
+
+
+else{
+var a = (temp[i].weight).split(","); 
+        var m=[{"grade":'A',"mark":'8'},{"grade":'B',"mark":'7'},{"grade":'C',"mark":'5'},{"grade":'D',"mark":'3'}];
+        var f=0;
+        for (var j = 0; j < a.length; j++)
+        {
+        if(a[j]==temp[i].value)
+          f=1;
+        }
+        if(f==1){
+        for (var j= 0; j < m.length;j++)
+        {
+          if(m[j].grade==temp[i].value)
+           temp[i].values=m[j].mark;
+        }
+        }
+        else
+        {
+          temp[i].value="";
+          temp[i].values=temp[i].value;
+        } 
+ // alert(JSON.stringify(temp[i]));
+}
+
+  this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length);     
+      }
+
+         document.getElementById("readfiles").value ="";
+            temp=[];
+            array=[];
+            array1=[];
+            tempstudentarr=[];
+          document.getElementById("readfiles").value ="";
+           this.categorylength="";
+       }
+      }, 
+      excelmark1:function(e){
+if(document.querySelector("#coscolasticcheckid").checked==true){
+       this.$.cosolasticxluplodingid.hidden=false;
+       localStorage.setItem("curr_sess_template_tef","coactive"); 
+      }
+   if(document.querySelector("#coscolasticcheckid").checked==false){
+this.$.cosolasticxluplodingid.hidden=true;
+   document.getElementById("readfiles").value ="";
+   localStorage.setItem("curr_sess_template_tef","coinactive"); 
+     }
+    },
+fngenrategrade:function(arr){
+         tempassesmetarr=arr;
+   //  alert(JSON.stringify(tempassesmetarr));
+   
+   },
+     fnstudentarrvalue:function(arr){
+         tempstudentarr=arr;
+    //   alert(JSON.stringify(tempstudentarr));
+   
+      },
       setDefaultHeaders:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -99,6 +307,9 @@
         this.disablesave=false;
         this.hideheader=true;
         this.$.dynamicsavebtn.hidden=true;
+        localStorage.setItem("curr_sess_template_tef","coinactive"); 
+        document.querySelector("#coscolasticcheckid").checked=false;
+        this.$.cosolasticxluplodingid.hidden=true;
         this.FnSetLabel();
       },
       FnSetMarkEnteredArray:function(arr){
