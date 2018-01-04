@@ -39,6 +39,10 @@
         <p>{{studentid}}</p>
         <p>{{studentname}}</p>        
         <p><paper-button  id="tb3" on-click="FnView">View</paper-button></p>
+        <p><paper-button  id="tb3" style="{{fontsvalue}}" 
+        disabled$="{{verifyvalues}}" on-click="Fnverified">{{verifyvalueids}}</paper-button></p>
+          <p><paper-button  id="tb3" style="color:blue" 
+        hidden$="{{hiddenundoids}}" on-click="Fnundo">Undo</paper-button></p>
       <!--     <p><paper-button disabled="{{edit}}" id="tb3" on-click="FnView">View</paper-button></p>
        -->
         <!-- </tr> -->
@@ -55,9 +59,21 @@
   (function() {
     'use strict';
     Polymer({
-      is: 'student-list-itemcard',            
-      FnView:function(){
-        localStorage.setItem("curr_sess_viewstudid",this.studentid);
+      is: 'student-list-itemcard', 
+     Fnverified:function(e){
+         localStorage.setItem('curr_sess_verify','verifyid');  
+   this.$.newformatservice.passstudentverifyvalues(this.studentid,this.studentname);   
+          this.fngetViewvalues();
+         },
+   Fnundo:function(){
+      this.$.newformatservice.undotudentverifyvalues(this.studentid,this.studentname);   
+       },     
+       FnView:function(){
+         localStorage.setItem('curr_sess_verify','unverifyid');    
+           this.fngetViewvalues();
+       },
+      fngetViewvalues:function(e){
+     localStorage.setItem("curr_sess_viewstudid",this.studentid);
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
@@ -65,9 +81,19 @@
         this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
         this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
         this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid);
-        document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('cce-onetofour-score-card','');        
-        document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
+       if(localStorage.getItem('curr_sess_verify')=='unverifyid')    
+          {
+          
+  document.querySelector('app-card').setPage('homepage','');
+document.querySelector('home-page').setPage('cce-onetofour-score-card','');        
+   document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
+          
+         }
+       else{
+       
+        this.$.otfscorecardservice.mailReportcardService1();
+         }
+
         }
         else
         {   
@@ -89,17 +115,29 @@
           this.$.newformatservice.fetchnewformatremark1(this.studentid);
           this.$.newformatservice.fetchnewformatcoscholasticsubjects1(this.studentid);
           this.$.newformatservice.fetchnewformatscholasticsubjects1(this.studentid);
-    
+    if(localStorage.getItem('curr_sess_verify')=='unverifyid')   
+       {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('newformat-reportcard-nineten','');
+       }
+        else{
+        document.querySelector('newformat-reportcard-nineten').fnpdfconvection();
+        }
         }
         else{
         this.$.newformatservice.fetchstudinfofornewformatService(this.studentid);
         this.$.newformatservice.fetchnewformatscholasticsubjects(this.studentid);
         this.$.newformatservice.fetchnewformatcoscholasticsubjects(this.studentid);
         this.$.newformatservice.fetchnewformatremark(this.studentid);
+    if(localStorage.getItem('curr_sess_verify')=='unverifyid') 
+        {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('reprotcard-newformat-threetoeight','');
+      
+       }
+     else{
+        document.querySelector('reprotcard-newformat-threetoeight').fnpdfconvection();
+        }
         }
         } 
         }
@@ -148,7 +186,8 @@
        document.querySelector('home-page').setPage('studentinfoedit','');
        document.querySelector('studentinfoedit-card').FnSetStudentId(this.studentid);       
       }
-      }
+
+       },
     });
   })();
   </script>

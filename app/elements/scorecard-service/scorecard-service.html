@@ -316,13 +316,14 @@
         obj.grade=localStorage.getItem("curr_sess_grade");
         obj.section=localStorage.getItem("curr_sess_section");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");          
         this.fetchstudnameparam=obj;
         this.$.fetchstudnameajax.generateRequest();
       },
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
-        
+        var arr1=e.detail.response.verifyarr;
+       
         document.querySelector('cce-generate-score-card').FnHide();
         // document.querySelector('generate-studentlist-outcard').FnHide();
         for(var i=0;i<arr.length;i++){
@@ -331,6 +332,25 @@
             arr[i].editable=false;
           else
             arr[i].editable=true;
+        }
+        for(var i=0;i<arr.length;i++){
+          var flag=0;
+          for(var j=0;j<arr1.length;j++){
+           if(arr[i].id.trim()==arr1[j].student_id.trim())
+              { 
+                flag=1;
+              arr[i].fonts="color:green;";
+                arr[i].verifyvalue=true;
+                arr[i].hiddenundoid=false;
+                arr[i].verifyvalueid="verified";
+             }
+          }
+        if(flag==0){
+               arr[i].fonts="color:red;";
+               arr[i].verifyvalue=false;
+               arr[i].hiddenundoid=true;
+               arr[i].verifyvalueid="Verify";
+             }
         }
         document.querySelector('student-list-card').studentarr=arr; 
         // document.querySelector('generate-studentlist-card').studentarr=arr; 

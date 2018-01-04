@@ -112,6 +112,16 @@
         content-type="application/json"
         on-response="ntotenoverallvalusResponse"
         debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="ntotenoverallvalus1ajax"
+        url="{{ntotenoverallvalus1url}}"
+        params="{{ntotenoverallvalus1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="ntotenoverallvalus1Response"
+        debounce-duration="300"
     ><iron-ajax
         method="post"
         id="threetoeightvaluesajax"
@@ -120,6 +130,44 @@
         handle-as="json"
         content-type="application/json"
         on-response="threetoeightvaluesResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="threetoeightvalues1ajax"
+        url="{{threetoeightvalues1url}}"
+        params="{{threetoeightvalues1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="threetoeightvalues1Response"
+        debounce-duration="300"
+    >
+     <iron-ajax
+        method="post"
+        id="sendmailajax"
+        url="{{sendmailurl}}"
+        params="{{sendmailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sendmailResponse"
+        debounce-duration="300"
+    ><iron-ajax
+        method="post"
+        id="passstudentverifyvaluesajax"
+        url="{{passstudentverifyvaluesurl}}"
+        params="{{passstudentverifyvaluesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="passstudentverifyvaluesResponse"
+        debounce-duration="300"
+    ><iron-ajax
+        method="post"
+        id="undotudentverifyvaluesajax"
+        url="{{undotudentverifyvaluesurl}}"
+        params="{{undotudentverifyvaluesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="undotudentverifyvaluesResponse"
         debounce-duration="300"
     >
   </template>
@@ -137,6 +185,7 @@
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.studentid=id;
+       
         obj.termname=localStorage.getItem("curr_sess_termname");
         this.fetchnewformatremarkparam= obj;
         this.$.fetchnewformatremarkajax.generateRequest();
@@ -148,8 +197,72 @@
             arr[0].generic="";
           if(arr[0].speccomment=="undefined")
             arr[0].speccomment="";
-          document.querySelector('reprotcard-newformat-threetoeight').remark=arr[0].generic+" "+arr[0].speccomment;
+       document.querySelector('reprotcard-newformat-threetoeight').remark=arr[0].generic+" "+arr[0].speccomment;
         }
+      },
+      passstudentverifyvalues:function(id,name){
+        this.passstudentverifyvaluesurl=sessionStorage.getItem("addrinfo")+"/passstudentverifyvalues-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+         obj.studentid=id;
+        obj.studentname=name;
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        this.passstudentverifyvaluesparam= obj;
+        this.$.passstudentverifyvaluesajax.generateRequest();
+      },
+     passstudentverifyvaluesResponse:function(e){
+        var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
+  if(arr=='succ'){
+
+  }
+        
+       },
+undotudentverifyvalues:function(id,name){
+        this.undotudentverifyvaluesurl=sessionStorage.getItem("addrinfo")+"/undotudentverifyvalues-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+         obj.studentid=id;
+        obj.studentname=name;
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        this.undotudentverifyvaluesparam= obj;
+        this.$.undotudentverifyvaluesajax.generateRequest();
+      },
+undotudentverifyvaluesResponse:function(e){
+     var arr=e.detail.response.returnval;
+       // alert(JSON.stringify(arr));
+    if(arr=="Deleted!"){
+      document.querySelector('scorecard-service').callFetchstudentnameService();
+    }
+       },
+       ntoteneightpdfconvection:function(classs,section,remark,result,date){
+        this.ntotenoverallvalus1url=sessionStorage.getItem("addrinfo")+"/ntotenoverallvalus-service";
+        var obj={"schoolid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.classs=classs;
+        obj.section=section;
+        obj.remark=remark;
+        obj.result=result;
+        obj.date=date;
+        obj.staffid=sessionStorage.getItem("curr_sess_loggedid").toUpperCase();
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        this.ntotenoverallvalus1param=obj;
+       // alert(JSON.stringify(obj));
+        this.$.ntotenoverallvalus1ajax.generateRequest();
+      },
+      ntotenoverallvalus1Response:function(e){
+        var arr=e.detail.response.returnval;
+      if(e.detail.response.returnval=='converted'){
+  document.querySelector('scorecard-service').callFetchstudentnameService();
+   }
       },
      ntotenoverallvalus:function(classs,section,remark,result,date){
         this.ntotenoverallvalusurl=sessionStorage.getItem("addrinfo")+"/ntotenoverallvalus-service";
@@ -170,7 +283,9 @@
       },
       ntotenoverallvalusResponse:function(e){
         var arr=e.detail.response.returnval;
-       
+        if(e.detail.response.returnval=='converted'){
+           this.sendmailService();
+         }
       },
        threetoeightvalues:function(classs,section,remark,result,date){
         this.threetoeightvaluesurl=sessionStorage.getItem("addrinfo")+"/threetoeightvalues-service";
@@ -191,7 +306,34 @@
       },
       threetoeightvaluesResponse:function(e){
         var arr=e.detail.response.returnval;
-       
+       //  alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=='converted'){
+        this.sendmailService();
+        }
+      },
+    fnthreetoeightpdfconvection:function(classs,section,remark,result,date){
+        this.threetoeightvalues1url=sessionStorage.getItem("addrinfo")+"/threetoeightvalues-service";
+        var obj={"schoolid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.classs=classs;
+        obj.section=section;
+        obj.remark=remark;
+        obj.result=result;
+        obj.date=date;
+        obj.staffid=sessionStorage.getItem("curr_sess_loggedid").toUpperCase();
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        this.threetoeightvalues1param=obj;
+       // alert(JSON.stringify(obj));
+        this.$.threetoeightvalues1ajax.generateRequest();
+      },
+      threetoeightvalues1Response:function(e){
+        var arr=e.detail.response.returnval;
+       // alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=='converted'){
+  document.querySelector('scorecard-service').callFetchstudentnameService();
+        }
       },
       fetchnewformatremark1:function(id){
         this.fetchnewformatremarkurl1=sessionStorage.getItem("addrinfo")+"/fetchnewformatremark-service1";
@@ -205,8 +347,8 @@
       },
       fetchnewformatremarkResponse1:function(e){
         var arr=e.detail.response.returnval;
-        if(arr.length>0){
-          document.querySelector('newformat-reportcard-nineten').remark=arr[0].generic+" "+arr[0].speccomment;
+      if(arr.length>0){
+    document.querySelector('newformat-reportcard-nineten').remark=arr[0].generic+" "+arr[0].speccomment;
         }
       },
       fetchstudinfofornewformatService:function(id){
@@ -217,6 +359,19 @@
         obj.studentid=id;
         this.fetchstudinfofornewformatparam= obj;
         this.$.fetchstudinfofornewformatajax.generateRequest();
+      },
+       sendmailService:function(){
+        var obj={"secmail":"","parentmail":""};
+        obj.secmail=localStorage.getItem("curr_sess_secmail");
+        obj.parentmail=localStorage.getItem("curr_sess_parentmail");
+        this.sendmailurl=sessionStorage.getItem("addrinfo")+"/sendmail1-service";
+        this.sendmailparam=obj;
+        this.$.sendmailajax.generateRequest();
+      },
+      sendmailResponse:function(e){
+        alert(e.detail.response);
+       
+           //document.querySelector('cce-onetofour-score-card').FnCloseSpinner();
       },
       fetchstudinfofornewformatResponse:function(e){
         var arr=e.detail.response.returnval;
