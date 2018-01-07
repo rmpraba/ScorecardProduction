@@ -131,6 +131,9 @@
       <!-- <div class="card" hidden$="{{dataanalysis}}">
        <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
       </div> -->
+       <div class="card" hidden$="{{sendmails}}">
+       <paper-button on-click="fnsendmails" no ink><img src="../../images/emails.jpg" height="180px" width="180px"></paper-button>
+      </div>
     </div>
     <div class="inner1" hidden$="{{hidemasterscontainer}}">
      <div class="card" hidden$="{{studentinformation}}">
@@ -201,10 +204,14 @@
       <div class="card" hidden$="{{coodinatormarkentry}}">
      <paper-button on-click="fncoodinatormarkentry" no ink><img src="../../images/changeapprove.jpg" height="180px" width="180px"><h4>Mark Change Approval</h4></paper-button>
       </div>
+  <div class="card" hidden$="{{termcomparisonvalue}}">
+     <paper-button on-click="fncomparisonvalue" no ink><img src="../../images/comparisonvalue.jpg" height="180px" width="180px"><h4>Comparison Report</h4></paper-button>
+ </div>
      <div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px">
        </paper-button>
       </div>
+
     </div>
     <div class="inner1" hidden$="{{hidemasterscontainer}}">
      <div class="card" hidden$="{{studentinformation}}">
@@ -673,6 +680,7 @@
     <teacher-book-service-card id="bookservice"></teacher-book-service-card>
     <student-add-service id="studservice"></student-add-service>
     <single-student-markentry-service id="singleservice"></single-student-markentry-service>
+    <student-term-comparison-report-service id="comparisonservice"></student-term-comparison-report-service>
   </template>
   <script>
   (function() {
@@ -1000,6 +1008,24 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
        {
           this.$.assesmentservice.callTermService("Term");
        }
+ if(localStorage.getItem('curr_sess_loggedassesmenttype')=='sendmailsid')
+      {
+document.querySelector('app-card').setPage('homepage','');
+document.querySelector('home-page').setPage('student-scorcard-mail-card','');
+    this.$.assesmentservice.callTermService("Term");
+    this.$.assesmentservice.callGradeService();   
+
+ //this.$.scorecardservice.fnmailtermvalue();
+      }
+ if(localStorage.getItem('curr_sess_loggedassesmenttype')=='comparisonterm')
+     {
+      document.querySelector('app-card').setPage('homepage','');
+    document.querySelector('home-page').setPage('student-term-comparison-report','');
+
+    this.$.comparisonservice.callGradeService();   
+    
+      }
+
         this.$.cdialog.close();   
       },
       FnStudent:function()
@@ -1068,8 +1094,8 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
         else if(localStorage.getItem('curr_sess_report')=="2")
         {
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('approveassesment','');  
-        this.$.assesmentservice.callApproveService(); 
+        document.querySelector('home-page').setPage('approveassesment','');
+         this.$.assesmentservice.callApproveService(); 
         // document.querySelector('home-page').setPage('termassesment','');        
         // this.$.assesmentservice.callGradeService();   
         }
@@ -1371,6 +1397,11 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
         if(sessionStorage.getItem("curr_sess_loggedroleid")!='management')
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle();
+      },
+      fnsendmails:function(e){
+     localStorage.setItem('curr_sess_loggedassesmenttype','sendmailsid');
+        this.$.cdialog.toggle();
+
       },
       FnTeacherbserver:function()
       {
@@ -1689,8 +1720,12 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
             localStorage.setItem('curr_sess_report',"6");
     
            this.$.cdialog.toggle();
-          }
-       
+          },
+       fncomparisonvalue:function(e){
+            localStorage.setItem('curr_sess_loggedassesmenttype','comparisonterm');
+           this.$.cdialog.toggle();
+
+       },
     });
   })();
   </script>

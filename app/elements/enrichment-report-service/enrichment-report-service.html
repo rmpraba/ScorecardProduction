@@ -154,7 +154,7 @@
          obj.section=localStorage.getItem("curr_sess_sectionname");
          this.fetchenrichmentstudcategorysubjectwiseparam= obj;
          this.$.fetchenrichmentstudcategorysubjectwiseajax.generateRequest();
-      },
+       },
       fetchenrichmentstudcategorysubjectwiseResponse:function(e){
         this.subject=e.detail.response.subject;
         this.total=e.detail.response.total;
@@ -192,7 +192,7 @@
             this.newtotal.splice(i,1);
             i--;
             break;
-          }
+           }
           }
           newtotalarr.push({'subject':subject,'subarr':newtemp});
           newtemp=[];
@@ -240,16 +240,14 @@
           comparr.push({'subject':subject,'subarr':comptemp});
           comptemp=[];
         }
-
-        // alert(JSON.stringify(totalarr));
+      // alert(JSON.stringify(totalarr)); 
         document.querySelector('enrichment-comparision-chart').FnRefresh();
         document.querySelector('enrichment-comparision-chart').FnComparearr(totalarr);
         if(totalarr.length>0)
         document.querySelector('enrichment-comparison-report').hideenrichmentchart=false;
         else
         document.querySelector('enrichment-comparison-report').hideenrichmentchart=true;
-
-        document.querySelector('newstud-enrichment-comparison').FnComparearr(newtotalarr);
+document.querySelector('newstud-enrichment-comparison').FnComparearr(newtotalarr);
         if(newtotalarr.length>0)
         document.querySelector('enrichment-comparison-report').hidenewenrichmentchart=false;
         else

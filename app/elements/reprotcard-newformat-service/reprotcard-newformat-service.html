@@ -162,12 +162,12 @@
         debounce-duration="300"
     ><iron-ajax
         method="post"
-        id="undotudentverifyvaluesajax"
-        url="{{undotudentverifyvaluesurl}}"
-        params="{{undotudentverifyvaluesparam}}"
+        id="undotudentverifyvalues1ajax"
+        url="{{undotudentverifyvalues1url}}"
+        params="{{undotudentverifyvalues1param}}"
         handle-as="json"
         content-type="application/json"
-        on-response="undotudentverifyvaluesResponse"
+        on-response="undotudentverifyvalues1Response"
         debounce-duration="300"
     >
   </template>
@@ -215,14 +215,12 @@
       },
      passstudentverifyvaluesResponse:function(e){
         var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
-  if(arr=='succ'){
-
-  }
+       // alert(JSON.stringify(arr));
+         
         
        },
-undotudentverifyvalues:function(id,name){
-        this.undotudentverifyvaluesurl=sessionStorage.getItem("addrinfo")+"/undotudentverifyvalues-service";
+undotudentverifyvaluess:function(id,name){
+        this.undotudentverifyvalues1url=sessionStorage.getItem("addrinfo")+"/undotudentverifyvalues1-service";
         var obj={};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -231,17 +229,17 @@ undotudentverifyvalues:function(id,name){
          obj.studentid=id;
         obj.studentname=name;
         obj.termname=localStorage.getItem("curr_sess_termname");
-        this.undotudentverifyvaluesparam= obj;
-        this.$.undotudentverifyvaluesajax.generateRequest();
+        this.undotudentverifyvalues1param= obj;
+        alert(JSON.stringify(obj));
+        this.$.undotudentverifyvalues1ajax.generateRequest();
       },
-undotudentverifyvaluesResponse:function(e){
+undotudentverifyvalues1Response:function(e){
      var arr=e.detail.response.returnval;
-       // alert(JSON.stringify(arr));
-    if(arr=="Deleted!"){
-      document.querySelector('scorecard-service').callFetchstudentnameService();
-    }
-       },
-       ntoteneightpdfconvection:function(classs,section,remark,result,date){
+   alert(JSON.stringify(arr));
+ if(arr=="Deleted!")
+  document.querySelector('scorecard-service').callFetchstudentnameService();
+    },
+     ntoteneightpdfconvection:function(classs,section,remark,result,date){
         this.ntotenoverallvalus1url=sessionStorage.getItem("addrinfo")+"/ntotenoverallvalus-service";
         var obj={"schoolid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");

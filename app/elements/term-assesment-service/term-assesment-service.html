@@ -585,6 +585,7 @@
          document.querySelector('cce-generate-score-card').termarr=e.detail.response.returnval;       
          document.querySelector('student-remove-card').termarr=e.detail.response.returnval;
          document.querySelector('teacherhome-card').termarr=e.detail.response.returnval;
+     document.querySelector('student-scorcard-mail-card').termarr=e.detail.response.returnval;
          document.querySelector('teacherhome-card').FnToggle();
       },
       callGradeService:function(){
@@ -602,6 +603,7 @@
       gradeResponse:function(e){
          document.querySelector('term-assesment-card').gradearr=e.detail.response.returnval;
          document.querySelector('addnewstudent-card').gradearr=e.detail.response.returnval;
+      document.querySelector('student-scorcard-mail-card').gradearr=e.detail.response.returnval;
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";

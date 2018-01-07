@@ -141,11 +141,11 @@
 
           <paper-dropdown-menu hidden$="{{hidesubject}}" id="term" label="Select Subject" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" id="subtyp" on-iron-select="FnSelectSubject"  attr-for-selected="value" required>
-              <template is="dom-repeat" items="{{subjectarr}}">
-                <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
-              </template>
+      <template is="dom-repeat" items="{{subjectarr}}">
+       <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
+      </template>
             </paper-menu>
-          </paper-dropdown-menu>  
+       </paper-dropdown-menu>  
     </div>
     </div>
 

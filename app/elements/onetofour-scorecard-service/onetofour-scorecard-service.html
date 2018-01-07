@@ -203,7 +203,7 @@
         }
      
       },
-      callfetchhealthattendanceinfoService:function(studid){
+callfetchhealthattendanceinfoService:function(studid){
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
         var obj={"schoolid":"","studid":"","academicyear":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -215,8 +215,8 @@
       fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.attendance;
         var arr1=e.detail.response.health;  
-         // alert(JSON.stringify(arr));
-         // alert(JSON.stringify(arr1));
+      //   alert(JSON.stringify(arr));
+      // alert(JSON.stringify(arr1));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){  
         for(var i=0;i<arr.length;i++){
         if((arr[i].term_id).toLowerCase()=="term1"){
@@ -256,7 +256,7 @@
         }
         }       
         }
-    
+       
         // if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
         // if(arr.length==1||arr.length==2||arr.length==3){
         // document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
@@ -373,9 +373,8 @@
         this.$.fetchsubjectnameajax.generateRequest();
       },
       fetchsubjectnameResponse:function(e){        
-        subjectarr=e.detail.response.returnval;     
-       
-       },
+         subjectarr=e.detail.response.returnval;     
+         },
       callfetchscholasticmarkService:function(studid){
         this.fetchscholasticmarkurl=sessionStorage.getItem("addrinfo")+"/fetchscholasticmark-service";
         var obj={"schoolid":"","studid":"","academicyear":""};
@@ -386,7 +385,7 @@
         this.$.fetchscholasticmarkajax.generateRequest(); 
       },
       fetchscholasticmarkResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+       // alert(JSON.stringify(e.detail.response.returnval));
         var engarr=[];
         var matharr=[];
         var evsarr=[];
@@ -922,15 +921,9 @@
             }                  
         }
        }
+          
 
-        // for(var i=0;i<engarr.length;i++){
-
-        // }
-        // alert(JSON.stringify(engarr.length));
-        // alert(JSON.stringify(gkarr));
-        // alert(JSON.stringify(parr));
-
-        // engarr.push(engobj);
+        
 
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){  
         document.querySelector('cce-onetofour-score-card').personalityArray=parr;
@@ -947,8 +940,7 @@
         document.querySelector('cce-onetofour-score-card').gkArray=gkarr;
         document.querySelector('cce-onetofour-score-card').danceArray=dancearr;
         }
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){  
-        // alert('yes');        
+    if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){ // alert('yes');        
         document.querySelector('comparisonreport-card').personalityArray=parr;
         // alert(JSON.stringify(document.querySelector('comparisonreport-card').personalityArray));
         document.querySelector('comparisonreport-card').acArray=acarr;
@@ -965,7 +957,7 @@
         document.querySelector('comparisonreport-card').danceArray=dancearr;
         // document.querySelector('comparisonreport-card').FnSetArray(engArray);
         }
-        alert("4");
+       
       },
       callfetchcoscholasticmarkService:function(studid){
         this.fetchcoscholasticmarkurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmark-service";
@@ -1069,6 +1061,7 @@
         }
       },
    mailReportcardService1:function(){
+    //alert("2");
   this.mailreportcard1url=sessionStorage.getItem("addrinfo")+"/mailreportcard-service"; 
         var obj={"schoolid":"","loggedid":"","schoolname":"","academicyear":"","grade":"","section":"","parentname":""}; 
        obj.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
@@ -1078,7 +1071,7 @@
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
         this.mailreportcard1param=obj;
-        //alert(JSON.stringify(obj));      
+       //alert(JSON.stringify(obj));      
         this.$.mailreportcard1ajax.generateRequest();
       },
       mailreportcard1Response:function(e){
@@ -1342,7 +1335,9 @@
           }
 
         }
-       
+       if(localStorage.getItem('curr_sess_verify')=='verifyid'){
+            this.mailReportcardService1(); 
+         }
       },
       FnFetchHealthinfo:function(studid){
         this.fetchhealthinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthinfo-service";
