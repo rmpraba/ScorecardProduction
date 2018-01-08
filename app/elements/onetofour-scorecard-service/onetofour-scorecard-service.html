@@ -206,105 +206,145 @@
         var arr1=e.detail.response.health;  
          // alert(JSON.stringify(arr));
          // alert(JSON.stringify(arr1));
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
-        if(arr.length==1||arr.length==2||arr.length==3){
-        document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
-        document.querySelector('cce-onetofour-score-card').wdterm1=arr[0].working_days;
-        document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==1||arr1.length==2||arr1.length==3){
-        document.querySelector('cce-onetofour-score-card').t1height=arr1[0].height+" cm";
-        document.querySelector('cce-onetofour-score-card').t1weight=arr1[0].weight+" Kg";  
+          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){  
+        for(var i=0;i<arr.length;i++){
+        if((arr[i].term_id).toLowerCase()=="term1"){
+        document.querySelector('cce-onetofour-score-card').adterm1=arr[i].attendance;
+        document.querySelector('cce-onetofour-score-card').wdterm1=arr[i].working_days;
+        document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[i].attendance/arr[i].working_days)*100).toFixed(2)+"%";
+        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[i].generic; 
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[i].speccomment; 
         }
-         document.querySelector('cce-onetofour-score-card').generalfeedback=arr[0].generic; 
-        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[0].speccomment; 
-         document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
-        document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
-        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==1||arr1.length==2||arr1.length==3){
-        document.querySelector('cce-fivetoten-score-card').height=arr1[0].height+" cm";
-        document.querySelector('cce-fivetoten-score-card').weight=arr1[0].weight+" Kg"; 
+        if((arr[i].term_id).toLowerCase()=="term2"){
+        document.querySelector('cce-onetofour-score-card').adterm2=arr[i].attendance;
+        document.querySelector('cce-onetofour-score-card').wdterm2=arr[i].working_days;
+        document.querySelector('cce-onetofour-score-card').pterm2=parseFloat((arr[i].attendance/arr[i].working_days)*100).toFixed(2)+"%";
+        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[i].generic; 
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[i].speccomment; 
         }
-        document.querySelector('fivetotencomparisonreport-card').term1attendance=arr[0].attendance;
-        document.querySelector('fivetotencomparisonreport-card').term1wday=arr[0].working_days;
-        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==1||arr1.length==2||arr1.length==3){
-        document.querySelector('fivetotencomparisonreport-card').height=arr1[0].height+" cm";
-        document.querySelector('fivetotencomparisonreport-card').weight=arr1[0].weight+" Kg";  
-        } 
-        document.querySelector('cce-fivetoten-score-card').term2attendance=arr[1].attendance;
-        document.querySelector('cce-fivetoten-score-card').term2wday=arr[1].working_days;
-        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==1||arr1.length==2||arr1.length==3){
-        document.querySelector('cce-fivetoten-score-card').height=arr1[1].height+" cm";
-        document.querySelector('cce-fivetoten-score-card').weight=arr1[1].weight+" Kg";   
-        }
-        document.querySelector('fivetotencomparisonreport-card').term1attendance=arr[1].attendance;
-        document.querySelector('fivetotencomparisonreport-card').term1wday=arr[1].working_days;
-        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==1||arr1.length==2||arr1.length==3){
-        document.querySelector('fivetotencomparisonreport-card').height=arr1[1].height+" cm";
-        document.querySelector('fivetotencomparisonreport-card').weight=arr1[1].weight+" Kg";
+        if((arr[i].term_id).toLowerCase()=="term3"){
+        document.querySelector('cce-onetofour-score-card').adterm3=arr[i].attendance;
+        document.querySelector('cce-onetofour-score-card').wdterm3=arr[i].working_days;
+        document.querySelector('cce-onetofour-score-card').pterm3=parseFloat((arr[i].attendance/arr[i].working_days)*100).toFixed(2)+"%";
+        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[i].generic; 
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[i].speccomment; 
         }
         }
-        if(arr.length==2){
-        document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
-        document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
-        document.querySelector('cce-onetofour-score-card').pterm2=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==2){
-        document.querySelector('cce-onetofour-score-card').t2height=arr1[1].height+" cm";
-        document.querySelector('cce-onetofour-score-card').t2weight=arr1[1].weight+" Kg";
+        for(var i=0;i<arr1.length;i++){
+        if((arr1[i].term_id).toLowerCase()=="term1"){
+        document.querySelector('cce-onetofour-score-card').t1height=arr1[i].height+" cm";
+        document.querySelector('cce-onetofour-score-card').t1weight=arr1[i].weight+" Kg";  
         }
-        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[1].generic; 
-        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[1].speccomment;  
+        if((arr1[i].term_id).toLowerCase()=="term2"){
+        document.querySelector('cce-onetofour-score-card').t2height=arr1[i].height+" cm";
+        document.querySelector('cce-onetofour-score-card').t2weight=arr1[i].weight+" Kg";  
         }
-        if(arr.length==3){
-        document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
-        document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
-        document.querySelector('cce-onetofour-score-card').pterm2=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==3){
-        document.querySelector('cce-onetofour-score-card').t2height=arr1[1].height+" cm";
-        document.querySelector('cce-onetofour-score-card').t2weight=arr1[1].weight+" Kg";
+        if((arr1[i].term_id).toLowerCase()=="term3"){
+        document.querySelector('cce-onetofour-score-card').t3height=arr1[i].height+" cm";
+        document.querySelector('cce-onetofour-score-card').t3weight=arr1[i].weight+" Kg";  
         }
-        document.querySelector('cce-onetofour-score-card').adterm3=arr[2].attendance; 
-        document.querySelector('cce-onetofour-score-card').wdterm3=arr[2].working_days;
-        document.querySelector('cce-onetofour-score-card').pterm3=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
-        if(arr1.length==3){
-        document.querySelector('cce-onetofour-score-card').t3height=arr1[2].height+" cm";
-        document.querySelector('cce-onetofour-score-card').t3weight=arr1[2].weight+" Kg";
+        }       
         }
-        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[2].generic; 
-        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[2].speccomment;  
-        }
-        }
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){          
-        if(arr.length==1||arr.length==2||arr.length==3){
-        document.querySelector('comparisonreport-card').adterm1=arr[0].attendance;
-        document.querySelector('comparisonreport-card').wdterm1=arr[0].working_days;
-        document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        document.querySelector('comparisonreport-card').t1height=arr[0].height+" cm";
-        document.querySelector('comparisonreport-card').t1weight=arr[0].weight+" Kg"; 
-        document.querySelector('comparisonreport-card').generalfeedback=arr[0].generic; 
-        document.querySelector('comparisonreport-card').specificfeedback=arr[0].speccomment;         
-        }
-        if(arr.length==2){
-        document.querySelector('comparisonreport-card').adterm2=arr[1].attendance;
-        document.querySelector('comparisonreport-card').wdterm2=arr[1].working_days;
-        document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
-        document.querySelector('comparisonreport-card').t2height=arr[1].height+" cm";
-        document.querySelector('comparisonreport-card').t2weight=arr[1].weight+" Kg";
-        document.querySelector('comparisonreport-card').generalfeedback=arr[1].generic; 
-        document.querySelector('comparisonreport-card').specificfeedback=arr[1].speccomment;  
-        }
-        if(arr.length==3){
-        document.querySelector('comparisonreport-card').adterm3=arr[2].attendance; 
-        document.querySelector('comparisonreport-card').wdterm3=arr[2].working_days;
-        document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
-        document.querySelector('comparisonreport-card').t3height=arr[2].height+" cm";
-        document.querySelector('comparisonreport-card').t3weight=arr[2].weight+" Kg";
-        document.querySelector('comparisonreport-card').generalfeedback=arr[2].generic; 
-        document.querySelector('comparisonreport-card').specificfeedback=arr[2].speccomment;  
-        }
-        }
+
+        // if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
+        // if(arr.length==1||arr.length==2||arr.length==3){
+        // document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
+        // document.querySelector('cce-onetofour-score-card').wdterm1=arr[0].working_days;
+        // document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==1||arr1.length==2||arr1.length==3){
+        // document.querySelector('cce-onetofour-score-card').t1height=arr1[0].height+" cm";
+        // document.querySelector('cce-onetofour-score-card').t1weight=arr1[0].weight+" Kg";  
+        // }
+        //  document.querySelector('cce-onetofour-score-card').generalfeedback=arr[0].generic; 
+        // document.querySelector('cce-onetofour-score-card').specificfeedback=arr[0].speccomment; 
+        //  document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
+        // document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
+        // // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==1||arr1.length==2||arr1.length==3){
+        // document.querySelector('cce-fivetoten-score-card').height=arr1[0].height+" cm";
+        // document.querySelector('cce-fivetoten-score-card').weight=arr1[0].weight+" Kg"; 
+        // }
+        // document.querySelector('fivetotencomparisonreport-card').term1attendance=arr[0].attendance;
+        // document.querySelector('fivetotencomparisonreport-card').term1wday=arr[0].working_days;
+        // // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==1||arr1.length==2||arr1.length==3){
+        // document.querySelector('fivetotencomparisonreport-card').height=arr1[0].height+" cm";
+        // document.querySelector('fivetotencomparisonreport-card').weight=arr1[0].weight+" Kg";  
+        // } 
+        // document.querySelector('cce-fivetoten-score-card').term2attendance=arr[1].attendance;
+        // document.querySelector('cce-fivetoten-score-card').term2wday=arr[1].working_days;
+        // // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==1||arr1.length==2||arr1.length==3){
+        // document.querySelector('cce-fivetoten-score-card').height=arr1[1].height+" cm";
+        // document.querySelector('cce-fivetoten-score-card').weight=arr1[1].weight+" Kg";   
+        // }
+        // document.querySelector('fivetotencomparisonreport-card').term1attendance=arr[1].attendance;
+        // document.querySelector('fivetotencomparisonreport-card').term1wday=arr[1].working_days;
+        // // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==1||arr1.length==2||arr1.length==3){
+        // document.querySelector('fivetotencomparisonreport-card').height=arr1[1].height+" cm";
+        // document.querySelector('fivetotencomparisonreport-card').weight=arr1[1].weight+" Kg";
+        // }
+        // }
+        // if(arr.length==2){
+        // document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
+        // document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
+        // document.querySelector('cce-onetofour-score-card').pterm2=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==2){
+        // document.querySelector('cce-onetofour-score-card').t2height=arr1[1].height+" cm";
+        // document.querySelector('cce-onetofour-score-card').t2weight=arr1[1].weight+" Kg";
+        // }
+        // document.querySelector('cce-onetofour-score-card').generalfeedback=arr[1].generic; 
+        // document.querySelector('cce-onetofour-score-card').specificfeedback=arr[1].speccomment;  
+        // }
+        // if(arr.length==3){
+        // document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
+        // document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
+        // document.querySelector('cce-onetofour-score-card').pterm2=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==3){
+        // document.querySelector('cce-onetofour-score-card').t2height=arr1[1].height+" cm";
+        // document.querySelector('cce-onetofour-score-card').t2weight=arr1[1].weight+" Kg";
+        // }
+        // document.querySelector('cce-onetofour-score-card').adterm3=arr[2].attendance; 
+        // document.querySelector('cce-onetofour-score-card').wdterm3=arr[2].working_days;
+        // document.querySelector('cce-onetofour-score-card').pterm3=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
+        // if(arr1.length==3){
+        // document.querySelector('cce-onetofour-score-card').t3height=arr1[2].height+" cm";
+        // document.querySelector('cce-onetofour-score-card').t3weight=arr1[2].weight+" Kg";
+        // }
+        // document.querySelector('cce-onetofour-score-card').generalfeedback=arr[2].generic; 
+        // document.querySelector('cce-onetofour-score-card').specificfeedback=arr[2].speccomment;  
+        // }
+        // }
+        // if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){          
+        // if(arr.length==1||arr.length==2||arr.length==3){
+        // document.querySelector('comparisonreport-card').adterm1=arr[0].attendance;
+        // document.querySelector('comparisonreport-card').wdterm1=arr[0].working_days;
+        // document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        // document.querySelector('comparisonreport-card').t1height=arr[0].height+" cm";
+        // document.querySelector('comparisonreport-card').t1weight=arr[0].weight+" Kg"; 
+        // document.querySelector('comparisonreport-card').generalfeedback=arr[0].generic; 
+        // document.querySelector('comparisonreport-card').specificfeedback=arr[0].speccomment;         
+        // }
+        // if(arr.length==2){
+        // document.querySelector('comparisonreport-card').adterm2=arr[1].attendance;
+        // document.querySelector('comparisonreport-card').wdterm2=arr[1].working_days;
+        // document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
+        // document.querySelector('comparisonreport-card').t2height=arr[1].height+" cm";
+        // document.querySelector('comparisonreport-card').t2weight=arr[1].weight+" Kg";
+        // document.querySelector('comparisonreport-card').generalfeedback=arr[1].generic; 
+        // document.querySelector('comparisonreport-card').specificfeedback=arr[1].speccomment;  
+        // }
+        // if(arr.length==3){
+        // document.querySelector('comparisonreport-card').adterm3=arr[2].attendance; 
+        // document.querySelector('comparisonreport-card').wdterm3=arr[2].working_days;
+        // document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
+        // document.querySelector('comparisonreport-card').t3height=arr[2].height+" cm";
+        // document.querySelector('comparisonreport-card').t3weight=arr[2].weight+" Kg";
+        // document.querySelector('comparisonreport-card').generalfeedback=arr[2].generic; 
+        // document.querySelector('comparisonreport-card').specificfeedback=arr[2].speccomment;  
+        // }
+        // }
         /*document.querySelector('cce-onetofour-score-card').height=arr[0].height;
         document.querySelector('cce-onetofour-score-card').width=arr[0].width;
         document.querySelector('cce-onetofour-score-card').bloodgroup=arr[0].blood_group;

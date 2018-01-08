@@ -3526,32 +3526,39 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
    console.log(qur);
    console.log('----------------------');
 
-  var qur1="select * from tr_term_attendance "+
+  var qur1="select distinct(term_id),school_id,academic_year,term_id,student_id,student_name,class_id,grade,section,attendance,working_days,speccomment,generic from tr_term_attendance "+
   " where student_id='"+req.query.studid+"' "+
-  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' ";
-  var qur2="select * from tr_term_health "+
+  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' order by term_id";
+  var qur2="select distinct(term_id),school_id,academic_year,term_id,student_id,student_name,class_id,grade,section,height,weight,blood_group,vision_left,vision_right,dental,bmi,remark from tr_term_health "+
   " where student_id='"+req.query.studid+"' "+
-  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' ";
-  var attendance=[];
+  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' order by term_id";
+   var attendance=[];
   var health=[];
 
   connection.query(qur,function(err, rows)
     {
       //console.log(qur);
-
     if(!err)
     {  
-       global.healthattendanceinfo=rows;     
-    
+       global.healthattendanceinfo=rows;    
       if(rows.length>0){
-      res.status(200).json({'returnval': rows});
+        connection.query(qur1,function(err, rows){
+          // global.healthattendanceinfo=rows; 
+          attendance=rows; 
+          // console.log(rows);
+          connection.query(qur2,function(err, rows){   
+          health=rows;
+          res.status(200).json({'attendance': attendance,'health': health});
+          });
+        });
+      // res.status(200).json({'returnval': rows});
       }
       else{
         console.log(qur1);
         connection.query(qur1,function(err, rows){
           // global.healthattendanceinfo=rows; 
           attendance=rows; 
-          console.log(rows);
+          // console.log(rows);
           connection.query(qur2,function(err, rows){   
           health=rows;
           res.status(200).json({'attendance': attendance,'health': health});
@@ -3564,7 +3571,6 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
-
   });
 });
 
