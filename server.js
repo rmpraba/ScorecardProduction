@@ -13,12 +13,12 @@ var connection = mysql.createConnection({
   // database : 'scorecard' 
   // port     : '62631',
   user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  password : '',
+  database : 'scorecardtemp',
 });
 
-var serverKey = "AAAAH0WgSPE:APA91bGgBTHNnBEeYG0V0aUlua0IZnuvF6xz1dcSGGjTuFU0PlR3H-LNMbvpSpA7IwU-e3A6-4nqMeW3wkePBbu9fVeM14OIXOsrjsTHVZzUxbkFFvhJM6lQIx-R3DVGO4loIKD8hf4U"; //put your server key here 
-var fcm = new FCM(serverKey);
+//var serverKey = "AAAAH0WgSPE:APA91bGgBTHNnBEeYG0V0aUlua0IZnuvF6xz1dcSGGjTuFU0PlR3H-LNMbvpSpA7IwU-e3A6-4nqMeW3wkePBbu9fVeM14OIXOsrjsTHVZzUxbkFFvhJM6lQIx-R3DVGO4loIKD8hf4U"; //put your server key here 
+//var fcm = new FCM(serverKey);
 var bodyParser = require('body-parser'); 
 var app = express();
 var logfile;
@@ -16473,8 +16473,8 @@ else{
     var studentarr=[]; 
     var categorycnt=[];
     console.log("----------------sub-mapping------------");
-    console.log(qur1);
-    console.log(qur2)
+    //console.log(qur1);
+   // console.log(qur2)
     console.log(qur);
     console.log("----------------------------------------")
     connection.query(qur,function(err, rows){

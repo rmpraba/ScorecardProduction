@@ -66,6 +66,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin-left: 15%;
       margin-top: 5%;
       }
+      #dynamicspinneree1{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+    }
     </style>
       <div class="card">
           <div class="inner">
@@ -111,6 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      </div>
    </template>
     </div>
+       <div class="spinner"><paper-dialog modal id="dynamicspinneree1" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
  <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
   <script>
@@ -127,7 +134,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.hidecard=true;  
         this.$.setalllbulmailid.hidden=true;       
       },
-     
+      FnToggleSpinner:function(flag){
+        this.$.dynamicspinneree1.opened=flag;
+      },
       FnRefresh:function()
       {  
       document.querySelector('#mailrgrade').selected=-1;
@@ -142,6 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        temparr=arr;
       },
       bulksendmail:function(e){
+        this.FnToggleSpinner(true);
  document.querySelector('student-scorcard-mail-item-card').bulksendmailvalue();
 
       },

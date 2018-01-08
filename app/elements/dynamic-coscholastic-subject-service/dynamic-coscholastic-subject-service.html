@@ -571,7 +571,7 @@
         document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
         temp=[];
         overall=[];
-      }
+      }  
       },
  templateincoscolasticsubject:function(gradename,section,subject){
         this.templateincoscolasticsubject2url=sessionStorage.getItem("addrinfo")+"/templateincoscolasticsubject-service";
@@ -581,10 +581,12 @@
          obj.assesmenttype=localStorage.getItem("curr_sess_assesment");
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.langpref=localStorage.getItem("curr_sess_languagepref");
+         obj.subjectid=localStorage.getItem("curr_sess_subjectid");
          obj.gradename=gradename;
          obj.section=section;
          obj.subject=subject;
          this.templateincoscolasticsubject2param=obj;
+       //  alert(JSON.stringify(obj));
          this.$.templateincoscolasticsubject2ajax.generateRequest();
       },
   templateincoscolasticsubject2Response:function(e){
