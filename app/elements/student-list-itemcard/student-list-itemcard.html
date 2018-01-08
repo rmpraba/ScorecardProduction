@@ -30,7 +30,7 @@
         text-transform: none;
         height: 25px;
       } 
-
+ 
     </style>
     <div class='card'>
       <!-- <table border="1"> -->
@@ -49,6 +49,7 @@
     <scorecard-service id="scorecardservice"></scorecard-service>
     <report-service id="reportservice"></report-service>
        <reprotcard-newformat-service id="newformatservice"></reprotcard-newformat-service>
+        
   </template>
   <script>
   (function() {
@@ -56,10 +57,13 @@
     Polymer({
       is: 'student-list-itemcard', 
      Fnverified:function(e){
-         localStorage.setItem('curr_sess_verify','verifyid');  
-   this.$.newformatservice.passstudentverifyvalues(this.studentid,this.studentname);   
-          this.fngetViewvalues();
+         localStorage.setItem('curr_sess_verify','verifyid'); 
+        
+      document.querySelector('cce-generate-score-card').FnToggleSpinner(true);
+  this.$.newformatservice.passstudentverifyvalues(this.studentid,this.studentname);   
+           this.fngetViewvalues();
          },
+       
     Fnundovalue:function(e){
       this.$.newformatservice.undotudentverifyvaluess(this.studentid,this.studentname);   
           },     

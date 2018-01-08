@@ -32,6 +32,12 @@
       --paper-input-container-label: { color: red };
       text-align:center;
       }
+      #dynamicspinneree{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+    }
     </style>
       <div class="card">
           <div class="inner">
@@ -68,6 +74,7 @@
     </div>
     </div>
     <scorecard-service id="scorecardservice"></scorecard-service>
+     <div class="spinner"><paper-dialog modal id="dynamicspinneree" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
   </template>
   <script>
   (function() {
@@ -80,6 +87,9 @@
       is: 'cce-generate-score-card',
       ready:function(){
         this.hidecard=true;         
+      },
+      FnToggleSpinner:function(flag){
+        this.$.dynamicspinneree.opened=flag;
       },
       FnHide:function(){
         this.hidecard=false;

@@ -348,6 +348,8 @@
           this.callFetchstudentnameService();
           // alert('Scorecard is not ready..!Due to evaluation pending....');
         }
+
+        
       },
       callFetchstudentnameService:function(){
         this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
@@ -394,6 +396,12 @@
              }
         }
         document.querySelector('student-list-card').studentarr=arr; 
+     if(localStorage.getItem('curr_sess_verify')=='verifyid') {
+       //alert("1");
+      document.querySelector('cce-generate-score-card').FnToggleSpinner(false);
+
+     }   
+
         // document.querySelector('generate-studentlist-card').studentarr=arr; 
         
       },
@@ -1119,7 +1127,7 @@
         this.$.mailreportcardajax.generateRequest();
       },
       mailreportcardResponse:function(e){
-        // alert(e.detail.response.returnval);
+       //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=='converted'){
           this.sendmailService();
         }

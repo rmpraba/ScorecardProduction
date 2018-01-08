@@ -17,6 +17,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   port     : '3306',
   user     : 'root',
+<<<<<<< HEAD
   password : 'admin',
   database : 'mlzsreportcard'
   // host     : 'localhost',
@@ -25,9 +26,14 @@ var connection = mysql.createConnection({
   // password : '6RNH4TEavBhh',
   // database : 'mlzscrm'
  });
+=======
+  password : '',
+  database : 'scorecardtemp',
+});
+>>>>>>> 7b9af2f9592dbfd0bc8851f217f97b4cad7067cf
 
-var serverKey = "AAAAH0WgSPE:APA91bGgBTHNnBEeYG0V0aUlua0IZnuvF6xz1dcSGGjTuFU0PlR3H-LNMbvpSpA7IwU-e3A6-4nqMeW3wkePBbu9fVeM14OIXOsrjsTHVZzUxbkFFvhJM6lQIx-R3DVGO4loIKD8hf4U"; //put your server key here 
-var fcm = new FCM(serverKey);
+//var serverKey = "AAAAH0WgSPE:APA91bGgBTHNnBEeYG0V0aUlua0IZnuvF6xz1dcSGGjTuFU0PlR3H-LNMbvpSpA7IwU-e3A6-4nqMeW3wkePBbu9fVeM14OIXOsrjsTHVZzUxbkFFvhJM6lQIx-R3DVGO4loIKD8hf4U"; //put your server key here 
+//var fcm = new FCM(serverKey);
 var bodyParser = require('body-parser'); 
 var app = express();
 var logfile;
@@ -16482,8 +16488,8 @@ else{
     var studentarr=[]; 
     var categorycnt=[];
     console.log("----------------sub-mapping------------");
-    console.log(qur1);
-    console.log(qur2)
+    //console.log(qur1);
+   // console.log(qur2)
     console.log(qur);
     console.log("----------------------------------------")
     connection.query(qur,function(err, rows){

@@ -80,9 +80,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
     var bulkarr=[];
+    var c1=0,c2=0;
     Polymer({
       is: 'student-scorcard-mail-item-card',
      Fnpassmail:function(e){
+       document.querySelector('student-scorcard-mail-card').FnToggleSpinner(true);  
+
     this.getparentmailvalue();
       },
       fnmailset:function(e){
@@ -126,6 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
    getparentmailvalue:function(){
         // alert('calling');
+
         var obj={};
         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -150,11 +154,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
       getparentmailResponse:function(e){
         var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
+      //  alert(JSON.stringify(arr));
         if(arr.length>0){
        localStorage.setItem("curr_sess_parentmail",arr[0].email);
        localStorage.setItem("curr_sess_secmail",arr[0].alternate_mail);
-         this.sendmailService();  
+         this.sendmailService();
         }
         else{
           alert("Please Check the parent mail");
@@ -184,8 +188,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       sendmailResponse:function(e){
         alert(e.detail.response);
+        c2++;
+        if(bulkarr.length==0){
+        document.querySelector('student-scorcard-mail-card').FnToggleSpinner(false);}
+        if(c1==c2){
+        document.querySelector('student-scorcard-mail-card').FnToggleSpinner(false); c1=0;
+           c2=0; 
+         } 
       },
       bulksendmailvalue:function(e){
+      c1=bulkarr.length;
             for(var i=0;i<bulkarr.length;i++) {
     var obj={};
         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
