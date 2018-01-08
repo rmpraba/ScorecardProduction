@@ -133,13 +133,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  <div class="container" hidden$="{{hideeng}}" style="width: 300;margin-left: 5%;">
       <div id="chartContainer11" ></div>      
 </div> 
- <div class="container" hidden$="{{hidemath}}" style="width: 300;margin-left: 30%;">
+ <div class="container" hidden$="{{hidemath}}" style="width: 300;margin-left: 5%;">
       <div id="chartContainer22" ></div>
 </div>
- <div class="container" hidden$="{{hideevs}}" style="width: 300;margin-left: 55%;">
+ <div class="container" hidden$="{{hideevs}}" style="width: 300;margin-left: 5%;">
       <div id="chartContainer33" ></div>
- </div>          
-          </div>
+ </div>
+  <div class="container" hidden$="{{hideeng}}" style="width: 300;margin-left: 73%;">
+      <div id="chartContainer111" ></div>      
+</div> 
+ <div class="container" hidden$="{{hidemath}}" style="width: 300;margin-left: 73%;">
+      <div id="chartContainer222" ></div>
+</div>
+ <div class="container" hidden$="{{hideevs}}" style="width: 300;margin-left: 73%;">
+      <div id="chartContainer333" ></div>
+ </div>
+ <div class="container" hidden$="{{hidrport}}" style="width: 300;margin-left: 5%;">
+      <div id="chartContainerrport" ></div>
+ </div>  
+<div class="container" hidden$="{{hidrport}}" style="width: 300;margin-left: 73%;">
+    <div id="chartContainerrport1" ></div>
+  </div> 
+  </div>
   <student-term-comparison-report-service id="compareservice"></student-term-comparison-report-service>
   </template>
    <script type="text/javascript" src="../../scripts/canvasjs.min.js"></script>
@@ -151,13 +166,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var engchartarr=[];
     var mathschartarr=[];
     var evschartarr=[];
+    var reportcardarr=[];
     Polymer({
       is: 'student-term-comparison-report',
     ready:function(e){
          this.$.categorycomparsionid.hidden=true;
-        this.hideeng=true;
-        this.hidemath=true;
-        this.hideevs=true;
+         this.hideeng=true;
+         this.hidemath=true;
+         this.hideevs=true;
+         this.hidrport=true;
        },
 
       FnSelectGrade:function(e){        
@@ -190,6 +207,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      FnSelectsubject1:function(e){
            this.subjectname=e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_subject",this.subjectname);                
+         
           this.$.compareservice.ReportCardandEnrichmentcategoryvalue(gradename,this.comparisonvalue,this.subjectname);
       if(this.comparisonvalue=="Report Card"){
             this.$.compareservice.comparedistinsionandsource(gradename,this.comparisonvalue); 
@@ -199,20 +218,69 @@ this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalu
           }
         },
  FnSelectsource:function(e){
-     this.sourcevalue=e.target.selectedItem.textContent.trim(); 
-     this.$.compareservice.CompareservicesourcegraphinEnrichment(gradename,section,this.subjectname,this.sourcevalue); 
+  this.sourcevalue=e.target.selectedItem.textContent.trim(); 
+     if(this.comparisonvalue=="Enrichment"){
+          localStorage.setItem('curr_sess_comparetermvalue',"EnrichmentSource");
+       this.$.compareservice.CompareservicesourcegraphinEnrichment(gradename,section,this.subjectname,this.sourcevalue); 
+     }
+     else if(this.comparisonvalue=="Report Card"){
+          localStorage.setItem('curr_sess_comparetermvalue',"ReportCardSource");
+       this.$.compareservice.CompareservicesourcegraphinReportCard(gradename,section,this.subjectname,this.sourcevalue); 
+      }
      },
-   FnSelectDestination:function(e){
-       this.destinationtermvalue=e.target.selectedItem.textContent.trim();
-     },
+    FnSelectDestination:function(e){
+        this.destinationtermvalue=e.target.selectedItem.textContent.trim();
+    if(this.comparisonvalue=="Enrichment"){
+     localStorage.setItem('curr_sess_comparetermvalue',"EnrichmentDestination");
+         this.$.compareservice.CompareservicesourcegraphinEnrichment(gradename,section,this.subjectname,this.destinationtermvalue); 
+       }
+     else if(this.comparisonvalue=="Report Card"){
+       localStorage.setItem('curr_sess_comparetermvalue',"ReportCardDestination");
+            this.$.compareservice.CompareservicesourcegraphinReportCard(gradename,section,this.subjectname,this.destinationtermvalue); 
+       }
+       },
 
-
-  FnComparearr:function(arr){
-       // alert(JSON.stringify(arr));
+   FnComparearr:function(arr){
+      // alert(JSON.stringify(arr));
        var subject="";
        if(arr.length>0){      
        for(var i=0;i<arr.length;i++)
        {
+    if(this.comparisonvalue=="Report Card"){
+  for(var j=0;j<arr[i].subarr.length;j++){
+        var temparr=[];
+        var dataPoints=[];
+        var obj={};
+        obj.type= "column";
+        obj.name="("+(arr[i].subarr[j].grade)+")";
+        obj.legendText= "("+(arr[i].subarr[j].grade)+")";
+        obj.showInLegend= true;
+        var obj1={};
+        obj1.label=arr[i].subarr[j].subject_name;
+        obj1.y=JSON.parse(parseFloat(parseFloat(arr[i].subarr[j].score)).toFixed(1));
+        dataPoints.push(obj1);
+        obj.dataPoints=dataPoints;
+        for(var k=j+1;k<arr[i].subarr.length;k++)
+        {
+          // alert(arr[i].subarr[j].subject_name+"  "+arr[i].subarr[k].subject_name);
+          if(arr[i].subarr[j].subject_name!='undefined'||arr[i].subarr[k].subject_name!='undefined')
+          {
+           if(arr[i].subarr[j].subject_name==arr[i].subarr[k].subject_name&&arr[i].subarr[j].level==arr[i].subarr[k].level)
+           {
+            var obj1={};
+            obj1.label=arr[i].subarr[k].subject_name;
+            obj1.y=JSON.parse(parseFloat(parseFloat(arr[i].subarr[k].score)).toFixed(1));
+            dataPoints.push(obj1);
+            obj.dataPoints=dataPoints;
+            arr.splice(j,1);
+            j--;
+           }
+          }
+        }
+       reportcardarr.push(obj);
+       }
+      }
+ else  if(this.comparisonvalue=="Enrichment"){   
         // alert('Iteration'+i);
         if(arr[i].subject=="English"){ 
         for(var j=0;j<arr[i].subarr.length;j++){
@@ -322,14 +390,19 @@ this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalu
        // subject=arr[i].subject; 
        // alert(JSON.stringify(chartarr));      
        }
-      alert(JSON.stringify(engchartarr));
-      alert(JSON.stringify(mathschartarr));
-      alert(JSON.stringify(evschartarr));
+     }
+      
+    
        // if(subject=="English")
        if(engchartarr.length>0){
-        alert("1")
+        
        this.hideeng=false;
+    if(localStorage.getItem('curr_sess_comparetermvalue')=="EnrichmentSource")
        this.FnEnglishOpenChart();
+    if(localStorage.getItem('curr_sess_comparetermvalue')=="EnrichmentDestination")
+       this.FnEnglishOpenChart1();
+     
+      
        }
        else{
        this.hideeng=true;
@@ -337,7 +410,12 @@ this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalu
        // if(subject=="Mathematics")
        if(mathschartarr.length>0){
        this.hidemath=false;
+      
+     if(localStorage.getItem('curr_sess_comparetermvalue')=="EnrichmentSource")
        this.FnMathsOpenChart();
+      if(localStorage.getItem('curr_sess_comparetermvalue')=="EnrichmentDestination")
+       this.FnMathsOpenChart1();
+      
        }
        else{
        this.hidemath=true;
@@ -345,13 +423,98 @@ this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalu
        // if(subject=="EVS")
        if(evschartarr.length>0){
        this.hideevs=false;
+     if(localStorage.getItem('curr_sess_comparetermvalue')=="EnrichmentSource")
        this.FnEvsOpenChart();
+      if(localStorage.getItem('curr_sess_comparetermvalue')=="EnrichmentDestination")
+       this.FnEvsOpenChart1();
+       }
+
+      if(reportcardarr.length>0){
+       this.hidrport=false;
+      if(localStorage.getItem('curr_sess_comparetermvalue')=="ReportCardSource")
+       this.FnRportOpenChart();
+     if(localStorage.getItem('curr_sess_comparetermvalue')=="ReportCardDestination")
+       this.FnRportOpenChart1();
        }
        else{
-       this.hideevs=true;
+       this.hidrport=true;
        }
        }     
       },
+       FnRportOpenChart:function(){
+      var chart = new CanvasJS.Chart("chartContainerrport",
+       {
+       theme: "theme3",
+       animationEnabled: true,
+       title:{
+        text: "Report Card Comparision(Overall)",
+        fontSize: 20
+       },
+      toolTip: {
+        shared: true
+      },      
+      axisY: {
+        title: "No of students"
+      },     
+      width:350,
+      height:350,
+      data: reportcardarr,
+
+      legend:{
+            cursor:"pointer",
+            itemclick: function(e){
+             // this.$.enrichmentreportservice.callFetchEnrichmentCategoryLevel();
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          },
+        });
+
+    chart.render();
+    reportcardarr=[];
+    },
+    FnRportOpenChart1:function(){
+      var chart = new CanvasJS.Chart("chartContainerrport1",
+       {
+       theme: "theme3",
+       animationEnabled: true,
+       title:{
+        text: "Report Card Comparision(Overall)",
+        fontSize: 20
+       },
+      toolTip: {
+        shared: true
+      },      
+      axisY: {
+        title: "No of students"
+      },     
+      width:350,
+      height:350,
+      data: reportcardarr,
+
+      legend:{
+            cursor:"pointer",
+            itemclick: function(e){
+             // this.$.enrichmentreportservice.callFetchEnrichmentCategoryLevel();
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          },
+        });
+
+    chart.render();
+    reportcardarr=[];
+    },
     FnEnglishOpenChart:function(){
       var chart = new CanvasJS.Chart("chartContainer11",
        {
@@ -462,6 +625,119 @@ this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalu
    evschartarr=[];
     },
 
+
+
+
+
+ FnEnglishOpenChart1:function(){
+      var chart = new CanvasJS.Chart("chartContainer111",
+       {
+       theme: "theme3",
+       animationEnabled: true,
+       title:{
+        text: "Enrichment Comparision(Overall)",
+        fontSize: 20
+       },
+      toolTip: {
+        shared: true
+      },      
+      axisY: {
+        title: "No of students"
+      },     
+      width:350,
+      height:350,
+      data: engchartarr,
+
+      legend:{
+            cursor:"pointer",
+            itemclick: function(e){
+             // this.$.enrichmentreportservice.callFetchEnrichmentCategoryLevel();
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          },
+        });
+
+    chart.render();
+    engchartarr=[];
+    },
+    FnMathsOpenChart1:function(){
+    var chart = new CanvasJS.Chart("chartContainer222",
+    {
+      theme: "theme3",
+      animationEnabled: true,
+      title:{
+        text: "Enrichment Comparision(Overall)",
+        fontSize: 20
+      },
+      toolTip: {
+        shared: true
+      },      
+      axisY: {
+        title: "No of students"
+      },     
+      width:350,
+      height:350,
+      data: mathschartarr,
+
+      legend:{
+            cursor:"pointer",
+            itemclick: function(e){
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          },
+        });
+
+    chart.render();
+     mathschartarr=[];
+    },
+    FnEvsOpenChart1:function(){
+    var chart = new CanvasJS.Chart("chartContainer333",
+    {
+      theme: "theme3",
+      animationEnabled: true,
+      title:{
+        text: "Enrichment Comparision(Overall)",
+        fontSize: 20
+      },
+      toolTip: {
+        shared: true
+      },      
+      axisY: {
+        title: "No of students"
+      },     
+      width:350,
+      height:350,
+      data: evschartarr,
+
+      legend:{
+            cursor:"pointer",
+         itemclick: function(e){
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          },
+        });
+
+    chart.render();
+   evschartarr=[];
+    },
 
 
 

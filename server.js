@@ -18769,6 +18769,7 @@ app.post('/CompareservicesourcegraphinEnrichment-service',  urlencodedParser,fun
   var qur1="select distinct(subject_name) as subject_name from tr_beginner_assesment_marks where "+
   "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"' and "+
   "section_id='"+req.query.section+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesment+"'";
+
    var qur="select count(distinct(student_id)) as score,level,grade,subject_name from tr_beginner_assesment_marks "+
   " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"' and "+
   " section_id='"+req.query.section+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesment+"' group by level,grade,subject_name";  
@@ -18776,6 +18777,7 @@ app.post('/CompareservicesourcegraphinEnrichment-service',  urlencodedParser,fun
 
     console.log("------------------enrichment count----------------------");
     console.log(qur);
+    console.log(qur1);
    var subarr=[];
     connection.query(qur1,  function(err, rows)
       {
@@ -18799,6 +18801,52 @@ app.post('/CompareservicesourcegraphinEnrichment-service',  urlencodedParser,fun
   });
 });
 
+app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,function (req, res)
+{ 
+
+ 
+ var qur="SELECT subject_id,(sum(rtotal)/(select count( distinct( category_name)) from subject_mapping  where subject_name='english' and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' )) as score,student_id FROM `tr_term_assesment_overall_assesmentmarks`where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+"section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' group by subject_id,student_id ";
+
+
+  var qur1="select distinct(subject_id) as subject_name from tr_term_assesment_overall_assesmentmarks  where "+
+  "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
+  "section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"'";
+  
+    var qur2="select * from md_grade_rating";
+  /* var qur="SELECT term_cat_grade as grade,count(distinct(student_id)) as score,rtotal,subject_id as subject_name FROM `tr_term_assesment_overall_assesmentmarks` where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
+  " section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' group by term_cat_grade,subject_id";  */
+     
+   console.log("------------------Reportcard count----------------------");
+    console.log(qur);
+    console.log(qur1);
+   var subarr=[];
+   var graderatarr=[];
+    connection.query(qur2,  function(err, rows)
+      {
+     if(!err)
+        {  
+        graderatarr=rows;  
+        connection.query(qur1,  function(err, rows)
+      {
+     if(!err)
+        {  
+        subarr=rows;  
+     connection.query(qur,  function(err, rows)
+      {
+        if(!err)
+        {    
+          res.status(200).json({'returnval': rows,'subject':subarr,'graderatarr':graderatarr});
+        }
+        else
+        {
+          console.log(err);
+          res.status(200).json({'returnval': 'fail'});
+        }  
+
+      }); } 
+     }); }  
+    });
+});
 //Node server running port number
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 5000
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
