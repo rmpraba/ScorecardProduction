@@ -187,8 +187,11 @@
        FnSendEmail:function(e){
          this.$.newformatservice.threetoeightvalues(this.class,this.section,this.remark,this.result,this.date);
          this.$.threetoeightdialog.toggle();
+      },
+      fnpdfconvection:function(){
+         this.$.newformatservice.fnthreetoeightpdfconvection(this.class,this.section,this.remark,this.result,this.date);
 
-   },
+      },
     });
   })();
   </script>

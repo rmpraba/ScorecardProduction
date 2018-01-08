@@ -55,6 +55,8 @@
         scorearr=arr;
       },
       FnSave:function(){
+    localStorage.setItem("curr_sess_template_tef","inactive"); 
+        
         if(scorearr.length>0){
         for(var i=0;i<scorearr.length;i++){
           var t=1;

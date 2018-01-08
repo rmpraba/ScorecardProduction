@@ -117,7 +117,9 @@
         this.callService();
       },
       callService:function()
-      {           
+      {   
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+              
         if(this.attendance==""||this.attendance==null||this.attendance=="undefined"){
           this.attendance="";
         }

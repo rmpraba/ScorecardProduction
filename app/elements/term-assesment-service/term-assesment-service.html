@@ -585,6 +585,7 @@
          document.querySelector('cce-generate-score-card').termarr=e.detail.response.returnval;       
          document.querySelector('student-remove-card').termarr=e.detail.response.returnval;
          document.querySelector('teacherhome-card').termarr=e.detail.response.returnval;
+     document.querySelector('student-scorcard-mail-card').termarr=e.detail.response.returnval;
          document.querySelector('teacherhome-card').FnToggle();
       },
       callGradeService:function(){
@@ -602,6 +603,7 @@
       gradeResponse:function(e){
          document.querySelector('term-assesment-card').gradearr=e.detail.response.returnval;
          document.querySelector('addnewstudent-card').gradearr=e.detail.response.returnval;
+      document.querySelector('student-scorcard-mail-card').gradearr=e.detail.response.returnval;
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
@@ -1349,12 +1351,15 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       },
       insertfaassesmentmarkResponse:function(e){
         // alert(insertflag+" "+insertcheckflag);
-        if(e.detail.response.returnval=='succ')
+          if(e.detail.response.returnval=='succ')
         insertflag++;
         if(insertflag==insertcheckflag){
       alert('Marks saved!');
           insertflag=0;
-     
+     if(localStorage.getItem("curr_sess_template_tef")=="active"){
+         document.querySelector('term-assesment-card').callService();
+        }
+   
         }
       }, 
       insertassesmentmarkResponse:function(e){
@@ -1363,11 +1368,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(insertflag==insertcheckflag){
           alert('Marks saved!');
           insertflag=0;
-       //     if(localStorage.getItem("curr_sess_page")=="single-student-mark-entery-card")
-       //    {
-       //   document.querySelector('single-student-mark-entery-card').updatestudentmark();
-       // }
+   // document.querySelector("term-assesment-card").FnToggleSpinner(false);
+   if(localStorage.getItem("curr_sess_template_tef")=="active"){
+         document.querySelector('term-assesment-card').callService();
+       }
+     if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
+         document.querySelector('coscholastic-assesment-card').callService();
         }
+      }
       },      
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
          this.termattendanceurl=sessionStorage.getItem("addrinfo")+"/termattendance-service";

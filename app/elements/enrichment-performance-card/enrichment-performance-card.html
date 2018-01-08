@@ -107,17 +107,15 @@ FnActivityCompleteness:function(assigned,parameter,assesment){
         assigned[i].flag="Completed";
         assigned[i].green=false;
         assigned[i].red=true;
-      }
-    }
-    if (temp==0) {
+       }
+     }
+    if (temp==0){
       assigned[i].flag="Not Completed";
       assigned[i].green=true;
       assigned[i].red=false;
-    }
-    // alert(c1+" "+c2);
-    
-
-  }
+     }
+  
+   }
 
   // alert(JSON.stringify(assigned));
   var temparr=[];

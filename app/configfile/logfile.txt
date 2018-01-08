@@ -54,3 +54,34 @@ pdf write:success
 
 pdf write:success
 
+
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null
+
+pdf mail sendin status:Error: ./app/reportcard/Ameya  Motiwale.pdf does not exist
+
+pdf mail sendin status:Error: ./app/reportcard/Ameya  Motiwale.pdf does not exist
+
+pdf mail sendin status:Error: ./app/reportcard/Ameya  Motiwale.pdf does not exist
+
+pdf mail sendin status:Error: ./app/reportcard/Ameya  Motiwale.pdf does not exist
+
+pdf mail sendin status:Error: ./app/reportcard/Ameya  Motiwale.pdf does not exist
+
+pdf mail sendin status:Error: ./app/reportcard/Ameya  Motiwale.pdf does not exist
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null
+
+pdf mail sendin status:null

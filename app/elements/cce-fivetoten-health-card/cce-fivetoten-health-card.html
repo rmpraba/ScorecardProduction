@@ -46,8 +46,35 @@
             font-family: Calibri;
             font-size: 17px;
           }
+ .hrspace
+      {
+       padding-left: 87%;
+        @apply(--layout-horizontal);
+        width: 120%;
+      }
+     .exceldiv
+      {
+        @apply(--layout-horizontal);
+        margin-top: 3%;
+        margin-left: 73%;
+      }
     </style>
     <div>
+
+      <div id="hidetop">
+          <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
+             id="heathcheckid" on-change="excelmark1">Excel Upload</paper-checkbox>
+     </div>
+    <div id=heathovarallfileid>
+      <div class="hrspace">
+        <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable1111', 'Mark Report')" value="Download Template">
+     </div>
+      <div class="exceldiv" >
+         <input id="healthreadfile" type="file" onchange="healthloadFile(event)"/>
+         <xmp id="output"></xmp>
+        <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
+      </div>
+   </div>
     <!-- <template is="dom-repeat" items="{{label}}"> -->
      <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
       <center><h1>{{schoolname}}</h1>
@@ -65,8 +92,8 @@
       <th id="tb1">Vision Right</th>
       <th id="tb1">Dental Hygiene</th>
       <th id="tb1"></th>
-      </tr>  
-      </div>
+     </tr>  
+    </div>
    
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="9">
@@ -77,30 +104,178 @@
       </center> 
     <!-- </template>      -->
     </div>
-    <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>  
-    <!-- <component-service id="componentservice" label="{{label}}"></component-service> -->
+  <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>  
+   <div  id="dynamicreporttable1111" hidden>
+      <table border="1" id="MarkTable">    
+      <tr>
+      <th id="tb3">SNo</th>
+      <th id="tb3">Studentno</th>
+      <th id="tb2">StudentName</th>
+      <th id="tb1">Height</th>
+      <th id="tb1">Weight</th>
+      <th id="tb1">BloodGroup</th>
+      <th id="tb1">VisionLeft</th>
+      <th id="tb1">VisionRight</th>
+      <th id="tb1">DentalHygiene</th>
+       </tr>  
+    <template is="dom-repeat" items="{{studarr}}">
+      <tr>
+      <td id="tb3">{{item.serialno}}</td>
+      <td id="tb3">{{item.id}}</td>
+      <td id="tb2">{{item.student_name}}</td>
+      <td id="tb1">{{item.height}}</td>
+      <td id="tb1">{{item.weight}}</td>
+      <td id="tb1">{{item.blood_group}}</td>
+      <td id="tb1">{{item.vision_left}}</td>
+      <td id="tb1">{{item.vision_right}}</td>
+      <td id="tb1">{{item.dental}}</td>
+      </tr>
+      </template>
+      </table>
+       </div>
+     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+
   </template>
 
    <script type="text/javascript">
-var tableToExcel = (function() {
+  var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+    ,base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    ,format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
   return function(table, name) {
     if (!table.nodeType) table = document.getElementById(table)
     var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
     window.location.href = uri + base64(format(template, ctx))
   }
-})()
-</script>
+  })()
+  </script>
+<script type="text/javascript">
+  var array=[];
+  var array1=[];
+  var tempstudentarr=[];
+  
+  function healthloadFile(event) {
+  alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
+    array=data; 
+   });
+  }
+  </script>
   <script>
   (function() {
     'use strict';
+      var detailarr=[];
+      var tempassesmetarr=[];
+  
     Polymer({
       is: 'cce-fivetoten-health-card',
-      ready:function(){      
+      ready:function(){   
+       this.$.heathovarallfileid.hidden=true;
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+
       },
+      FnClick:function(){
+        //alert(JSON.stringify(array));
+         var temp=[];
+     
+         if(array.length==0){
+        alert("Pls save the file in EXCEL WORKBOOK extension!");
+        document.getElementById("healthreadfile").value = "";
+       }
+       else{ 
+        for(var i=0;i<array.length;i++){
+             if(JSON.stringify({})==JSON.stringify(array[i])){
+
+             }
+         else{
+         var setarr=[];
+           setarr=Object.keys(array[i]);
+             setarr.splice(0,3);
+             
+     if(setarr.length>0){
+         var obj={};
+          obj.studentid=array[i].Studentno;
+          obj.studentname=array[i].StudentName;
+         
+          if(setarr.length==1){
+          obj.Height=array[i].Height;
+          obj.Weight="";
+          obj.BloodGroup="";
+          obj.VisionLeft="";
+          obj.VisionRight="";
+          obj.DentalHygiene="";;
+         
+          }
+          if(setarr.length==2){
+          obj.Height=array[i].Height;
+          obj.Weight=array[i].Weight;
+          obj.BloodGroup="";
+          obj.VisionLeft="";
+          obj.VisionRight="";
+          obj.DentalHygiene="";
+          }
+          if(setarr.length==3){
+            obj.Height=array[i].Height;
+          obj.Weight=array[i].Weight;
+          obj.BloodGroup=array[i].BloodGroup;
+          obj.VisionLeft="";
+          obj.VisionRight="";
+          obj.DentalHygiene=""; 
+          }
+          if(setarr.length==4){
+          obj.Height=array[i].Height;
+          obj.Weight=array[i].Weight;
+          obj.BloodGroup=array[i].BloodGroup;
+          obj.VisionLeft=array[i].VisionLeft;
+          obj.VisionRight="";
+          obj.DentalHygiene=""; 
+          }
+          if(setarr.length==5){
+           obj.Height=array[i].Height;
+           obj.Weight=array[i].Weight;
+          obj.BloodGroup=array[i].BloodGroup;
+           obj.VisionLeft=array[i].VisionLeft;
+          obj.VisionRight=array[i].VisionRight;
+          obj.DentalHygiene=""; 
+          }
+             if(setarr.length==6){
+           obj.Height=array[i].Height;
+          obj.Weight=array[i].Weight;
+          obj.BloodGroup=array[i].BloodGroup;
+          obj.VisionLeft=array[i].VisionLeft;
+          obj.VisionRight=array[i].VisionRight;
+          obj.DentalHygiene=array[i].DentalHygiene; 
+          }
+           temp.push(obj);
+        //  alert(JSON.stringify(temp));
+             }}}
+   this.FnSpinnerrActive(true);
+   localStorage.setItem("curr_sess_lenth",temp.length);
+    for(var i=0;i<temp.length;i++){
+
+    this.$.coscholasticservice.callinserthealthService(temp[i].studentid,temp[i].studentname,temp[i].Height,temp[i].Weight,temp[i].BloodGroup,temp[i].VisionLeft,temp[i].VisionRight,temp[i].DentalHygiene);     
+      }
+         document.getElementById("healthreadfile").value ="";
+            temp=[];
+            array=[];
+            array1=[];
+            tempstudentarr=[];
+            document.getElementById("healthreadfile").value ="";
+           this.categorylength="";
+       }
+      },
+      excelmark1:function(e){
+if(document.querySelector("#heathcheckid").checked==true){
+       this.$.heathovarallfileid.hidden=false;
+       localStorage.setItem("curr_sess_template_tef","active"); 
+      }
+   if(document.querySelector("#heathcheckid").checked==false){
+this.$.heathovarallfileid.hidden=true;
+ document.getElementById("healthreadfile").value ="";
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+     }
+    
+    },
       FnSave:function(){
         alert("Mark entry for this section completed!");
       },
@@ -125,6 +300,8 @@ var tableToExcel = (function() {
         this.section="";
         this.subject="";
          this.$.hidetop.hidden=true;
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+      document.querySelector("#heathcheckid").checked=false;
       },
        FnSpinnerrActive:function(flag){
         if(flag==true)

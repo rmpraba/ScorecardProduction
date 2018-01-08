@@ -44,9 +44,35 @@
             font-family: Calibri;
             font-size: 17px;
           }
+ .hrspace
+      {
+       padding-left: 87%;
+        @apply(--layout-horizontal);
+        width: 120%;
+      }
+     .exceldiv
+      {
+        @apply(--layout-horizontal);
+        margin-top: 3%;
+        margin-left: 73%;
+      }
     </style>
     <div>  
     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+      <div id="hidetop">
+      <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
+             id="attendancecheckid" on-change="excelmark11">Excel Upload</paper-checkbox>
+     </div>
+    <div id=attendencefileid>
+      <div class="hrspace">
+  <input type="button" id="btn2" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')" value="Download Template">
+     </div>
+      <div class="exceldiv" >
+         <input id="attendancefile" type="file" onchange="attendanceloadFile(event)"/>
+         <xmp id="output"></xmp>
+        <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
+      </div>
+   </div>
     <div>  
     <div id="hidetop">
       <center><h1>{{schoolname}}</h1>      
@@ -74,22 +100,133 @@
       </table>      
       </center> 
       <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-    </div>    
-    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    </div>  
+    <div  id="attendencetemplatefeildid" hidden>
+       <table border="1" >    
+      <tr>   
+       <th id="tb1">SNo</th>
+       <th id="tb1">Studentno</th>
+       <th id="tb2">StudentName</th>
+       <th id="tb1">TotalAttendance</th>
+       <th id="tb2">GenericComment</th>
+       <th id="tb2">SpecificComment</th>
+    
+     </tr>  
+      <template is="dom-repeat" items="{{studarr}}">
+      <tr>
+      <td>{{item.serialno}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.student_name}}</td>
+      <td>{{item.attendance}}</td>
+      <td>{{item.generic}}</td>
+      <td>{{item.speccomment}}</td>
+          <!-- <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
+      </td> -->
+      </tr>
+      </template> 
+     </table> 
+    </div>
+    </div>  
+     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+     <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
+   <script type="text/javascript">
+  var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    ,base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    ,format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+  })()
+  </script>
+<script type="text/javascript">
+  var array=[];
+  var array1=[];
+  var tempstudentarr=[];
+  
+  function attendanceloadFile(event) {
+  alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
+    array=data; 
+   });
+  }
+  </script>
   <script>
+
   (function() {
     'use strict';
     Polymer({
       is: 'attendance-card',
-      ready:function(){      
+      ready:function(){ 
+       this.$.attendencefileid.hidden=true;
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+
       },
       setWorkingDays:function(days){
         this.workingdays=days;
       },
+       FnClick:function(){
+     //   alert(JSON.stringify(array));
+         var temp=[];
+     
+         if(array.length==0){
+        alert("Pls save the file in EXCEL WORKBOOK extension!");
+        document.getElementById("attendancefile").value = "";
+       }
+       else{ 
+        for(var i=0;i<array.length;i++){
+             if(JSON.stringify({})==JSON.stringify(array[i])){
+
+             }
+         else{
+         var setarr=[];
+           setarr=Object.keys(array[i]);
+             setarr.splice(0,3);
+             
+         if(setarr.length==3){
+          var obj={};
+           obj.studentid=array[i].Studentno;
+           obj.studentname=array[i].StudentName;
+           obj.TotalAttendance=array[i].TotalAttendance;
+           obj.GenericComment=array[i].GenericComment;
+           obj.SpecificComment=array[i].SpecificComment; 
+            temp.push(obj);
+         //  alert(JSON.stringify(temp));
+             }
+           }}
+
+      this.FnSpinnerrActive(true);
+   localStorage.setItem("curr_sess_lenth",temp.length);
+    for(var i=0;i<temp.length;i++){
+  this.$.coscholasticservice.callinsertattendanceService(temp[i].studentid,temp[i].studentname,temp[i].TotalAttendance,this.workingdays,temp[i].GenericComment,temp[i].SpecificComment);     
+       }
+         document.getElementById("attendancefile").value ="";
+            temp=[];
+            array=[];
+            array1=[];
+            tempstudentarr=[];
+            document.getElementById("attendancefile").value ="";
+           this.categorylength="";
+       }
+      },
       FnSave:function(){
         alert('Attendance for this section is complete!');
       },
+excelmark11:function(e){
+  if(document.querySelector("#attendancecheckid").checked==true){
+       this.$.attendencefileid.hidden=false;
+       localStorage.setItem("curr_sess_template_tef","active"); 
+   }
+  if(document.querySelector("#attendancecheckid").checked==false){
+    this.$.attendencefileid.hidden=true;
+      document.getElementById("attendancefile").value ="";
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+       }
+     },
+      
       setDefaultHeaders:function(){   
         this.$.hidetop.hidden=false;     
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");        
@@ -112,8 +249,12 @@
       },
       FnRefresh:function()
       {
-        this.$.hidetop.hidden=true;
+            this.$.hidetop.hidden=true;
         this.studarr=[];
+       localStorage.setItem("curr_sess_template_tef","inactive"); 
+       document.querySelector("#attendancecheckid").checked=false;
+
+    
       },
        FnSpinnerrActive:function(flag){
         if(flag==true)

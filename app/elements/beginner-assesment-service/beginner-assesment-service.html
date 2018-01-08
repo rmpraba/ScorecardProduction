@@ -254,15 +254,14 @@
          this.callGradeService();
       },
       callGradeService:function(){
-         this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
+         this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade1-service";
          var obj={"schoolid":"","loggedid":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.term=localStorage.getItem('curr_sess_termname');
-         
-         this.gradeparam= obj;
+          this.gradeparam= obj;
          this.$.gradeajax.generateRequest();
       },
       gradeResponse:function(e){
@@ -312,7 +311,7 @@
         var reportarr=[];
         var arr=e.detail.response.returnval;
         //alert(JSON.stringify(arr));
-         if(localStorage.getItem("curr_sess_subject")!="English") 
+      if(localStorage.getItem("curr_sess_subject")!="English") 
          {
         for(var i=0;i<arr.length;i++)
         {

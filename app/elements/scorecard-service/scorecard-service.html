@@ -190,6 +190,15 @@
         content-type="application/json"
         on-response="enablestudentResponse"
         debounce-duration="300"
+    > <iron-ajax        
+        method="post"
+        id="getinmailinfoajax"
+        url="{{getinmailinfourl}}"
+        params="{{getinmailinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getinmailinfoResponse"
+        debounce-duration="300"
     >
   </template>
   <script>
@@ -216,7 +225,7 @@
       callSchoolService:function()
       {
         this.fetchschoolurl=sessionStorage.getItem("addrinfo")+"/fetchschool-service";
-         // var obj={"schoolid":"","loggedid":"","roleid":""};
+      // var obj={"schoolid":"","loggedid":"","roleid":""};
          // obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          // obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          // obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
@@ -271,21 +280,53 @@
          this.sectionparam= obj;
          this.$.sectionajax.generateRequest();
       },
+       getinmailinfo:function(){        
+    this.getinmailinfourl=sessionStorage.getItem("addrinfo")+"/getinmailinfo-service";
+         var obj={};
+          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+          obj.grade=localStorage.getItem("curr_sess_grade");
+          obj.section=localStorage.getItem("curr_sess_section");
+          obj.termname=localStorage.getItem("curr_sess_termname");
+       this.getinmailinfoparam=obj;
+         this.$.getinmailinfoajax.generateRequest();
+       },
+       getinmailinfoResponse:function(e){
+        var temp=[];
+        temp.push({"student_id":"STUDENT ID","student_name":"STUDENT NAME","email_id":"EMAIL ID","verifyvalueid":false,"verifyvalue":true,"ids":"Allcheck","all_id":"Check box"});
+      var arr=e.detail.response.returnval;
+      for(var i=0;i<arr.length;i++){
+           var m=i+1;
+             var c=arr[i].student_id;
+             arr[i].ids=c.replace(/[^\w\s]/gi, '');
+             arr[i].seqid=i+1;
+             arr[i].verifyvalueid=true;
+             arr[i].verifyvalue=false;
+             
+              temp.push(arr[i]);
+        }    
+      // alert(JSON.stringify(arr));
+  document.querySelector('student-scorcard-mail-card').studentarr=temp;
+  document.querySelector('student-scorcard-mail-card').passtempvalue(temp);
+       },
       sectionResponse:function(e){ 
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='feecollectionupdate')
+    if(localStorage.getItem('curr_sess_loggedassesmenttype')=='feecollectionupdate')
           document.querySelector('generate-studentlist-outcard').sectionarr=e.detail.response.returnval;       
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Scorecard')
+    if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Scorecard')
           document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval; 
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Comparisonreport')
+     if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Comparisonreport')
           document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval; 
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Analysis')
+     if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Analysis')
           document.querySelector('beginner-term-analysis-card').sectionarr=e.detail.response.returnval; 
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidatedreport')
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidatedreport')
           document.querySelector('consolidated-report-card').sectionarr=e.detail.response.returnval; 
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo')
+  if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo')
           document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval;
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidateddataanalysis')
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidateddataanalysis')
           document.querySelector('consolidated-data-analysis').sectionarr=e.detail.response.returnval;
+  if(localStorage.getItem('curr_sess_loggedassesmenttype')=='sendmailsid')
+    document.querySelector('student-scorcard-mail-card').sectionarr=e.detail.response.returnval;
+
       },
       callscorecardreadynessService:function(){
          this.scorecardreadynessurl=sessionStorage.getItem("addrinfo")+"/scorecardreadyness-service";
@@ -316,13 +357,14 @@
         obj.grade=localStorage.getItem("curr_sess_grade");
         obj.section=localStorage.getItem("curr_sess_section");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");          
         this.fetchstudnameparam=obj;
         this.$.fetchstudnameajax.generateRequest();
       },
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
-        
+        var arr1=e.detail.response.verifyarr;
+       
         document.querySelector('cce-generate-score-card').FnHide();
         // document.querySelector('generate-studentlist-outcard').FnHide();
         for(var i=0;i<arr.length;i++){
@@ -331,6 +373,25 @@
             arr[i].editable=false;
           else
             arr[i].editable=true;
+        }
+        for(var i=0;i<arr.length;i++){
+          var flag=0;
+          for(var j=0;j<arr1.length;j++){
+           if(arr[i].id.trim()==arr1[j].student_id.trim())
+              { 
+                flag=1;
+              arr[i].fonts="color:green;";
+                arr[i].verifyvalue=true;
+                arr[i].hiddenundoid=false;
+                arr[i].verifyvalueid="verified";
+              }
+           }
+         if(flag==0){
+               arr[i].fonts="color:red;";
+               arr[i].verifyvalue=false;
+               arr[i].hiddenundoid=true;
+               arr[i].verifyvalueid="Verify";
+             }
         }
         document.querySelector('student-list-card').studentarr=arr; 
         // document.querySelector('generate-studentlist-card').studentarr=arr; 
