@@ -43,19 +43,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
      <div class="card">
           <div class="inner">
-            <div>
-          <paper-dropdown-menu  hidden id="term" label="Select Term" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rterm"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required> 
-                <template is="dom-repeat" items="{{termarr}}">
-                <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
-                </template>    
-               
-            </paper-menu>
-          </paper-dropdown-menu>
-         </div>
+          
    <div class="fildid">
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rgrade"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+            <paper-menu class="dropdown-content" id="comparergradeid"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
                 <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
@@ -64,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    </div>
 <div class="fildid">
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rsection"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="comparersectionid"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
@@ -73,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </div>
 <div class="fildid">
           <paper-dropdown-menu   id="Type" label="Select Comparison Type" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rterm"  on-iron-select="FnSelectComparison"  attr-for-selected="value" required> 
+            <paper-menu class="dropdown-content" id="comparerenandrdid"  on-iron-select="FnSelectComparison"  attr-for-selected="value" required> 
             <paper-item value="ReportCard">Report Card</paper-item>
              <paper-item value="Category">Enrichment</paper-item>
            </paper-menu>
@@ -81,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </div>
 <div class="fildid">
            <paper-dropdown-menu  id="Type" label="Select category wise" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rterm"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required> 
+            <paper-menu class="dropdown-content" id="comparesubandcatid"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required> 
              <paper-item value="Subjectwise">Subjectwise</paper-item>
              <paper-item value="Categorywise">Categorywise</paper-item>
            </paper-menu>
@@ -89,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </div>
 <div class="fildid">
             <paper-dropdown-menu id="section" label="Select Subject" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rsubject"  on-iron-select="FnSelectsubject1"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="comparersubjectid"  on-iron-select="FnSelectsubject1"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{subjectarr}}">
                 <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
               </template>
@@ -98,22 +89,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  </div>
  <div class="fildid">  
            <paper-dropdown-menu id="categorycomparsionid" label="Select Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="rsubject"  on-iron-select="FnSelectCategorywise"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="comparercategoryid"  on-iron-select="FnSelectCategorywise"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{categoryarr}}">
                 <paper-item value="{{item.category_name}}">{{item.category_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
-  </div>        
+        </div>        
           </div>
           </div>
 
-     <div  style="width: 50%;margin-left: 10%;margin-top:2%;">
+          <div  style="width: 50%;margin-left: 10%;margin-top:2%;">
           <center>
          
          <div style="margin-top: 15%;">
         <paper-dropdown-menu  label="Source" disabled="{{read}}" >
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectsource"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="comparersourceid" on-iron-select="FnSelectsource"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{termarr}}">
                 <paper-item value="{{item.term_id}}">{{item.term_id}}</paper-item>
               </template>
@@ -122,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <div style="margin-left: 72%;margin-top: -9%;">
            <paper-dropdown-menu  label=" Destination" >
-            <paper-menu class="dropdown-content"   on-iron-select="FnSelectDestination"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content"  id="comparerdestinationid"  on-iron-select="FnSelectDestination"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{termarr}}">
                 <paper-item value="{{item.term_id}}">{{item.term_id}}</paper-item>
               </template>
@@ -152,8 +143,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="chartContainerrport" ></div>
  </div>  
 <div class="container" hidden$="{{hidrport}}" style="width: 300;margin-left: 73%;">
-    <div id="chartContainerrport1" ></div>
-  </div> 
+<div id="chartContainerrport1" ></div>
+</div> 
   </div>
   <student-term-comparison-report-service id="compareservice"></student-term-comparison-report-service>
   </template>
@@ -181,15 +172,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         gradename = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.compareservice.callSectionService(gradename);
-          },
+        document.querySelector('#comparersectionid').selected=-1;
+        document.querySelector('#comparerenandrdid').selected=-1;
+        document.querySelector('#comparesubandcatid').selected=-1;
+        document.querySelector('#comparersubjectid').selected=-1;
+        document.querySelector('#comparercategoryid').selected=-1;
+        document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+
+    },
+    FnRefresh(){
+        document.querySelector('#comparergradeid').selected=-1;
+        document.querySelector('#comparersectionid').selected=-1;
+        document.querySelector('#comparerenandrdid').selected=-1;
+        document.querySelector('#comparesubandcatid').selected=-1;
+        document.querySelector('#comparersubjectid').selected=-1;
+        document.querySelector('#comparercategoryid').selected=-1;
+        document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+    },
        FnSelectSection:function(e){
         section = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_section",section);                
+        localStorage.setItem("curr_sess_section",section); 
+        document.querySelector('#comparerenandrdid').selected=-1;
+        document.querySelector('#comparesubandcatid').selected=-1;
+        document.querySelector('#comparersubjectid').selected=-1;
+        document.querySelector('#comparercategoryid').selected=-1;
+        document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+
+
+
+               
         },
        FnSelectComparison:function(e){
       this.comparisonvalue=e.target.selectedItem.textContent.trim();
          localStorage.setItem('curr_sess_Comparisonvalue',this.comparisonvalue);
-  
+         document.querySelector('#comparesubandcatid').selected=-1;
+        document.querySelector('#comparersubjectid').selected=-1;
+        document.querySelector('#comparercategoryid').selected=-1;
+        document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+
+
+
+
         },
       FnSelectcategory:function(e){
        
@@ -204,33 +231,88 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
          this.$.categorycomparsionid.hidden=false;
          }
+
+        document.querySelector('#comparersubjectid').selected=-1;
+        document.querySelector('#comparercategoryid').selected=-1;
+        document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+
+
+
+
      },
+     FnSelectCategorywise:function(e) {
+           this.category=e.target.selectedItem.textContent.trim();
+            ;
+         document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+
+
+
+
+       // body...
+     }, 
      FnSelectsubject1:function(e){
            this.subjectname=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_subject",this.subjectname);                
-         
-          this.$.compareservice.ReportCardandEnrichmentcategoryvalue(gradename,this.comparisonvalue,this.subjectname);
+        this.$.compareservice.ReportCardandEnrichmentcategoryvalue(gradename,this.comparisonvalue,this.subjectname);
       if(this.comparisonvalue=="Report Card"){
-            this.$.compareservice.comparedistinsionandsource(gradename,this.comparisonvalue); 
+   this.$.compareservice.comparedistinsionandsource(gradename,this.comparisonvalue); 
         } 
   else if(this.comparisonvalue=="Enrichment"){
-this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalue,this.subjectname); 
+   this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalue,this.subjectname); 
           }
-        },
+         document.querySelector('#comparercategoryid').selected=-1;
+        document.querySelector('#comparersourceid').selected=-1;
+        document.querySelector('#comparerdestinationid').selected=-1;
+
+
+
+
+        },  
  FnSelectsource:function(e){
   this.sourcevalue=e.target.selectedItem.textContent.trim(); 
-     if(this.comparisonvalue=="Enrichment"){
+if(this.sourcevalue==this.destinationtermvalue){
+alert("Both Are Same Value.....!");
+}
+else{
+     if(this.categoryvalue=="Subjectwise"){
+        
+         if(this.comparisonvalue=="Enrichment"){
           localStorage.setItem('curr_sess_comparetermvalue',"EnrichmentSource");
-       this.$.compareservice.CompareservicesourcegraphinEnrichment(gradename,section,this.subjectname,this.sourcevalue); 
-     }
-     else if(this.comparisonvalue=="Report Card"){
+        this.$.compareservice.CompareservicesourcegraphinEnrichment(gradename,section,this.subjectname,this.sourcevalue); 
+       }
+        else if(this.comparisonvalue=="Report Card"){
           localStorage.setItem('curr_sess_comparetermvalue',"ReportCardSource");
        this.$.compareservice.CompareservicesourcegraphinReportCard(gradename,section,this.subjectname,this.sourcevalue); 
-      }
+         }
+
+         }
+       else if(this.categoryvalue=="Categorywise"){
+      
+        if(this.comparisonvalue=="Enrichment"){
+          localStorage.setItem('curr_sess_comparetermvalue',"EnrichmentSource");
+       this.$.compareservice.CompareservicesourcegraphinEnrichment1(gradename,section,this.subjectname,this.sourcevalue,this.category); 
+        }
+        else if(this.comparisonvalue=="Report Card"){
+          localStorage.setItem('curr_sess_comparetermvalue',"ReportCardSource");
+        this.$.compareservice.CompareservicesourcegraphinReportCard1(gradename,section,this.subjectname,this.sourcevalue,this.category); 
+         }
+       }
+    }
+         document.querySelector('#comparerdestinationid').selected=-1;
+
      },
       FnSelectDestination:function(e){
         this.destinationtermvalue=e.target.selectedItem.textContent.trim();
-    if(this.comparisonvalue=="Enrichment"){
+        if(this.sourcevalue==this.destinationtermvalue){
+           alert("Both Are Same Value.....!");
+         }
+      else
+         {
+          if(this.categoryvalue=="Subjectwise"){
+       
+        if(this.comparisonvalue=="Enrichment"){
      localStorage.setItem('curr_sess_comparetermvalue',"EnrichmentDestination");
          this.$.compareservice.CompareservicesourcegraphinEnrichment(gradename,section,this.subjectname,this.destinationtermvalue); 
        }
@@ -238,16 +320,32 @@ this.$. compareservice.comparedistinsionandsource1(gradename,this.comparisonvalu
        localStorage.setItem('curr_sess_comparetermvalue',"ReportCardDestination");
             this.$.compareservice.CompareservicesourcegraphinReportCard(gradename,section,this.subjectname,this.destinationtermvalue); 
        }
-       },
 
+         }
+       else if(this.categoryvalue=="Categorywise"){
+      
+       
+ if(this.comparisonvalue=="Enrichment"){
+     localStorage.setItem('curr_sess_comparetermvalue',"EnrichmentDestination");
+         this.$.compareservice.CompareservicesourcegraphinEnrichment1(gradename,section,this.subjectname,this.destinationtermvalue,this.category); 
+     }
+     else if(this.comparisonvalue=="Report Card"){
+       localStorage.setItem('curr_sess_comparetermvalue',"ReportCardDestination");
+            this.$.compareservice.CompareservicesourcegraphinReportCard1(gradename,section,this.subjectname,this.destinationtermvalue,this.category); 
+       }
+       
+         }
+       }
+       },
+  
    FnComparearr:function(arr){
       // alert(JSON.stringify(arr));
        var subject="";
        if(arr.length>0){      
        for(var i=0;i<arr.length;i++)
        {
-    if(this.comparisonvalue=="Report Card"){
-  for(var j=0;j<arr[i].subarr.length;j++){
+if(this.comparisonvalue=="Report Card"){
+    for(var j=0;j<arr[i].subarr.length;j++){
         var temparr=[];
         var dataPoints=[];
         var obj={};

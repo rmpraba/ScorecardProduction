@@ -96,6 +96,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="CompareservicesourcegraphinReportCardResponse"
         debounce-duration="300"
+        >  <iron-ajax
+        method="post"
+        id="CompareservicesourcegraphinReportCard1ajax"
+        url="{{CompareservicesourcegraphinReportCard1url}}"
+        params="{{CompareservicesourcegraphinReportCard1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="CompareservicesourcegraphinReportCard1Response"
+        debounce-duration="300"
+        >  <iron-ajax
+        method="post"
+        id="CompareservicesourcegraphinEnrichment1ajax"
+        url="{{CompareservicesourcegraphinEnrichment1url}}"
+        params="{{CompareservicesourcegraphinEnrichment1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="CompareservicesourcegraphinEnrichment1Response"
+        debounce-duration="300"
         >
     </div>
   </template>
@@ -116,7 +134,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          obj.section=section;
          this.CompareservicesourcegraphinEnrichmentparam=obj;
          //alert(JSON.stringify(obj));
-
          this.$.CompareservicesourcegraphinEnrichmentajax.generateRequest();
          },
      CompareservicesourcegraphinEnrichmentResponse:function(e){
@@ -140,6 +157,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           temp=[];
          }
         // alert(JSON.stringify(totalarr))
+         document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+       },
+  CompareservicesourcegraphinEnrichment1:function(gradename,section,subject,sourcevalue,category){
+    this.CompareservicesourcegraphinEnrichment1url=sessionStorage.getItem("addrinfo")+"/CompareservicesourcegraphinEnrichment1-service";
+         var obj={};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");  
+         obj.assesment=sourcevalue;
+         obj.grade=gradename;
+         obj.subject=subject;
+         obj.section=section;
+         obj.category=category;
+         this.CompareservicesourcegraphinEnrichment1param=obj;
+         //alert(JSON.stringify(obj));
+         this.$.CompareservicesourcegraphinEnrichment1ajax.generateRequest();
+         },
+     CompareservicesourcegraphinEnrichment1Response:function(e){
+        this.total=e.detail.response.returnval;
+        this.subject=e.detail.response.subject;
+
+        var totalarr=[];
+        var temp=[];
+        var subject="";
+            for(var i=0;i<this.total.length;i++){
+          subject=localStorage.getItem("curr_sess_subject");
+          for(var j=0;j<this.subject.length;j++){
+          if(this.total[i].subject_name==this.subject[j].subject_name){
+            temp.push(this.total[i]);
+            this.total.splice(i,1);
+            i--;
+            break;
+           }
+          }
+          totalarr.push({'subject':subject,'subarr':temp});
+          temp=[];
+         }
+      // alert(JSON.stringify(totalarr))
          document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
        },
      CompareservicesourcegraphinReportCard:function(gradename,section,subject,sourcevalue){
@@ -179,8 +233,7 @@ CompareservicesourcegraphinReportCardResponse:function(e){
              
 
    var temparr=[];
-  
-          for(var j=0;j<graderate.length;j++){
+  for(var j=0;j<graderate.length;j++){
                    var c=0;
                    var flage=0;
                   for(var i=0;i<temp1.length;i++){
@@ -197,9 +250,9 @@ CompareservicesourcegraphinReportCardResponse:function(e){
                       obj.score=c;
                       temparr.push(obj); 
                        c=0; 
-                   }
+                  }
   
-  for(var i=0;i<temparr.length;i++){
+    for(var i=0;i<temparr.length;i++){
           subject=temparr[i].subject_name;
           for(var j=0;j<this.subject.length;j++){
           if(temparr[i].subject_name==this.subject[j].subject_name){
@@ -215,6 +268,42 @@ CompareservicesourcegraphinReportCardResponse:function(e){
         // alert(JSON.stringify(totalarr))
          document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
        },
+
+  CompareservicesourcegraphinReportCard1:function(gradename,section,subject,sourcevalue,category){
+    this.CompareservicesourcegraphinReportCard1url=sessionStorage.getItem("addrinfo")+"/CompareservicesourcegraphinReportCard1-service";
+         var obj={};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");  
+         obj.assesment=sourcevalue;
+         obj.grade=gradename;
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.section=section;
+         obj.category=category;
+         this.CompareservicesourcegraphinReportCard1param=obj;
+         this.$.CompareservicesourcegraphinReportCard1ajax.generateRequest();
+         },
+CompareservicesourcegraphinReportCard1Response:function(e){
+    this.total=e.detail.response.returnval;
+        this.subject=e.detail.response.subject;
+        var totalarr=[];
+        var temp=[];
+        var subject="";
+            for(var i=0;i<this.total.length;i++){
+           subject=localStorage.getItem("curr_sess_subject");
+          for(var j=0;j<this.subject.length;j++){
+          if(this.total[i].subject_name==this.subject[j].subject_name){
+            temp.push(this.total[i]);
+            this.total.splice(i,1);
+            i--;
+            break;
+             }
+            }
+          totalarr.push({'subject':subject,'subarr':temp});
+          temp=[];
+          }
+          document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+         },
+
      callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
          var obj={"schoolid":"","loggedid":"","roleid":"","term":""};
