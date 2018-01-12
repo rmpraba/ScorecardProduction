@@ -114,6 +114,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="CompareservicesourcegraphinEnrichment1Response"
         debounce-duration="300"
+        ><iron-ajax
+        method="post"
+        id="compareservicegrademasterajax"
+        url="{{compareservicegrademasterurl}}"
+        params="{{compareservicegrademasterparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="compareservicegrademasterResponse"
+        debounce-duration="300"
         >
     </div>
   </template>
@@ -123,6 +132,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'student-term-comparison-report-service',
+      compareservicegrademaster:function(){
+          this.compareservicegrademasterurl=sessionStorage.getItem("addrinfo")+"/compareservicegrademaster-service";
+           this.$.compareservicegrademasterajax.generateRequest();
+         },
+         compareservicegrademasterResponse:function(e){
+        this.enricharr=e.detail.response.returnval;
+        this.reportcardarr=e.detail.response.reportcardarr;
+          },
       CompareservicesourcegraphinEnrichment:function(gradename,section,subject,sourcevalue){
     this.CompareservicesourcegraphinEnrichmenturl=sessionStorage.getItem("addrinfo")+"/CompareservicesourcegraphinEnrichment-service";
          var obj={};
@@ -133,17 +150,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          obj.subject=subject;
          obj.section=section;
          this.CompareservicesourcegraphinEnrichmentparam=obj;
-         //alert(JSON.stringify(obj));
          this.$.CompareservicesourcegraphinEnrichmentajax.generateRequest();
          },
+         
+
      CompareservicesourcegraphinEnrichmentResponse:function(e){
         this.total=e.detail.response.returnval;
         this.subject=e.detail.response.subject;
-
+    if(e.detail.response.returnval=="invalid"){
+          alert("Pls check the Enrichment mark.....!");
+         }
+     else{ 
         var totalarr=[];
         var temp=[];
         var subject="";
-            for(var i=0;i<this.total.length;i++){
+           for(var i=0;i<this.total.length;i++){
           subject=this.total[i].subject_name;
           for(var j=0;j<this.subject.length;j++){
           if(this.total[i].subject_name==this.subject[j].subject_name){
@@ -156,8 +177,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           totalarr.push({'subject':subject,'subarr':temp});
           temp=[];
          }
-        // alert(JSON.stringify(totalarr))
-         document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+ document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+}
        },
   CompareservicesourcegraphinEnrichment1:function(gradename,section,subject,sourcevalue,category){
     this.CompareservicesourcegraphinEnrichment1url=sessionStorage.getItem("addrinfo")+"/CompareservicesourcegraphinEnrichment1-service";
@@ -170,13 +191,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          obj.section=section;
          obj.category=category;
          this.CompareservicesourcegraphinEnrichment1param=obj;
-         //alert(JSON.stringify(obj));
-         this.$.CompareservicesourcegraphinEnrichment1ajax.generateRequest();
+          this.$.CompareservicesourcegraphinEnrichment1ajax.generateRequest();
          },
      CompareservicesourcegraphinEnrichment1Response:function(e){
         this.total=e.detail.response.returnval;
         this.subject=e.detail.response.subject;
-
+ if(e.detail.response.returnval=="invalid"){
+          alert("Pls check the Enrichment mark.....!");
+         }
+       else{ 
         var totalarr=[];
         var temp=[];
         var subject="";
@@ -193,8 +216,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           totalarr.push({'subject':subject,'subarr':temp});
           temp=[];
          }
-      // alert(JSON.stringify(totalarr))
-         document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+  document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+}
        },
      CompareservicesourcegraphinReportCard:function(gradename,section,subject,sourcevalue){
     this.CompareservicesourcegraphinReportCardurl=sessionStorage.getItem("addrinfo")+"/CompareservicesourcegraphinReportCard-service";
@@ -206,16 +229,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.section=section;
          this.CompareservicesourcegraphinReportCardparam=obj;
-         //alert(JSON.stringify(obj));
         this.$.CompareservicesourcegraphinReportCardajax.generateRequest();
          },
 CompareservicesourcegraphinReportCardResponse:function(e){
-       var total=e.detail.response.returnval;
+
+        var total=e.detail.response.returnval;
         this.subject=e.detail.response.subject;
         var graderate=e.detail.response.graderatarr;
-        var totalarr=[];
-        var temp=[];
-        var subject="";
+   if(total=="invalid"){
+  alert("Pls check the term mark.....!");
+   }
+   else{
+         var totalarr=[];
+         var temp=[];
+         var subject="";
          var temp1=[];
  for(var i=0;i<total.length;i++){
         for(var j=0;j<graderate.length;j++){
@@ -250,7 +277,7 @@ CompareservicesourcegraphinReportCardResponse:function(e){
                       obj.score=c;
                       temparr.push(obj); 
                        c=0; 
-                  }
+                   }
   
     for(var i=0;i<temparr.length;i++){
           subject=temparr[i].subject_name;
@@ -265,8 +292,8 @@ CompareservicesourcegraphinReportCardResponse:function(e){
           totalarr.push({'subject':subject,'subarr':temp});
           temp=[];
          }
-        // alert(JSON.stringify(totalarr))
-         document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+  document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+}
        },
 
   CompareservicesourcegraphinReportCard1:function(gradename,section,subject,sourcevalue,category){
@@ -283,8 +310,16 @@ CompareservicesourcegraphinReportCardResponse:function(e){
          this.$.CompareservicesourcegraphinReportCard1ajax.generateRequest();
          },
 CompareservicesourcegraphinReportCard1Response:function(e){
-    this.total=e.detail.response.returnval;
-        this.subject=e.detail.response.subject;
+           this.subject=e.detail.response.subject;
+      if(e.detail.response.returnval=="invalid"){
+          alert("Pls check the term mark.....!");
+         }
+       else{      
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+           this.total=e.detail.response.returnval;
+
+
+    
         var totalarr=[];
         var temp=[];
         var subject="";
@@ -302,7 +337,65 @@ CompareservicesourcegraphinReportCard1Response:function(e){
           temp=[];
           }
           document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
-         },
+       }
+      else{
+
+   var total1=e.detail.response.returnval;
+
+ var totalarr=[];
+         var temp=[];
+         var subject="";
+         var temp1=[];
+ for(var i=0;i<total1.length;i++){
+        for(var j=0;j<this.reportcardarr.length;j++){
+            var ccc=total1[i].score.toFixed(1);
+                ccc.replace(/[^\w\s]/gi, '');
+                ccc.trim();
+      if(this.reportcardarr[j].higher_limit>=ccc && this.reportcardarr[j].lower_limit<=ccc){
+               total1[i].grade=this.reportcardarr[j].grade;
+               temp1.push(total1[i]);
+                }
+             
+              } 
+             }
+
+     var temparr=[];
+    for(var j=0;j<this.reportcardarr.length;j++){
+                   var c=0;
+                   var flage=0;
+                  for(var i=0;i<temp1.length;i++){
+                      flage=1;
+                if((this.reportcardarr[j].grade)==(temp1[i].grade)){
+                       
+                               c++;
+                         
+                         }   
+                        }
+                     var obj={};
+                      obj.subject_name=localStorage.getItem("curr_sess_category");
+                      obj.grade=this.reportcardarr[j].grade;
+                      obj.score=c;
+                      temparr.push(obj); 
+                       c=0; 
+                  }
+  
+    for(var i=0;i<temparr.length;i++){
+          subject=temparr[i].subject_name;
+          for(var j=0;j<this.subject.length;j++){
+          if(temparr[i].subject_name==this.subject[j].subject_name){
+            temp.push(temparr[i]);
+            temparr.splice(i,1);
+            i--;
+            break;
+           }
+          }
+          totalarr.push({'subject':subject,'subarr':temp});
+          temp=[];
+         }
+document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+       }
+     }
+    },
 
      callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
@@ -351,9 +444,7 @@ CompareservicesourcegraphinReportCard1Response:function(e){
          this.$.comparedistinsionandsource1ajax.generateRequest();
       },
     comparedistinsionandsource1Response:function(e){
-         //alert(JSON.stringify(e.detail.response.returnval));       
-
-  document.querySelector('student-term-comparison-report').termarr=e.detail.response.returnval;
+ document.querySelector('student-term-comparison-report').termarr=e.detail.response.returnval;
         
        },
        callSectionService:function(gradename){        
@@ -399,12 +490,9 @@ CompareservicesourcegraphinReportCard1Response:function(e){
          obj.subjectname=subjectname;
          this.ReportCardandEnrichmentcategoryvalue1param=obj;
         this.$.ReportCardandEnrichmentcategoryvalue1ajax.generateRequest();
-        //   alert(JSON.stringify(obj));    
          },
-        ReportCardandEnrichmentcategoryvalue1Response:function(e){ 
-      //   alert(JSON.stringify(e.detail.response.returnval));       
-
-      document.querySelector('student-term-comparison-report').categoryarr=e.detail.response.returnval;
+ ReportCardandEnrichmentcategoryvalue1Response:function(e){ 
+ document.querySelector('student-term-comparison-report').categoryarr=e.detail.response.returnval;
       },
     });
   })();

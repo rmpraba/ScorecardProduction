@@ -18788,7 +18788,10 @@ app.post('/CompareservicesourcegraphinEnrichment-service',  urlencodedParser,fun
       {
         if(!err)
         {    
-          res.status(200).json({'returnval': rows,'subject':subarr});
+          if(rows.length>0)
+              res.status(200).json({'returnval': rows,'subject':subarr});
+            else
+              res.status(200).json({'returnval': 'invalid','subject':'invalid'});
         }
         else
         {
@@ -18826,7 +18829,10 @@ app.post('/CompareservicesourcegraphinEnrichment1-service',  urlencodedParser,fu
       {
         if(!err)
         {    
-          res.status(200).json({'returnval': rows,'subject':subarr});
+           if(rows.length>0)
+              res.status(200).json({'returnval': rows,'subject':subarr});
+            else
+              res.status(200).json({'returnval': 'invalid','subject':'invalid'});
         }
         else
         {
@@ -18841,12 +18847,26 @@ app.post('/CompareservicesourcegraphinEnrichment1-service',  urlencodedParser,fu
 
 app.post('/CompareservicesourcegraphinReportCard1-service',  urlencodedParser,function (req, res)
 { 
+    if(req.query.grade=="Grade-1" ||req.query.grade=="Grade-2"||req.query.grade=="Grade-3"||req.query.grade=="Grade-4"){
 
   var qur1="select distinct(category) as subject_name from tr_term_assesment_overall_assesmentmarks  where "+
   "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+"section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' and  category='"+req.query.category+"'";
 
    var qur="SELECT  count(term_cat_grade)as score,term_cat_grade as grade,  category as subject_name,subject_id,sum(rtotal) as scorevalue  from tr_term_assesment_overall_assesmentmarks "+
   " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+"section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' and  category='"+req.query.category+"' group by term_cat_grade ";  
+ 
+
+}
+else{
+
+ var qur1="select distinct(category) as subject_name from tr_term_fa_assesment_marks  where "+
+  "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+"section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' and  category='"+req.query.category+"'";
+
+   var qur="SELECT  student_id,  category as subject_name,sum(mark) as score from tr_term_fa_assesment_marks "+
+  " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+"section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' and  category='"+req.query.category+"' group by student_id ";  
+ 
+
+}
  
 
     console.log("------------------enrichment count----------------------");
@@ -18861,8 +18881,12 @@ app.post('/CompareservicesourcegraphinReportCard1-service',  urlencodedParser,fu
      connection.query(qur,  function(err, rows)
       {
         if(!err)
-        {    
-          res.status(200).json({'returnval': rows,'subject':subarr});
+        {  
+           if(rows.length>0)
+              res.status(200).json({'returnval': rows,'subject':subarr});
+            else
+              res.status(200).json({'returnval': 'invalid','subject':'invalid'});
+
         }
         else
         {
@@ -18900,10 +18924,7 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
     }
  
 
-
-
-  
-    var qur2="select * from md_grade_rating";
+  var qur2="select * from md_grade_rating";
   /* var qur="SELECT term_cat_grade as grade,count(distinct(student_id)) as score,rtotal,subject_id as subject_name FROM `tr_term_assesment_overall_assesmentmarks` where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
   " section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' group by term_cat_grade,subject_id";  */
      
@@ -18925,8 +18946,12 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
      connection.query(qur,  function(err, rows)
       {
         if(!err)
-        {    
+        {  
+         if(rows.length>0)
           res.status(200).json({'returnval': rows,'subject':subarr,'graderatarr':graderatarr});
+            else
+              res.status(200).json({'returnval': 'invalid','subject':'invalid','graderatarr':'invalid'});  
+          
         }
         else
         {
@@ -18938,6 +18963,45 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
      }); }  
     });
 });
+
+app.post('/compareservicegrademaster-service',  urlencodedParser,function (req, res)
+{ 
+
+
+  
+    var qur="select * from md_grade_rating";
+    var qur1="select * from newformat_scholastic_grademaster";
+      
+   console.log("------------------Reportcard count----------------------");
+    console.log(qur);
+    console.log(qur1);
+    var reportcardarr=[];
+    connection.query(qur,  function(err, rows)
+      {
+     if(!err)
+        {  
+        reportcardarr=rows;  
+        connection.query(qur1,  function(err, rows)
+      {
+      if(!err)
+        {    
+          res.status(200).json({'returnval': rows,'reportcardarr':reportcardarr});
+        }
+        else
+        {
+          console.log(err);
+          res.status(200).json({'returnval': 'fail'});
+        }  
+
+      }); } 
+      
+    });
+});
+
+
+
+
+
 //Node server running port number
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 5000
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'

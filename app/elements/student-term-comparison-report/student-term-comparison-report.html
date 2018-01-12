@@ -190,6 +190,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#comparercategoryid').selected=-1;
         document.querySelector('#comparersourceid').selected=-1;
         document.querySelector('#comparerdestinationid').selected=-1;
+         this.$.categorycomparsionid.hidden=true;
+         this.hideeng=true;
+         this.hidemath=true;
+         this.hideevs=true;
+         this.hidrport=true;
     },
        FnSelectSection:function(e){
         section = e.target.selectedItem.textContent.trim();
@@ -243,7 +248,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      FnSelectCategorywise:function(e) {
            this.category=e.target.selectedItem.textContent.trim();
-            ;
+        localStorage.setItem("curr_sess_category",this.category);                
+         
          document.querySelector('#comparersourceid').selected=-1;
         document.querySelector('#comparerdestinationid').selected=-1;
 
@@ -267,13 +273,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#comparerdestinationid').selected=-1;
 
 
-
+     this.$.compareservice.compareservicegrademaster();
 
         },  
  FnSelectsource:function(e){
   this.sourcevalue=e.target.selectedItem.textContent.trim(); 
 if(this.sourcevalue==this.destinationtermvalue){
 alert("Both Are Same Value.....!");
+ document.querySelector('#comparerdestinationid').selected=-1;
+         this.hideeng=true;
+         this.hidemath=true;
+         this.hideevs=true;
+         this.hidrport=true;
+         this.sourcevalue="";
+
 }
 else{
      if(this.categoryvalue=="Subjectwise"){
@@ -307,9 +320,15 @@ else{
         this.destinationtermvalue=e.target.selectedItem.textContent.trim();
         if(this.sourcevalue==this.destinationtermvalue){
            alert("Both Are Same Value.....!");
+        document.querySelector('#comparersourceid').selected=-1;
+          this.hideeng=true;
+         this.hidemath=true;
+         this.hideevs=true;
+         this.hidrport=true;
+         this.destinationtermvalue="";
          }
       else
-         {
+          {
           if(this.categoryvalue=="Subjectwise"){
        
         if(this.comparisonvalue=="Enrichment"){
