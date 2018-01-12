@@ -18997,7 +18997,7 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
  
 
   var qur2="select * from md_grade_rating";
->>>>>>> 8773462b31173fe60894c8196a5b5729111cd202
+
   /* var qur="SELECT term_cat_grade as grade,count(distinct(student_id)) as score,rtotal,subject_id as subject_name FROM `tr_term_assesment_overall_assesmentmarks` where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
   " section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' group by term_cat_grade,subject_id";  */
      
