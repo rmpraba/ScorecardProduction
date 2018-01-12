@@ -3,3 +3,7 @@ dist
 
 .tmp
 .publish/
+
+*.txt
+*.txt
+app/configfile/logfile.txt

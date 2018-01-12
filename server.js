@@ -5,17 +5,28 @@ var htmlToPdf = require('html-to-pdf');
 var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
-var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
-  host :'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'scorecard' 
-  // port     : '62631',
+  // host:"mysmis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  // database:"mlzscrm",
+  // port:'3306',
+  // user:"mysmis",
+  // password:"mysmispass",
+  // reconnect:true,
+  // data_source_provider:"rds",
+  // type:"mysql"
+  host     : 'localhost',
+  port     : '3306',
   user     : 'root',
-  password : '',
-  database : 'scorecardtemp',
-});
+
+  password : 'admin',
+  database : 'mlzsreportcard'
+  // host     : 'localhost',
+  // port     : '37506',
+  // user     : 'adminVwbmIka',
+  // password : '6RNH4TEavBhh',
+  // database : 'mlzscrm'
+ });
+
 
 //var serverKey = "AAAAH0WgSPE:APA91bGgBTHNnBEeYG0V0aUlua0IZnuvF6xz1dcSGGjTuFU0PlR3H-LNMbvpSpA7IwU-e3A6-4nqMeW3wkePBbu9fVeM14OIXOsrjsTHVZzUxbkFFvhJM6lQIx-R3DVGO4loIKD8hf4U"; //put your server key here 
 //var fcm = new FCM(serverKey);
@@ -7756,7 +7767,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res){
   server.send({
    text:    "Report Card",
    from:    "samsidhschools@gmail.com",
-   to:      "mohamedsiddiq1992@gmail.com",
+   to:      req.query.parentmail,
   
    subject: "Term1 Report Card",
    text: "Dear Parent,"+"\n\n"+"Enclosed please find the report card of your ward.Kindly do not reply to this mail id.But you may contact the class teacher in case of any query."+"\n\n\n"+"Thanks&Regards,"+"\n"+"Class Teacher",
@@ -7786,7 +7797,7 @@ app.post('/sendmail1-service', urlencodedParser,function (req, res) {
   server.send({
    text:    "Report Card",
    from:    "samsidhschools@gmail.com",
-   to:      "mohamedsiddiq1992@gmail.com",
+   to:      req.query.parentmail,
   
   subject: "Term1 Report Card",
    text: "Dear Parent,"+"\n\n"+"Enclosed please find the report card of your ward.Kindly do not reply to this mail id.But you may contact the class teacher in case of any query."+"\n\n\n"+"Thanks&Regards,"+"\n"+"Class Teacher",
@@ -18963,6 +18974,7 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
      }); }  
     });
 });
+<<<<<<< HEAD
 
 app.post('/compareservicegrademaster-service',  urlencodedParser,function (req, res)
 { 
@@ -19009,5 +19021,15 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
  });
+=======
+function setvalue(){
+  console.log("calling setvalue.....");
+}
+var server = app.listen(5000, function () {
+var host = server.address().address;
+var port = server.address().port;
+console.log("Example app listening at http://%s:%s", host, port);
+});
+>>>>>>> origin/master
 
 
