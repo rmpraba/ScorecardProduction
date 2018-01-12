@@ -19021,15 +19021,5 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
  });
-=======
-function setvalue(){
-  console.log("calling setvalue.....");
-}
-var server = app.listen(5000, function () {
-var host = server.address().address;
-var port = server.address().port;
-console.log("Example app listening at http://%s:%s", host, port);
-});
->>>>>>> origin/master
 
 
