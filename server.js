@@ -18974,7 +18974,7 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
      }); }  
     });
 });
-<<<<<<< HEAD
+
 
 app.post('/compareservicegrademaster-service',  urlencodedParser,function (req, res)
 { 
