@@ -350,6 +350,16 @@
         on-response="studentconficsResponse"
         debounce-duration="300">
     </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="fngetstudenttermajax"
+        url="{{fngetstudenttermurl}}"
+        params="{{fngetstudenttermparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fngetstudenttermResponse"
+        debounce-duration="300">
+      </iron-ajax>    
   </template>
   <script>
   (function() {
@@ -406,7 +416,7 @@ getalltermmarksResponse:function(e)
         }, 
         getalltermmarks1:function(stuid)
         {
-  this.getalltermmarks1url=sessionStorage.getItem("addrinfo")+"/getalltermmarks-service";
+  this.getalltermmarks1url=sessionStorage.getItem("addrinfo")+"/getalltermmarks-service1";
   var obj={"school_id":"","academic_year":""};
       obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
@@ -421,7 +431,7 @@ getalltermmarks1Response:function(e)
        // alert(JSON.stringify(res));      
     if(res!='no rows'){
     document.querySelector("student-information-card").hideterm=false;
-    document.querySelector("student-information-card").termarrrs=res;
+    // document.querySelector("student-information-card").termarrrs=res;
     document.querySelector("student-information-card").FnSpinnerActive(false); 
     }
     else{
@@ -1204,7 +1214,25 @@ fetchstudentinfoResponse:function(e)
             document.querySelector('student-information-card').gradeidzzsss=res[0].gradeid;
             document.querySelector('student-information-card').gradeidzzsss1=res[0].gradeid;
             document.querySelector('student-information-card').gradeidnames=res[0].gradename;
-
+            this.fngetstudentterm(res[0].gradename);
+          },
+          fngetstudentterm:function(grade)
+         {
+            this.fngetstudenttermurl=sessionStorage.getItem("addrinfo")+"/fngetstudentterm-service";
+            var obj={"schoolid":"","academic_year":""};
+            obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+            obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+            // obj.studentid=studentid;
+            obj.grade=grade;
+            this.fngetstudenttermparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.fngetstudenttermajax.generateRequest(); 
+         },    
+          fngetstudenttermResponse:function(e)
+          {
+            var res=e.detail.response.returnval;
+            // alert(JSON.stringify(res));
+            document.querySelector('student-information-card').termarrrs=res;
           }
     });
   })();

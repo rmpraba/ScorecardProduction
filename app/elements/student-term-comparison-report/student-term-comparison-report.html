@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="student-term-comparison-report">
@@ -102,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div  style="width: 50%;margin-left: 10%;margin-top:2%;">
           <center>
          
-         <div style="margin-top: 15%;">
+         <div style="margin-top: 3%;">
         <paper-dropdown-menu  label="Source" disabled="{{read}}" >
             <paper-menu class="dropdown-content" id="comparersourceid" on-iron-select="FnSelectsource"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{termarr}}">
