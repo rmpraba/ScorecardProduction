@@ -22,7 +22,7 @@
           }
     </style>
     <div hidden$="{{hidetable1}}">
-      <table id="newenrichmentexportTable" border="1" style="border-collapse: collapse;">
+      <table id="newenrichmentexportTablee" border="1" style="border-collapse: collapse;">
       <tr><th>Serial No</th><th>Student Name</th><th>Written</th><th>Grade</th><th>Category</th><th>Level</th><th>Student Status</th></tr>
         <template is="dom-repeat" items="{{arr}}">
           <tr><td>{{item.sno}}</td><td>{{item.studentname}}</td><td>{{item.mark}}</td><td>{{item.grade}}</td><td>{{item.category}}</td><td>{{item.enrich_level}}</td><td>{{item.status}}</td></tr>
@@ -30,12 +30,12 @@
       </table>
       <center>  
       <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-      <input type="button" id="btn3" onclick="tableToExcel('newenrichmentexportTable', 'Report')" value="Export to Excel">
+      <input type="button" id="btn3" onclick="tableToExcel('newenrichmentexportTablee', 'Report')" value="Export to Excel">
       </center>
     </div>
 
     <div hidden$="{{hidetable2}}">
-      <table id="newenrichmentexportTable1" border="1" style="border-collapse: collapse;">
+      <table id="newenrichmentexportTablee1" border="1" style="border-collapse: collapse;">
       <tr><th>Serial No</th><th>Student Name</th><th colspan="2">Reading</th><th>Grade</th><th>Category</th><td>Speed level</td><td>Comprehension level</td><th>Student Status</th></tr>
       <tr><th></th><th></th><th>Speed</th><th>Comprehension</th><th></th><th></th><th></th><th></th><th></th></tr>
         <template is="dom-repeat" items="{{arr}}">
@@ -44,7 +44,7 @@
       </table>
       <center>  
       <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-      <input type="button" id="btn3" onclick="tableToExcel('newenrichmentexportTable1', 'Report')" value="Export to Excel">
+      <input type="button" id="btn3" onclick="tableToExcel('newenrichmentexportTablee1', 'Report')" value="Export to Excel">
       </center>
     </div>
     
