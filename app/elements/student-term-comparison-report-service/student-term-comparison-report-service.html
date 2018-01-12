@@ -167,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            for(var i=0;i<this.total.length;i++){
           subject=this.total[i].subject_name;
           for(var j=0;j<this.subject.length;j++){
-          if(this.total[i].subject_name==this.subject[j].subject_name){
+          if(this.total[i].subject_name.toLowerCase()==this.subject[j].subject_name.toLowerCase()){
             temp.push(this.total[i]);
             this.total.splice(i,1);
             i--;
@@ -206,7 +206,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             for(var i=0;i<this.total.length;i++){
           subject=localStorage.getItem("curr_sess_subject");
           for(var j=0;j<this.subject.length;j++){
-          if(this.total[i].subject_name==this.subject[j].subject_name){
+          if(this.total[i].subject_name.toLowerCase()==this.subject[j].subject_name.toLowerCase()){
             temp.push(this.total[i]);
             this.total.splice(i,1);
             i--;
@@ -236,6 +236,7 @@ CompareservicesourcegraphinReportCardResponse:function(e){
         var total=e.detail.response.returnval;
         this.subject=e.detail.response.subject;
         var graderate=e.detail.response.graderatarr;
+      
    if(total=="invalid"){
   alert("Pls check the term mark.....!");
    }
@@ -282,7 +283,7 @@ CompareservicesourcegraphinReportCardResponse:function(e){
     for(var i=0;i<temparr.length;i++){
           subject=temparr[i].subject_name;
           for(var j=0;j<this.subject.length;j++){
-          if(temparr[i].subject_name==this.subject[j].subject_name){
+        if(temparr[i].subject_name.toLowerCase()==this.subject[j].subject_name.toLowerCase()){
             temp.push(temparr[i]);
             temparr.splice(i,1);
             i--;
@@ -326,7 +327,7 @@ CompareservicesourcegraphinReportCard1Response:function(e){
             for(var i=0;i<this.total.length;i++){
            subject=localStorage.getItem("curr_sess_subject");
           for(var j=0;j<this.subject.length;j++){
-          if(this.total[i].subject_name==this.subject[j].subject_name){
+          if(this.total[i].subject_name.toLowerCase()==this.subject[j].subject_name.toLowerCase()){
             temp.push(this.total[i]);
             this.total.splice(i,1);
             i--;
@@ -336,7 +337,7 @@ CompareservicesourcegraphinReportCard1Response:function(e){
           totalarr.push({'subject':subject,'subarr':temp});
           temp=[];
           }
-          document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
+   document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
        }
       else{
 
@@ -382,7 +383,7 @@ CompareservicesourcegraphinReportCard1Response:function(e){
     for(var i=0;i<temparr.length;i++){
           subject=temparr[i].subject_name;
           for(var j=0;j<this.subject.length;j++){
-          if(temparr[i].subject_name==this.subject[j].subject_name){
+     if(temparr[i].subject_name.toLowerCase()==this.subject[j].subject_name.toLowerCase()){
             temp.push(temparr[i]);
             temparr.splice(i,1);
             i--;
@@ -491,8 +492,8 @@ document.querySelector('student-term-comparison-report').FnComparearr(totalarr);
          this.ReportCardandEnrichmentcategoryvalue1param=obj;
         this.$.ReportCardandEnrichmentcategoryvalue1ajax.generateRequest();
          },
- ReportCardandEnrichmentcategoryvalue1Response:function(e){ 
- document.querySelector('student-term-comparison-report').categoryarr=e.detail.response.returnval;
+    ReportCardandEnrichmentcategoryvalue1Response:function(e){ 
+       document.querySelector('student-term-comparison-report').categoryarr=e.detail.response.returnval;
       },
     });
   })();
