@@ -15,16 +15,12 @@ var connection = mysql.createConnection({
   // reconnect:true,
   // data_source_provider:"rds",
   // type:"mysql"
+  
   host     : 'localhost',
-  port     : '3306',
   user     : 'root',
   password : 'admin',
   database : 'mlzsreportcard'
-  // host     : '192.168.1.123',
-  // port     : '3306',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
+
   // host     : 'localhost',
   // port     : '37506',
   // user     : 'adminVwbmIka',
@@ -18998,9 +18994,7 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
   qur1="select distinct(subject_id) as subject_name from tr_term_fa_assesment_marks  where "+
   "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
   "section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"'";
-    }
- 
-
+  }
   var qur2="select * from md_grade_rating";
   /* var qur="SELECT term_cat_grade as grade,count(distinct(student_id)) as score,rtotal,subject_id as subject_name FROM `tr_term_assesment_overall_assesmentmarks` where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
   " section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' group by term_cat_grade,subject_id";  */
