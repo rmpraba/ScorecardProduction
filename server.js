@@ -1874,7 +1874,7 @@ var qur="select school_id,id,student_name,class_id  from md_student where  class
 "section_id from md_section where section_name='"+req.query.section+"' and "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') "+
 "and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
-"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and flag='active'";
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and flag='active' order by student_name";
  console.log('--------------------------enrichment stud fetch------------------------------');
  console.log('--------------------------------------------------------');
  console.log(qur);  
@@ -17115,7 +17115,7 @@ app.post('/callfetchinfofortemplate-service',  urlencodedParser,function (req,re
 "section_id from md_section where section_name='"+req.query.section+"' and "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') "+
 "and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
-"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and flag='active'";
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and flag='active' order by student_name";
 
 
 
