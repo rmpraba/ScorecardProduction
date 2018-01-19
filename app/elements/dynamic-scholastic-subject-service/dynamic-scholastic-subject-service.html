@@ -136,16 +136,27 @@
             if(e.detail.response.returnval=="0")
             {
                 // alert('Submitted!');
-                document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
+        document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
             }
             else if(e.detail.response.returnval=="1")
             {
                 if(e.detail.response.auditflag=='Assesment3'){
                     this.$.termservice.callOveralltermmarkinsertService();
                     this.$.termservice.calloveralltermassesmentinsertService();
-                }
-                else
+        if(localStorage.getItem("curr_sess_single_studetmap")=="mapactive"){
+
+        } 
+        else{
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
+
+        }
+
+         }
+                else{
                     this.$.termservice.callOveralltermmarkinsertService();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+
+                }
                 
                 // if(localStorage.getItem("curr_sess_assesment")=="Assesment1"||localStorage.getItem("curr_sess_assesment")=="Assesment2"){
                 //     this.$.termservice.callOveralltermmarkinsertService();
@@ -179,20 +190,28 @@
       subjectapprovalResponse:function(e){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
             if(e.detail.response.returnval=='done'){
-                alert('Submitted for approval!!');
+             //   alert('Submitted for approval!!');
+     document.querySelector('term-assesment-card').TermMarkdialog("Submitted for approval!!");
+
                 document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
             }
             if(e.detail.response.returnval=='exist'){
                 alert('Already submitted!!');
+ document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
+
             }
         }
         else{
            if(e.detail.response.returnval=='done'){
                 alert('Approved!!');
-                document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
+ document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
+document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
+
             } 
             if(e.detail.response.returnval=='exist'){
                 alert('Already approved!!');
+ document.querySelector('term-assesment-card').TermMarkdialog("Already approved!!");
+
             }
         }
       },

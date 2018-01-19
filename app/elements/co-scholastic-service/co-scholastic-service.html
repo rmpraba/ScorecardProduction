@@ -764,7 +764,11 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
 insertcosubcategorymarkResponse:function(e){
   this.temp++;
   if(this.sublength==this.temp){
-  alert('Mark saved!');
+  //alert('Mark saved!');
+    if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive"){
+   document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
+   document.querySelector("coscholastic-assesment-card").TermMarkdialog("Mark Saved!");
+  }
   this.sublength=0;
   this.temp=0;
   }

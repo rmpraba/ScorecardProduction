@@ -1351,31 +1351,49 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       },
       insertfaassesmentmarkResponse:function(e){
         // alert(insertflag+" "+insertcheckflag);
+     document.querySelector("term-assesment-card").FnToggleSpinner(false);
+
           if(e.detail.response.returnval=='succ')
         insertflag++;
         if(insertflag==insertcheckflag){
-      alert('Marks saved!');
+     // alert('Marks saved!');
           insertflag=0;
+     if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive"){
+
      if(localStorage.getItem("curr_sess_template_tef")=="active"){
          document.querySelector('term-assesment-card').callService();
         }
-   
+   if(localStorage.getItem("curr_sess_template_tef")=="inactive"){
+   document.querySelector("term-assesment-card").FnToggleSpinner(false);
+   document.querySelector("term-assesment-card").TermMarkdialog("Mark Saved!");
+         
+         }
+      }
         }
       }, 
       insertassesmentmarkResponse:function(e){
         if(e.detail.response.returnval=='succ')
         insertflag++;
         if(insertflag==insertcheckflag){
-          alert('Marks saved!');
+       //alert('Marks saved!');
           insertflag=0;
-   // document.querySelector("term-assesment-card").FnToggleSpinner(false);
-   if(localStorage.getItem("curr_sess_template_tef")=="active"){
+     if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive"){
+       if(localStorage.getItem("curr_sess_template_tef")=="active"){
          document.querySelector('term-assesment-card').callService();
        }
-     if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
+      if(localStorage.getItem("curr_sess_template_tef")=="inactive"){
+            document.querySelector("term-assesment-card").FnToggleSpinner(false);
+     document.querySelector("term-assesment-card").TermMarkdialog("Mark Saved!");
+     }
+       if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
          document.querySelector('coscholastic-assesment-card').callService();
         }
+        if(localStorage.getItem("curr_sess_template_tef")=="coinactive") {
+      document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
+    document.querySelector("coscholastic-assesment-card").TermMarkdialog("Mark Saved!");
+        }
       }
+   }
       },      
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
          this.termattendanceurl=sessionStorage.getItem("addrinfo")+"/termattendance-service";
@@ -1499,16 +1517,24 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
      {
       if(e.detail.response.returnval=='exist'){        
         alert('Assesment already approved!');
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+
       }
       else if(e.detail.response.returnval=='not exist'){        
         alert('Please approve the previous assesment of this term!');
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+
       }
       else
       {
         if(e.detail.response.returnval=='updated')
           this.Fnimportmark();
-        if(e.detail.response.returnval=='not updated')
+        if(e.detail.response.returnval=='not updated'){
           alert('Unable to approve!!');
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+
+        }
+
       }
      },
 
@@ -1712,8 +1738,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },
     updateflagResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=='exist')
-      alert("Already Approved!");
+      if(e.detail.response.returnval=='exist'){
+          alert("Already Approved!");
+          document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+
+      }
+    
       if(e.detail.response.returnval=='updated'){
       this.callOveralltermmarkinsertService();   
       }
@@ -1738,30 +1768,31 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          this.$.overalltermmarkinsertajax.generateRequest();
       },
       overalltermmarkinsertResponse:function(e){        
-        // alert("Inserted!");
+      // alert("Inserted!");
         if(e.detail.response.returnval=="succ")
         {
-            if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
-             alert('Approved!');              
-            else
-             // alert('Submitted!');
-            document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+             alert('Approved!'); 
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+
+            }
+
+           else
+           
+ document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
         }
          
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development")
           this.calloveralltermassesmentinsertService();
       else{
+
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
-        this.callApproveService();
-        document.querySelector('home-page').setPage('approveassesment','');  
-        document.querySelector('approve-one-to-four-card').setDefaultHeaders();
-       }
-       }
-        // n1++;
-        // if(localStorage.getItem("curr_sess_assesment")=="Assesment3"&&(n1==this.count)){
-        // this.calloveralltermassesmentinsertService();
-        // }
-      },
+          this.callApproveService();
+         document.querySelector('home-page').setPage('approveassesment','');  
+         document.querySelector('approve-one-to-four-card').setDefaultHeaders();
+         }
+        }
+       },
       calloveralltermassesmentinsertService:function()
       {
          this.overalltermassesmentinserturl=sessionStorage.getItem("addrinfo")+"/overalltermassesmentinsert-service";
@@ -1781,11 +1812,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="succ")
          {
-          if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
-          alert("All assesments are approved in this term!");
-          else
-          // alert('Submitted!');
-          document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
+          if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+         alert("All assesments are approved in this term!");
+         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+        }
+          else{
+           document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
+
+          }
          }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
             this.callApproveService();

@@ -69,12 +69,13 @@
        </tr>
        </table>
      
-<template is="dom-repeat" items="{{approvearr}}" as="m">
-<div id="itemcard"><approve-one-to-four-itemcard category="{{m.category}}" academic="{{m.academic_year}}" assesment="{{m.assesment_id}}" term="{{m.term_name}}" grade="{{m.grade}}" section="{{m.section}}" subject="{{m.subject}}" langpref="{{m.langpref}}" subjectid="{{m.subject_id}}"></approve-one-to-four-itemcard></div>
-</template>
+    <template is="dom-repeat" items="{{approvearr}}" as="m">
+        <div id="itemcard"><approve-one-to-four-itemcard category="{{m.category}}" academic="{{m.academic_year}}" assesment="{{m.assesment_id}}" term="{{m.term_name}}" grade="{{m.grade}}" section="{{m.section}}" subject="{{m.subject}}" langpref="{{m.langpref}}" subjectid="{{m.subject_id}}"></approve-one-to-four-itemcard>
+        </div>
+   </template>
  
  </div>
- </template>
+ </template>  
   <script>
   (function() {
     'use strict';
@@ -86,6 +87,7 @@
       this.$.dynamicapprovespinner.opened=true;
       if(flag==false)
       this.$.dynamicapprovespinner.opened=false;
+
     }   
     });
   })();

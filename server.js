@@ -1713,6 +1713,34 @@ var qur="select subject_sub_category_name from md_subject_sub_category where sub
   });
 });
 
+app.post('/subject1-service',  urlencodedParser,function (req, res)
+{
+var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_subject s join "+
+    " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
+    " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
+    " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
+    " t.role_id='"+req.query.roleid+"' and s.subject_category in('"+req.query.subjectcategory+"')";
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+
 app.post('/fngetstudentterm-service',  urlencodedParser,function (req,res)
 {  
     var qur="SELECT distinct(term_id),term_name from md_grade_assesment_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' ";
@@ -18994,9 +19022,7 @@ app.post('/CompareservicesourcegraphinReportCard-service',  urlencodedParser,fun
   "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
   "section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"'";
     }
- 
-
-  var qur2="select * from md_grade_rating";
+    var qur2="select * from md_grade_rating";
 
   /* var qur="SELECT term_cat_grade as grade,count(distinct(student_id)) as score,rtotal,subject_id as subject_name FROM `tr_term_assesment_overall_assesmentmarks` where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and "+
   " section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.assesment+"' group by term_cat_grade,subject_id";  */

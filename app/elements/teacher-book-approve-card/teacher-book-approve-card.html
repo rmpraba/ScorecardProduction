@@ -77,7 +77,7 @@
         -moz-box-shadow: inset 10px -10px 25px rgba(0,0,0,0.6); 
         -webkit-box-shadow: inset 10px -10px 25px rgba(146, 93, 93, 0.6); 
         -o-box-shadow: inset 10px -10px 25px rgba(0,0,0,0.6)
-    }
+      }
 
     img
     { 
@@ -193,8 +193,8 @@
 
      <div id="zdsasddsasfsa" >
       <table border="1" class="report1" id="reporttabzzzzz">
-        <!--<tr style="border-bottom: 1px solid #ccc; line-height: 1.8em;border-color:#6699ff"> -->
-        <tr>
+       
+       <tr>
           <th style="width: 5%;">S.NO</th>
           <th style="width: 16%;">Concept</th>
           <th style="width: 17%;">Work schdule</th>
@@ -208,10 +208,10 @@
           <th style="width: 10.9%;">Innovation</th>
           <th style="width: 10.9%;">Remark</th>
           <th style="width: 4.6%;"></th>
-        </tr>  
-            <tr>        
-             <template  is="dom-repeat" items="{{overallarr1}}" as="view">
-                <tr>   
+      </tr>  
+   <tr>        
+   <template  is="dom-repeat" items="{{overallarr1}}" as="view">
+   <tr>   
 <aproval-book-innovatiosn-item-card rowid="{{view.rowid}}" remark="{{view.remarks}}" period="{{view.period}}" planneddate="{{view.planned_date_from}}" skill="{{view.skill}}" innovation="{{view.innovation}}" iddate="{{view.id_date}}" hidecheck="{{view.hidecheck}}" hidecheck11="{{view.hidecheck11}}"  hidecheck1="{{view.hidecheck1}}"  rowidz="{{view.rowidz}}" value="{{view.value}}" conceptid="{{view.concept_id}}"
    conceptname="{{view.concept_name}}" subconceptid="{{view.sub_concept_id}}" subconceptname="{{view.sub_concept_name}}" teachingaid="{{view.teaching_aid}}" sno="{{view.sno}}" bldvaluename="{{view.bld_value_name}}" plannedtoate="{{view.planned_to_date}}" > 
     </aproval-book-innovatiosn-item-card>

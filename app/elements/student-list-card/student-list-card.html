@@ -36,13 +36,14 @@
     <div>
       <table >
 
-      <tr><th>Student Id</th><th colspan="2">Student Name</th><th>View</th><th>Verified</th><th>Undo</th></tr>
+     
 
       </table>
 
      <template is="dom-repeat" items="{{studentarr}}">
       <div id='itemcard'>
-        <student-list-itemcard verifyvalues="{{item.verifyvalue}}" fontsvalue="{{item.fonts}}" studentid="{{item.id}}" studentname="{{item.student_name}}" verifyvalueids="{{item.verifyvalueid}}" sno="{{item.sno}}" edit="{{item.editable}}" hiddenundoids="{{item.hiddenundoid}}"> </student-list-itemcard>
+               
+      <student-list-itemcard verifyvalues="{{item.verifyvalue}}" fontsvalue="{{item.fonts}}" studentid="{{item.id}}" studentname="{{item.student_name}}" verifyvalueids="{{item.verifyvalueid}}" sno="{{item.sno}}" edit="{{item.editable}}" hiddenundoids="{{item.hiddenundoid}}" verifyvalueid1="{{item.verifyvalueid1}}" verifyvalue1="{{item.verifyvalue1}}" fontss="{{item.fontss}}" undo="{{item.undo}}"  verifyids="{{item.verifyids}}" undoid="{{item.undoid}}"> </student-list-itemcard>
         
      </div>
   </template>

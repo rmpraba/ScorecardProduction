@@ -5,7 +5,7 @@
 <dom-module id="scorecard-service">
   <template>
 
-    <iron-ajax
+    <iron-ajax  
         method="post"
         id="gradeajax"
         url="{{gradeurl}}"
@@ -366,9 +366,32 @@
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
         var arr1=e.detail.response.verifyarr;
-       
+        var temp=[];
+
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo'){
+         document.querySelector('cce-generate-score-card').FnHide();
+     
+       for(var i=0;i<arr.length;i++){
+          arr[i].sno=i+1;
+          if(arr[i].feepaid_status=='Yes')
+            arr[i].editable=false;
+          else
+            arr[i].editable=true;
+        }
+      temp.push({"id":"STUDENT ID","student_name":"STUDENT NAME","view":"VIEW","fontss":"font-weight: bold;","verifyvalueid1":false,"verifyvalue1":true,"verifyids":"","undoid":""});
+        for(var i=0;i<arr.length;i++){
+          arr[i].fontss=" font-weight: normal;";
+          arr[i].verifyvalueid1=true;
+          arr[i].verifyvalue1=false;
+           arr[i].verifyids="";
+           temp.push(arr[i]);
+        }
+        document.querySelector('student-list-card').studentarr=temp; 
+   
+      }
+     else{
         document.querySelector('cce-generate-score-card').FnHide();
-        // document.querySelector('generate-studentlist-outcard').FnHide();
+        document.querySelector('generate-studentlist-outcard').FnHide();
         for(var i=0;i<arr.length;i++){
           arr[i].sno=i+1;
           if(arr[i].feepaid_status=='Yes')
@@ -376,35 +399,49 @@
           else
             arr[i].editable=true;
         }
+
         for(var i=0;i<arr.length;i++){
           var flag=0;
           for(var j=0;j<arr1.length;j++){
            if(arr[i].id.trim()==arr1[j].student_id.trim())
               { 
                 flag=1;
-              arr[i].fonts="color:green;";
+                arr[i].fonts="color:green;";
+                arr[i].fontss=" font-weight: normal;";
                 arr[i].verifyvalue=true;
                 arr[i].hiddenundoid=false;
                 arr[i].verifyvalueid="verified";
+                arr[i].undo="UNDO";
               }
            }
          if(flag==0){
                arr[i].fonts="color:red;";
+               arr[i].fontss=" font-weight: normal;";
                arr[i].verifyvalue=false;
                arr[i].hiddenundoid=true;
                arr[i].verifyvalueid="Verify";
+               arr[i].undo="";
+
              }
         }
-        document.querySelector('student-list-card').studentarr=arr; 
-     if(localStorage.getItem('curr_sess_verify')=='verifyid') {
-       //alert("1");
-      document.querySelector('cce-generate-score-card').FnToggleSpinner(false);
+    temp.push({"id":"STUDENT ID","student_name":"STUDENT NAME","view":"VIEW","Verified":"VERIFIED","Undo":"UNDO","verifyvalueid1":false,"verifyvalue1":true,"fontss":"font-weight: bold;","verifyids":"Verify","undoid":"Undo"});
+       
+        for(var i=0;i<arr.length;i++){
+           arr[i].verifyvalueid1=true;
+           arr[i].verifyvalue1=false;
+           arr[i].verifyids="";
+           arr[i].undoid="";
+          
+          temp.push(arr[i]);
+        }
 
-     }   
-
-        // document.querySelector('generate-studentlist-card').studentarr=arr; 
-        
-      },
+   document.querySelector('student-list-card').studentarr=temp; 
+     if(localStorage.getItem('curr_sess_verify')=='verifyid'){
+     document.querySelector('cce-generate-score-card').FnToggleSpinner(false);
+      }  
+    }
+       
+     },
       callFetchstudentinfoService:function(studid)
       {
 

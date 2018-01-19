@@ -88,8 +88,8 @@
           <th>CHAPTER</th>
           <th>EMPLOYEE NAME</th>
         </tr>
-      </table>   
-          
+      </table>      
+             
       <template is="dom-repeat" items="{{fullstatusarr}}" as="view">
         <div id='itemcard'>
           <class-teacher-book-reject-item-card empid="{{view.emp_id}}" empname="{{view.emp_name}}" gradeid="{{view.grade_id}}" gradename="{{view.grade_name}}" subjectid="{{view.subject_id}}" subjectname="{{view.subject_name}}" classid="{{view.section_id}}" sectionname="{{view.section_name}}" chapterid="{{view.chapter_id}}" chapter_name="{{view.chapter_name}}" termid="{{view.term_id}}"></class-teacher-book-reject-item-card>

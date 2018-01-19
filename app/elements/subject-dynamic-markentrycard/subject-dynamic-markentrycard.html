@@ -157,7 +157,7 @@
     'use strict';
     var scorearr=[];
     var gradearr=[];
-    var detailarr=[];
+    var detailarr=[]; 
     var tempassesmetarr=[];
     Polymer({
       is: 'subject-dynamic-markentrycard',
@@ -167,6 +167,7 @@
         this.$.dynamicsavebtn.hidden=true;
         this.$.hiddenexcelheaderfiles1.hidden=true;
        localStorage.setItem("curr_sess_template_tef","inactive"); 
+         localStorage.setItem("curr_sess_single_studetmap","inmapactive");
 
       },
       fngenrategrade:function(arr){
@@ -251,8 +252,8 @@
         this.btnlabel="Approve";
         }
       },
-excelmark1:function(e){
-if(document.querySelector("#templatecheckvalueid11").checked==true){
+  excelmark1:function(e){
+ if(document.querySelector("#templatecheckvalueid11").checked==true){
        this.$.hiddenexcelheaderfiles1.hidden=false;
        localStorage.setItem("curr_sess_template_tef","active"); 
       }
@@ -274,6 +275,11 @@ this.$.hiddenexcelheaderfiles1.hidden=true;
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
         this.$.dynamicsavebtn.hidden=false;
+    if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+      this.$.templatecheckvalueid11.hidden=true;
+         else
+      this.$.templatecheckvalueid11.hidden=false;
+
       },
       FnRefresh:function()
       {

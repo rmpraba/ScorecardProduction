@@ -53,11 +53,18 @@
       },
       FnSetInfoArray:function(arr){
         scorearr=arr;
-      },
+       },
       FnSave:function(){
     localStorage.setItem("curr_sess_template_tef","inactive"); 
-        
-        if(scorearr.length>0){
+      if(scorearr.length>0){
+         if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive")
+         {
+          document.querySelector('term-assesment-card').FnToggleSpinner(true);
+           }
+         
+       
+          
+
         for(var i=0;i<scorearr.length;i++){
           var t=1;
           for(var j=0;j<scorearr.length;j++){
@@ -69,11 +76,13 @@
         }
         for(var i=0;i<scorearr.length;i++){
           if(scorearr[i].studentid==this.studentid){
+    // document.querySelector('term-assesment-card').FnToggleSpinner(true);
+            
             var temp=[];
             temp.push(scorearr[i]);
             this.$.assesmentservice.callinsertassesmentmarkService(scorearr[i].studentid,scorearr[i].studentname,scorearr[i].categoryname,scorearr[i].subcategoryname,scorearr[i].value,scorearr[i].seq,scorearr[i].categorycnt,scorearr[i].classid); 
           }
-        }
+        }   
         }
         else{
           alert("Please enter the marks!!");

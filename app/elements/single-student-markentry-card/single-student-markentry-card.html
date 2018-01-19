@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-repeat" items="{{category}}">
           <td valign="top" colspan="{{item.categorycnt}}">
           <single-subject-dynamic-markentry-input id="sdmei" categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" weight="{{item.weight}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}"></single-subject-dynamic-markentry-input>
-          </td>
+          </td>  
         </template>
         <!-- <td width="5%"><p style="text-align: center;" hidden$="{{hiddenoutinput}}">{{grade}}</p></td> -->
         <td width="5%"><paper-icon-button hidden$="{{hiddenoutinput}}" icon="save" on-click="FnSave"></paper-icon-button></td>

@@ -238,10 +238,13 @@ excelmark11:function(e){
       if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
       {
         this.importlabel='Approve';
+        this.$.attendancecheckid.hidden=true;
       }
-      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+   else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
         this.importlabel='Submit for approval';
-      }
+        this.$.attendancecheckid.hidden=false;
+
+       }
       },
       importmark:function()
       {

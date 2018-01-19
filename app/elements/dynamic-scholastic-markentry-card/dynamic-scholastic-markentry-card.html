@@ -51,7 +51,7 @@
     </style>
     <div>
       <div hidden$="{{hideheader}}">
-     <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
+     <paper-checkbox  style="margin-left: 67%;padding-left: 11%;" 
  id="templatecheckvalueid1" on-change="excelmark">Excel Upload</paper-checkbox>
  </div>
 <div id=hiddenexcelheaderfiles>
@@ -149,6 +149,8 @@
            this.$.dynamicsavebtn.hidden=true;
            this.$.hiddenexcelheaderfiles.hidden=true;
            localStorage.setItem("curr_sess_template_tef","inactive"); 
+           localStorage.setItem("curr_sess_single_studetmap","inmapactive");
+       
       },
       fngenrategrade:function(arr){
         tempassesmetarr=arr;
@@ -257,6 +259,11 @@ this.$.hiddenexcelheaderfiles.hidden=true;
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
         this.$.dynamicsavebtn.hidden=false;
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+           this.$.templatecheckvalueid1.hidden=true;
+        else
+          this.$.templatecheckvalueid1.hidden=false;
+        
       },
       FnRefresh:function()
       {
@@ -270,7 +277,7 @@ this.$.hiddenexcelheaderfiles.hidden=true;
         this.$.hiddenexcelheaderfiles.hidden=true;
         this.FnSetLabel();
        localStorage.setItem("curr_sess_template_tef","inactive"); 
-     document.querySelector("#templatecheckvalueid1").checked=false
+      document.querySelector("#templatecheckvalueid1").checked=false
 
       },
       FnSetMarkEnteredArray:function(arr){
@@ -282,13 +289,15 @@ this.$.hiddenexcelheaderfiles.hidden=true;
         {
           alert('Please complete markentry for all the students!!');
         }
-      },
+       },
       FnApprove:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
         this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
           this.$.assesmentservice.Fnauditterm();
+         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
+
         }
       }
     });

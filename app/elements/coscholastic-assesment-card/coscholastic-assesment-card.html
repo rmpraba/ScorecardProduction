@@ -46,6 +46,10 @@
       border: none;
       background-color: transparent;
     }
+       #termmarkdialogid1{
+      width: 20%;
+      border-radius: 25px;
+    }
     </style>
     <div class='card'>
      
@@ -74,7 +78,8 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>   
-           
+   
+ 
      </div>
     </div>   
     <div class="spinner"><paper-dialog modal id="dynamiccospinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
@@ -83,6 +88,12 @@
     <dynamic-coscholastic-subject-service id="scholasticsubjectservice"></dynamic-coscholastic-subject-service>
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
      <subject-dynamic-coscholastic-markentry-service id="subcoslosticservice"></subject-dynamic-coscholastic-markentry-service>
+         <paper-dialog id="termmarkdialogid1" modal>
+       <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
+       <center>
+      <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+       </center>
+     </paper-dialog>
   </template>
   <script>
   (function() {
@@ -104,6 +115,15 @@
         this.$.assesmentservice.callSectionService(gradename);
         if(this.flag==1)
           this.callService();
+      },
+       TermMarkdialog:function(argvalue)
+     {
+       this.getindialogvalu=argvalue;
+        this.$.termmarkdialogid1.toggle();
+     },
+     failureclose:function()
+      {
+      this.$.termmarkdialogid1.close();
       },
       FnSelectSection:function(e){
 

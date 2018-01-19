@@ -106,7 +106,7 @@
     Polymer({
       is: 'dynamic-coscholastic-subject-service',
       callSubjectApprovalService:function(grade,section,subject){
-        this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticapproval-service";
+this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticapproval-service";
          var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -128,20 +128,27 @@
       subjectapprovalResponse:function(e){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
             if(e.detail.response.returnval=='done'){
-                alert('Submitted for approval!!');
-                document.querySelector('dynamic-coscholastic-markentry-card').disablesave=true;
+               // alert('Submitted for approval!!');
+    document.querySelector('dynamic-coscholastic-markentry-card').disablesave=true;
+  document.querySelector('coscholastic-assesment-card').TermMarkdialog("Submitted for approval!!");
             }
             if(e.detail.response.returnval=='exist'){
                 alert('Already submitted!!');
+     // document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
+
             }
         }
         else{
-           if(e.detail.response.returnval=='done'){
+       if(e.detail.response.returnval=='done'){
                 alert('Approved!!');
                 document.querySelector('dynamic-coscholastic-markentry-card').disablesave=true;
+   // document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
+                
             } 
             if(e.detail.response.returnval=='exist'){
                 alert('Already approved!!');
+ //document.querySelector('term-assesment-card').TermMarkdialog("Already approved!!");
+
             }
         }
       },

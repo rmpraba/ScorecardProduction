@@ -193,7 +193,7 @@
 </span>
   </div>
  </div>
-<center>
+<center>  
 <div id="onetofourhiddenvalue">
    <template is="dom-repeat" items="{{studarr}}">
       <dynamic-scholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-scholastic-markentry-itemcard>
@@ -319,7 +319,7 @@
         else{
           if(sessionStorage.getItem("curr_sess_category")=="category2")
           {            
-            this.assesmentid='';
+          this.assesmentid='';
           }
           this.FnUpdateApprovalStatus();
         }
@@ -503,8 +503,10 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
           this.itemArray=[];
           localStorage.setItem("curr_sess_studentid",this.studentid);
           document.querySelector('#singlestudentgerid').selected=-1;
-         this.$.singleservice.getsection(this.studentid);
-         this.$.hiddenmainheader.hidden=false;
+          this.$.singleservice.getsection(this.studentid);
+          this.$.hiddenmainheader.hidden=false;
+         localStorage.setItem("curr_sess_single_studetmap","mapactive"); 
+
           },
 
           fnscolasticid:function(){

@@ -97,10 +97,10 @@
      </div>
     </div>
      <paper-input value="{{categorylength}}" hidden ></paper-input>
- <paper-input value="{{categorylength}}" hidden ></paper-input> 
+     <paper-input value="{{categorylength}}" hidden ></paper-input> 
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <dynamic-coscholastic-subject-service id="subjectservice"></dynamic-coscholastic-subject-service>
-  </template>
+  </template>   
   <script type="text/javascript">
   var array=[];
   var array1=[];
@@ -149,6 +149,8 @@
          this.$.dynamicsavebtn.hidden=true;
          this.$.cosolasticxluplodingid.hidden=true;
         localStorage.setItem("curr_sess_template_tef","coinactive"); 
+         localStorage.setItem("curr_sess_single_studetmap","inmapactive");
+
       },
       FnSetLabel:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
@@ -282,11 +284,10 @@ fngenrategrade:function(arr){
    //  alert(JSON.stringify(tempassesmetarr));
    
    },
-     fnstudentarrvalue:function(arr){
+   fnstudentarrvalue:function(arr){
          tempstudentarr=arr;
-    //   alert(JSON.stringify(tempstudentarr));
-   
-      },
+      //alert(JSON.stringify(tempstudentarr));
+   },
       setDefaultHeaders:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -297,6 +298,10 @@ fngenrategrade:function(arr){
         this.$.dynamicsavebtn.hidden=false;
         this.disablesave=false;
         this.FnSetLabel();
+    if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+        this.$.coscolasticcheckid.hidden=true;
+      else
+        this.$.coscolasticcheckid.hidden=false;
       },
       FnRefresh:function()
       {

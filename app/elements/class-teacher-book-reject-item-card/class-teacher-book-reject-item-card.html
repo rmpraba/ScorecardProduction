@@ -48,7 +48,7 @@
         <p><paper-button  id="tb3" on-click="FnView">View</paper-button></p>
       </div>
      <teacher-book-service-card id="bookservice"></teacher-book-service-card>
- <iron-ajax
+ <iron-ajax  
         method="post"
         id="rejectcapterstatusajax"
         url="{{rejectcapterstatusurl}}"
@@ -101,7 +101,7 @@ this.rejectcapterstatusurl=sessionStorage.getItem("addrinfo")+"/fetchclassconcep
             var overall=[];
            for(var k=0;k<res2.length;k++)
            {     
-                  var nameobj={};
+                   var nameobj={};
                       nameobj.conceptid=res2[k].concept_id;
                       nameobj.conceptname=res2[k].concept_name;
                       nameobj.subconceptid=res2[k].sub_concept_id;
@@ -122,16 +122,15 @@ this.rejectcapterstatusurl=sessionStorage.getItem("addrinfo")+"/fetchclassconcep
                       nameobj.planned_to_date=res2[k].planned_to_date;
                       nameobj.bld_value_name=res2[k].bld_value_name;
                       nameobj.teaching_aid=res2[k].teaching_aid;
-                       nameobj.co_ordinator_remarks=res2[k].co_ordinator_remarks;
-                       nameobj.rowid=k+1;
+                      nameobj.co_ordinator_remarks=res2[k].co_ordinator_remarks;
+                      nameobj.rowid=k+1;
                       nameobj.hidecheck=true; 
                       nameobj.grade_id=sessionStorage.getItem("grdeidz");
                       nameobj.subject_id=sessionStorage.getItem("subjectidz");
-                    setattr.push(nameobj);
-   }
-                   //alert(JSON.stringify(setattr));
-  
-    document.querySelector('app-card').setPage('homepage','');
+                      setattr.push(nameobj);
+    }
+   
+   document.querySelector('app-card').setPage('homepage','');
    document.querySelector('home-page').setPage('class-teacher-book-rejection-item-card','');
   document.querySelector('class-teacher-book-rejection-item-card').mainnarr=setattr; 
   document.querySelector('class-teacher-book-rejection-item-card').empid=res2[0].empid; 

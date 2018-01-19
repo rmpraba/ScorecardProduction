@@ -103,16 +103,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       localStorage.setItem("curr_sess_grade",this.grade);
       localStorage.setItem("curr_sess_section",this.section);
       localStorage.setItem("curr_sess_languagepref",this.langpref);
+      //document.querySelector("dynamic-scholastic-markentry-card").exuploadeonetofourid.hidden=true;
       // alert(this.langpref);
       //alert(localStorage.getItem("curr_sess_assesment"));
       // this.FnToggleSpinner(true);
       // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true); 
       if(this.subject=="Attendance")
       {
-        // alert('hi');
-        this.$.coscholasticservice.callFetchStudentInfoforattendance();
-        // document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
-        // document.querySelector('attendance-card').setDefaultHeaders(); 
+         this.$.coscholasticservice.callFetchStudentInfoforattendance();
       }
       else if(localStorage.getItem("curr_sess_subject")=="Work Education"||localStorage.getItem("curr_sess_subject")=="Life Skills"||localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"||localStorage.getItem("curr_sess_subject")=="Attitudes And values"||localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"||localStorage.getItem("curr_sess_subject")=="Health and Physical Education"||localStorage.getItem("curr_sess_subject")=="Discipline")
       {
@@ -152,6 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('dynamic-coscholastic-markentry-card').FnRefresh();
         this.$.coscholasticsubjectservice.subjectsubmittedcheckService(this.grade,this.section,this.subject);
         }
+     // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
       }
       // this.$.assesmentservice.fetchimportmark(this.academic,this.term,this.assesment,this.grade,this.section,this.subject);
      },

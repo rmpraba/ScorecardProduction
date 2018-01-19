@@ -469,7 +469,8 @@
                         }//alert(JSON.stringify(generatearr));
         var a=[];
        for(var k=0;k<generatearr.length;k++)
-       {          var nameobj={"class_for_admission":"","student_name ":"","gender":"","enquiry_no":"","dob":"","admission_no":""};
+       {         
+        var nameobj={"class_for_admission":"","student_name ":"","gender":"","enquiry_no":"","dob":"","admission_no":""};
          nameobj.class_for_admission=generatearr[k].class_for_admission; 
          nameobj.student_name=generatearr[k].student_name; 
          nameobj.enquiry_no=generatearr[k].enquiry_no; 
@@ -769,20 +770,16 @@ for(var j=0;j<k.length;j++){
              document.querySelector('student-list-pass-section-card').stupersonalinfo13(kn); 
             kn.splice(obj);
          }
-            else{
+            else
+            {
               document.querySelector('student-list-pass-section-card').f11(); 
                 kn.splice(obj);
                this.$.previousid.open();
                this.$.z1.hidden=false;
                this.$.nextbutton.hidden=true;
                this.$.prebutton.hidden=false;
-
-    
-            }
-
-      
-
-   },
+      }
+  },
 mappingstudent1:function(e){
 
 },

@@ -118,8 +118,10 @@
       subjectapprovalResponse:function(e){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
             if(e.detail.response.returnval=='done'){
-                alert('Submitted for approval!!');
+            // alert('Submitted for approval!!');
                 document.querySelector('subject-dynamic-markentrycard').disablesave=true;
+              document.querySelector('term-assesment-card').TermMarkdialog("Submitted for approval!!");
+          
             }
             if(e.detail.response.returnval=='exist'){
                 alert('Already submitted!!');

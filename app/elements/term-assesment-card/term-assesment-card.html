@@ -39,6 +39,10 @@
       border: none;
       background-color: transparent;
     }
+    #termmarkdialogid11{
+      width: 20%;
+      border-radius: 25px;
+    }
     </style>
     <div class='card'>
      
@@ -89,9 +93,17 @@
      </div>
     </div>
     <div class="spinner"><paper-dialog modal id="dynamicspinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+      <paper-dialog id="termmarkdialogid11" modal>
+       <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
+       <center>
+      <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+       </center>
+     </paper-dialog>
+
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <subject-dynamic-service id="subjectservice"></subject-dynamic-service>
     <dynamic-scholastic-subject-service id="scholasticsubjectservice"></dynamic-scholastic-subject-service>
+
   </template>
   <script>
   (function() {
@@ -105,7 +117,17 @@
        this.flag=0;
        this.hideassesment=false;
       },
-      FnHideView:function(){
+     TermMarkdialog:function(argvalue)
+     {
+      // alert(argvalue);
+       this.getindialogvalu=argvalue;
+       this.$.termmarkdialogid11.toggle();
+     },
+     failureclose:function()
+      {
+      this.$.termmarkdialogid11.close();
+      },
+    FnHideView:function(){
         this.flag=0;
         this.hideassesmenttype=true;
         // this.hideassesment=true;
@@ -121,25 +143,11 @@
           this.SA1='SA2';
         }
       },
-      /*FnSelectacademicyear:function(e){
-        academicyear = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_academicyear",academicyear);
-        if(this.flag==1)
-          this.callService();       
-      },*/
-      FnSelectGrade:function(e){
+    FnSelectGrade:function(e){
         document.querySelector('#sectionnam1').selected=-1;
         document.querySelector('#assesmentcat1').selected=-1;
         document.querySelector('#subjectnam1').selected=-1;
         gradename = e.target.selectedItem.textContent.trim();
-        // if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){
-        //   this.hideassesmenttype=true;
-        //   this.hideassesment=false;
-        // }
-        // else{
-        //   this.hideassesmenttype=false;
-        //   this.hideassesment=true;
-        // }
         localStorage.setItem("curr_sess_grade",gradename);
         localStorage.setItem("curr_sess_gradeid",this.gradeid);
         this.$.assesmentservice.callSectionService(gradename);
@@ -342,6 +350,7 @@
         this.flag=0;
       },
       FnToggleSpinner:function(flag){
+      //  alert(flag);
         this.$.dynamicspinner.opened=flag;
       }
 

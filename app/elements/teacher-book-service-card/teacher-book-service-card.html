@@ -2,7 +2,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="teacher-book-service-card">
-  <template>
+  <template>   
       <iron-ajax
         method="post"
         id="bookrefsectionajax"
@@ -728,10 +728,10 @@
       this.$.fnfetchcprgradeajax.generateRequest();
       },
       fnfetchcprgradeResponse:function(e){
-        document.querySelector('curriculam-report').gradearr=e.detail.response.returnval;
+   document.querySelector('curriculam-report').gradearr=e.detail.response.returnval;
       },
      fnfetchcprsubject:function(gradename){
-      this.fnfetchcprsubjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
+      this.fnfetchcprsubjecturl=sessionStorage.getItem("addrinfo")+"/subject1-service";
       var obj={"school_id":"","capterid":"","conceptid":"","academic_year":""};
       obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
       obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
@@ -1209,7 +1209,7 @@ if(subarr1.length!=0){
         obj.remarks=remark;
         obj.termid=sessionStorage.getItem("termid"); 
         this.fnmasterplaneditparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.fnmasterplaneditajax.generateRequest();      
         }}}
   
@@ -3081,12 +3081,17 @@ fnfinalbookvalueResponse:function(e)
          chapterstatusResponse:function(e)
          {
             var res=e.detail.response.returnval;
-            // alert(JSON.stringify(res));
-            document.querySelector('class-teacher-book-reject-card').fullstatusarr=res;
+          //   alert(JSON.stringify(res));
+            if(res.length>0){
+     document.querySelector('class-teacher-book-reject-card').fullstatusarr=res;
+        }else{
+            res="";
+          //  alert(res);
+      document.querySelector('class-teacher-book-reject-card').fullstatusarr=res;
+
+            }
          },
-
-
-          getappovedcoordinator:function(e){
+ getappovedcoordinator:function(e){
           this.getappovedcoordinatorurl=sessionStorage.getItem("addrinfo")+"/getappovedcoordinator-service";
             var obj={"schoolid":"","academic_year":"","roleid":"","emp_id":""};
            obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
