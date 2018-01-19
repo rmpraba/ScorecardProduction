@@ -12419,12 +12419,15 @@ app.post('/fnsetstudentinfo-service' , urlencodedParser,function (req, res)
       flag:'active'
       }; 
   // console.log(JSON.stringify(response));
-   var qur= "SELECT * FROM  md_student WHERE school_id='"+req.query.school_id+"' and id='"+req.query.id+"' and student_name='"+req.query.student_name+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
+    var qur= "SELECT * FROM  md_student WHERE school_id='"+req.query.school_id+"' and id='"+req.query.id+"' and student_name='"+req.query.student_name+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
    
     var qur1="update md_student set class_id='"+req.query.classid+"',grade_id='"+req.query.stugradeid+"',school_type='"+req.query.school_type+"' where school_id='"+req.query.school_id+"' and id='"+req.query.id+"' and     academic_year='"+req.query.academic_year+"' and flag='active'";
+   
+     var qur3="update tr_student_to_subject set class_id='"+req.query.classid+"',grade='"+req.query.stugradeid+"',section='"+req.query.sectionname+"' where school_id='"+req.query.school_id+"' and student_id='"+req.query.id+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
 
-   // console.log(qur);
-   // console.log(qur1)
+   console.log(qur);
+   console.log(qur1)
+   console.log(qur3)
    connection.query(qur,
     function(err, rows)
     {
@@ -12445,15 +12448,22 @@ app.post('/fnsetstudentinfo-service' , urlencodedParser,function (req, res)
     });
     }
     else{
-       connection.query(qur1,function(err, rows){  
-          console.log('update');
+       connection.query(qur1,function(err, result){  
+        if(!err) 
+        {
+       connection.query(qur3,function(err, result){  
         if(!err)
+        {
         res.status(200).json({'returnval': 'updated successfully'});
-        else
+       }
+       else
         res.status(200).json({'returnval': 'not updated'});
-        });   
-        } 
-      });   
+      });
+     }
+    });
+    }
+     
+   });
 });
 
 

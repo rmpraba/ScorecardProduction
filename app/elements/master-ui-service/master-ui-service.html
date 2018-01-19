@@ -1269,6 +1269,7 @@ Generatesectionid:function()
              var dob=studeninfoarr[i].dob;
              var Gender=studeninfoarr[i].gender;
              var classid=studeninfoarr[i].classid;
+             var sectionname=studeninfoarr[i].sectionname;
     this.fnsetstudentinfourl=sessionStorage.getItem("addrinfo")+"/fnsetstudentinfo-service";
        var obj={"school_id":"","id":"","student_name":"","school_type":"","dob":"","Gender":"","classid":"","stugradeid":"","academic_year":""};
            obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -1279,6 +1280,7 @@ Generatesectionid:function()
            obj.dob=dob;
            obj.Gender=Gender;
            obj.stugradeid=stugradeid;
+           obj.sectionname=sectionname;
            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
 
         //   obj.stugradeid=stugradeid;

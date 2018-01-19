@@ -63,12 +63,11 @@
            </template>
      <div class="buttons">
      <paper-button  on-click="FnSubmit">Submit</paper-button>
-   <paper-button dialog-confirm autofocus  on-click="fncancal">OK</paper-button>
+     <paper-button dialog-confirm autofocus  on-click="fncancal">OK</paper-button>
        </div>
      </paper-dialog>
      
-     
-        <iron-ajax        
+       <iron-ajax        
         id="thirdlangrefretajax"
         url="{{thirdlangrefreturl}}"
         params="{{thirdlangrefretparam}}"
@@ -112,9 +111,7 @@
   var map;
   var rm;
   var rm1;
-var f;
-            
-  //var checkvalu=[];
+  var f;
     Polymer({
       is: 'student-list-pass-section-card',
       
@@ -143,6 +140,7 @@ var f;
             obj.gender=this.gender;
             obj.enq_id=this.id;
             obj.classid=this.classid;
+            obj.sectionname=this.sectionname;
             paspstuinfo.push(obj);
             v.push(obj);
             rm=this.id;
@@ -224,6 +222,8 @@ this.thirdlangrefreturl=sessionStorage.getItem("addrinfo")+"/thirdlangrefret-ser
       obj.id=this.admissinno;
       obj.gradeid=this.stugradeid;
       obj.classid=this.classid;
+        obj.sectionname=this.sectionname;
+
       obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
       this.thirdlangrefretparam=obj;
@@ -263,7 +263,7 @@ this.thirdlangrefreturl=sessionStorage.getItem("addrinfo")+"/thirdlangrefret-ser
           // alert(JSON.stringify(arr));
        studentcheckinfoarr=arr;
        },
-       f11:function(e){
+        f11:function(e){
          var c=paspstuinfo.length;
               if(paspstuinfo!=0){
                 this.fnsplice();
@@ -287,6 +287,8 @@ this.thirdlangrefreturl=sessionStorage.getItem("addrinfo")+"/thirdlangrefret-ser
       obj.id=this.admissinno;
       obj.gradeid=this.stugradeid;
       obj.classid=this.classid;
+       obj.sectionname=this.sectionname;
+
       obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
       this.thirdlangrefret1param=obj;
@@ -296,6 +298,8 @@ var obj={"id":"","school_id":"","gradeid":"","classid":"","academic_year":""};
       obj.id=this.admissinno;
       obj.gradeid=this.stugradeid;
       obj.classid=this.classid;
+      obj.sectionname=this.sectionname;
+
       obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
       this.thirdlangrefret11param=obj;
@@ -317,6 +321,8 @@ var obj={"id":"","school_id":"","gradeid":"","classid":"","academic_year":""};
             obj.gender=this.gender;
             obj.enq_id=this.id;
             obj.classid=this.classid;
+            obj.sectionname=this.sectionname;
+
             paspstuinfo.splice(obj);
           },
          fnsplice:function(){
@@ -334,13 +340,15 @@ var obj={"id":"","school_id":"","gradeid":"","classid":"","academic_year":""};
             obj.gender=this.gender;
             obj.enq_id=this.id;
             obj.classid=this.classid;
+            obj.sectionname=this.sectionname;
+            
             paspstuinfo.splice(obj);
            }
         },
         stupersonalinfo13:function(arr)
         {
-                for(var k=0;k<arr.length;k++){
-                var  dbid=arr[k].dd;
+           for(var k=0;k<arr.length;k++){
+                    var  dbid=arr[k].dd;
                     document.querySelector('#'+dbid).checked=false;
         }
      },
