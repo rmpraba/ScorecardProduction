@@ -432,14 +432,16 @@
               kn.splice(obj);     
           }          
       var getgradearr=[];
-          for(var i=0;i<sectionarr.length;i++){
-                          var section_id=sectionarr[i].section_id;
-                          
-                            var obj={"srtarr":""};
+      if(setarrr.length==0){
+        for(var i=0;i<sectionarr.length;i++){
+                           var section_id=sectionarr[i].section_id;
+                             var obj={"srtarr":""};
                                 obj.srtarr=section_id;
                                setarrr.push(obj);
                              // alert(JSON.stringify(obj));
                           }
+              }
+          
              // alert(JSON.stringify(setarrr));
                    // this.setsubjectarr=setarrr;
                 var generatearr=[];
@@ -588,8 +590,9 @@
           subarr.push(obj1);
           }
           obj.subject=subarr;
-          temp.push(obj);
-
+            
+        temp.push(obj);
+      //  alert(JSON.stringify(temp));
          this.finalarr=[];
          this.finalarr.push(temp[0]);
          for(var i=0;i<(k).length;i++){
@@ -720,7 +723,7 @@ for(var j=0;j<k.length;j++){
          }
          if(flag==0){
           }
-     }
+       }
   
          //alert(JSON.stringify(k));
      
