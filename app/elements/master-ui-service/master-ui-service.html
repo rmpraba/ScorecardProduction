@@ -1370,8 +1370,10 @@ Generatesectionid:function()
       //  alert('1');
            var res=e.detail.response.returnval; 
        //alert(JSON.stringify(res));
-           document.querySelector('Student-to-section-mapping-card').mappingstudent(res);
-          document.querySelector('student-list-pass-section-card').studentcheckinfo1(res); 
+       if(res.length>0){
+document.querySelector('Student-to-section-mapping-card').mappingstudent(res);
+document.querySelector('student-list-pass-section-card').studentcheckinfo1(res);
+  } 
        },
        tranfergradeinfo:function(e)
        {

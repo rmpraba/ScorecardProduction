@@ -389,8 +389,15 @@
         {
          document.querySelector('#empgradeiddd').selected=-1; 
         }
-       },
 
+       },
+       FnRefresh1:function(){
+
+
+
+ 
+    
+ }, 
         counttypevalue:function(e)
        {
          this.counttypevalueurl=sessionStorage.getItem("addrinfo")+"/counttypevalue-service";
@@ -419,18 +426,13 @@
     mappingstudentarr=arr;
      },
     Generate:function(e)
-    {
+    {    
         this.$.z.hidden=false;   
         this.$.z1.hidden=true;
         this.hidenewtabb=false;
         this.$.nextbutton.hidden=false;
         //this.hidegenerateopt=true;
-    if(overall12!=0)
-    {
-           document.querySelector('student-list-pass-section-card').overallinfo(); 
-           document.querySelector('student-list-pass-section-card').stupersonalinfo13(kn); 
-              kn.splice(obj);     
-          }          
+            
       var getgradearr=[];
       if(setarrr.length==0){
         for(var i=0;i<sectionarr.length;i++){
@@ -493,6 +495,7 @@
              obj1.section_id=generatearr[l].section_id;
              obj1.class_id=generatearr[l].class_id; 
              obj1.id=generatearr[l].class_id+generatearr[l].admission_no;
+             obj1.check=false;
              a.push(obj1);
              generatearr.splice(l,1);
              l--;
@@ -572,7 +575,7 @@
                 }
             }   
        }
-        // alert(JSON.stringify(k));
+     // alert(JSON.stringify(k));
           var temp=[];
           var subarr=[];
           var obj={};
@@ -1006,7 +1009,7 @@ for(var j=0;j<l.length;j++){
         overall=[];
         g=[];
         setarrr=[];
-        document.querySelector('specific-student-section-card').studentsectioncleanzzzz();
+//document.querySelector('specific-student-section-card').studentsectioncleanzzzz();
      },
 
 
@@ -1131,7 +1134,7 @@ for(var j=0;j<l.length;j++){
         this.$.uiservice.selectspecificstudent(admission_no);
         this.value=this.student_name;
         this.hidenewtabb=true;
-        document.querySelector('specific-student-section-card').studentsectioncleanzzzz();
+     document.querySelector('specific-student-section-card').studentsectioncleanzzzz();
 
     },
 
@@ -1196,17 +1199,23 @@ for(var j=0;j<l.length;j++){
     
     fngradechange:function()
     {
+
+
       document.querySelector('#empgradeiddd').selected=-1; 
       this.hidespecific=true;
-       this.value="";
+     
         chzz.checked=false;
         chkkk2.checked=false;
         this.$.studz.hidden=true; 
          this.hidegenerateopt=true;
-         this.sectionfullarr="";
+        
          this.$.z.hidden=true;
         this.$.z1.hidden=true;
         this.hidenewtabb=true;
+       overall12=[]; 
+       kn=[];
+     this.value="";
+    this.sectionfullarr="";
     },
     fnsinglestudsubmit:function()
     {
