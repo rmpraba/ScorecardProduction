@@ -23,9 +23,9 @@
     </style>
     <div hidden$="{{hidetable1}}">
       <table id="newenrichmentexportTablee" border="1" style="border-collapse: collapse;">
-      <tr><th>Serial No</th><th>Student Name</th><th>Written</th><th>Grade</th><th>Category</th><th>Level</th><th>Student Status</th></tr>
+      <tr><th>Serial No</th><th>Student Id</th><th>Student Name</th><th>Written</th><th>Grade</th><th>Category</th><th>Level</th><th>Student Status</th></tr>
         <template is="dom-repeat" items="{{arr}}">
-          <tr><td>{{item.sno}}</td><td>{{item.studentname}}</td><td>{{item.mark}}</td><td>{{item.grade}}</td><td>{{item.category}}</td><td>{{item.enrich_level}}</td><td>{{item.status}}</td></tr>
+          <tr><td>{{item.sno}}</td><td>{{item.studentid}}</td><td>{{item.studentname}}</td><td>{{item.mark}}</td><td>{{item.grade}}</td><td>{{item.category}}</td><td>{{item.enrich_level}}</td><td>{{item.status}}</td></tr>
         </template>
       </table>
       <center>  
@@ -36,10 +36,10 @@
 
     <div hidden$="{{hidetable2}}">
       <table id="newenrichmentexportTablee1" border="1" style="border-collapse: collapse;">
-      <tr><th>Serial No</th><th>Student Name</th><th colspan="2">Reading</th><th>Grade</th><th>Category</th><td>Speed level</td><td>Comprehension level</td><th>Student Status</th></tr>
-      <tr><th></th><th></th><th>Speed</th><th>Comprehension</th><th></th><th></th><th></th><th></th><th></th></tr>
+      <tr><th>Serial No</th><th>Student Id</th><th>Student Name</th><th colspan="2">Reading</th><th>Grade</th><th>Category</th><th>Speed level</th><th>Comprehension level</th><th>Student Status</th></tr>
+      <tr><th></th><th></th><th></th><th>Speed</th><th>Comprehension</th><th></th><th></th><th></th><th></th><th></th></tr>
         <template is="dom-repeat" items="{{arr}}">
-          <tr><td>{{item.sno}}</td><td>{{item.studentname}}</td><td>{{item.mark1}}</td><td>{{item.mark2}}</td><td>{{item.grade}}</td><td>{{item.category}}</td><td>{{item.speed_level}}</td><td>{{item.comprehension_level}}</td><th>{{item.status}}</th></tr>
+          <tr><td>{{item.sno}}</td><td>{{item.studentid}}</td><td>{{item.studentname}}</td><td>{{item.mark1}}</td><td>{{item.mark2}}</td><td>{{item.grade}}</td><td>{{item.category}}</td><td>{{item.speed_level}}</td><td>{{item.comprehension_level}}</td><th>{{item.status}}</th></tr>
         </template>
       </table>
       <center>  
