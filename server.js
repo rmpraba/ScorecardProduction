@@ -18,8 +18,8 @@ var connection = mysql.createConnection({
   
   host     : 'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  password : '',
+  database : 'scorecardtemp'
 
   // host     : 'localhost',
   // port     : '37506',
@@ -7869,8 +7869,8 @@ app.post('/sendmail-service', urlencodedParser,function (req, res){
      });
   
  });
-app.post('/sendmail1-service', urlencodedParser,function (req, res) {
-  console.log(req.query.parentmail+"  "+req.query.secmail);
+ app.post('/sendmail1-service', urlencodedParser,function (req, res) {
+   console.log(req.query.parentmail+"  "+req.query.secmail);
   var secmail=req.query.secmail;
   var server  = email.server.connect({
    user:    "samsidhschools@gmail.com",
