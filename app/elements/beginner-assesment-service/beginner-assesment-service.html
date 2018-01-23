@@ -594,8 +594,9 @@
          c2++;
          }       
          if(c1==c2){
-         alert("Saved!!");
+        //  alert("Saved!!");  
          document.querySelector("beginner-assesment-card").FnToggleSpinner(false);
+        document.querySelector("beginner-assesment-card").TermMarkdialog("Saved!!");
          document.querySelector('beginner-assesment-card').FnServiceCall();
          document.querySelector('enrichment-dynamic-markentrycard').hideexcelcontent();   
          c1=0;

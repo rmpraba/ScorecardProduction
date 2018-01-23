@@ -164,7 +164,7 @@
           <template is="dom-repeat" items="{{getschooltypearr}}" as="view">
             <employe-schooltype-to-category-item-card schooltypenamexx="{{view.school_type_name}}" schooltypeidxx="{{view.school_type_id}}" id="EM0S{{view.school_type_id}}"></employe-schooltype-to-category-item-card>
           </template>
-        </div>
+        </div>  
       </div> 
 
       <div class="subcat1">  
@@ -476,6 +476,7 @@
                            obj1.subject_name=generatearr[l].subject_name;
                            obj1.subject_id=generatearr[l].subject_id;
                            obj1.id=generatearr[l].subject_id+generatearr[k].emp_id;
+                           obj1.check=false;
                            a.push(obj1);
                            generatearr.splice(l,1);
                            l--;

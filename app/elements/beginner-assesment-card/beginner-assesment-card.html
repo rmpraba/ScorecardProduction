@@ -43,6 +43,10 @@
       border: none;
       background-color: transparent;
     }
+     #beginnerkdialogid{
+      width: 20%;
+      border-radius: 25px;
+    }
     </style>
     <div class='card'>     
     <div class='drop'>      
@@ -77,6 +81,13 @@
      </div>
     </div>
     <div class="spinner"><paper-dialog modal id="dynamicspinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+      <paper-dialog id="beginnerkdialogid" modal>
+       <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
+       <center>
+      <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+       </center>
+     </paper-dialog>
+
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <component-service id="componentservice"></component-service>
   </template>
@@ -91,7 +102,17 @@
         this.flag=0;
         this.hidesheet=true;
         localStorage.setItem("curr_sess_page","beginner-assesment-card"); 
-      },  
+      }, 
+    TermMarkdialog:function(argvalue)
+     {
+      // alert(argvalue);
+       this.getindialogvalu=argvalue;
+       this.$.beginnerkdialogid.toggle();
+     },
+     failureclose:function()
+      {
+      this.$.beginnerkdialogid.close();
+      }, 
       FnToggleSpinner:function(flag){
         this.$.dynamicspinner.opened=flag;
       },                             

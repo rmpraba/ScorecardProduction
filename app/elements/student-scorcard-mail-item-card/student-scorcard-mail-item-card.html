@@ -188,6 +188,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       sendmailResponse:function(e){
         alert(e.detail.response);
+        document.querySelector('student-scorcard-mail-card').FnToggleSpinner(false);
+
         c2++;
         if(bulkarr.length==0){
         document.querySelector('student-scorcard-mail-card').FnToggleSpinner(false);}

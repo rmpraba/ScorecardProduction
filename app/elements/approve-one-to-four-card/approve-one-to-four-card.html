@@ -45,6 +45,10 @@
         margin-left: 7%;
         width: 83%;
       }
+       #termmarkdialogid111{
+        width: 20%;
+      border-radius: 25px;
+    }
     </style> 
     <div class="spinner"><paper-dialog id="dynamicapprovespinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     <div>
@@ -75,6 +79,12 @@
    </template>
  
  </div>
+<paper-dialog id="termmarkdialogid111" modal>
+       <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
+       <center>
+      <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+       </center>
+     </paper-dialog>
  </template>  
   <script>
   (function() {
@@ -88,7 +98,17 @@
       if(flag==false)
       this.$.dynamicapprovespinner.opened=false;
 
-    }   
+    },
+    TermMarkdialog:function(argvalue)
+     {
+       alert(argvalue);
+       this.getindialogvalu=argvalue;
+       this.$.termmarkdialogid111.toggle();
+     },
+     failureclose:function()
+      {
+      this.$.termmarkdialogid111.close();
+      },   
     });
   })();
   </script>

@@ -132,9 +132,11 @@
       subjectsubmittedcheck3Response:function(e){
           if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
         if(e.detail.response.returnval=='exist'){
-            alert('Already Submitted!!');
-      //      document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
-        }
+           
+ document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
+ document.querySelector("coscholastic-assesment-card").TermMarkdialog("Already submitted!!");
+ document.querySelector("coscholastic-assesment-card").FnRefresh();
+         }
         else{
             this.callFetchInfoForSubjectTemplate(gradename,subject);
             // this.callFetchStudentInfo(gradename,section,subject);
@@ -183,15 +185,19 @@ document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted 
             }
             if(e.detail.response.returnval=='exist'){
                 alert('Already submitted!!');
+                alert('3');
+document.querySelector("coscholastic-assesment-card").TermMarkdialog("Already submitted!!");
+           
             }
         }
         else{
            if(e.detail.response.returnval=='done'){
                 alert('Approved!!');
-                document.querySelector('subject-dynamic-coscholastic-markentry-card').disablesave=true;
+    document.querySelector('subject-dynamic-coscholastic-markentry-card').disablesave=true;
             } 
             if(e.detail.response.returnval=='exist'){
                 alert('Already approved!!');
+          
             }
         }
       },
@@ -336,7 +342,10 @@ document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted 
         ssubject="";
         studentarr=[];
         overall=[]; 
-       document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr=overall;
+document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr=overall;
+
+document.querySelector('subject-dynamic-coscholastic-markentry-card').FnRefresh();
+
         }
         // alert(JSON.stringify(overall));
       },

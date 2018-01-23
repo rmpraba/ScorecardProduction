@@ -197,6 +197,7 @@
             }
             if(e.detail.response.returnval=='exist'){
                 alert('Already submitted!!');
+
  document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
 
             }
@@ -252,7 +253,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
          }
          if(obj.role=='Co-Ordinator'||obj.role=='HeadMistress'){
             obj.flag='1';
-         }
+         }  
          this.subjectsubmittedcheckparam= obj;
          this.$.subjectsubmittedcheckajax.generateRequest();
       },
@@ -261,8 +262,10 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         // alert(sessionStorage.getItem("curr_sess_loggedrole"));
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
         if(e.detail.response.returnval=='exist'){
-            alert('Already Submitted!!');
-            document.querySelector('term-assesment-card').FnToggleSpinner(false);
+           // alert('Already Submitted!!');
+        document.querySelector('term-assesment-card').FnToggleSpinner(false);
+         document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
+     
         }
         else{
             this.callFetchInfoForSubjectTemplate(gradename,subject);
@@ -297,8 +300,17 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         // alert(JSON.stringify(e.detail.response.returnval));
         assesscategorycnt=e.detail.response.catarr;
         assesscategory=e.detail.response.returnval;
-        if(assesscategory.length>0)
+        if(assesscategory.length>0){
         this.callFetchStudentInfo(gradename,section,subject);
+
+        }
+          else{
+        document.querySelector('term-assesment-card').FnToggleSpinner(false);
+        document.querySelector('term-assesment-card').TermMarkdialog("Please Check the Subject");
+       
+          }
+
+          
         // categorycnt=e.detail.response.catarr;
       },
       callFetchStudentInfo:function(grad,sec,sub){

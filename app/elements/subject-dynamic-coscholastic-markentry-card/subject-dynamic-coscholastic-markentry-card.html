@@ -50,7 +50,7 @@
      margin-left: 73%;
       }
     </style>
-     <div hidden$="{{hideheader}}">
+     <div hidden$="{{hideheader1}}">
             <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
              id="coscolasticcheckid1" on-change="excelmark1">Excel Upload
              </paper-checkbox>
@@ -282,6 +282,16 @@ document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
   fngenrategrade:function(arr){
           tempassesmetarr=arr;
     },
+    FnRefresh:function(){
+       this.hideheader1=true;      
+        this.$.dynamicsavebtn1.hidden=true;
+       localStorage.setItem("curr_sess_template_tef","coinactive"); 
+       this.$.subjectdynamiccoscholasticid.hidden=true;
+         localStorage.setItem("curr_sess_template_tef","inactive"); 
+       localStorage.setItem("curr_sess_single_studetmap","inmapactive");
+        this.$.coscolasticcheckid1.hidden=true;
+
+    },
   fnstudentarrvalue:function(arr){
          tempstudentarr=arr;
      },
@@ -315,6 +325,10 @@ document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
         this.$.dynamicsavebtn1.hidden=false;
         this.hideheader1=false;
         this.FnSetLabel();
+   if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+        this.$.coscolasticcheckid1.hidden=true;
+      else
+        this.$.coscolasticcheckid1.hidden=false;
       },
         FnApprove:function(){
         // this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);

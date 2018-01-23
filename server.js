@@ -33,16 +33,14 @@ var connection = mysql.createConnection({
 var bodyParser = require('body-parser'); 
 var app = express();
 var logfile;
- AWS.config.loadFromPath('app/configfile/credential.json');
+AWS.config.loadFromPath('app/configfile/credential.json');
 
 app.use(express.static('app'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.get('/', function (req, res) {
+app.get('/', function (req, res){
   res.sendFile("app/index.html" );
 })
-
-
 app.post('/smis-fetchvisitortype',  urlencodedParser,function (req, res)
 {
   var arr=[];
@@ -1739,13 +1737,13 @@ var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_su
     else
       console.log(err);
   });
-});
+ });
 
 
 app.post('/fngetstudentterm-service',  urlencodedParser,function (req,res)
 {  
     var qur="SELECT distinct(term_id),term_name from md_grade_assesment_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' ";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,function(err, rows){
     if(!err)
     {  
@@ -2957,8 +2955,7 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   function(err, rows)
   {
   response.subject_category=rows[0].subject_category;
- // console.log(response.subject_category);
-
+ 
   var q="SELECT * FROM tr_term_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' "+
   " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"' and sub_cat_sequence='"+req.query.subcatseq+"'";
   console.log('..................................');
@@ -3956,7 +3953,7 @@ app.post('/fetchreportsubjectname-service',  urlencodedParser,function (req,res)
   "(select subject_id from mp_grade_subject where grade_id=(select grade_id from "+
   "md_grade where grade_name='"+req.query.grade+"')) "+
   " order by subject_category";
-  console.log('-----------------------fetchreportsubjectname----------------------------');
+  console.log('----------fetchreportsubjectname------------');
   //console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -3975,7 +3972,6 @@ app.post('/fetchreportsubjectname-service',  urlencodedParser,function (req,res)
   });
 });
 
-//fetching mark
 app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};

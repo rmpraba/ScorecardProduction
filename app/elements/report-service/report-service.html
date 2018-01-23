@@ -160,8 +160,7 @@
           this.callassesmentwisereportService();
         } 
         else if(localStorage.getItem("curr_sess_reporttype")=="Termwise"){
-          //document.querySelector('consolidated-report-card').FnHide();
-          this.calltermwisereportService();
+           this.calltermwisereportService();
         }
         else if(localStorage.getItem("curr_sess_reporttype")=="Subjectwise"){
           //document.querySelector('consolidated-report-card').FnHide();
@@ -571,11 +570,11 @@ var i;
           var obj={};
           obj.ASSESMENT_TYPE=assesscategory[i].ASSESMENT_TYPE;
            if(i==0)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==1)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==2)
-          obj.spancnt=11;
+          obj.spancnt=10;
           temp.push(obj);
          
         }
@@ -1105,11 +1104,11 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
           var obj={};
           obj.ASSESMENT_TYPE=assesscategory[i].ASSESMENT_TYPE;
            if(i==0)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==1)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==2)
-          obj.spancnt=11;
+          obj.spancnt=10;
           temp.push(obj);
          }
 
@@ -1117,11 +1116,11 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
           var obj={};
           obj.ASSESMENT_TYPE=assesscategory[i].ASSESMENT_TYPE;
            if(i==0)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==1)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==2)
-          obj.spancnt=11;
+          obj.spancnt=10;
           temp.push(obj);
          
          
@@ -1130,17 +1129,17 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
           var obj={};
           obj.ASSESMENT_TYPE=assesscategory[i].ASSESMENT_TYPE;
            if(i==0)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==1)
-           obj.spancnt=8;
+           obj.spancnt=7;
            if(i==2)
-          obj.spancnt=11;
+          obj.spancnt=10;
           temp.push(obj);
          
          
         }
       
-        tempcnt=27;
+        tempcnt=24;
    //     alert(JSON.stringify(temp));
         if(parseFloat(tempcnt)>=8){
            percent=100;
@@ -1160,20 +1159,20 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
            var obj={};
             obj.studentname="Student Name";
             obj.subcategoryname="Term1";
-            obj.categorycnt=27;
-            obj.width=(parseFloat(27)*parseFloat(divider))+"%";
+            obj.categorycnt=24;
+            obj.width=(parseFloat(24)*parseFloat(divider))+"%";
             termarr.push(obj);
              obj={};
             obj.studentname="Student Name";
             obj.subcategoryname="Term2";
-            obj.categorycnt=27;
-            obj.width=(parseFloat(27)*parseFloat(divider))+"%";
+            obj.categorycnt=24;
+            obj.width=(parseFloat(24)*parseFloat(divider))+"%";
             termarr.push(obj);
             obj={};
             obj.studentname="Student Name";
             obj.subcategoryname="Term3"; 
-            obj.categorycnt=27;
-            obj.width=(parseFloat(27)*parseFloat(divider))+"%";
+            obj.categorycnt=24;
+            obj.width=(parseFloat(24)*parseFloat(divider))+"%";
             termarr.push(obj);
                          
 
