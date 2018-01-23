@@ -493,6 +493,9 @@
     <div class="card" hidden$="{{dataanalysiss}}">
       <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
     </div>
+    <div class="card" hidden$="{{studenttracking}}">
+      <paper-button on-click="FnStudentTracking" no ink><img src="../../images/performance.png" height="180px" width="180px"></paper-button>
+    </div>
     <!-- <div class="card" hidden$="{{Analysiss}}">
       <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
     </div>  --> 
@@ -1398,10 +1401,16 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle();
       },
+      FnStudentTracking:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','StudentTracking');
+        // document.querySelector('student-performance-tracking-homecard').FnHideSchool();
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('student-performance-tracking-homecard','');
+        document.querySelector('student-performance-tracking-homecard').FnCallService();      
+      },
       fnsendmails:function(e){
-     localStorage.setItem('curr_sess_loggedassesmenttype','sendmailsid');
-        this.$.cdialog.toggle();
-
+       localStorage.setItem('curr_sess_loggedassesmenttype','sendmailsid');
+       this.$.cdialog.toggle();
       },
       FnTeacherbserver:function()
       {

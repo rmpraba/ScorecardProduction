@@ -3,15 +3,128 @@
 <dom-module id="student-performance-tracking-homecard">
   <template>
     <style>
+    .outcard{
+        @apply(--layout-vertical);
+    }
+    .drop{        
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        border-bottom: 1px solid #dedede;
+    }
+    paper-dropdown-menu{
+      width: 15%;
+      margin-left: 3%;
+      --paper-input-container-label: { color: red };
+      text-align:center;
+    }
+    .drop1,.drop2
+    {
+      @apply(--layout-vertical);
+      /*width: 100%;*/
+    }
+    .indrop{     
+        width: 100%;   
+        @apply(--layout-horizontal);
+        /*@apply(--layout-center-justified);*/
+        border-bottom: 1px solid #dedede;
+    }
+    /*assesment-performance-expandcard{
+      width: 100%;
+      margin-left: 5%;
+    }*/
+    h3{
+        color: #111AD9  ;
+      }
     </style>
-    <div></div>
+    <div class='outcard'>
+    <div class='drop'>
+      <paper-dropdown-menu id="spthcbranch" label="Select Branch" disabled="{{read}}" required>
+        <paper-menu id="spthcbranch" class="dropdown-content"  on-iron-select="FnSelectBranch"  attr-for-selected="value" required>     
+          <template is="dom-repeat" items="{{brancharr}}">
+            <paper-item value="{{item.id}}">{{item.name}}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+      <paper-dropdown-menu id="spthcacademicyear" label="Select Academic Year" disabled="{{read}}" required>
+        <paper-menu id="spthcacademicyear" class="dropdown-content"  on-iron-select="FnSelectAcademicyear"  attr-for-selected="value" required>
+          <template is="dom-repeat" items="{{academicarr}}">
+            <paper-item value="{{item.academic_year}}">{{item.academic_year}}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+      <paper-dropdown-menu id="spthcgrade" label="Select Grade" disabled="{{read}}" required>
+        <paper-menu id="spthcgrade" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+          <template is="dom-repeat" items="{{gradearr}}">
+            <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+      <paper-dropdown-menu id="spthcsection" label="Select Section" disabled="{{read}}" required>
+        <paper-menu id="spthcsection" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+          <template is="dom-repeat" items="{{sectionarr}}">
+            <paper-item value="{{item.section_name}}">{{item.section_id}}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+    </div>  
+    </div>
+    <center>
+    <h3>Total number of students: {{total}}</h3>
+    </center>
+    
+    <template is="dom-repeat" items="{{assesmentarr}}">
+    <!-- <div class='drop1'> -->
+    <assesment-performance-expandcard assesment="{{item.assesment}}" subjectarr="{{item.totalarr}}"></assesment-performance-expandcard>
+    <!-- </div> -->
+   <!--  <h3>Assesment Name:{{item.assesment}}</h3>   
+      <div class="indrop">        
+        <assesment-performance-card assesment="{{item.assesment}}" subjectarr="{{item.totalarr}}"></assesment-performance-card>
+      </div> -->
+    </template>
+    <!-- </div> -->
+    <!-- <div class='drop2'>
+    <h3>Assesment Name: </h3>
+    <template is="dom-repeat" items="{{assesmentarr}}">
+      <div class="indrop">
+        <assesment-performance-card></assesment-performance-card>
+      </div>
+    </template>
+    </div> -->
+    <performance-report-service id='performancereportservice'></performance-report-service>
   </template>
   <script>
   (function() {
     'use strict';
     Polymer({
       is: 'student-performance-tracking-homecard',
-      
+      FnCallService:function(){
+        this.$.performancereportservice.FnFetchBranchService();
+        this.$.performancereportservice.FnFetchAcademicYear();
+        // this.$.performancereportservice.FnFetchGrade();
+        // this.$.performancereportservice.FnFetchSection();
+      },
+      FnSelectBranch:function(e){
+        this.schoolid=e.target.selectedItem.value.trim();
+        this.schoolname=e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_schoolid",this.schoolid);
+      },
+      FnSelectAcademicyear:function(e){
+        this.academicyear=e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_academicyear",this.academicyear);
+        this.$.performancereportservice.FnFetchGrade(this.schoolid,this.academicyear);    
+      },
+      FnSelectGrade:function(e){
+        this.gradeid=e.target.selectedItem.value.trim();
+        this.gradename=e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_grade",this.gradename);
+        this.$.performancereportservice.FnFetchSection(this.schoolid,this.academicyear,this.gradeid);        
+      },
+      FnSelectSection:function(e){
+        this.sectionid=e.target.selectedItem.value.trim();
+        this.sectionname=e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",this.sectionname);
+        this.$.performancereportservice.FnFetchAssesmentInfo(this.schoolid,this.academicyear,this.gradeid,this.gradename,this.sectionid,this.sectionname);
+      }
     });
   })();
   </script>

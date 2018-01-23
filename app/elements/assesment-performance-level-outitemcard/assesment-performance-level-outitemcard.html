@@ -1,0 +1,93 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-icons/image-icons.html">
+
+<dom-module id="assesment-performance-level-outitemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .indrop{
+        @apply(--layout-horizontal);
+        width: 100%;
+      }
+      iron-icon.tiny {
+          --iron-icon-height: 12px;
+          --iron-icon-width: 12px;
+          margin-top: 2%;
+          --iron-icon-fill-color: #111AD9;
+      }
+      assesment-performance-student-list{
+        @apply(--layout-vertical);
+        width: 100%;
+      }
+      .incard{
+        @apply(--layout-horizontal);
+        width: 100%;
+      }
+      .cardd{
+        @apply(--layout-vertical);
+        width: 100%;
+      }
+      h3{
+        color: #111AD9;
+      }
+      paper-dialog{
+        width: 80%;
+      }
+    </style>
+    <div hidden>{{subcategory}}{{subject}}</div>
+    <div>
+    <div class="indrop">
+      <h5 style="width: 80%;">Category : {{category}}</h5> 
+      <div style="width:20%;text-align: right;margin-top: 4%;padding-top: 5%;"><iron-icon class="tiny" icon="image:remove-red-eye" on-click="FnView"></iron-icon></div>             
+    </div>
+        <assesment-performance-level-itemcard subject="{{subject}}" category="{{category}}" 
+        subject="{{subject}}" categoryname="{{categoryname}}" subcategory="{{subcategory}}" level="{{level}}" configcolumn="{{configcolumn}}" assesment="{{assesment}}" levelarr="{{levelarr}}"></assesment-performance-level-itemcard>
+    </div>
+
+    <div>
+    <paper-dialog id="dialogstudentlist">
+    <h3>Student List</h3>
+    <h4>Subject:{{showsubject}}&nbsp;&nbsp;&nbsp;&nbsp;Category:{{showcategory}}&nbsp;&nbsp;&nbsp;&nbsp;Sub-Category:{{showsubcategory}}&nbsp;&nbsp;&nbsp;&nbsp;Level:{{showlevel}}</h4>
+    <br>
+    <paper-dialog-scrollable>
+    <div class="incard">
+    <template is="dom-repeat" items="{{studentarr}}">
+    <div class="cardd">
+    <h3>{{item.category}}</h3>
+    <assesment-performance-student-list studentarr="{{item.studarr}}"></assesment-performance-student-list>
+    </div>
+    </template>
+    </div>
+    </paper-dialog-scrollable>
+    <div class="buttons">
+    <paper-button dialog-dismiss>Cancel</paper-button>
+    </div>
+    </paper-dialog>
+    </div>
+
+    <performance-report-service id="performancereportservice"></performance-report-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'assesment-performance-level-outitemcard',
+      FnView:function(){
+        // alert(this.configcolumn+" "+this.assesment);
+        // alert(this.subject+" "+this.categoryname+" "+this.subcategory+" "+this.level);
+        this.$.performancereportservice.FnFetchlevelbasedstudents(this.subject,this.categoryname,this.subcategory,this.level,this.configcolumn,this.assesment);
+      },
+      FnShowDialog:function(subject,categoryname,subcategory,level){
+        this.showsubject=subject;
+        this.showcategory=categoryname;
+        this.showsubcategory=subcategory;
+        this.showlevel=level;
+        this.$.dialogstudentlist.toggle();
+      }
+    });
+  })();
+  </script>
+</dom-module>

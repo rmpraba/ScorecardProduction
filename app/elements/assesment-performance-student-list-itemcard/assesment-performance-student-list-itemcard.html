@@ -1,0 +1,30 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="assesment-performance-student-list-itemcard">
+  <template>
+    <style>
+      .indrop{
+        @apply(--layout-horizontal);
+        margin-top: 2%;
+        margin-left: 3%;
+        width: 100%;
+        color: red;
+      }      
+    </style>
+    
+    <div class="indrop">
+    <template is="dom-repeat" items="{{levelarr}}">
+    {{item.assesment_id}}-{{item.level}}({{item.category}})
+    </template>
+    </div>
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'assesment-performance-student-list-itemcard',
+    });
+  })();
+  </script>
+</dom-module>
