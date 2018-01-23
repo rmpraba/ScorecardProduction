@@ -10053,7 +10053,7 @@ connection.query("SELECT * FROM md_employee_creation WHERE emp_id='"+req.query.e
             {
             if(!err)
             {
-              var tempseq=parseInt((req.query.empid).substring(3))+1;
+              var tempseq=parseInt((req.query.empid).substring(6))+1;
               console.log(tempseq);
                       connection.query("UPDATE school_sequence SET emp_sequence='"+tempseq+"' where school_id='"+req.query.school_id+"'", function (err,result){
                         if(result.affectedRows>0)
@@ -10125,7 +10125,7 @@ app.post('/sectioncreationmapping-service' , urlencodedParser,function (req, res
             {
             if(!err)
             {
-              var tempseq=parseInt((req.query.classid).substring(3))+1;
+              var tempseq=parseInt((req.query.classid).substring(6))+1;
               console.log(tempseq);
                       connection.query("UPDATE school_sequence SET sec_sequence='"+tempseq+"' where school_id='"+req.query.school_id+"'", function (err,result){
                         if(result.affectedRows>0)
@@ -12907,9 +12907,9 @@ app.post('/FnSetschoolInfo1-service',  urlencodedParser,function (req,res)
   {  
     var response={
          school_id:req.query.school,
-         emp_prefix:'STF',
+         emp_prefix:'STF'+req.query.uschoolid+'00',
          emp_sequence:'1',
-         sec_prefix:'CLS',
+         sec_prefix:'CLS'+req.query.uschoolid+'00',
          sec_sequence:'1',
     };
      console.log(response);

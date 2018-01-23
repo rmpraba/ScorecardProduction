@@ -164,8 +164,9 @@
         <td>
           <table cellspacing="0" cellpadding="1" border="0" width="560px">
             <tr>
-              <th><h4><label style="margin-left: -16em;">Employee ID</label></h4></th>
-              <th><h4><label style="margin-left: -29em;">Employee Names</label></h4></th>
+              <th><h4><label style="margin-left: -12em;">Employee ID</label></h4></th>
+              <th><h4><label style="margin-left: -21em;">Employee Names</label></h4></th>
+              <th><h4><label style="margin-left: -17em;">Employee password</label></h4></th>
               <th><paper-icon-button  style="margin-left: -17em;"  id="btn1" icon="add" on-click="getempdetails"></paper-icon-button>
                <paper-tooltip for="btn1">Create</paper-tooltip>
               </th>
@@ -181,8 +182,9 @@
             <table cellspacing="0" cellpadding="1" border="0" width="550px">
               <template is="dom-repeat" items="{{selectschoolpersonalarr}}" as="view">
            <tr>
-                 <td>{{view.emp_id}}</td>
+                   <td>{{view.emp_id}}</td>
                    <td>{{view.emp_name}}</td>
+                   <td>{{view.emp_password}}</td>
                     <td>
                       <new-employee-creation-item-card employeeid="{{view.emp_id}}" employeename="{{view.emp_name}}" employeephone="{{view.emp_phone}}"  employeemail="{{view.emp_mail}}" employeeschool="{{view.school_id}}" employeepassword="{{view.emp_password}}" employeemobile="{{view.emp_mobile}}" hiderolenameinput="true" hiderolenameitem="false"></new-employee-creation-item-card>           
                   </td>
