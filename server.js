@@ -5442,7 +5442,7 @@ insertqur="insert into tr_term_auditimport set ?";
 else if(req.query.assesmentid=='Assesment2'){
 qurcheck="select * from tr_term_auditimport where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment1'  and subject_id='"+req.query.subject+"'";  
 // response.assesment_level2='Assesment1';
-updatequr="update tr_term_auditimport set ? where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment1'  and subject_id='"+req.query.subject+"'";
+ updatequr="update tr_term_auditimport set ? where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment1'  and subject_id='"+req.query.subject+"'";
 updateval={assesment_level2:req.query.assesmentid};
 }
 else if(req.query.assesmentid=='Assesment3'){
@@ -10660,6 +10660,69 @@ app.post('/termrecovery-service',urlencodedParser,function (req,res)
       res.status(200).json({'returnval': ''});
     });
 });
+
+app.post('/subjectapprovalaudit-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+      school_id:req.query.schoolid,
+      academic_year:req.query.academicyear,
+      assesment_level2:req.query.assesment,
+      grade:req.query.gradename,
+      section:req.query.section,
+      subject_id:req.query.subject,
+      term_name:req.query.termname,
+
+      };
+      console.log(response);
+     var qur="SELECT * FROM tr_term_auditimport WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and grade='"+req.query.gradename+"'";
+
+     var qur1="update tr_term_auditimport set assesment_level2='"+req.query.assesment+"' WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and grade='"+req.query.gradename+"'";
+
+     console.log("-------------audit-service-value--------");
+    console.log(qur);
+    console.log("---------------------------------");
+    console.log(qur1)
+    console.log("---------------------------------")
+   connection.query(qur,
+    function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO tr_term_auditimport SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)   
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+    }
+    else
+    {
+      //console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+});
+
+
+
+
+
+
+
+
+
+
 app.post('/terminsert-service' , urlencodedParser,function (req, res)
 {  
     var response={

@@ -283,7 +283,8 @@ this.$.hiddenexcelheaderfiles.hidden=true;
       FnSetMarkEnteredArray:function(arr){
         var scorearrlen=arr;
         if(((this.studarr.length)-2)==(scorearrlen)){
-        this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+    this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+    this.$.subjectservice.callSubjectApprovalAuditService(this.grade,this.section,this.subject,this.assesmentname);
         }
         else
         {

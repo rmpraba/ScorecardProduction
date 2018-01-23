@@ -101,6 +101,15 @@
         content-type="application/json"
         on-response="checkstatusupdateResponse"
         debounce-duration="300"
+    > <iron-ajax        
+        method="post"
+        id="subjectapprovalauditajax"
+        url="{{subjectapprovalauditurl}}"
+        params="{{subjectapprovalauditparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="subjectapprovalauditResponse"
+        debounce-duration="300"
     >
     <term-assesment-service id="termservice"></term-assesment-service>
     
@@ -166,6 +175,26 @@
                 // }
             }
         }
+      },
+
+       callSubjectApprovalAuditService:function(grade,section,subject,assesmentname){
+      this.subjectapprovalauditurl=sessionStorage.getItem("addrinfo")+"/subjectapprovalaudit-service";
+         var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesment=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+         obj.gradename=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.assesmentname=assesmentname;
+         this.subjectapprovalauditparam=obj;
+         this.$.subjectapprovalauditajax.generateRequest();
+      },
+      subjectapprovalauditResponse:function(e){
+     var arr=e.detail.response.returnval;
+  //     alert(JSON.stringify(arr));
       },
       callSubjectApprovalService:function(grade,section,subject){
         this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticapproval-service";
