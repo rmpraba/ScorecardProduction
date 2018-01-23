@@ -122,7 +122,7 @@
       <td>{{item.speccomment}}</td>
           <!-- <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
       </td> -->
-      </tr>
+      </tr>  
       </template> 
      </table> 
     </div>
@@ -169,10 +169,8 @@
         this.workingdays=days;
       },
        FnClick:function(){
-     //   alert(JSON.stringify(array));
-         var temp=[];
-     
-         if(array.length==0){
+          var temp=[];
+      if(array.length==0){
         alert("Pls save the file in EXCEL WORKBOOK extension!");
         document.getElementById("attendancefile").value = "";
        }
@@ -210,7 +208,7 @@
             tempstudentarr=[];
             document.getElementById("attendancefile").value ="";
            this.categorylength="";
-       }
+        }
       },
       FnSave:function(){
         alert('Attendance for this section is complete!');

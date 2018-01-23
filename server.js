@@ -1737,13 +1737,13 @@ var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_su
     else
       console.log(err);
   });
- });
+});
 
 
 app.post('/fngetstudentterm-service',  urlencodedParser,function (req,res)
 {  
     var qur="SELECT distinct(term_id),term_name from md_grade_assesment_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' ";
-  //  console.log(qur);
+    console.log(qur);
     connection.query(qur,function(err, rows){
     if(!err)
     {  
@@ -4525,11 +4525,18 @@ app.post('/insertattendance-service',  urlencodedParser,function (req,res)
          section:req.query.section                 
   } 
   var qur="SELECT * FROM tr_term_attendance where school_id='"+req.query.schoolid+"' and "+
-  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and class_id='"+req.query.classid+"' and "+
+  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and section='"+req.query.section+"' and "+
+  "grade='"+req.query.grade+"'and "+
   "student_id='"+req.query.studentid+"'";
 
-  // console.log(qur);
-  
+ console.log("-------------Attendance UPDATE------------------");
+  console.log(qur);
+ console.log("------------------------------------------------");
+  console.log("UPDATE tr_term_attendance SET generic='"+req.query.generic+"',speccomment='"+req.query.specific+"',attendance='"+req.query.attendance+"' where school_id='"+req.query.schoolid+"' and "+
+  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and section='"+req.query.section+"'  and grade='"+req.query.grade+"' and "+
+  "student_id='"+req.query.studentid+"'");
+  console.log("------------------------------------------------");
+
 connection.query(qur,
 function(err, rows)
 {
@@ -4552,7 +4559,7 @@ function(err, rows)
 else
 {
   connection.query("UPDATE tr_term_attendance SET ? where school_id='"+req.query.schoolid+"' and "+
-  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and class_id='"+req.query.classid+"' and "+
+  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and section='"+req.query.section+"'  and grade='"+req.query.grade+"' and "+
   "student_id='"+req.query.studentid+"'",[response],
     function(err, rows)
     {
@@ -10034,8 +10041,8 @@ app.post('/emppersonaldetails-service' ,  urlencodedParser,function (req, res)
     var response={"emp_id":req.query.empid,
     "emp_name":req.query.name,"school_id":req.query.school_id,"emp_phone":req.query.Telephone,"emp_password":req.query.password,"emp_mobile":req.query.MobileNumber,"emp_mail":req.query.mailid,"flage":req.query.flage,academic_year:req.query.academic_year}; 
 
-    console.log('-----------personal detail creation--------');
-    console.log(JSON.stringify(response));
+      console.log('-----------personal detail creation--------');
+     console.log(JSON.stringify(response));
 
 connection.query("SELECT * FROM md_employee_creation WHERE emp_id='"+req.query.empid+"'and school_id='"+req.query.school_id+"' and emp_phone='"+req.query.Telephone+"'and academic_year='"+req.query.academic_year+"'",function(err, rows)
     {
