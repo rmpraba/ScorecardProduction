@@ -93,7 +93,7 @@
     var studentarr=[];
     var overall=[];
     var gradename,section,subject,languagepref;
-    Polymer({
+      Polymer({
       is: 'subject-dynamic-service',
       callSubjectApprovalService:function(grade,section,subject){
         this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectapproval-service";

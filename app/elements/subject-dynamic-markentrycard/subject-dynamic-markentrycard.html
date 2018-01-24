@@ -68,12 +68,13 @@
         <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
       </div>
    </div>
-    <center>
     <div hidden$="{{hideheader}}">
+    <center>
+   
       <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
-    </div>
+ 
       <!-- <table border="1" >   -->
       <!-- <tr><td></td>
         <template is="dom-repeat" items="{{titlearr}}">
@@ -86,16 +87,17 @@
       <subject-dynamic-markentryitemcard id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-markentryitemcard>
       <!-- </td></tr> -->
       </template>  
-      </div>
-
-     
+       </div>
+      
       <!-- </table> -->
       </center> 
     <!-- </template>      -->
-    </div>
-    <div class="btndiv">
+     <div class="btndiv">
     <!-- <paper-button class="button" id="grade" on-click="FnGenerateGrade">Generate Grade</paper-button> -->
     <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
+    </div>
+    </div>
+   
     </div>  
     <subject-dynamic-service id="subjectservice"></subject-dynamic-service>
     <div  id="dynamicreporttable111" hidden>

@@ -17,7 +17,7 @@
     }    
     .card{
         @apply(--layout-vertical);
-    }
+      }
     .drop{        
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
@@ -154,6 +154,11 @@
         if(this.flag==1)
           document.querySelector('subject-dynamic-markentrycard').studarr=[];
           // this.callService();
+   if(localStorage.getItem("curr_sess_page")=="subject-dynamic-markentrycard")
+   document.querySelector('subject-dynamic-markentrycard').hideheader=true;
+    if(localStorage.getItem("curr_sess_page")=="dynamic-scholastic-markentry-card")
+   document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
+    
       },
       FnSelectSection:function(e){
         document.querySelector('#assesmentcat1').selected=-1;
@@ -163,8 +168,13 @@
         this.$.assesmentservice.callSubjectService(gradename,section);
         if(this.flag==1)
           document.querySelector('subject-dynamic-markentrycard').studarr=[];
-          // this.callService();
-      },      
+         
+ if(localStorage.getItem("curr_sess_page")=="subject-dynamic-markentrycard")
+   document.querySelector('subject-dynamic-markentrycard').hideheader=true;
+ if(localStorage.getItem("curr_sess_page")=="dynamic-scholastic-markentry-card")
+   document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
+    
+     },      
       FnSelectSubject:function(e){
         this.flag=1;
         var sname = e.target.selectedItem.value; 
@@ -182,17 +192,27 @@
         localStorage.setItem("curr_sess_subjectid",subjectid);
         localStorage.setItem("curr_sess_languagepref",pref);
        // alert(localStorage.getItem("curr_sess_subjectid"));
-        this.callService();       
+        this.callService(); 
+  if(localStorage.getItem("curr_sess_page")=="subject-dynamic-markentrycard")
+   document.querySelector('subject-dynamic-markentrycard').hideheader=true;
+    if(localStorage.getItem("curr_sess_page")=="dynamic-scholastic-markentry-card")
+   document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
+          
       },
-      FnSelectAssesment:function(e){
+   FnSelectAssesment:function(e){
         document.querySelector('#subjectnam1').selected=-1;
         assesment = e.target.selectedItem.textContent.trim();
-        // alert(assesment);
+  //alert(localStorage.getItem("curr_sess_page"));
         localStorage.setItem("curr_sess_assesment",assesment);
         localStorage.setItem("curr_sess_assesmenttype",assesment);
         if(this.flag==1)
    document.querySelector('subject-dynamic-markentrycard').studarr=[];
           // this.callService();
+       if(localStorage.getItem("curr_sess_page")=="subject-dynamic-markentrycard")
+   document.querySelector('subject-dynamic-markentrycard').hideheader=true;
+    if(localStorage.getItem("curr_sess_page")=="dynamic-scholastic-markentry-card")
+   document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
+    
       },
       FnSelectAssesmentType:function(e){
         assesmenttype = e.target.selectedItem.textContent.trim();
@@ -200,6 +220,12 @@
         localStorage.setItem("curr_sess_assesmenttype",assesmenttype);
         if(this.flag==1)
           this.callService();
+  if(localStorage.getItem("curr_sess_page")=="subject-dynamic-markentrycard")
+   document.querySelector('subject-dynamic-markentrycard').hideheader=true;
+    if(localStorage.getItem("curr_sess_page")=="dynamic-scholastic-markentry-card")
+   document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
+    
+
       },
       callService:function(){        
         this.FnRefresh();

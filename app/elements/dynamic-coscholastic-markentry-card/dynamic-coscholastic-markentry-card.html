@@ -64,22 +64,25 @@
         <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;" on-click="FnClick1">Upload File</paper-button>    
       </div>
    </div>
-    <center>
     <div hidden$="{{hideheader}}">
+   
+    <center>
       <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
-    </div>
+    
       <div>
       <template is="dom-repeat" items="{{studarr}}">
       <dynamic-coscholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-coscholastic-markentry-itemcard>
       </template>  
       </div>
       </center> 
+       <div class="btndiv">
+        <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
+       </div>
+      </div>
     </div>
-    <div class="btndiv">
-      <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
-    </div> 
+    
    <div  id="codynamicreporttable" hidden>
       <div width="{{tabwidth}}">
        <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">

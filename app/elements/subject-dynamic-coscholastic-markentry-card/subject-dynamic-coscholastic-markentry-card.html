@@ -65,22 +65,25 @@
         <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick1">Upload File</paper-button>    
       </div>
    </div>
-    <div>
-    <center>
+   
     <div hidden$="{{hideheader1}}">
+    
+    <center>
       <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
-    </div>  
+ 
     <template is="dom-repeat" items="{{studarr}}">
      
       <subject-dynamic-coscholastic-markentry-item-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-coscholastic-markentry-item-card>
    </template> 
       </center>
-      </div>
-     <div class="btndiv">
+    <div class="btndiv">
       <paper-button  class="button" id="dynamicsavebtn1" on-click="FnApprove">{{btnlabel}}</paper-button>
-    </div>  
+    </div> 
+      </div>
+     
+         
   <term-assesment-service id="assesmentservice"></term-assesment-service>
      <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
 
