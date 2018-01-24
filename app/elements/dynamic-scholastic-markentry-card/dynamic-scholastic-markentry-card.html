@@ -82,7 +82,7 @@
     </div>  
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
    <term-assesment-service id="assesmentservice"></term-assesment-service>
-<beginner-assesment-service id="beginnerservice"></beginner-assesment-service>
+  <beginner-assesment-service id="beginnerservice"></beginner-assesment-service>
    
   <div  id="dynamicreporttable11" hidden>
    <div width="{{tabwidth}}">
@@ -283,13 +283,17 @@ this.$.hiddenexcelheaderfiles.hidden=true;
       FnSetMarkEnteredArray:function(arr){
         var scorearrlen=arr;
         if(((this.studarr.length)-2)==(scorearrlen)){
-    this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
-    this.$.subjectservice.callSubjectApprovalAuditService(this.grade,this.section,this.subject,this.assesmentname);
+       this.$.subjectservice.callSubjectApprovalAuditCheckService(this.grade,this.section,this.subject,this.assesmentname);
         }
         else
         {
           alert('Please complete markentry for all the students!!');
         }
+       },
+       Fngetmarkentry:function(e){
+      this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+     this.$.subjectservice.callSubjectApprovalAuditService(this.grade,this.section,this.subject,this.assesmentname);
+
        },
       FnApprove:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){

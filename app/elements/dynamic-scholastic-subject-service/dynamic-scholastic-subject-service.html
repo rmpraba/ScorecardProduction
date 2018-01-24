@@ -110,6 +110,15 @@
         content-type="application/json"
         on-response="subjectapprovalauditResponse"
         debounce-duration="300"
+    > <iron-ajax        
+        method="post"
+        id="callsubjectapprovaladitcheckajax"
+        url="{{callsubjectapprovaladitcheckurl}}"
+        params="{{callsubjectapprovaladitcheckparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="callsubjectapprovaladitcheckResponse"
+        debounce-duration="300"
     >
     <term-assesment-service id="termservice"></term-assesment-service>
     
@@ -194,9 +203,45 @@
       },
       subjectapprovalauditResponse:function(e){
      var arr=e.detail.response.returnval;
-  //     alert(JSON.stringify(arr));
+  //s     alert(JSON.stringify(arr));
       },
-      callSubjectApprovalService:function(grade,section,subject){
+
+  callSubjectApprovalAuditCheckService:function(grade,section,subject,assesmentname){
+        var obj={};   
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.assesmentid=assesmentname;
+         obj.subject=subject;
+         obj.gradename=grade;
+         obj.sectionname=section;
+         this.callsubjectapprovaladitcheckurl=sessionStorage.getItem("addrinfo")+"/callsubjectapprovaladitcheck-service";
+         this.callsubjectapprovaladitcheckparam=obj;
+         this.$.callsubjectapprovaladitcheckajax.generateRequest();
+       },
+    callsubjectapprovaladitcheckResponse:function(e)
+     {
+      if(e.detail.response.returnval=='exist'){        
+      //  alert('Assesment already approved!');
+ document.querySelector('term-assesment-card').TermMarkdialog("Assesment already approved!");
+      
+      }
+      else if(e.detail.response.returnval=='not exist'){        
+       // alert('Please approve the previous assesment of this term!');
+ document.querySelector('term-assesment-card').TermMarkdialog("Please approve the previous assesment of this term!");
+
+      }
+      else
+      {
+   if(e.detail.response.returnval=='updated')
+ document.querySelector('dynamic-scholastic-markentry-card').Fngetmarkentry();
+        if(e.detail.response.returnval=='not updated')
+      //   alert('Unable to approve!!');
+document.querySelector('term-assesment-card').TermMarkdialog("Unable to approve!!");
+
+      }
+     },
+ callSubjectApprovalService:function(grade,section,subject){
         this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticapproval-service";
          var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
