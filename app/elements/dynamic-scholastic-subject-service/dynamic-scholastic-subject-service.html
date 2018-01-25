@@ -101,6 +101,24 @@
         content-type="application/json"
         on-response="checkstatusupdateResponse"
         debounce-duration="300"
+    > <iron-ajax        
+        method="post"
+        id="subjectapprovalauditajax"
+        url="{{subjectapprovalauditurl}}"
+        params="{{subjectapprovalauditparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="subjectapprovalauditResponse"
+        debounce-duration="300"
+    > <iron-ajax        
+        method="post"
+        id="callsubjectapprovaladitcheckajax"
+        url="{{callsubjectapprovaladitcheckurl}}"
+        params="{{callsubjectapprovaladitcheckparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="callsubjectapprovaladitcheckResponse"
+        debounce-duration="300"
     >
     <term-assesment-service id="termservice"></term-assesment-service>
     
@@ -167,7 +185,63 @@
             }
         }
       },
-      callSubjectApprovalService:function(grade,section,subject){
+
+       callSubjectApprovalAuditService:function(grade,section,subject,assesmentname){
+      this.subjectapprovalauditurl=sessionStorage.getItem("addrinfo")+"/subjectapprovalaudit-service";
+         var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesment=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+         obj.gradename=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.assesmentname=assesmentname;
+         this.subjectapprovalauditparam=obj;
+         this.$.subjectapprovalauditajax.generateRequest();
+      },
+      subjectapprovalauditResponse:function(e){
+     var arr=e.detail.response.returnval;
+  //s     alert(JSON.stringify(arr));
+      },
+
+  callSubjectApprovalAuditCheckService:function(grade,section,subject,assesmentname){
+        var obj={};   
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.assesmentid=assesmentname;
+         obj.subject=subject;
+         obj.gradename=grade;
+         obj.sectionname=section;
+         this.callsubjectapprovaladitcheckurl=sessionStorage.getItem("addrinfo")+"/callsubjectapprovaladitcheck-service";
+         this.callsubjectapprovaladitcheckparam=obj;
+         this.$.callsubjectapprovaladitcheckajax.generateRequest();
+       },
+    callsubjectapprovaladitcheckResponse:function(e)
+     {
+      if(e.detail.response.returnval=='exist'){        
+      //  alert('Assesment already approved!');
+ document.querySelector('term-assesment-card').TermMarkdialog("Assesment already approved!");
+      
+      }
+      else if(e.detail.response.returnval=='not exist'){        
+       // alert('Please approve the previous assesment of this term!');
+ document.querySelector('term-assesment-card').TermMarkdialog("Please approve the previous assesment of this term!");
+
+      }
+      else
+      {
+   if(e.detail.response.returnval=='updated')
+ document.querySelector('dynamic-scholastic-markentry-card').Fngetmarkentry();
+        if(e.detail.response.returnval=='not updated')
+      //   alert('Unable to approve!!');
+document.querySelector('term-assesment-card').TermMarkdialog("Unable to approve!!");
+
+      }
+     },
+ callSubjectApprovalService:function(grade,section,subject){
         this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticapproval-service";
          var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");

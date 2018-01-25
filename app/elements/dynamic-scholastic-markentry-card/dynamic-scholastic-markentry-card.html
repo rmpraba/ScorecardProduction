@@ -93,25 +93,27 @@
        </div>
        </div>
        </div>
-    <center>
     <div hidden$="{{hideheader}}">
+ 
+    <center>
       <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
-    </div>
       <div>
       <template is="dom-repeat" items="{{studarr}}">
       <dynamic-scholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-scholastic-markentry-itemcard>
       </template>     
-       </div>
-      </center> 
+      </div>
+    </center> 
+       <div class="btndiv">
+        <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
+      </div> 
+      </div>
     </div>  
-    <div class="btndiv">
-    <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
-    </div>  
+     
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
    <term-assesment-service id="assesmentservice"></term-assesment-service>
-<beginner-assesment-service id="beginnerservice"></beginner-assesment-service>
+  <beginner-assesment-service id="beginnerservice"></beginner-assesment-service>
    
   <div  id="dynamicreporttable11" hidden>
    <div width="{{tabwidth}}">
@@ -326,12 +328,17 @@ this.$.hiddenexcelheaderfiles.hidden=true;
       FnSetMarkEnteredArray:function(arr){
         var scorearrlen=arr;
         if(((this.studarr.length)-2)==(scorearrlen)){
-        this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+       this.$.subjectservice.callSubjectApprovalAuditCheckService(this.grade,this.section,this.subject,this.assesmentname);
         }
         else
         {
           alert('Please complete markentry for all the students!!');
         }
+       },
+       Fngetmarkentry:function(e){
+      this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+     this.$.subjectservice.callSubjectApprovalAuditService(this.grade,this.section,this.subject,this.assesmentname);
+
        },
       FnApprove:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
