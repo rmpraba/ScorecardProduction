@@ -7,6 +7,28 @@
       :host {
         display: block;
       }
+       paper-dropdown-menu{
+      width: 24%;
+    margin-left: 7%;
+    text-align: center;
+    }
+    paper-dropdown-menu{
+   width: 24%;
+    margin-left: 7%;
+      --paper-input-container-label: { color: red };
+      text-align:center;
+    }
+     .card{
+        @apply(--layout-vertical);
+    }
+
+    .drop{        
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        /*margin-top: 5%;*/
+        margin-left: 5%;
+        border-bottom: 1px solid #dedede; 
+    }
        .viewdata{
         margin-top: 5%;
         /*font-size: 12px;*/
@@ -34,6 +56,10 @@
             border: none;
             background-color: transparent;
           }
+          .filterid{
+          margin-left: 42%;
+          margin-top: -5%;
+          }
       #itemcard:nth-child(odd) {
         background-color: white;
        
@@ -49,19 +75,67 @@
         width: 20%;
       border-radius: 25px;
     }
+      #dialogfilterid{
+        border-radius: 25px;
+          width: 40%;
+       }
+
     </style> 
     <div class="spinner"><paper-dialog id="dynamicapprovespinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
-    <div>
-     <center><h1>Mount Litera Zee School</h1>
-     <div id="hidetop">
-      <h3>Continuous Comprehensive Evaluation</h3>  
-      </div>
-      </center>
-       <div class="outcard">
+   
+      <center><h1>Mount Litera Zee School</h1>
+         <div id="hidetop">
+          <h3>Continuous Comprehensive Evaluation</h3>
+
+      <div class="filterid">
+       <paper-dropdown-menu id="grade" label="Select Filter"  >
+         <paper-menu  id="gradenam3" class="dropdown-content"  on-iron-select="FnSelectFilter"  attr-for-selected="value" required>     
+           <paper-item value="Filter By Grade">Filter By Grade</paper-item>
+           <paper-item value="Filter By Section">Filter By Section</paper-item>
+           <paper-item value="Filter By Subject">Filter By Subject</paper-item>
+        </paper-menu>
+      </paper-dropdown-menu>  
+     </div>
+   </center>
+
+   <paper-dialog id="dialogfilterid" modal>
+ 
+ <div class='card'>
+     <div class='drop'>
+   
+
+     <paper-dropdown-menu id="filtergrade" label="Select Grade"  >
+            <paper-menu  id="gradenam3" class="dropdown-content"  on-iron-select="FnSelectGrade1"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+               <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+     </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="filtersection" label="Select Section" >
+            <paper-menu id="sectionnam3" class="dropdown-content"  on-iron-select="FnSelectSection1"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="filtersubject" label="Select Subject">
+            <paper-menu id="subjectnam3" class="dropdown-content"  on-iron-select="FnSelectSubject1"  attr-for-selected="value" required>   
+              <template is="dom-repeat" items="{{subjectarr}}">
+                <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>   
+   
+  <paper-icon-button  style="margin-left: 3%;" icon="close" suffix on-click="Fncloseconcpt" >
+    </paper-icon-button>
+     </div>
+    </div>  
+   </paper-dialog>
+ <div class="outcard">
     <table id="Mark">
-     
       <tr>
-       
        <th id="tb1">Academic Year</th>
        <th id="tb1">Term</th>
        <th id="tb1">Assesment</th>
@@ -70,25 +144,28 @@
        <th id="tb1">Subject</th>
        <th id="tb1">View</th>
        <th id="tb1">Revert</th>
-       </tr>
-       </table>
+      </tr>
+    </table>
      
     <template is="dom-repeat" items="{{approvearr}}" as="m">
-        <div id="itemcard"><approve-one-to-four-itemcard category="{{m.category}}" academic="{{m.academic_year}}" assesment="{{m.assesment_id}}" term="{{m.term_name}}" grade="{{m.grade}}" section="{{m.section}}" subject="{{m.subject}}" langpref="{{m.langpref}}" subjectid="{{m.subject_id}}"></approve-one-to-four-itemcard>
-        </div>
+        <div id="itemcard"><approve-one-to-four-itemcard category="{{m.category}}" academic="{{m.academic_year}}" assesment="{{m.assesment_id}}" term="{{m.term_name}}" grade="{{m.grade}}" section="{{m.section}}" subject="{{m.subject}}" langpref="{{m.langpref}}" subjectid="{{m.subject_id}}"></approve-one-to-four-itemcard></div>
    </template>
  
- </div>
+ </div>  
 <paper-dialog id="termmarkdialogid111" modal>
        <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
        <center>
       <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
        </center>
-     </paper-dialog>
- </template>  
+ </paper-dialog>
+    <scorecard-service id="scorecardservice"></scorecard-service>
+   <term-assesment-service id="ghghhfghfghgfhgfhgfhgfhfg"></term-assesment-service>
+  </template>  
   <script>
   (function() {
     'use strict';
+    var gradename,section,subject,filtervalue;
+
     Polymer({
     is: 'approve-one-to-four-card',
     FnSpinnerrActive:function(flag){
@@ -99,12 +176,61 @@
       this.$.dynamicapprovespinner.opened=false;
 
     },
-    TermMarkdialog:function(argvalue)
-     {
-       alert(argvalue);
-       this.getindialogvalu=argvalue;
+      FnSelectGrade1:function(e){
+        gradename = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_grade1",gradename);
+       if(filtervalue=="Filter By Grade")
+       {
+        this.$.ghghhfghfghgfhgfhgfhgfhfg.Fnfiltervalues(gradename);
+
+       }
+        this.$.scorecardservice.callSectionService(gradename);
+      },
+       FnSelectSection1:function(e){
+
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section1",section);
+        this.$.scorecardservice.callSubjectService(gradename,section);    
+      },
+       FnSelectSubject1:function(e){
+        this.flag=1;
+        subject = e.target.selectedItem.textContent.trim();
+         localStorage.setItem("curr_sess_subject1",subject); 
+       //  alert('1');
+       this.$.assesmentservice1.callApproveService1();   
+        },
+    FnSelectFilter:function(e){
+      filtervalue = e.target.selectedItem.textContent.trim();
+         localStorage.setItem("curr_sess_filter",filtervalue); 
+       this.$.dialogfilterid.toggle();
+          if(filtervalue=="Filter By Grade"){
+              this.$.filtergrade.hidden=false;
+              this.$.filtersection.hidden=true;
+              this.$.filtersubject.hidden=true;
+          }
+
+          if(filtervalue=="Filter By Section"){
+              this.$.filtergrade.hidden=false;
+              this.$.filtersection.hidden=false;
+              this.$.filtersubject.hidden=true;
+          }
+
+          if(filtervalue=="Filter By Subject"){
+              this.$.filtergrade.hidden=false;
+              this.$.filtersection.hidden=false;
+              this.$.filtersubject.hidden=false;
+          }
+        },
+   Fncloseconcpt:function(){
+       this.$.dialogfilterid.close();
+
+},
+     TermMarkdialog:function(argvalue)
+      {
+        alert(argvalue);
+        this.getindialogvalu=argvalue;
        this.$.termmarkdialogid111.toggle();
-     },
+      },
      failureclose:function()
       {
       this.$.termmarkdialogid111.close();
