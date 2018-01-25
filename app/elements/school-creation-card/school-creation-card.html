@@ -169,7 +169,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </table>
           </td>
         </tr>
-
+  
         <tr>
           <td>
             <div  class="newcard" style="width:560px;margin-left: 3em;height:270px;">
@@ -414,9 +414,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.ready();
             
           },
-          fnschoolidzzzzzzzz:function(e){
+          fnschoolidzzzzzzzz:function(e,e1){
             this.schoolidzzzzzzzz=e;
            // alert(this.schoolidzzzzzzzz);
+           this.uschoolid=e1;
           },
 
          FnSubmit:function()
@@ -440,7 +441,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               else 
               {
                   
-        this.$.uiservice.FnSetschoolInfo(sname,this.schoolidzzzzzzzz,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation,this.Board,this.shortname1);
+        this.$.uiservice.FnSetschoolInfo(sname,this.schoolidzzzzzzzz,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation,this.Board,this.shortname1,this.uschoolid);
                   this.$.mydialog.toggleDialog();
                 document.querySelector('#academicswww').selected=-1;
                 document.querySelector('school-creation-card').FnRefresh(); 

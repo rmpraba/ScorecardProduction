@@ -54,22 +54,21 @@
       ready:function(){
         scorearr=this.temp;
         // alert('calling');
-      },
-      attached:function(){
+        },
+       attached:function(){
         scorearr=[];
         // alert('yes attached!!');
-      },
-      FnSetInfoArray:function(arr){
+       },
+       FnSetInfoArray:function(arr){
         scorearr=arr;
-      },
-      FnSave:function(){
+       },
+       FnSave:function(){
         localStorage.setItem("curr_sess_template_tef","inactive");
         
-        // alert(JSON.stringify(scorearr));
-        if(scorearr.length>0){
+         if(scorearr.length>0){
           if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive")
            {
-          document.querySelector('term-assesment-card').FnToggleSpinner(true);
+            document.querySelector('term-assesment-card').FnToggleSpinner(true);
            }
          
         for(var i=0;i<scorearr.length;i++){

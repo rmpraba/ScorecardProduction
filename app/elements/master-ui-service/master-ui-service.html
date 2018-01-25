@@ -2306,7 +2306,7 @@ insertschoolTypename:function(schooltypesarr)
    
          },
 
-      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board,shortname)
+      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board,shortname,uschoolid)
 
       {
        
@@ -2332,6 +2332,8 @@ insertschoolTypename:function(schooltypesarr)
        this.FnSetschoolInfo1url=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo1-service";
         var obj1={};
         obj1.school=schoolid1;
+        obj1.uschoolid=uschoolid;
+        
         this.FnSetschoolInfo1param=obj1;
       //  alert(JSON.stringify(obj1));
         this.$.FnSetschoolInfo1ajax.generateRequest();
@@ -2400,7 +2402,7 @@ insertschoolTypename:function(schooltypesarr)
        var arr= e.detail.response.returnval;
       // alert(JSON.stringify(arr));
        var m=arr[0].school_prefix+arr[0].school_seq;       
-    document.querySelector('school-creation-card').fnschoolidzzzzzzzz(m);
+    document.querySelector('school-creation-card').fnschoolidzzzzzzzz(m,arr[0].school_seq);
       
       },
 

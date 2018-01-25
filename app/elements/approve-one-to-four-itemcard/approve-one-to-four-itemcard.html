@@ -95,7 +95,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       localStorage.setItem("curr_sess_approvalflag",1);
       localStorage.setItem("curr_sess_academicyear",this.academic);
       localStorage.setItem("curr_sess_termname",this.term);
-      // alert(this.assesment);
       localStorage.setItem("curr_sess_assesment",this.assesment);
       localStorage.setItem("curr_sess_assesmenttype",this.assesment);
       localStorage.setItem("curr_sess_subject",this.subject);
@@ -132,7 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('home-page').setPage('termassesment','');
         document.querySelector('term-assesment').hiddenpage(); 
         document.querySelector('term-assesment-sheet-card').setPage('subject-dynamic-markentrycard');
-     document.querySelector('subject-dynamic-markentrycard').FnRefresh();
+        document.querySelector('subject-dynamic-markentrycard').FnRefresh();
         this.$.subjectservice.subjectsubmittedcheckService(this.grade,this.section,this.subject);
       }
       else{
