@@ -18,8 +18,8 @@ var connection = mysql.createConnection({
   
   host     : 'localhost',
   user     : 'root',
-  password : '',
-  database : 'scorecardtemp'
+  password : 'admin',
+  database : 'mlzsreportcard'
 
   // host     : 'localhost',
   // port     : '37506',
@@ -1491,7 +1491,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     " tg.role_id='"+req.query.roleid+"' and tg.id='"+req.query.loggedid+"' and tg.school_id='"+req.query.schoolid+"' and "+ 
     " tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and "+ 
     " academic_year='"+req.query.academicyear+"' and grade_id in (select grade_id from md_grade where school_id='"+req.query.schoolid+"' "+ 
-    " and  academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.gradename+"')";
+    " and  academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.gradename+"') order by UPPER(section_id)";
   }
   else if(req.query.roleid=='class-teacher')
   {
@@ -1504,7 +1504,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from "+
     " mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
     " tg.id='"+req.query.loggedid+"' and tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and "+
-    " g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+    " g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by UPPER(section_id)";
   }
    else if(req.query.roleid=='co-ordinator')
   {
@@ -1514,7 +1514,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     // "grade_id=(select grade_id from md_grade where "+
     // "school_id='"+req.query.schoolid+"' and grade_name='"+req.query.gradename+"') and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"'";
     var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
-    " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+    " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by UPPER(section_id)";
   }
   else if(req.query.roleid=='headmistress')
   {
@@ -1525,12 +1525,12 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     // "where grade_name='"+req.query.gradename+"') and "+
     // "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' ";
     var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
-    " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+    " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by UPPER(section_id)";
   }
    else if(req.query.roleid=='principal'||req.query.roleid=='viceprincipal'||req.query.roleid=='headofedn'||req.query.roleid=='management')
   {
     var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
-    " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+    " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by UPPER(section_id)";
     //console.log('5');
     // var qur="select * from md_section where section_id in "+
     // "(select distinct(section_id) from mp_teacher_grade where "+
@@ -2249,7 +2249,7 @@ app.post('/fetchstudentforattendance-service',  urlencodedParser,function (req, 
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'  and flag='active' and id not in(select student_id from tr_term_attendance where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
- //console.log(qur);
+ console.log(qur);
  connection.query(qur,
   
     function(err, rows)
@@ -2272,7 +2272,7 @@ app.post('/fetchstudentforattendance-service',  urlencodedParser,function (req, 
 app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function (req, res)
 {
   var qur="select student_id as id ,student_name,attendance,working_days,speccomment,generic from tr_term_attendance where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by student_name";
- //console.log(qur);
+ console.log(qur);
  connection.query(qur,
     function(err, rows)
     {
@@ -2956,20 +2956,21 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   {
   response.subject_category=rows[0].subject_category;
  
-  var q="SELECT * FROM tr_term_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' "+
-  " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"' and sub_cat_sequence='"+req.query.subcatseq+"'";
-  console.log('..................................');
-  console.log(q);
-  console.log('..................................');
+  // var q="SELECT * FROM tr_term_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' "+
+  // " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"' and sub_cat_sequence='"+req.query.subcatseq+"'";
+  // console.log('..................................');
+  // console.log(q);
+  // console.log('..................................');
   connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ? ",[cond1,cond2,cond3,cond4,cond6,cond7,cond8,cond9,cond10,cond11,cond12],function(err, rows) {
-  console.log("length..........."+rows.length);
+  // console.log("length..........."+rows.length);
   if(rows.length==0){
+    console.log('In if');
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
   function(err, result)
     {
     if(!err)
     {  
-     console.log("rows affected............"+result.affectedRows);  
+     // console.log("rows affected............"+result.affectedRows);  
       res.status(200).json({'returnval': 'succ'});
     }
     else
@@ -2980,6 +2981,7 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   });
   }
   else{
+    console.log('In else');
    connection.query("UPDATE tr_term_assesment_marks SET ? WHERE ? and ? and ? and ? and ? and ? and ? and ? ",[mark,cond1,cond2,cond3,cond4,cond6,cond7,cond8,cond9],function(err, rows) {
     if(!err){
       res.status(200).json({'returnval': 'succ'});

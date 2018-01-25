@@ -45,10 +45,14 @@
       padding: 0;
       border: none;
       background-color: transparent;
+      box-shadow: none;
     }
        #termmarkdialogid1{
       width: 20%;
       border-radius: 25px;
+    }
+    h4{
+      color: #061E98;
     }
     </style>
     <div class='card'>
@@ -82,7 +86,7 @@
  
      </div>
     </div>   
-    <div class="spinner"><paper-dialog modal id="dynamiccospinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div class="spinner"><paper-dialog modal id="dynamiccospinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner><h4>{{spinnermsg}}</h4></paper-dialog></div>
     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
     <term-assesment-service id="termassesmentservice"></term-assesment-service>
     <dynamic-coscholastic-subject-service id="scholasticsubjectservice"></dynamic-coscholastic-subject-service>
@@ -151,6 +155,7 @@
         {
      //   alert(2);
          this.FnToggleSpinner(true);
+         this.spinnermsg="Please wait...Loading";
          if(localStorage.getItem('curr_sess_report')=='0'){
           // alert("in");
           document.querySelector('coscholastic-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');

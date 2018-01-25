@@ -12,7 +12,7 @@
         display: block;
       }    
       table{
-        width: 80%;
+        width: 83%;
         border-collapse: collapse;
         margin-left: 1%;
       }
@@ -20,10 +20,13 @@
         width: 30%;
       }
       #tb1{
-        width:15%;
+        width:14%;
       }
       #tb2{
-        width:20%;
+        width:18%;
+      }
+      #tb3{
+        width:14%;
       }
       .button{
             width: 15%;
@@ -44,45 +47,77 @@
             font-family: Calibri;
             font-size: 17px;
           }
- .hrspace
+     .hrspace
       {
-       padding-left: 87%;
+        margin-left: 5%;
         @apply(--layout-horizontal);
-        width: 120%;
+       
       }
-     .exceldiv
+      .exceldiv
       {
         @apply(--layout-horizontal);
-        margin-top: 3%;
-        margin-left: 73%;
+        /*margin-top: 3%;*/
+        margin-left: 8%;
+      }
+      .excelcard{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        border-bottom: 1px solid #dedede;
+      }
+      #attendencefileid{
+        @apply(--layout-horizontal);
+      }
+      #upload{
+        margin-left: -10%;
+        /*padding-top: -2%;*/
+      }
+      .fileupload{
+        @apply(--layout-vertical);
+      }
+      #readfile{
+        margin-top: 2%;
+      }
+      #hidetop{
+        margin-top: 0.5%;
+      }
+      h4{
+      color: #061E98;
       }
     </style>
     <div>  
-    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
-      <div id="hidetop">
-      <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
-             id="attendancecheckid" on-change="excelmark11">Excel Upload</paper-checkbox>
-     </div>
-    <div id=attendencefileid>
-      <div class="hrspace">
-  <input type="button" id="btn2" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')" value="Download Template">
-     </div>
-      <div class="exceldiv" >
-         <input id="attendancefile" type="file" onchange="attendanceloadFile(event)"/>
-         <xmp id="output"></xmp>
-        <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner><h4>{{spinnermsg}}</h4></paper-dialog></div>
+    <div class="excelcard" align="right">
+      <div id="hidetop" hidden$="{{hideheader}}">
+      <paper-checkbox id="attendancecheckid" on-change="excelmark11">Excel Upload</paper-checkbox>
       </div>
-   </div>
+      <div id="attendencefileid">
+      <div class="hrspace">
+      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')"></paper-icon-button>
+      <paper-tooltip for="download">Download</paper-tooltip>
+      <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
+      </div>
+      <div class="exceldiv" >
+      <!-- <div class="fileupload"> -->
+        <input id="attendancefile" type="file" onchange="attendanceloadFile(event)"/>
+        <xmp id="output"></xmp>
+      <!-- </div> -->
+        <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
+        <paper-tooltip for="upload">Upload</paper-tooltip>
+        <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
+       </div>
+       </div>
+       </div>
     <div>  
     <div id="hidetop">
       <center><h1>{{schoolname}}</h1>      
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
-      <h4>Term &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
+      <h4>Term : &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} : &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <h4>Total Working Days: {{workingdays}}</h4>
       <table border="1" >    
       <tr>   
        <th id="tb1">SNo</th>
-       <th id="tb2">Name</th>
+       <th id="tb2">Student Id</th>
+       <th id="tb2">Student Name</th>
        <th id="tb1">Total Attendance</th>
        <th id="tb2">Generic Comment</th>
        <th id="tb2">Specific Comment</th>
@@ -91,7 +126,7 @@
       </div>
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
-      <td colspan="6">
+      <td colspan="7">
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
       </td>
       </tr>
@@ -105,12 +140,11 @@
        <table border="1" >    
       <tr>   
        <th id="tb1">SNo</th>
-       <th id="tb1">Studentno</th>
+       <th id="tb1">StudentId</th>
        <th id="tb2">StudentName</th>
        <th id="tb1">TotalAttendance</th>
        <th id="tb2">GenericComment</th>
        <th id="tb2">SpecificComment</th>
-    
      </tr>  
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
@@ -188,7 +222,7 @@
              
          if(setarr.length==3){
           var obj={};
-           obj.studentid=array[i].Studentno;
+           obj.studentid=array[i].StudentId;
            obj.studentname=array[i].StudentName;
            obj.TotalAttendance=array[i].TotalAttendance;
            obj.GenericComment=array[i].GenericComment;
@@ -199,6 +233,7 @@
            }}
 
       this.FnSpinnerrActive(true);
+      this.spinnermsg="Please wait...uploading";
    localStorage.setItem("curr_sess_lenth",temp.length);
     for(var i=0;i<temp.length;i++){
   this.$.coscholasticservice.callinsertattendanceService(temp[i].studentid,temp[i].studentname,temp[i].TotalAttendance,this.workingdays,temp[i].GenericComment,temp[i].SpecificComment);     

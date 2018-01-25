@@ -3,9 +3,6 @@
 <dom-module id="dynamic-scholastic-markentry-card">
   <template>
     <style>
-      :host {
-        display: block;
-      }
       table{
         /*width: 90%;*/
         border-collapse: collapse;                          
@@ -38,32 +35,64 @@
       }
          .hrspace
       {
-       padding-left: 87%;
+        margin-left: 5%;
         @apply(--layout-horizontal);
        
       }
-          .exceldiv
+      .exceldiv
       {
         @apply(--layout-horizontal);
-  margin-top: 3%;
-  margin-left: 73%;
+        /*margin-top: 3%;*/
+        margin-left: 8%;
       }
+      .excelcard{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        border-bottom: 1px solid #dedede;
+      }
+      #hiddenexcelheaderfiles{
+        @apply(--layout-horizontal);
+      }
+      #upload{
+        margin-left: -10%;
+        /*padding-top: -2%;*/
+      }
+      .fileupload{
+        @apply(--layout-vertical);
+      }
+      #readfile{
+        margin-top: 2%;
+      }
+      #check{
+        margin-top: 0.5%;
+      }
+      /*#download{*/
+        /*padding-top: -2%;*/
+        /*padding-left: 3%;*/
+      /*}*/
     </style>
     <div>
-      <div hidden$="{{hideheader}}">
-     <paper-checkbox  style="margin-left: 67%;padding-left: 11%;" 
- id="templatecheckvalueid1" on-change="excelmark">Excel Upload</paper-checkbox>
- </div>
-<div id=hiddenexcelheaderfiles>
-     <div class="hrspace">
-       <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template">
-     </div>
-     <div class="exceldiv" >
+      <div class="excelcard" align="right">
+      <div id="check" hidden$="{{hideheader}}">
+      <paper-checkbox id="templatecheckvalueid1" on-change="excelmark">Excel Upload</paper-checkbox>
+      </div>
+      <div id="hiddenexcelheaderfiles">
+      <div class="hrspace">
+      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')"></paper-icon-button>
+      <paper-tooltip for="download">Download</paper-tooltip>
+      <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
+      </div>
+      <div class="exceldiv" >
+      <!-- <div class="fileupload"> -->
         <input id="readfile" type="file" onchange="loadFile(event)"/>
         <xmp id="output"></xmp>
-        <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
+      <!-- </div> -->
+        <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
+        <paper-tooltip for="upload">Upload</paper-tooltip>
+        <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
        </div>
-  </div>
+       </div>
+       </div>
     <center>
     <div hidden$="{{hideheader}}">
       <h1>{{schoolname}}</h1>
@@ -110,14 +139,21 @@
   
   function loadFile(event) {
   alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
-    array1=data; 
+    array1=data;
+    // alert(JSON.stringify(array1));
+    // alert(array1.length+" "+tempstudentarr.length); 
      for(var i=0;i<array1.length;i++){
+     // alert('in');
        for(var j=0;j<tempstudentarr.length;j++){
-       // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
-       if(array1[i].StudentNo==tempstudentarr[j].id){
+       // alert('in in');
+       //alert(array[i].StudentId+"  "+tempstudentarr[j].id);
+       if(array1[i].StudentId.trim()==tempstudentarr[j].id.trim()){
           array.push(array1[i]);
          }      
-    }  
+    } 
+
+    // alert(JSON.stringify(array));
+
     }       
   });
   }
@@ -177,7 +213,7 @@ this.$.hiddenexcelheaderfiles.hidden=true;
       }
     },
        FnClick:function(){
-        // alert(JSON.stringify(array));
+      //  alert(JSON.stringify(array));
         var temp=[];
    if(array.length==0){
         alert("Pls save the file in EXCEL WORKBOOK extension!");
@@ -194,11 +230,16 @@ this.$.hiddenexcelheaderfiles.hidden=true;
                   for(var j=0;j<setarr.length;j++){
                    for(var k=0;k<tempassesmetarr.length;k++){
                 //alert(this.categorylength+" "+setarr.length);
+                // alert(setarr[j]);
+                  // var inx=setarr[j].indexOf("(");
+                  //       setarr[j]=setarr[j].substring(0,inx);
+                  // alert(setarr[j]);     
                      if(this.categorylength==setarr.length){ 
-  if(tempassesmetarr[k].category_name+":"+tempassesmetarr[k].sub_category_name==setarr[j]){
+   // alert(tempassesmetarr[k].category_name+":"+tempassesmetarr[k].sub_category_name+"("+tempassesmetarr[k].weight+")" +" "+setarr[j]);                      
+  if((tempassesmetarr[k].category_name).trim()+":"+(tempassesmetarr[k].sub_category_name+"("+tempassesmetarr[k].weight+")").trim() == (setarr[j]).trim()){
           var m=setarr[j];
           var obj={};
-          obj.studentid=array[i].StudentNo;
+          obj.studentid=array[i].StudentId;
           obj.studentname=array[i].StudentName;
           obj.classid=localStorage.getItem("curr_sess_classid");
           obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
@@ -212,9 +253,10 @@ this.$.hiddenexcelheaderfiles.hidden=true;
           obj.subcategoryname=tempassesmetarr[k].sub_category_name;
           obj.seq=tempassesmetarr[k].sub_seq;
           obj.value=array[i][m];
+      //    alert(i+" "+m);
           obj.grade="";
           temp.push(obj);
-         // alert(JSON.stringify(temp));
+         //    alert(JSON.stringify(temp));
                  } }
                  else{
                      // temp=[];
@@ -227,6 +269,7 @@ this.$.hiddenexcelheaderfiles.hidden=true;
                      }}}}}
     
   document.querySelector("term-assesment-card").FnToggleSpinner(true);
+  document.querySelector("term-assesment-card").spinnermsg="Please wait...uploading"
       
       for(var i=0;i<temp.length;i++){
     this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].value,temp[i].seq,temp.length);     

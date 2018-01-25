@@ -385,7 +385,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
             obj.width=parseFloat(temp[i].spancnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall.push({"tabwidth":tabwidth,"serialno":"",student_name:'',hiddenoutinput:true,'category':categorytitle});
+         overall.push({"tabwidth":tabwidth,"serialno":"Sno",id:"Student Id",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
        
          categorytitle=[]
          temp=[];
@@ -414,7 +414,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
+         overall.push({"tabwidth":tabwidth,"serialno":"",student_name:'',hiddenoutinput:true,'category':categorytitle});
        
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
@@ -462,6 +462,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
      document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
      document.querySelector('dynamic-scholastic-markentry-card').studarr=overall;
      document.querySelector('term-assesment-card').FnToggleSpinner(false);
+     // document.querySelector('term-assesment-card').spinnermsg='Please wait...Loading';
         }
       //document.querySelector('dynamic-scholastic-markentry-card').studarr1=temparr;
       },
@@ -503,6 +504,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         document.querySelector('dynamic-scholastic-markentry-card').hideheader=false;
         document.querySelector('dynamic-scholastic-markentry-card').setDefaultHeaders();
         document.querySelector('dynamic-scholastic-markentry-card').studarr=overall;
+        // document.querySelector('term-assesment-card').spinnermsg='Please wait...Loading';
         this.templateincoscolasticsubject(gradename,section,subject);
      
      //   document.querySelector('term-assesment-card').FnToggleSpinner(false);
@@ -594,7 +596,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
          }
          // cat.push({"studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
          // document.querySelector('dynamic-scholastic-markentry-report').catarr=cat;
-         overall.push({"studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall.push({"sno":"S.No","id":"Student Id","studentname":"Student Name","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
          categorytitle=[]
          temp=[];
         for(var i=0;i<assesscategory.length;i++){
@@ -620,7 +622,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall.push({"sno":"Sno","studentname":"Student Name","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall.push({"sno":"","studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
 
         for(var i=0;i<arr.length;i++){
             var obj={};
@@ -750,7 +752,7 @@ document.querySelector('dynamic-scholastic-markentry-card').fnstudentarrvalue(ar
             var cnt=1;
             var obj={};
             obj.studentname="StudentName";
-            obj.subcategoryname=temp[i].sub_category_name;
+            obj.subcategoryname=temp[i].sub_category_name+"("+temp[i].weight+")";
             for(var j=i+1;j<temp.length;j++){
               if(temp[i].sub_category_name==temp[j].sub_category_name&&temp[i].sub_category_id==temp[j].sub_category_id){
                 cnt++;
@@ -762,7 +764,7 @@ document.querySelector('dynamic-scholastic-markentry-card').fnstudentarrvalue(ar
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall1.push({"sno":"Sno","Studentno":"StudentNo","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall1.push({"sno":"Sno","Studentno":"StudentId","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
       
         for(var i=0;i<arr1.length;i++){
             var obj={};

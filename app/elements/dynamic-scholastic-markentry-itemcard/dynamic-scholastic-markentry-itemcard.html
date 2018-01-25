@@ -25,8 +25,9 @@
         <paper-input hidden value="{{studentid}}"></paper-input>
         <table border="1" width="{{tabwidth}}">
         <tr>     
-        <th width="3%" style="text-align: center;" valign="top">{{serialno}}</th>      
-        <th width="14%" valign="top"><p>{{studentname}}</p></th>
+        <th width="3%" valign="top"><p>{{serialno}}</p></th>      
+        <th width="7%" valign="top"><p>{{studentid}}</p></th>
+        <th width="12%" valign="top"><p>{{studentname}}</p></th>
         <template is="dom-repeat" items="{{category}}">
           <td valign="top" colspan="{{item.categorycnt}}" width="{{item.width}}">
           <scholastic-markentry-card id="sdmei" categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" weight="{{item.weight}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}" seq="{{item.seq}}"></scholastic-markentry-card>
@@ -60,6 +61,7 @@
          if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive")
          {
           document.querySelector('term-assesment-card').FnToggleSpinner(true);
+          document.querySelector('term-assesment-card').spinnermsg='Please wait...marks are saving';
            }
          
        

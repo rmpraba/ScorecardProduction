@@ -22,7 +22,7 @@
         width:6%
       }
       #tb2{
-        width:20%
+        width:15%
       }
       #tb3{
         width:2%
@@ -46,37 +46,69 @@
             font-family: Calibri;
             font-size: 17px;
           }
- .hrspace
+     .hrspace
       {
-       padding-left: 87%;
+        margin-left: 5%;
         @apply(--layout-horizontal);
-        width: 120%;
+       
       }
-     .exceldiv
+      .exceldiv
       {
         @apply(--layout-horizontal);
-        margin-top: 3%;
-        margin-left: 73%;
+        /*margin-top: 3%;*/
+        margin-left: 8%;
+      }
+      .excelcard{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        border-bottom: 1px solid #dedede;
+      }
+      #heathovarallfileid{
+        @apply(--layout-horizontal);
+      }
+      #upload{
+        margin-left: -10%;
+        /*padding-top: -2%;*/
+      }
+      .fileupload{
+        @apply(--layout-vertical);
+      }
+      #readfile{
+        margin-top: 2%;
+      }
+      #hidetop{
+        margin-top: 0.5%;
+      }
+      h4{
+      color: #061E98;
       }
     </style>
     <div>
+     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+     <paper-spinner active></paper-spinner><h4>{{spinnermsg}}</h4></paper-dialog></div>
 
-      <div id="hidetop">
-          <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
-             id="heathcheckid" on-change="excelmark1">Excel Upload</paper-checkbox>
-     </div>
-    <div id=heathovarallfileid>
-      <div class="hrspace">
-        <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable1111', 'Mark Report')" value="Download Template">
-     </div>
-      <div class="exceldiv" >
-         <input id="healthreadfile" type="file" onchange="healthloadFile(event)"/>
-         <xmp id="output"></xmp>
-        <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
+     <div class="excelcard" align="right">
+      <div id="hidetop" hidden$="{{hideheader}}">
+      <paper-checkbox id="heathcheckid" on-change="excelmark1">Excel Upload</paper-checkbox>
       </div>
-   </div>
-    <!-- <template is="dom-repeat" items="{{label}}"> -->
-     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+      <div id="heathovarallfileid">
+      <div class="hrspace">
+      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('dynamicreporttable1111', 'Mark Report')"></paper-icon-button>
+      <paper-tooltip for="download">Download</paper-tooltip>
+      <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
+      </div>
+      <div class="exceldiv" >
+      <!-- <div class="fileupload"> -->
+        <input id="healthreadfile" type="file" onchange="healthloadFile(event)"/>
+        <xmp id="output"></xmp>
+      <!-- </div> -->
+        <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
+        <paper-tooltip for="upload">Upload</paper-tooltip>
+        <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
+       </div>
+       </div>
+       </div>
+
       <center><h1>{{schoolname}}</h1>
       <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
@@ -84,7 +116,8 @@
       <table border="1" id="MarkTable">    
       <tr>
       <th id="tb3">SNo</th>
-      <th id="tb2">Name</th>
+      <th id="tb2">Student Id</th>
+      <th id="tb2">Student Name</th>
       <th id="tb1">Height</th>
       <th id="tb1">Weight</th>
       <th id="tb1">Blood Group</th>
@@ -96,7 +129,7 @@
     </div>
    
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="9">
+      <tr><td colspan="10">
       <cce-fivetoten-health-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" height="{{item.height}}" weight="{{item.weight}}" bloodgroup="{{item.blood_group}}" visionleft="{{item.vision_left}}" visionright="{{item.vision_right}}" dental="{{item.dental}}"></cce-fivetoten-health-itemcard>
       </td></tr>
       </template>
@@ -109,7 +142,7 @@
       <table border="1" id="MarkTable">    
       <tr>
       <th id="tb3">SNo</th>
-      <th id="tb3">Studentno</th>
+      <th id="tb3">StudentId</th>
       <th id="tb2">StudentName</th>
       <th id="tb1">Height</th>
       <th id="tb1">Weight</th>
@@ -194,7 +227,7 @@
              
      if(setarr.length>0){
          var obj={};
-          obj.studentid=array[i].Studentno;
+          obj.studentid=array[i].StudentId;
           obj.studentname=array[i].StudentName;
          
           if(setarr.length==1){
@@ -250,6 +283,7 @@
         //  alert(JSON.stringify(temp));
              }}}
    this.FnSpinnerrActive(true);
+   this.spinnermsg="Please wait...uploading";
    localStorage.setItem("curr_sess_lenth",temp.length);
     for(var i=0;i<temp.length;i++){
 

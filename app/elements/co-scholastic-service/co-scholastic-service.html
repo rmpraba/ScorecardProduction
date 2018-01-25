@@ -1287,6 +1287,7 @@ insertcosubcategorymarkResponse:function(e){
       fetchstudentreportforattendanceResponse:function(e)
       {
         attendancearr=e.detail.response.returnval;
+        // alert(JSON.stringify(attendancearr));
     if(localStorage.getItem("curr_sess_page")=='single-student-mark-entery-card')
     {
 
@@ -1323,14 +1324,17 @@ insertcosubcategorymarkResponse:function(e){
        
         for(var i=0;i<arr.length;i++)
         {
+          // for(var j=0;j<attendancearr.length;j++){
             attendancearr.push(arr[i]);
+          // }
         }
 
          for(var i=0;i<attendancearr.length;i++)
          {
-
           attendancearr[i].serialno=parseInt(i)+1;
          }
+
+         // alert(attendancearr.length);
            // document.querySelector('home-page').setPage('coscholasticassesmentsheet');
            // document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
            // document.querySelector('attendance-card').setDefaultHeaders();
@@ -1354,6 +1358,7 @@ if(localStorage.getItem("curr_sess_page")=='single-student-mark-entery-card')
     document.querySelector('attendance-card').studarr=attendancearr;
     document.querySelector('attendance-card').FnSpinnerrActive(false);
             }
+            attendancearr=[];
       },
 
        callFetchStudentInfoforphysical:function(){

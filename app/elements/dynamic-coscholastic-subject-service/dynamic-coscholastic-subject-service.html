@@ -321,7 +321,7 @@ this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticap
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
            }
-           overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
+           overall.push({"tabwidth":tabwidth,"serialno":"Sno","id":"Student Id",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
           for(var j=0;j<assesscategory.length;j++){
@@ -368,6 +368,7 @@ this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticap
      document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
      document.querySelector('dynamic-coscholastic-markentry-card').studarr=overall;
      document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
+
         }
         // alert(JSON.stringify(overall));
       },
@@ -649,7 +650,7 @@ document.querySelector('dynamic-coscholastic-markentry-card').fnstudentarrvalue(
         for(var i=0;i<temp.length;i++){
             var obj={};
             obj.studentname="Student Name";
-            obj.subcategoryname=temp[i].category_name;
+            obj.subcategoryname=temp[i].category_name+"("+temp[i].weight+")";
             obj.categorycnt=temp[i].spancnt;
             obj.width=parseFloat(temp[i].spancnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
@@ -668,7 +669,7 @@ document.querySelector('dynamic-coscholastic-markentry-card').fnstudentarrvalue(
             var cnt=1;
             var obj={};
             obj.studentname="StudentName";
-            obj.subcategoryname=temp[i].sub_category_name;
+            obj.subcategoryname=temp[i].sub_category_name+"("+temp[i].weight+")";
             for(var j=i+1;j<temp.length;j++){
               if(temp[i].sub_category_name==temp[j].sub_category_name&&temp[i].sub_category_id==temp[j].sub_category_id){
                 cnt++;
@@ -680,7 +681,7 @@ document.querySelector('dynamic-coscholastic-markentry-card').fnstudentarrvalue(
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-   overall1.push({"sno":"Sno","Studentno":"StudentNo","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+   overall1.push({"sno":"Sno","Studentno":"StudentId","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
       
         for(var i=0;i<arr1.length;i++){
             var obj={};
