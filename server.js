@@ -18,8 +18,8 @@ var connection = mysql.createConnection({
   
   host     : 'localhost',
   user     : 'root',
-  password : '',
-  database : 'scorecardtemp'
+  password : 'admin',
+  database : 'mlzsreportcard'
 
   // host     : 'localhost',
   // port     : '37506',
@@ -16820,7 +16820,6 @@ else{
     connection.query(qur1,function(err, rows){
     if(!err)
     {  
-
     enricharr=rows;
     res.status(200).json({'enricharr': enricharr,'studentarr':studentarr,'categorycnt':categorycnt,"cmtarr":cmtarr});
     }

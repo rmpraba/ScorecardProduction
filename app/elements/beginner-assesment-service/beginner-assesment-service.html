@@ -711,7 +711,7 @@ document.querySelector('enrichment-dynamic-markentrycard').categorylength=arr3[0
         for(var i=0;i<temp.length;i++){
             var obj={};
             obj.studentname="Student Name";
-            obj.subcategoryname=temp[i].category_name;
+            obj.subcategoryname=temp[i].category_name+"("+temp[i].weight+")";
             obj.categorycnt=temp[i].spancnt;
             obj.width=parseFloat(temp[i].spancnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
@@ -730,7 +730,7 @@ document.querySelector('enrichment-dynamic-markentrycard').categorylength=arr3[0
             var cnt=1;
             var obj={};
             obj.studentname="StudentName";
-            obj.subcategoryname=temp[i].sub_category_name;
+            obj.subcategoryname=temp[i].sub_category_name+"("+temp[i].weight+")";
             for(var j=i+1;j<temp.length;j++){
               if(temp[i].sub_category_name==temp[j].sub_category_name&&temp[i].sub_category_id==temp[j].sub_category_id){
                 cnt++;
@@ -742,7 +742,7 @@ document.querySelector('enrichment-dynamic-markentrycard').categorylength=arr3[0
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall.push({"sno":"Sno","Studentno":"StudentNo","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall.push({"sno":"Sno","Studentno":"StudentId","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
       
         for(var i=0;i<arr1.length;i++){
             var obj={};

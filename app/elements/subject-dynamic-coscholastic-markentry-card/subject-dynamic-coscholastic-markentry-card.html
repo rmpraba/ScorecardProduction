@@ -39,18 +39,60 @@
       }
  .hrspace
       {
-       padding-left: 87%;
-        @apply(--layout-horizontal);
-       
+       /*padding-left: 87%;*/
+       margin-left: 5%;
+       @apply(--layout-horizontal);
       }
-.exceldiv
+    .exceldiv
       {
-    @apply(--layout-horizontal);
-    margin-top: 3%;
-     margin-left: 73%;
+        @apply(--layout-horizontal);
+        /*margin-top: 3%;*/
+        margin-left: 8%;
+      }
+      .excelcard{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        border-bottom: 1px solid #dedede;
+      }
+      #subjectdynamiccoscholasticid{
+        @apply(--layout-horizontal);
+      }
+      #upload{
+        margin-left: -10%;
+        /*padding-top: -2%;*/
+      }
+      .fileupload{
+        @apply(--layout-vertical);
+      }
+      #coreadfiles{
+        margin-top: 2%;
+      }
+      #check{
+        margin-top: 0.5%;
       }
     </style>
-     <div hidden$="{{hideheader1}}">
+    <div class="excelcard" align="right">
+      <div id="check" hidden$="{{hideheader1}}">
+      <paper-checkbox id="coscolasticcheckid1" on-change="excelmark1">Excel Upload</paper-checkbox>
+      </div>
+      <div id="subjectdynamiccoscholasticid">
+      <div class="hrspace">
+      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('coscolaticvaluedynamicreporttable', 'Mark Report')"></paper-icon-button>
+      <paper-tooltip for="download">Download</paper-tooltip>
+      <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
+      </div>
+      <div class="exceldiv" >
+      <!-- <div class="fileupload"> -->
+        <input id="coreadfiles" type="file" onchange="coloadFiles(event)"/>
+        <xmp id="output"></xmp>
+      <!-- </div> -->
+        <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick1"></paper-icon-button>
+        <paper-tooltip for="upload">Upload</paper-tooltip>
+        <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
+      </div>
+      </div>
+    </div>
+    <!--  <div hidden$="{{hideheader1}}">
             <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
              id="coscolasticcheckid1" on-change="excelmark1">Excel Upload
              </paper-checkbox>
@@ -64,7 +106,7 @@
          <xmp id="output"></xmp>
         <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick1">Upload File</paper-button>    
       </div>
-   </div>
+   </div> -->
    
     <div hidden$="{{hideheader1}}">
     
@@ -117,7 +159,7 @@ function coloadFiles(event){
      for(var i=0;i<array1.length;i++){
        for(var j=0;j<tempstudentarr.length;j++){
        // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
-       if(array1[i].StudentNo==tempstudentarr[j].id){
+       if(array1[i].StudentId==tempstudentarr[j].id){
           array.push(array1[i]);
          }      
     }  
@@ -192,7 +234,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
             // alert("1");
           var m=setarr[j];
           var obj={};
-          obj.studid=array[i].StudentNo;
+          obj.studid=array[i].StudentId;
           obj.studname=array[i].StudentName;
           obj.categoryid=tempassesmetarr[k].category_id;
           obj.category=tempassesmetarr[k].category_name;

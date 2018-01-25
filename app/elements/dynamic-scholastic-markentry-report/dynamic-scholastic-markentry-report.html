@@ -49,6 +49,7 @@
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
       <th width="5%">{{item.sno}}</th>
+      <th width="15%">{{item.id}}</th>
       <th width="15%">{{item.studentname}}</th>
       <template is="dom-repeat" items="{{item.category}}" as="i">
       <th colspan$="{{i.categorycnt}}" width$="{{i.width}}">{{i.subcategoryname}}</th>

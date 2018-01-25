@@ -702,6 +702,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
             var obj={};
             var cnt=1;
             var category=[];
+            obj.id=arr[i].student_id;
             obj.studentname=arr[i].student_name;
             obj.subcategoryname=arr[i].mark;
             obj.categorycnt=cnt;
@@ -722,7 +723,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
             // obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             // category.push(obj);
             // alert(JSON.stringify(category));
-            overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":category});
+            overall.push({"id":arr[i].student_id,"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":category});
             // category=[];
         }
         // alert(JSON.stringify(overall));

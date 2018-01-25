@@ -299,7 +299,7 @@ document.querySelector("coscholastic-assesment-card").TermMarkdialog("Already su
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
+         overall.push({"tabwidth":tabwidth,"sno":"Sno",id:"Student Id",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
           for(var j=0;j<assesscategory.length;j++){
@@ -491,7 +491,7 @@ document.querySelector('subject-dynamic-coscholastic-markentry-card').fnstudenta
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall1.push({"sno":"Sno","Studentno":"StudentNo","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall1.push({"sno":"Sno","Studentno":"StudentId","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
       //alert(c);
          for(var i=0;i<arr1.length;i++){
             var obj={};
@@ -612,7 +612,7 @@ callFetchStudentInfo11:function(grad,sec,sub){
             obj.width=parseFloat(temp[i].spancnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-  overall.push({"studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+  overall.push({"sno":"Sno","id":"Student Id","studentname":"Student Name","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
 
   var  categorysubtitle=[];
         for(var i=0;i<categorytitle.length;i++){
@@ -641,7 +641,7 @@ callFetchStudentInfo11:function(grad,sec,sub){
              categorysubtitle.push(obj);
           }
 
-overall.push({"sno":"Sno","studentname":"Student Name","tabwidth":tabwidth,"serialno":"",'category':categorysubtitle});
+overall.push({"sno":"","studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorysubtitle});
     categorytitle=[]
    categorysubtitle=[];
 
@@ -682,6 +682,7 @@ overall.push({"sno":"Sno","studentname":"Student Name","tabwidth":tabwidth,"seri
             var obj1={};
             var cnt=1;
             var category=[];
+            obj.id=arr[i].student_id;
             obj.studentname=arr[i].student_name;
             obj.subcategoryname=arr[i].mark;
             obj.categorycnt=cnt;
@@ -714,7 +715,7 @@ overall.push({"sno":"Sno","studentname":"Student Name","tabwidth":tabwidth,"seri
             // obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             // category.push(obj);
             // alert(JSON.stringify(category));
-            overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":category});
+            overall.push({"id":arr[i].student_id,"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":category});
             // category=[];
         }
         // alert(JSON.stringify(overall));

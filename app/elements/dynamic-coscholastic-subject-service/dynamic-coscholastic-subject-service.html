@@ -517,7 +517,7 @@ this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticap
          }
          // cat.push({"studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
          // document.querySelector('dynamic-scholastic-markentry-report').catarr=cat;
-         overall.push({"studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall.push({"sno":"Sno","id":"Student Id","studentname":"Student Name","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
          categorytitle=[]
          temp=[];
         for(var i=0;i<assesscategory.length;i++){
@@ -544,12 +544,13 @@ this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticap
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
         }
-        overall.push({"studentname":"Student Name","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+        overall.push({"id":"","studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
 
         for(var i=0;i<arr.length;i++){
             var obj={};
             var cnt=1;
             var category=[];
+            obj.id=arr[i].student_id;
             obj.studentname=arr[i].student_name;
             obj.subcategoryname=arr[i].mark;
             obj.categorycnt=cnt;
@@ -570,8 +571,12 @@ this.subjectapprovalurl=sessionStorage.getItem("addrinfo")+"/subjectscholasticap
             // obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             // category.push(obj);
             // alert(JSON.stringify(category));
-            overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":category});
+
+            overall.push({"id":arr[i].student_id,"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":category});
             // category=[];
+        }
+        for(var i=2,j=0;i<overall.length;i++,j++){
+            overall[i].sno=j+1;
         }
         // alert(JSON.stringify(overall));
         document.querySelector('dynamic-coscholastic-markentry-report').hideheader=false;

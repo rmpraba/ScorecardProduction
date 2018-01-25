@@ -61,12 +61,8 @@
          if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive")
          {
           document.querySelector('term-assesment-card').FnToggleSpinner(true);
-          document.querySelector('term-assesment-card').spinnermsg='Please wait...marks are saving';
-           }
-         
-       
-          
-
+          document.querySelector('term-assesment-card').spinnermsg='Please wait...saving';
+         }     
         for(var i=0;i<scorearr.length;i++){
           var t=1;
           for(var j=0;j<scorearr.length;j++){

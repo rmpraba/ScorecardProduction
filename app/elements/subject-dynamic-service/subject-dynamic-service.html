@@ -284,7 +284,7 @@
             obj.categorycnt=cnt;
             categorytitle.push(obj);
          }
-         overall.push({sno:'Sno',student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
+         overall.push({sno:'Sno',id:'Student Id',student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
           for(var j=0;j<assesscategory.length;j++){
@@ -394,7 +394,8 @@
         // alert(JSON.stringify(assesscategory));
         // alert(JSON.stringify(arr));
         row.push('Sno');
-        row.push('Student name');
+        row.push('Student Id');
+        row.push('Student Name');
         for(var i=0;i<assesscategory.length;i++){
             row.push(assesscategory[i].category_name);
         }
@@ -402,6 +403,7 @@
         for(var i=0;i<arr.length;i++){
             row=[];
             row.push(i+1);
+            row.push(arr[i].student_id);
             row.push(arr[i].student_name);
             row.push(arr[i].mark);
             for(var j=i+1;j<arr.length;j++){
@@ -507,7 +509,7 @@ document.querySelector('subject-dynamic-markentrycard').fnstudentarrvalue(arr1);
             var cnt=1;
             var obj={};
             obj.studentname="StudentName";
-            obj.subcategoryname=temp[i].sub_category_name;
+            obj.subcategoryname=temp[i].sub_category_name+"("+arr[i].weight+")";
             for(var j=i+1;j<temp.length;j++){
               if(temp[i].sub_category_name==temp[j].sub_category_name&&temp[i].sub_category_id==temp[j].sub_category_id){
                 cnt++;
@@ -519,7 +521,7 @@ document.querySelector('subject-dynamic-markentrycard').fnstudentarrvalue(arr1);
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall1.push({"sno":"Sno","Studentno":"StudentNo","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+         overall1.push({"sno":"Sno","Studentno":"StudentId","studentname":"StudentName","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
       
         for(var i=0;i<arr1.length;i++){
             var obj={};

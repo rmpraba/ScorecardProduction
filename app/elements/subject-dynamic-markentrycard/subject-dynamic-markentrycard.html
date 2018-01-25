@@ -43,18 +43,61 @@
       }
       .hrspace
       {
-       padding-left: 87%;
-        @apply(--layout-horizontal);
+       /*padding-left: 87%;*/
+       margin-left: 5%;
+       @apply(--layout-horizontal);
       }
-     .exceldiv
+    .exceldiv
       {
         @apply(--layout-horizontal);
-        margin-top: 3%;
-      margin-left: 73%;
+        /*margin-top: 3%;*/
+        margin-left: 8%;
+      }
+      .excelcard{
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        border-bottom: 1px solid #dedede;
+      }
+      #hiddenexcelheaderfiles1{
+        @apply(--layout-horizontal);
+      }
+      #upload{
+        margin-left: -10%;
+        /*padding-top: -2%;*/
+      }
+      .fileupload{
+        @apply(--layout-vertical);
+      }
+      #readfile1{
+        margin-top: 2%;
+      }
+      #check{
+        margin-top: 0.5%;
       }
     </style>
     <div>
-      <div hidden$="{{hideheader}}">
+    <div class="excelcard" align="right">
+      <div id="check" hidden$="{{hideheader}}">
+      <paper-checkbox id="templatecheckvalueid11" on-change="excelmark1">Excel Upload</paper-checkbox>
+      </div>
+      <div id="hiddenexcelheaderfiles1">
+      <div class="hrspace">
+      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('dynamicreporttable111', 'Mark Report')"></paper-icon-button>
+      <paper-tooltip for="download">Download</paper-tooltip>
+      <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
+      </div>
+      <div class="exceldiv" >
+      <!-- <div class="fileupload"> -->
+        <input id="readfile1" type="file" onchange="loadFile1(event)"/>
+        <xmp id="output"></xmp>
+      <!-- </div> -->
+        <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
+        <paper-tooltip for="upload">Upload</paper-tooltip>
+        <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
+      </div>
+      </div>
+    </div>
+    <!--   <div hidden$="{{hideheader}}">
             <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
              id="templatecheckvalueid11" on-change="excelmark1">Excel Upload</paper-checkbox>
      </div>
@@ -67,7 +110,7 @@
          <xmp id="output"></xmp>
         <paper-button style="margin-left: -19%;margin-top: -1%;width: 42%;color: white;height: 30px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>    
       </div>
-   </div>
+   </div> -->
     <div hidden$="{{hideheader}}">
     <center>
    
@@ -132,7 +175,7 @@
      for(var i=0;i<array1.length;i++){
        for(var j=0;j<tempstudentarr.length;j++){
        // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
-       if(array1[i].StudentNo==tempstudentarr[j].id){
+       if(array1[i].StudentId==tempstudentarr[j].id){
           array.push(array1[i]);
          }      
     }  
@@ -202,10 +245,10 @@
                   for(var k=0;k<tempassesmetarr.length;k++){
                 //alert(this.categorylength+" "+setarr.length);
   if(this.categorylength==setarr.length){ 
-   if(tempassesmetarr[k].category_name.trim()==setarr[j].trim()){
+   if(tempassesmetarr[k].category_name.trim()+"("+tempassesmetarr[k].weight.trim()+")"==setarr[j].trim()){
           var m=setarr[j];
           var obj={};
-          obj.studentid=array[i].StudentNo;
+          obj.studentid=array[i].StudentId;
           obj.studentname=array[i].StudentName;
           obj.classid=localStorage.getItem("curr_sess_classid");
           obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
