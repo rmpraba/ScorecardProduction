@@ -294,7 +294,17 @@
         content-type="application/json"
         on-response="approvemarkResponse"
         debounce-duration="300"
+    >   <iron-ajax
+        method="post"
+        id="filterapprovemarkajax"
+        url="{{filterapprovemarkurl}}"
+        params="{{filterapprovemarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="filterapprovemarkResponse"
+        debounce-duration="300"
     >  
+
     <iron-ajax
         method="post"
         id="fetchimportmarkajax"
@@ -529,6 +539,16 @@
         on-response="fnfaassesmenttermmarksResponse"
         debounce-duration="300"
     >
+      <iron-ajax
+        method="post"
+        id="appuvalfetchapprovalstatusajax"
+        url="{{appuvalfetchapprovalstatusurl}}"
+        params="{{appuvalfetchapprovalstatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="appuvalfetchapprovalstatusResponse"
+        debounce-duration="300"
+      >
 
     
   </template>
@@ -658,6 +678,44 @@
          this.assesmentparam= obj;
          this.$.assesmentajax.generateRequest();
       },
+      Fnfiltervalues:function(e){
+       var obj1={"schoolid":"","flag":"","loggedid":""};
+        obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj1.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+        obj1.academicyear=localStorage.getItem("curr_sess_academicyear");         
+        obj1.term=localStorage.getItem("curr_sess_termname");  
+        obj1.grade=localStorage.getItem("curr_sess_grade1");  
+        obj1.section=localStorage.getItem("curr_sess_section1");  
+        obj1.subject=localStorage.getItem("curr_sess_subject1");  
+        obj1.filter=localStorage.getItem("curr_sess_filter");  
+
+    if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+      {
+       obj1.flag=0;
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedrole")=="HeadMistress")
+      {
+        obj1.flag=1;
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal")
+      {
+        obj1.flag=1;
+      }
+       this.filterapprovemarkurl=sessionStorage.getItem("addrinfo")+"/filterapprovemark-service";
+       this.filterapprovemarkparam=obj1;
+       this.$.filterapprovemarkajax.generateRequest();  
+       },
+       filterapprovemarkResponse:function(e){         
+       var approvearr=e.detail.response.returnval;
+      // alert(JSON.stringify(approvearr));
+      if(approvearr!='invalid')
+      document.querySelector('approve-one-to-four-card').approvearr=approvearr;
+      else
+      {
+        approvearr=[];
+        document.querySelector('approve-one-to-four-card').approvearr=approvearr;
+       }
+       },
       assesmentResponse:function(e){         
          document.querySelector('term-assesment-card').assesmentarr=e.detail.response.returnval;
       },
@@ -1787,7 +1845,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       else{
 
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
-          this.callApproveService();
+          if(localStorage.getItem("curr_sess_filterid")=="fillteractive"){
+        this.Fnfiltervalues();
+       }
+       else{
+        this.callApproveService();   
+        }
          document.querySelector('home-page').setPage('approveassesment','');  
          document.querySelector('approve-one-to-four-card').setDefaultHeaders();
          }
@@ -1822,7 +1885,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           }
          }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
-            this.callApproveService();
+    if(localStorage.getItem("curr_sess_filterid")=="fillteractive"){
+        this.Fnfiltervalues();
+       }
+       else{
+        this.callApproveService();   
+        }
             document.querySelector('home-page').setPage('approveassesment','');  
             document.querySelector('approve-one-to-four-card').setDefaultHeaders();
         }
@@ -2315,8 +2383,36 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(arr[i].flag=="1")
           arr[i].flag="Approved";
       } 
-      document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
+     document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
     },
+
+    AppruvalFnfiltervalues:function(e){
+    var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
+        obj.term=localStorage.getItem("curr_sess_termname");
+         obj.grade=localStorage.getItem("curr_sess_grade1");  
+        obj.section=localStorage.getItem("curr_sess_section1");  
+        obj.subject=localStorage.getItem("curr_sess_subject1");  
+        obj.filter=localStorage.getItem("curr_sess_filter");  
+     this.appuvalfetchapprovalstatusurl=sessionStorage.getItem("addrinfo")+"/filterapprovemark11-service";
+        obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+        this.appuvalfetchapprovalstatusparam=obj;
+        this.$.appuvalfetchapprovalstatusajax.generateRequest();
+    },
+    appuvalfetchapprovalstatusResponse:function(e){
+     // alert(JSON.stringify(e.detail.response.returnval));
+      var arr=e.detail.response.returnval;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].flag=="0")
+          arr[i].flag="Pending for approval";
+        if(arr[i].flag=="1")
+          arr[i].flag="Approved";
+      } 
+     document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
+    },
+
     callUpdateStudentInfo:function(id,name,pname,pmail,alternatemail,mothername,address){
       var obj={"schoolid":"","academicyear":"","enrno":"","name":"","pname":"","pmail":"","grade":"","section":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -2490,7 +2586,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },
     revertsubmittedmarkResponse:function(e){
         alert(e.detail.response.returnval);
+       if(localStorage.getItem("curr_sess_filterid")=="fillteractive"){
+        this.Fnfiltervalues();
+       }
+       else{
         this.callApproveService();   
+        }
     },
     FnEnableordisablebtns:function(){
       
@@ -2612,7 +2713,15 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(res==='Updated')
         {
             alert('Removed Successfully');
+            if(localStorage.getItem("curr_sess_filterid")=="fillteractive")
+            {
+         this.AppruvalFnfiltervalues();
+            }
+            else{
             this.FnFetchApprovalStatus();
+
+            }
+
         }
         //alert(JSON.stringify(res));
        },
@@ -2642,7 +2751,14 @@ fnimporttermmarks11:function(termname,assesmentid,grade,section,subject)
         if(res==='Updated')
         {
             alert('Removed Successfully');
+           if(localStorage.getItem("curr_sess_filterid")=="fillteractive")
+            {
+         this.AppruvalFnfiltervalues();
+            }
+            else{
             this.FnFetchApprovalStatus();
+
+            }
         }
         //alert(JSON.stringify(res));
        },
@@ -2742,7 +2858,14 @@ fnimporttermmarks11:function(termname,assesmentid,grade,section,subject)
         if(res=='done')
         {
             alert('Reverted Successfully');
+             if(localStorage.getItem("curr_sess_filterid")=="fillteractive")
+            {
+         this.AppruvalFnfiltervalues();
+            }
+            else{
             this.FnFetchApprovalStatus();
+
+            }
         }
      },
 

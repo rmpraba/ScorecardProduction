@@ -5811,6 +5811,118 @@ connection.query(checkqur,function(err, rows){
 });
 
 
+app.post('/filterapprovemark11-service' ,  urlencodedParser,function (req, res)
+{    
+
+ // var checkqur="SELECT grade_id FROM md_employee where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'"
+var qur1;
+var qur2;
+
+  if(req.query.filter=="Filter By Grade"){
+ 
+  qur1="select  *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks  tr_term_assesment_import_marks where  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and term_name='"+req.query.term+"'";
+
+  qur2="select * ,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks  where  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and term_name='"+req.query.term+"'";
+   
+  }
+
+ else if(req.query.filter=="Filter By Section"){
+
+  qur1="select  *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks  tr_term_assesment_import_marks where  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and term_name='"+req.query.term+"'";
+
+ qur2="select * ,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks  where  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and term_name='"+req.query.term+"'";
+   
+ }
+
+ else if(req.query.filter=="Filter By Subject"){
+
+ qur1="select  *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks  tr_term_assesment_import_marks where  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and term_name='"+req.query.term+"'";
+
+  qur2="select * ,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks  where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and term_name='"+req.query.term+"'";
+   
+ }
+  
+ 
+  console.log('--------------subject------------------');
+ console.log(qur1);
+ console.log(qur2);
+connection.query(qur1,function(err, rows){
+  if(rows.length>0){
+     res.status(200).json({'returnval': rows});
+  }
+  else{
+  connection.query(qur2,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'no rows'});
+  });
+  }
+});
+});
+
+
+
+
+
+
+
+
+
+
+
+app.post('/filterapprovemark-service' ,  urlencodedParser,function (req, res)
+{    
+
+ // var checkqur="SELECT grade_id FROM md_employee where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'"
+var qur1;
+var qur2;
+
+  if(req.query.filter=="Filter By Grade"){
+ 
+  qur1="select  *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks  tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and term_name='"+req.query.term+"'";
+
+  qur2="select * ,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks  where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and term_name='"+req.query.term+"'";
+   
+  }
+
+ else if(req.query.filter=="Filter By Section"){
+
+  qur1="select  *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks  tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and term_name='"+req.query.term+"'";
+
+ qur2="select * ,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks  where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and term_name='"+req.query.term+"'";
+   
+ }
+
+ else if(req.query.filter=="Filter By Subject"){
+
+ qur1="select  *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks  tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and term_name='"+req.query.term+"'";
+
+  qur2="select * ,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks  where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and term_name='"+req.query.term+"'";
+   
+ }
+  
+ 
+  console.log('--------------subject------------------');
+ console.log(qur1);
+ console.log(qur2);
+connection.query(qur1,function(err, rows){
+  if(rows.length>0){
+     res.status(200).json({'returnval': rows});
+  }
+  else{
+  connection.query(qur2,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'no rows'});
+  });
+  }
+});
+});
+
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
   var flag="";
