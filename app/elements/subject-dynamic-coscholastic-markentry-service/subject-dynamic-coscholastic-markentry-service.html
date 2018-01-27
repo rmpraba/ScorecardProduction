@@ -185,8 +185,7 @@ document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted 
             }
             if(e.detail.response.returnval=='exist'){
                 alert('Already submitted!!');
-                alert('3');
-document.querySelector("coscholastic-assesment-card").TermMarkdialog("Already submitted!!");
+                document.querySelector("coscholastic-assesment-card").TermMarkdialog("Already submitted!!");
            
             }
         }
@@ -217,8 +216,15 @@ document.querySelector("coscholastic-assesment-card").TermMarkdialog("Already su
         assesscategorycnt=e.detail.response.catarr;
         assesscategory=e.detail.response.returnval;
         if(assesscategory.length>0){
-        localStorage.setItem("curr_sess_assesment",assesscategory[0].assesment_type);
-        this.callFetchStudentInfo(gradename,section,subject);
+            alert("4");
+      localStorage.setItem("curr_sess_assesment",assesscategory[0].assesment_type);
+     this.callFetchStudentInfo(gradename,section,subject);
+         }
+         else{
+            alert("6");
+     document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
+     document.querySelector('coscholastic-assesment-card').TermMarkdialog("Please Check The Subject");
+
          }
     //categorycnt=e.detail.response.catarr;
       },

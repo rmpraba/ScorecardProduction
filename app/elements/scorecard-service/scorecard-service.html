@@ -262,7 +262,7 @@
         document.querySelector('assesment-comparison-homecard').schoolarr=e.detail.response.returnval;
       },
        callGradeService:function(){
-         // alert('calling');
+
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade1-service";
          var obj={"schoolid":"","loggedid":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -290,7 +290,8 @@
           document.querySelector('consolidated-data-analysis').gradearr=e.detail.response.returnval;
          if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approval')
           document.querySelector('approve-one-to-four-card').gradearr=e.detail.response.returnval;
-    
+    if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
+     document.querySelector('approvalstatus-card').gradearr=e.detail.response.returnval;
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
@@ -391,7 +392,9 @@
     document.querySelector('student-scorcard-mail-card').sectionarr=e.detail.response.returnval;
  if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approval')
      document.querySelector('approve-one-to-four-card').sectionarr=e.detail.response.returnval;
-      },
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
+     document.querySelector('approvalstatus-card').sectionarr=e.detail.response.returnval;
+     },
       callscorecardreadynessService:function(){
          this.scorecardreadynessurl=sessionStorage.getItem("addrinfo")+"/scorecardreadyness-service";
          var obj={"academicyear":"","schoolid":"","grade":"","section":""};
@@ -646,9 +649,12 @@
                 arr[i].subject_id=arr[i].language_pref+"  "+arr[i].subject_id;
             }
           }
-
-     document.querySelector('approve-one-to-four-card').subjectarr=arr;  
-      },
+if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approval')
+     document.querySelector('approvalstatus-card').subjectarr=arr;  
+if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
+     document.querySelector('approvalstatus-card').subjectarr=arr;  
+  
+  },
       callFetchsubjectinfoService:function(studid){
         this.fetchsubjectnameurl=sessionStorage.getItem("addrinfo")+"/fetchsubjectname-service";
         var obj={"scoolid":"","studid":""};

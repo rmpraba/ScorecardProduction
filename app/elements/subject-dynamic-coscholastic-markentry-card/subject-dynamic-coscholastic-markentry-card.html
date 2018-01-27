@@ -292,7 +292,7 @@ document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
         for( var  j=0;j<temp.length;j++){
             if(tempstudentarr[i].id==temp[j].studid){
                   c+=parseFloat(temp[j].mark);
-                   tempvalue++;
+                   tempvalue++;   
        //alert(temp[j].tempvalu+"=="+tempvalue);
           if(temp[j].tempvalu==tempvalue){
              var obj1={};
@@ -310,6 +310,7 @@ document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
       }
    // alert(JSON.stringify(finalarr)); 
    localStorage.setItem("curr_sess_lenth",finalarr.length);
+ //  alert(localStorage.getItem("curr_sess_lenth"));
    for(var i=0;i<finalarr.length;i++){
     var t=i+1;
      this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(finalarr[i].studid,finalarr[i].studname,finalarr[i].category,finalarr[i].subcategory,finalarr[i].avg,t);
