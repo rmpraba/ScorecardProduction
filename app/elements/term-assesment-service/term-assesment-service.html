@@ -1715,8 +1715,20 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(arr[0].result=='match')
           this.updateimportmarkService();
         else{
+    if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+    else{
           alert("Please make sure all the students entry!");
-          this.FnEnableordisablebtns();
+
+    }
+      this.FnEnableordisablebtns();
         }
     },
 
@@ -1742,7 +1754,21 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(arr[0].result=='match')
           this.updatefaimportmarkService();
         else
+         {
+           if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+    else{
           alert("Please make sure all the students entry!");
+
+    }
+}
     },
     updateimportmarkService:function(){
       // alert(localStorage.getItem("curr_sess_termname"));
@@ -1764,10 +1790,43 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },    
     updateimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=="exist")
-        alert('Already Submitted');
-      if(e.detail.response.returnval=="succ")
-        alert("Submitted!");
+     
+      if(e.detail.response.returnval=="exist"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+
+
+       }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+    else{
+          alert("Already Submitted");
+
+      }
+      }
+
+      if(e.detail.response.returnval=="succ"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+    else{
+          alert("Submitted!");
+
+    }
+      }
+        
+
+
+      
     },
 
 
@@ -1789,10 +1848,38 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },    
     updatefaimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=="exist")
-        alert('Already Submitted');
-      if(e.detail.response.returnval=="succ")
-        alert("Submitted!");
+      if(e.detail.response.returnval=="exist"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+
+
+       }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+    else{
+          alert("Already Submitted");
+
+      }
+      }
+
+      if(e.detail.response.returnval=="succ"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+    else{
+          alert("Submitted!");
+
+    }
+      }
     },
     updateflagResponse:function(e){
       // alert(e.detail.response.returnval);
@@ -2335,8 +2422,21 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         var arr=e.detail.response.returnval;
         if(arr[0].result=='match')
           this.updateimportmarkService();
-        else
+        else{
+if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+       }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+    else{
           alert("Please make sure all the students entry!");
+
+    }
+}
     },
     updateattendanceimportmarkService:function(){
       // alert(localStorage.getItem("curr_sess_termname"));
@@ -2358,10 +2458,42 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },    
     updateattendanceimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=="exist")
-        alert('Already Submitted');
-      if(e.detail.response.returnval=="succ")
-        alert("Submitted!");
+     
+     if(e.detail.response.returnval=="exist"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+    else{
+          alert("'Already Submitted");
+
+    }
+      }
+
+      if(e.detail.response.returnval=="succ"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+    else{
+          alert("Submitted!");
+
+    }
+      }
+        
+
+
+      
     },
     FnFetchApprovalStatus:function(){
       var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};

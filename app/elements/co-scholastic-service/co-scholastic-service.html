@@ -730,10 +730,11 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
 
       if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
        if(localStorage.getItem("curr_sess_lenth")==tempcnt2){
-     // alert(localStorage.getItem("curr_sess_lenth")+" "+tempcnt2);
-   document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
-   document.querySelector("coscholastic-assesment-card").callService();
-      tempcnt2=0;
+  
+
+      document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
+     document.querySelector("coscholastic-assesment-card").callService();
+     tempcnt2=0;
         }
        }
       },
@@ -824,16 +825,19 @@ insertcosubcategorymarkResponse:function(e){
         temphealth++;
      if(localStorage.getItem("curr_sess_template_tef")=="active"){
         if(temphealth==(localStorage.getItem("curr_sess_lenth"))){
-        alert("Attendance Saved!");
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog();
+      
         document.querySelector("coscholastic-assesment-card").callService();
         temphealth=0;
       }
      }
      else{
        if(e.detail.response.returnval=="inserted")
-          alert("Attendance Saved!");
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Attendance Saved!");
+          
          if(e.detail.response.returnval=="updated")
-          alert("Attendance updated!");
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Attendance Saved!");
+         
        }
       },
       callinserthealthService:function(studid,studname,height,weight,bloodgroup,visionleft,visionright,dental){
@@ -861,16 +865,19 @@ insertcosubcategorymarkResponse:function(e){
          temphealth++;
      if(localStorage.getItem("curr_sess_template_tef")=="active"){
         if(temphealth==(localStorage.getItem("curr_sess_lenth"))){
-        alert("Health info Saved!");  
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Health info Saved!");
+         
         document.querySelector("coscholastic-assesment-card").callService();
         temphealth=0;
       }
      }
      else{
        if(e.detail.response.returnval=="inserted")
-          alert("Health info Saved!");
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Health info Saved!");
+       
          if(e.detail.response.returnval=="updated")
-          alert("Health info updated!");
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Health info update!");
+          
        }
       
       } ,
