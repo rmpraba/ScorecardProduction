@@ -92,10 +92,10 @@
     <dynamic-coscholastic-subject-service id="scholasticsubjectservice"></dynamic-coscholastic-subject-service>
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
      <subject-dynamic-coscholastic-markentry-service id="subcoslosticservice"></subject-dynamic-coscholastic-markentry-service>
-         <paper-dialog id="termmarkdialogid1" modal>
+     <paper-dialog id="termmarkdialogid1" modal>
        <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
        <center>
-      <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+        <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
        </center>
      </paper-dialog>
   </template>
@@ -107,6 +107,7 @@
     Polymer({
       is: 'coscholastic-assesment-card',
       ready:function(){
+     
       },
       callDefaultService:function(){
         this.flag=0; 
@@ -120,7 +121,7 @@
         if(this.flag==1)
           this.callService();
 
-         document.querySelector('#gradenam2').selected=-1;
+        document.querySelector('#gradenam2').selected=-1;
         document.querySelector('#sectionnam2').selected=-1;
         document.querySelector('#subjectnam2').selected=-1;
         

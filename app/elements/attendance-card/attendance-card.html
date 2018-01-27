@@ -28,6 +28,10 @@
       #tb3{
         width:14%;
       }
+      #attendencesubmit{
+        width:18%;
+
+      }
       .button{
             width: 15%;
             background: #252626;
@@ -121,20 +125,20 @@
        <th id="tb1">Total Attendance</th>
        <th id="tb2">Generic Comment</th>
        <th id="tb2">Specific Comment</th>
-       <th id="tb1"></th>
+       <th style="width:14%;" id='attendencesubmit'></th>
      </tr>  
       </div>
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
       <td colspan="7">
-      <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
+      <attendance-item-card serialno="{{item.serialno}}" hidesavevalue="{{hidesavevalue}}"studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
       </td>
       </tr>
       </template> 
     
       </table>      
       </center> 
-      <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
+      <paper-button class="button" id="attendencesubmit" on-click="importmark">{{importlabel}}</paper-button>
     </div>  
     <div  id="attendencetemplatefeildid" hidden>
        <table border="1" >    
@@ -268,16 +272,29 @@ excelmark11:function(e){
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
         this.term=localStorage.getItem("curr_sess_termname");
-      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+    if(localStorage.getItem('curr_sess_report')=='0'){
+
+  if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
       {
         this.importlabel='Approve';
         this.$.attendancecheckid.hidden=true;
+        this.hidesavevalue=false;
+      
       }
    else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
         this.importlabel='Submit for approval';
         this.$.attendancecheckid.hidden=false;
+       this.hidesavevalue=false;
 
        }
+        
+    }
+else if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.attendancecheckid.hidden=true;
+        this.hidesavevalue=true;
+        this.$.attendencesubmit.hidden=true;
+       }
+       
       },
       importmark:function()
       {

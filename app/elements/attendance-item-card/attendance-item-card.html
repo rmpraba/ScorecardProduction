@@ -45,7 +45,7 @@
         <paper-item on-click="FnGeneric" style="word-wrap: break-word;" value="{{genericcomment}}">{{genericcomment}}</paper-item>
         </td>   
         <td id="tb2"><paper-item style="word-wrap: break-word;" on-click="FnSpecific" value="{{specificcomment}}">{{specificcomment}}</paper-item></td>  
-        <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td></tr></table>
+        <td id="tb1" hidden$="{{hidesavevalue}}"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td></tr></table>
     </div>
     <paper-dialog id="attendancegenericcmnt" modal>
         <h3>Generic Comment</h3>
