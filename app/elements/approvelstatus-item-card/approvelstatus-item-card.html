@@ -15,6 +15,7 @@
       } 
       .card{
         @apply(--layout-horizontal);
+        margin-top: 0.5%;
       } 
       p{
         width: 25%;
@@ -31,16 +32,17 @@
       }
     </style>
 
-        <div class="card">
-          <p class='p1' style="margin-left: 0%;">{{academicyear}}</p>
-          <p class='p2' style="margin-left: 10%;">{{termname}}</p>
-          <p class='p3' style="margin-left: 5%;">{{assesmentid}}</p>
-          <p class='p4' style="margin-left: 5%;">{{grade}}</p>
-          <p class='p5' style="margin-left: 5%;">{{section}}</p>
-          <p class='p6' style="margin-left: 5%;">{{subject}}</p>
-          <p class='p6' style="margin-left: 5%;">{{flag}}</p>
-          <p class='p7'><ahref class="viewdata" on-click="FnRemove"><u>Revert</u></ahref></p>
+        <div class="card" style="{{color}}">
+          <p class='p1' style="margin-left: 0%;{{font}}">{{academicyear}}</p>
+          <p class='p2' style="margin-left: 10%;{{font}}">{{termname}}</p>
+          <p class='p3' style="margin-left: 5%;{{font}}">{{assesmentid}}</p>
+          <p class='p4' style="margin-left: 5%;{{font}}">{{grade}}</p>
+          <p class='p5' style="margin-left: 5%;{{font}}">{{section}}</p>
+          <p class='p6' style="margin-left: 5%;{{font}}">{{subject}}</p>
+          <p class='p6' style="margin-left: 5%;{{font}}">{{flag}}</p>
+          <p class='p7' ><ahref hidden$="{{hideflag}}" class="viewdata" on-click="FnRemove"><u>Revert</u></ahref></p>
         </div>
+
 
           <term-assesment-service id="assesmentservice"></term-assesment-service>
 

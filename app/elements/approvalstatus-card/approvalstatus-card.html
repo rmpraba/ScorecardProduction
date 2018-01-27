@@ -44,8 +44,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             background-color: transparent;
           }
       #itemcard:nth-child(odd) {
-        background-color: white;
-       
+        /*background-color: white;*/
+        background-color: #f1f1f1;
       }
       #itemcard:nth-child(even) {
         background-color: #f1f1f1;
@@ -75,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       </center>
        <div class="outcard">
-       <table id="Mark">
+       <!-- <table id="Mark">
        <tr>
        <th id="tb1">Academic Year</th>
        <th id="tb1">Term</th>
@@ -86,11 +86,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        <th id="tb1">Status</th>
        <th id="tb1">Revert</th>
        </tr>
-       </table>
+       </table> -->
      
   <template is="dom-repeat" items="{{approvalarr}}" as="item">
     <div id="itemcard">
-      <approvelstatus-item-card academicyear="{{item.academic_year}}" termname="{{item.term_name}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject}}" flag="{{item.flag}}"></approvelstatus-item-card>
+      <approvelstatus-item-card academicyear="{{item.academic_year}}" termname="{{item.term_name}}" assesmentid="{{item.assesment_name}}" grade="{{item.grade_name}}" section="{{item.section_name}}" subject="{{item.subject_name}}" flag="{{item.flag}}"
+      hideflag="{{item.hideflag}}" font="{{item.font}}" color="{{item.color}}"></approvelstatus-item-card>
     </div>
   </template>
 

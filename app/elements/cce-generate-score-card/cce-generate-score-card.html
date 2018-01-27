@@ -38,6 +38,13 @@
       border: none;
       background-color: transparent;
     }
+    #termmarkdialogid11{
+      width: 30%;
+      border-radius: 25px;
+    }
+    h4{
+      color: #061E98;
+    }
     </style>
       <div class="card">
           <div class="inner">
@@ -56,7 +63,7 @@
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" id="rgrade"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
-                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+                <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -75,11 +82,17 @@
     </div>
     <scorecard-service id="scorecardservice"></scorecard-service>
      <div class="spinner"><paper-dialog modal id="dynamicspinneree" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+     <paper-dialog id="termmarkdialogid11" modal>
+       <h3 style="color:#F90B07"><center>{{dialoginput}}</center></h3>
+       <center>
+      <paper-button on-click="FnClose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+       </center>
+     </paper-dialog>
   </template>
   <script>
   (function() {
     'use strict';
-    var gradename;
+    var gradename,gradeid;
     var section;
     var termname;
     var item=[];
@@ -87,6 +100,13 @@
       is: 'cce-generate-score-card',
       ready:function(){
         this.hidecard=true;         
+      },
+      FnOpen:function(){
+        this.dialoginput="Scorecard is not ready..!Due to evaluation pending....";
+        this.$.termmarkdialogid11.toggle();
+      },
+      FnClose:function(){
+        this.$.termmarkdialogid11.toggle();
       },
       FnToggleSpinner:function(flag){
         this.$.dynamicspinneree.opened=flag;
@@ -110,7 +130,9 @@
       },
       FnSelectGrade:function(e){        
         gradename = e.target.selectedItem.textContent.trim();       
+        gradeid = e.target.selectedItem.value.trim();       
         localStorage.setItem("curr_sess_grade",gradename);
+        localStorage.setItem("curr_sess_gradeid",gradeid);
         this.$.scorecardservice.callSectionService(gradename);
         if(this.flag==1)
           this.callService();

@@ -262,7 +262,7 @@
         document.querySelector('assesment-comparison-homecard').schoolarr=e.detail.response.returnval;
       },
        callGradeService:function(){
-         alert('calling');
+         // alert('calling');
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade1-service";
          var obj={"schoolid":"","loggedid":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -398,6 +398,7 @@
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.gradeid=localStorage.getItem("curr_sess_gradeid");
          obj.section=localStorage.getItem("curr_sess_section");
          obj.termname=localStorage.getItem("curr_sess_termname");          
          this.scorecardreadynessparam= obj;
@@ -409,11 +410,10 @@
           this.callFetchstudentnameService();
         }
         else{
-          this.callFetchstudentnameService();
+          // this.callFetchstudentnameService();
+          document.querySelector('cce-generate-score-card').FnOpen();
           // alert('Scorecard is not ready..!Due to evaluation pending....');
-        }
-
-        
+        }        
       },
       callFetchstudentnameService:function(){
         this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
