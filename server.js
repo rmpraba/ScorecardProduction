@@ -18,8 +18,8 @@ var connection = mysql.createConnection({
   
   host     : 'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  password : '',
+  database : 'scorecardtemp'
 
   // host     : 'localhost',
   // port     : '37506',

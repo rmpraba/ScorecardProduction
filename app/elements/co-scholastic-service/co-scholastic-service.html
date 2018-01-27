@@ -727,10 +727,13 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
       },
        insertcoassesmentmarkResponse:function(e){
         tempcnt2++;
+
       if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
        if(localStorage.getItem("curr_sess_lenth")==tempcnt2){
-    document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
-    document.querySelector("coscholastic-assesment-card").callService();
+     // alert(localStorage.getItem("curr_sess_lenth")+" "+tempcnt2);
+   document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
+   document.querySelector("coscholastic-assesment-card").callService();
+      tempcnt2=0;
         }
        }
       },
@@ -774,7 +777,7 @@ insertcosubcategorymarkResponse:function(e){
   }
 },
 
-   
+     
       calloverallinsertcoassesmentService:function(studid,studname,category,total,reduction,grade){        
          this.overallinsertcoassesmenturl=sessionStorage.getItem("addrinfo")+"/overallinsertcoassesment-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
