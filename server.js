@@ -2539,7 +2539,7 @@ app.post('/fetchstudentreportforhealth1-service',  urlencodedParser,function (re
 });
 app.post('/getinmailinfo-service',  urlencodedParser,function (req, res)
 {
-  var qur="select * from tr_student_varified_table where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and section_name='"+req.query.section+"'";
+ var qur="select * from tr_student_varified_table v  join parent p on(v.student_id=p.student_id) where v.school_id='"+req.query.schoolid+"' and p.school_id='"+req.query.schoolid+"' and v.academic_year='"+req.query.academicyear+"' and v.grade_name='"+req.query.grade+"' and v.section_name='"+req.query.section+"'";
  connection.query(qur,
     function(err, rows)
     {

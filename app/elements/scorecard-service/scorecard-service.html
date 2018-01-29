@@ -335,7 +335,7 @@
    approvemarkResponse:function(e)
     {
       var approvearr=e.detail.response.returnval;
-      alert(JSON.stringify(approvearr));
+      // alert(JSON.stringify(approvearr));
       if(approvearr!='invalid')
        document.querySelector('approve-one-to-four-card').approvearr=approvearr;
       else
@@ -357,7 +357,7 @@
        },
        getinmailinfoResponse:function(e){
         var temp=[];
-        temp.push({"student_id":"STUDENT ID","student_name":"STUDENT NAME","email_id":"EMAIL ID","verifyvalueid":false,"verifyvalue":true,"ids":"Allcheck","all_id":"Check box"});
+        temp.push({"student_id":"STUDENT ID","student_name":"STUDENT NAME","email":"EMAIL ID","verifyvalueid":false,"verifyvalue":true,"ids":"Allcheck","all_id":"Check box"});
       var arr=e.detail.response.returnval;
       for(var i=0;i<arr.length;i++){
            var m=i+1;
@@ -366,8 +366,8 @@
              arr[i].seqid=i+1;
              arr[i].verifyvalueid=true;
              arr[i].verifyvalue=false;
-             
-              temp.push(arr[i]);
+             arr[i].email=arr[i].email; 
+             temp.push(arr[i]);
         }    
       // alert(JSON.stringify(arr));
   document.querySelector('student-scorcard-mail-card').studentarr=temp;

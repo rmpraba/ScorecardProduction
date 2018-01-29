@@ -1,12 +1,4 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
@@ -28,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin-left: 30%;
       }
       .list{
-      margin-left: 10%;
+      /*margin-left: 10%;*/
       margin-top: 5%;
       }
       paper-dropdown-menu{
@@ -62,8 +54,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: #f1f1f1;
       }
       #itemcard{
-      width: 81%;
-      margin-left: 15%;
+      width: 80%;
+      /*margin-left: 15%;*/
       margin-top: 5%;
       }
       #dynamicspinneree1{
@@ -110,13 +102,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <paper-button on-click="bulksendmail">Send mail</paper-button>
     </div>
     </div>
+    <center>
       <div class="list" >
    <template is="dom-repeat" items="{{studentarr}}">
        <div id='itemcard'>
-         <student-scorcard-mail-item-card verifyvalues="{{item.verifyvalue}}" fontsvalue="{{item.fonts}}" studentid="{{item.student_id}}" studentname="{{item.student_name}}" verifyvalueids="{{item.verifyvalueid}}" id="{{item.ids}}{{item.seqid}}" emailid="{{item.email_id}}" check1t="{{check1tid}}"  check2t="{{check2tid}}" alls="{{item.all_id}}"> </student-scorcard-mail-item-card>
+         <student-scorcard-mail-item-card verifyvalues="{{item.verifyvalue}}" fontsvalue="{{item.fonts}}" studentid="{{item.student_id}}" studentname="{{item.student_name}}" verifyvalueids="{{item.verifyvalueid}}" id="{{item.ids}}{{item.seqid}}" emailid="{{item.email}}" check1t="{{check1tid}}"  check2t="{{check2tid}}" alls="{{item.all_id}}"> </student-scorcard-mail-item-card>
      </div>
    </template>
     </div>
+    </center>
        <div class="spinner"><paper-dialog modal id="dynamicspinneree1" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
  <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
