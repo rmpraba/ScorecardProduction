@@ -387,7 +387,7 @@
    approvemarkResponse:function(e)
     {
       var approvearr=e.detail.response.returnval;
-      alert(JSON.stringify(approvearr));
+      // alert(JSON.stringify(approvearr));
       if(approvearr!='invalid')
        document.querySelector('approve-one-to-four-card').approvearr=approvearr;
       else
@@ -409,7 +409,7 @@
        },
        getinmailinfoResponse:function(e){
         var temp=[];
-        temp.push({"student_id":"STUDENT ID","student_name":"STUDENT NAME","email_id":"EMAIL ID","verifyvalueid":false,"verifyvalue":true,"ids":"Allcheck","all_id":"Check box"});
+        temp.push({"student_id":"STUDENT ID","student_name":"STUDENT NAME","email":"EMAIL ID","verifyvalueid":false,"verifyvalue":true,"ids":"Allcheck","all_id":"Check box"});
       var arr=e.detail.response.returnval;
       for(var i=0;i<arr.length;i++){
            var m=i+1;
@@ -418,8 +418,8 @@
              arr[i].seqid=i+1;
              arr[i].verifyvalueid=true;
              arr[i].verifyvalue=false;
-             
-              temp.push(arr[i]);
+             arr[i].email=arr[i].email; 
+             temp.push(arr[i]);
         }    
       // alert(JSON.stringify(arr));
   document.querySelector('student-scorcard-mail-card').studentarr=temp;
@@ -486,31 +486,62 @@
         var arr=e.detail.response.returnval;
         var arr1=e.detail.response.verifyarr;
         var temp=[];
+        // alert(JSON.stringify(arr));
+        // alert(JSON.stringify(arr1));
 
-   if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo'){
-         document.querySelector('cce-generate-score-card').FnHide();
+   // if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo'){
+   //       document.querySelector('cce-generate-score-card').FnHide();
      
-       for(var i=0;i<arr.length;i++){
-          arr[i].sno=i+1;
-          if(arr[i].feepaid_status=='Yes')
-            arr[i].editable=false;
-          else
-            arr[i].editable=true;
-        }
-      temp.push({"id":"STUDENT ID","student_name":"STUDENT NAME","view":"VIEW","fontss":"font-weight: bold;","verifyvalueid1":false,"verifyvalue1":true,"verifyids":"","undoid":""});
-        for(var i=0;i<arr.length;i++){
-          arr[i].fontss=" font-weight: normal;";
-          arr[i].verifyvalueid1=true;
-          arr[i].verifyvalue1=false;
-           arr[i].verifyids="";
-           temp.push(arr[i]);
-        }
-        document.querySelector('student-list-card').studentarr=temp; 
+   //     for(var i=0;i<arr.length;i++){
+   //        arr[i].sno=i+1;
+   //        if(arr[i].feepaid_status=='Yes')
+   //          arr[i].editable=false;
+   //        else
+   //          arr[i].editable=true;
+   //      }
+   //    temp.push({"id":"STUDENT ID","student_name":"STUDENT NAME","view":"VIEW","fontss":"font-weight: bold;","viewlabel":false,"verifylabel":false,"verifyicon":true,"undolabel":true,"undoicon":true,"verifiedicon":true});
+   //      for(var i=0;i<arr.length;i++){
+   //        arr[i].fontss=" font-weight: normal;";
+   //        arr[i].verifyvalueid1=true;
+   //        arr[i].verifyvalue1=false;
+   //         arr[i].verifyids="";
+   //         temp.push(arr[i]);
+   //      }
+   //      document.querySelector('student-list-card').studentarr=temp; 
    
+   //    }
+   //   else{
+   //      document.querySelector('cce-generate-score-card').FnHide();
+   //      document.querySelector('generate-studentlist-outcard').FnHide();
+   //      for(var i=0;i<arr.length;i++){
+   //        arr[i].sno=i+1;
+   //        if(arr[i].feepaid_status=='Yes')
+   //          arr[i].editable=false;
+   //        else
+   //          arr[i].editable=true;
+   //      }
+
+      if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo'){
+        temp.push({"id":"Student Id","student_name":"Student Id","view":"View Reportcard","verification":"Verification Status","undo":"Undo","font":"font-weight: bold;","viewlabel":false,"verifylabel":true,"verifyicon":true,"undolabel":true,"undoicon":true,"verifiedicon":true});
+        document.querySelector('student-list-card').widthh="70%";
+        for(var i=0;i<arr.length;i++){
+           arr[i].view="View";
+           arr[i].viewlabel=false;
+           arr[i].verifylabel=true;
+           arr[i].verifyicon=true;
+           arr[i].undolabel=true;
+           arr[i].undoicon=true;
+           arr[i].verifiedicon=true;
+           arr[i].disable=true;
+           arr[i].icon="";
+           arr[i].disableundo=true;
+           arr[i].font="font-weight: normal;";
+          temp.push(arr[i]);
+        }
       }
-     else{
-        document.querySelector('cce-generate-score-card').FnHide();
-        document.querySelector('generate-studentlist-outcard').FnHide();
+      else{
+        temp.push({"id":"Student Id","student_name":"Student Id","view":"View Reportcard","verification":"Verification Status","undo":"Undo","font":"font-weight: bold;","viewlabel":false,"verifylabel":false,"verifyicon":true,"undolabel":false,"undoicon":true,"verifiedicon":true});
+        document.querySelector('student-list-card').widthh="90%";
         for(var i=0;i<arr.length;i++){
           arr[i].sno=i+1;
           if(arr[i].feepaid_status=='Yes')
@@ -518,47 +549,56 @@
           else
             arr[i].editable=true;
         }
-
         for(var i=0;i<arr.length;i++){
           var flag=0;
           for(var j=0;j<arr1.length;j++){
            if(arr[i].id.trim()==arr1[j].student_id.trim())
               { 
                 flag=1;
-                arr[i].fonts="color:green;";
-                arr[i].fontss=" font-weight: normal;";
-                arr[i].verifyvalue=true;
-                arr[i].hiddenundoid=false;
-                arr[i].verifyvalueid="verified";
-                arr[i].undo="UNDO";
+                arr[i].disable=true;
+                arr[i].icon="done-all";
+                arr[i].verifyicon=false;
+                arr[i].disableundo=false;
+                arr[i].undolabel=true;
+                arr[i].color="color:#248A09;";
+                arr[i].verifytext="Verified";
               }
            }
          if(flag==0){
-               arr[i].fonts="color:red;";
-               arr[i].fontss=" font-weight: normal;";
-               arr[i].verifyvalue=false;
-               arr[i].hiddenundoid=true;
-               arr[i].verifyvalueid="Verify";
-               arr[i].undo="";
-
+               arr[i].disable=false;
+               arr[i].icon="check";
+               arr[i].verifyicon=false;
+               arr[i].disableundo=true;
+               arr[i].undolabel=true;
+               arr[i].color="color:#2371CE;";
+               arr[i].verifytext="Click to verify";
              }
-        }
-    temp.push({"id":"STUDENT ID","student_name":"STUDENT NAME","view":"VIEW","Verified":"VERIFIED","Undo":"UNDO","verifyvalueid1":false,"verifyvalue1":true,"fontss":"font-weight: bold;","verifyids":"Verify","undoid":"Undo"});
+        }    
        
         for(var i=0;i<arr.length;i++){
-           arr[i].verifyvalueid1=true;
-           arr[i].verifyvalue1=false;
-           arr[i].verifyids="";
-           arr[i].undoid="";
-          
+           arr[i].view="View";
+           arr[i].viewlabel=false;
+           arr[i].verifylabel=true;
+           arr[i].verifyicon=arr[i].verifyicon;
+           arr[i].undolabel=arr[i].undolabel;
+           arr[i].undoicon=arr[i].verifiedicon;
+           arr[i].verifiedicon=arr[i].verifiedicon;
+           arr[i].disable=arr[i].disable;
+           arr[i].icon=arr[i].icon;
+           arr[i].disableundo=arr[i].disableundo;
+           arr[i].font="font-weight: normal;";
+           arr[i].color=arr[i].color;
+           arr[i].verifytext=arr[i].verifytext;
+           arr[i].editable=arr[i].editable;
           temp.push(arr[i]);
         }
-
-   document.querySelector('student-list-card').studentarr=temp; 
+      }
+     document.querySelector('cce-generate-score-card').FnHide();
+     document.querySelector('student-list-card').studentarr=temp; 
      if(localStorage.getItem('curr_sess_verify')=='verifyid'){
      document.querySelector('cce-generate-score-card').FnToggleSpinner(false);
       }  
-    }
+    // }
        
      },
       callFetchstudentinfoService:function(studid)
@@ -681,7 +721,7 @@
 
       },
          callSubjectService:function(gradename,section){
-          this.subjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
+          this.subjecturl=sessionStorage.getItem("addrinfo")+"/fetchapprovalsubject-service";
               var obj={"schoolid":"","loggedid":"","roleid":"","gradename":"","section":"","subjectcategory":""};
           obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
           obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
@@ -702,7 +742,7 @@
             }
           }
 if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approval')
-     document.querySelector('approvalstatus-card').subjectarr=arr;  
+     document.querySelector('approve-one-to-four-card').subjectarr=arr;  
 if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
      document.querySelector('approvalstatus-card').subjectarr=arr;  
   

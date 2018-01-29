@@ -20,7 +20,8 @@
       margin-left: 20%;
       }
       .list{
-      margin-left: 10%;
+      /*margin-left: 10%;*/
+      @apply(--layout-center-justified);
       margin-top: 5%;
       }
       paper-dropdown-menu{
@@ -97,9 +98,6 @@
                 <template is="dom-repeat" items="{{termarr}}">
                 <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
                 </template>    
-                <!-- <paper-item value="Term1">Term1</paper-item>
-                <paper-item value="Term2">Term2</paper-item>
-                <paper-item value="Term3">Term3</paper-item>  -->
             </paper-menu>
           </paper-dropdown-menu>
 
@@ -119,11 +117,13 @@
             </paper-menu>
           </paper-dropdown-menu>
           </div>
-    <div hidden$="{{hidecard}}">
-       <student-list-card></student-list-card>
-      
+
+    <center>
+    <div class="list" hidden$="{{hidecard}}">
+     <student-list-card></student-list-card>
     </div>
-    
+    </center>
+
 
     </div>
     

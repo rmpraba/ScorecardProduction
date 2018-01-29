@@ -2501,10 +2501,7 @@ if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorag
           alert("Submitted!");
 
     }
-      }
-        
-
-
+      }      
       
     },
     FnFetchApprovalStatus:function(){
@@ -2548,8 +2545,7 @@ if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorag
       }
       var final=[];
       for(var i=0;i<overall.length;i++){
-        for(var j=0;j<arr.length;j++){ 
-        // alert(overall[i].school_id+" "+arr[j].school_id+" "+overall[i].academic_year+" "+arr[j].academic_year+" "+overall[i].term_name+" "+arr[j].term_name+" "+overall[i].assesment_name+" "+arr[j].assesment_id+" "+overall[i].grade_name+" "+arr[j].grade+" "+overall[i].subject_name+" "+arr[j].subject);           
+        for(var j=0;j<arr.length;j++){           
             if((overall[i].school_id).toUpperCase()==arr[j].school_id&&overall[i].academic_year==arr[j].academic_year&&overall[i].term_name==arr[j].term_name&&overall[i].assesment_name==arr[j].assesment_id&&overall[i].grade_name==arr[j].grade&&overall[i].subject_name==arr[j].subject){
                 overall[i].flag=arr[j].flag;
                 overall[i].hideflag=false;
@@ -2562,16 +2558,12 @@ if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorag
       var obj={"academic_year":"Academicyear","term_name":"Term","assesment_name":"Assesment","grade_name":"Grade","section_name":"Section","subject_name":"Subject","flag":"Status","hideflag":true,"font":"font-weight: bold;"};
       var overallfinal=[];
       overallfinal.push(obj);
-      // alert(JSON.stringify(overall));
       for(var i=0;i<overall.length;i++){
         overallfinal.push(overall[i]);
       }
-      // alert(JSON.stringify(overallfinal));
       document.querySelector('approvalstatus-card').approvalarr=overallfinal;
       document.querySelector('approvalstatus-card').FnSpinnerrActive(false);
-
     },
-
     AppruvalFnfiltervalues:function(e){
     var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -2588,16 +2580,82 @@ if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorag
         this.$.appuvalfetchapprovalstatusajax.generateRequest();
     },
     appuvalfetchapprovalstatusResponse:function(e){
-     // alert(JSON.stringify(e.detail.response.returnval));
+      // alert(JSON.stringify(e.detail.response.returnval));
       var arr=e.detail.response.returnval;
+      var overall=e.detail.response.overall;
+      var filter=e.detail.response.filter;
+      
+      // alert(JSON.stringify(overall));
+      for(var i=0;i<overall.length;i++){
+        overall[i].color="background-color:#E8ECE9";
+        overall[i].flag="Yet to submit";
+        overall[i].hideflag=true;
+        if(overall[i].subject_category!='category1'&&overall[i].assesment_id!='assesment3')
+        {
+        overall.splice(i,1);
+        i--;
+        }
+      }
+      // alert(JSON.stringify(overall));
+      if(arr.length>0){
       for(var i=0;i<arr.length;i++){
-        if(arr[i].flag=="0")
+        if(arr[i].flag=="0"){
+          arr[i].color="background-color:#E0DA26";
           arr[i].flag="Pending for approval";
-        if(arr[i].flag=="1")
+        }
+        if(arr[i].flag=="1"){
+          arr[i].color="background-color:#99EC89";
           arr[i].flag="Approved";
+        }
+      }
+      var final=[];
+      for(var i=0;i<overall.length;i++){
+        for(var j=0;j<arr.length;j++){           
+            if((overall[i].school_id).toUpperCase()==arr[j].school_id&&overall[i].academic_year==arr[j].academic_year&&overall[i].term_name==arr[j].term_name&&overall[i].assesment_name==arr[j].assesment_id&&overall[i].grade_name==arr[j].grade&&overall[i].subject_name==arr[j].subject){
+                overall[i].flag=arr[j].flag;
+                overall[i].hideflag=false;
+                overall[i].color=arr[j].color;
+            }
+            overall[i].section_name=arr[j].section;
+        }
       } 
-     document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
+      }
+      else{
+        for(var i=0;i<overall.length;i++){
+         if(filter=="Filter By Section"||filter=="Filter By Subject")
+         overall[i].section_name=localStorage.getItem("curr_sess_section1");
+        }
+      }
 
+      var obj={"academic_year":"Academicyear","term_name":"Term","assesment_name":"Assesment","grade_name":"Grade","section_name":"Section","subject_name":"Subject","flag":"Status","hideflag":true,"font":"font-weight: bold;"};
+      var overallfinal=[];
+      overallfinal.push(obj);
+      for(var i=0;i<overall.length;i++){
+        if(filter=="Filter By Grade"){
+            if(localStorage.getItem("curr_sess_grade1")==overall[i].grade_name)
+                overallfinal.push(overall[i]);
+        }
+        else if(filter=="Filter By Section"){
+            if(localStorage.getItem("curr_sess_grade1")==overall[i].grade_name&&localStorage.getItem("curr_sess_section1")==overall[i].section_name)
+                overallfinal.push(overall[i]);
+        }
+        else if(filter=="Filter By Subject"){
+            if(localStorage.getItem("curr_sess_grade1")==overall[i].grade_name&&localStorage.getItem("curr_sess_section1")==overall[i].section_name&&localStorage.getItem("curr_sess_subject1")==overall[i].subject_name)
+                overallfinal.push(overall[i]);
+        }
+        else
+        overallfinal.push(overall[i]);
+      }
+      // alert(overallfinal.length);
+      document.querySelector('approvalstatus-card').approvalarr=overallfinal;
+      // document.querySelector('approvalstatus-card').FnSpinnerrActive(false);
+      // for(var i=0;i<arr.length;i++){
+      //   if(arr[i].flag=="0")
+      //     arr[i].flag="Pending for approval";
+      //   if(arr[i].flag=="1")
+      //     arr[i].flag="Approved";
+      // } 
+     // document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
     },
 
     callUpdateStudentInfo:function(id,name,pname,pmail,alternatemail,mothername,address){
@@ -2897,7 +2955,7 @@ if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorag
     fnimporttermmarksResponse:function(e)
        {
         var res=e.detail.response.returnval;
-        if(res==='Updated')
+        if(res=='Updated')
         {
             alert('Removed Successfully');
             if(localStorage.getItem("curr_sess_filterid")=="fillteractive")
@@ -2935,7 +2993,7 @@ fnimporttermmarks11:function(termname,assesmentid,grade,section,subject)
        {
        // alert(JSON.stringify(e.detail.response.returnval));
         var res=e.detail.response.returnval;
-        if(res==='Updated')
+        if(res=='Updated')
         {
             alert('Removed Successfully');
            if(localStorage.getItem("curr_sess_filterid")=="fillteractive")

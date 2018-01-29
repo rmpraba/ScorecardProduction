@@ -11,3 +11,6 @@ app/configfile/logfile.txt
 app/configfile/logfile.txt
 app/configfile/logfile.txt
 *.txt
+*.txt
+app/configfile/logfile.txt
+*.txt
