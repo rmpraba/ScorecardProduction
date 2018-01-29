@@ -30,36 +30,25 @@
         background-color: #f1f1f1;
       }
       #itemcard{
-        width: 80%;
+        width: 90%;
       }
 </style>
     <div>
-      <table >
-
-     
-
-      </table>
-
      <template is="dom-repeat" items="{{studentarr}}">
-      <div id='itemcard'>
-               
-      <student-list-itemcard verifyvalues="{{item.verifyvalue}}" fontsvalue="{{item.fonts}}" studentid="{{item.id}}" studentname="{{item.student_name}}" verifyvalueids="{{item.verifyvalueid}}" sno="{{item.sno}}" edit="{{item.editable}}" hiddenundoids="{{item.hiddenundoid}}" verifyvalueid1="{{item.verifyvalueid1}}" verifyvalue1="{{item.verifyvalue1}}" fontss="{{item.fontss}}" undo="{{item.undo}}"  verifyids="{{item.verifyids}}" undoid="{{item.undoid}}"> </student-list-itemcard>
-        
-     </div>
-  </template>
-    
+      <div id='itemcard'>      
+      <student-list-itemcard verifytext="{{item.verifytext}}" disableundo="{{item.disableundo}}"  disable="{{item.disable}}" icon="{{item.icon}}" color="{{item.color}}" font="{{item.font}}" studentid="{{item.id}}" studentname="{{item.student_name}}" sno="{{item.sno}}" edit="{{item.editable}}" view="{{item.view}}" verification="{{item.verification}}" undo="{{item.undo}}" viewlabel="{{item.viewlabel}}" verifylabel="{{item.verifylabel}}" verifyicon="{{item.verifyicon}}" undolabel="{{item.undolabel}}" undoicon="{{item.undoicon}}" verifiedicon="{{item.verifiedicon}}"> </student-list-itemcard>
+      </div>
+     </template>
     </div>
   </template>
   <script>
   (function() {
     'use strict';
-
     Polymer({
       is: 'student-list-card',
       ready:function(e){
        localStorage.setItem('curr_sess_verify','unverifyid');    
-      },
-      
+      }
     });
   })();
   </script>
