@@ -469,6 +469,34 @@
    //          arr[i].editable=true;
    //      }
 
+      if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo'){
+        temp.push({"id":"Student Id","student_name":"Student Id","view":"View Reportcard","verification":"Verification Status","undo":"Undo","font":"font-weight: bold;","viewlabel":false,"verifylabel":true,"verifyicon":true,"undolabel":true,"undoicon":true,"verifiedicon":true});
+        document.querySelector('student-list-card').widthh="70%";
+        for(var i=0;i<arr.length;i++){
+           arr[i].view="View";
+           arr[i].viewlabel=false;
+           arr[i].verifylabel=true;
+           arr[i].verifyicon=true;
+           arr[i].undolabel=true;
+           arr[i].undoicon=true;
+           arr[i].verifiedicon=true;
+           arr[i].disable=true;
+           arr[i].icon="";
+           arr[i].disableundo=true;
+           arr[i].font="font-weight: normal;";
+          temp.push(arr[i]);
+        }
+      }
+      else{
+        temp.push({"id":"Student Id","student_name":"Student Id","view":"View Reportcard","verification":"Verification Status","undo":"Undo","font":"font-weight: bold;","viewlabel":false,"verifylabel":false,"verifyicon":true,"undolabel":false,"undoicon":true,"verifiedicon":true});
+        document.querySelector('student-list-card').widthh="90%";
+        for(var i=0;i<arr.length;i++){
+          arr[i].sno=i+1;
+          if(arr[i].feepaid_status=='Yes')
+            arr[i].editable=false;
+          else
+            arr[i].editable=true;
+        }
         for(var i=0;i<arr.length;i++){
           var flag=0;
           for(var j=0;j<arr1.length;j++){
@@ -493,8 +521,7 @@
                arr[i].color="color:#2371CE;";
                arr[i].verifytext="Click to verify";
              }
-        }
-    temp.push({"id":"Student Id","student_name":"Student Id","view":"View Reportcard","verification":"Verification Status","undo":"Undo","font":"font-weight: bold;","viewlabel":false,"verifylabel":false,"verifyicon":true,"undolabel":false,"undoicon":true,"verifiedicon":true});
+        }    
        
         for(var i=0;i<arr.length;i++){
            arr[i].view="View";
@@ -510,8 +537,10 @@
            arr[i].font="font-weight: normal;";
            arr[i].color=arr[i].color;
            arr[i].verifytext=arr[i].verifytext;
+           arr[i].editable=arr[i].editable;
           temp.push(arr[i]);
         }
+      }
      document.querySelector('cce-generate-score-card').FnHide();
      document.querySelector('student-list-card').studentarr=temp; 
      if(localStorage.getItem('curr_sess_verify')=='verifyid'){

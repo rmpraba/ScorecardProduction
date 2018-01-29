@@ -20,7 +20,8 @@
       margin-left: 30%;
       }
       .list{
-      margin-left: 10%;
+      /*margin-left: 10%;*/
+      @apply(--layout-center-justified);
       margin-top: 5%;
       }
       paper-dropdown-menu{
@@ -73,9 +74,11 @@
             </paper-menu>
           </paper-dropdown-menu>
           </div>
+    <center>
     <div class="list" hidden$="{{hidecard}}">
      <student-list-card></student-list-card>
     </div>
+    </center>
     </div>
     <scorecard-service id="scorecardservice"></scorecard-service>
      <div class="spinner"><paper-dialog modal id="dynamicspinneree" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>

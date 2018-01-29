@@ -30,13 +30,13 @@
         background-color: #f1f1f1;
       }
       #itemcard{
-        width: 90%;
+        
       }
 </style>
     <div>
      <template is="dom-repeat" items="{{studentarr}}">
-      <div id='itemcard'>      
-      <student-list-itemcard verifytext="{{item.verifytext}}" disableundo="{{item.disableundo}}"  disable="{{item.disable}}" icon="{{item.icon}}" color="{{item.color}}" font="{{item.font}}" studentid="{{item.id}}" studentname="{{item.student_name}}" sno="{{item.sno}}" edit="{{item.editable}}" view="{{item.view}}" verification="{{item.verification}}" undo="{{item.undo}}" viewlabel="{{item.viewlabel}}" verifylabel="{{item.verifylabel}}" verifyicon="{{item.verifyicon}}" undolabel="{{item.undolabel}}" undoicon="{{item.undoicon}}" verifiedicon="{{item.verifiedicon}}"> </student-list-itemcard>
+      <div id='itemcard' style="width:{{widthh}};">      
+      <student-list-itemcard editable="{{item.editable}}" verifytext="{{item.verifytext}}" disableundo="{{item.disableundo}}"  disable="{{item.disable}}" icon="{{item.icon}}" color="{{item.color}}" font="{{item.font}}" studentid="{{item.id}}" studentname="{{item.student_name}}" sno="{{item.sno}}" edit="{{item.editable}}" view="{{item.view}}" verification="{{item.verification}}" undo="{{item.undo}}" viewlabel="{{item.viewlabel}}" verifylabel="{{item.verifylabel}}" verifyicon="{{item.verifyicon}}" undolabel="{{item.undolabel}}" undoicon="{{item.undoicon}}" verifiedicon="{{item.verifiedicon}}"> </student-list-itemcard>
       </div>
      </template>
     </div>
