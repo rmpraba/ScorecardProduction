@@ -83,7 +83,7 @@
         on-response="templateincoscolasticsubject1Response"
         debounce-duration="300"
     > 
-    
+    <term-assesment-service id="assmentservice"></term-assesment-service>
   </template>
   <script>
   (function() {
@@ -126,18 +126,21 @@
             if(e.detail.response.returnval=='exist'){
              alert('Already submitted!!');
              
-            document.querySelector('term-assesment-card').TermMarkdialog("'Already Approved!!'");
+      document.querySelector('term-assesment-card').TermMarkdialog("'Already Approved!!'");
 
             }
         }
         else{
            if(e.detail.response.returnval=='done'){
                 alert('Approved!!');
-                document.querySelector('subject-dynamic-markentrycard').disablesave=true;
+    document.querySelector('home-page').setPage('approveassesment',''); 
+        this.$.assmentservice.callApproveService();
+     document.querySelector('subject-dynamic-markentrycard').disablesave=true;
+
             } 
             if(e.detail.response.returnval=='exist'){
                 alert('Already approved!!');
-             alert(3);
+            
 
             }
         }

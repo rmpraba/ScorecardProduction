@@ -160,7 +160,7 @@
     </div>
 </div>
   <paper-input value="{{categorylength}}" hidden ></paper-input>
-<term-assesment-service id="assesmentservice"></term-assesment-service>
+  <term-assesment-service id="assesmentservice"></term-assesment-service>
 
   </template>
    <script type="text/javascript">
@@ -356,6 +356,7 @@ this.$.hiddenexcelheaderfiles1.hidden=true;
         }
       },
       FnApprove:function(){
+
         this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
       }
       // FnSetAlreadyEnteredMarks:function(arr){

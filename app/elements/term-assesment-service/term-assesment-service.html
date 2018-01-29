@@ -1657,7 +1657,20 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       alert("Already Approved!");
       if(e.detail.response.returnval=='updated'){
         alert('Approved!');
-      //this.callOveralltermmarkinsertService();   
+      //this.callOveralltermmarkinsertService();
+     // alert("33");
+     if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+
+
+      if(localStorage.getItem("curr_sess_filterid")=="fillteractive"){
+         this.Fnfiltervalues();
+        }
+       else{
+        this.callApproveService();   
+        }
+      document.querySelector('home-page').setPage('approveassesment','');  
+   //   document.querySelector('approve-one-to-four-card').setDefaultHeaders();
+      }   
       }
       if(e.detail.response.returnval=='not updated')
       alert("Unable to approve!");
@@ -1928,6 +1941,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(e.detail.response.returnval=="succ")
         {
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+          //  alert("eee");
              alert('Approved!'); 
         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
 
@@ -2407,6 +2421,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       alert("Already Approved!");
       if(e.detail.response.returnval=='updated'){
       alert("Approved!");
+     
       // this.callOveralltermmarkinsertService();   
       }
       if(e.detail.response.returnval=='not updated')

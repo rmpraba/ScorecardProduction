@@ -1045,6 +1045,8 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
         //  this.$.assesmentservice.callTermService("Term");
           this.$.scorecardservice.callGradeService();
           this.$.assesmentservice.callAcademicService(); 
+     
+      document.querySelector('cce-generate-score-card').hidegetfistsirchid=false;
          
       },
       FnSelectTermType:function(){
@@ -1466,6 +1468,8 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
         // this.$.scorecardservice.callFetchstudentnameService();
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
+      document.querySelector('cce-generate-score-card').hidegetfistsirchid=true;
+     
       },
 
     FnCreateCategory:function(e)
@@ -1657,6 +1661,7 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
         localStorage.setItem('curr_sess_loggedassesmenttype','sectionedit');
         this.$.uiservice.tranfergradeinfo();
         document.querySelector('section-edit-card').FnRefresh();
+
         this.$.cdialog.toggle();
       },
 

@@ -47,7 +47,10 @@
       color: #061E98;
     }
     </style>
+    <div hidden$="{{hidegetfistsirchid}}">
      <paper-checkbox on-change="fnchange" style="margin-left:81%" id="SingleStudentInfoid">Search By Name</paper-checkbox>
+      
+    </div>
   
       <div class="card" >
 
@@ -157,7 +160,9 @@
     Polymer({
       is: 'cce-generate-score-card',
       ready:function(){
-        this.hidecard=true;         
+        this.hidecard=true;
+         this.$.Filterstudentview.hidden=false;
+           this.$.searchstudentid.hidden=true;         
        },
       fnchange:function(e){
  if(this.$.SingleStudentInfoid.checked==true){
@@ -279,9 +284,11 @@
       document.querySelector('#scorertermid').selected=-1;
       document.querySelector('#scorergradeid').selected=-1;
       document.querySelector('#scorersectionid').selected=-1;
-     
+         this.$.Filterstudentview.hidden=false;
+        this.$.searchstudentid.hidden=true;     
       this.hidecard=true;
       this.flag=0;
+      this.$.SingleStudentInfoid.checked=false;
       },
       FnSelectTerm:function(e){
         termname = e.target.selectedItem.textContent.trim();       
