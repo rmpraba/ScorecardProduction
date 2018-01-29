@@ -2155,22 +2155,23 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('cc-eng-onetofour-card').FnResetFlag();
         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
-        if(localStorage.getItem("curr_sess_importsubject")=="GK"){ 
-             // alert("s");
-        document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');  
+      if(localStorage.getItem("curr_sess_importsubject")=="GK"){ 
+        
+         document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');  
         document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();    
         document.querySelector('cc-gk-onetofour-card').importarr=overall;
         document.querySelector('cc-gk-onetofour-card').FnResetFlag();
         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
-        if(localStorage.getItem("curr_sess_importsubject")=="Computer"){
+        if(localStorage.getItem("curr_sess_importsubject")=="Computer")
+        {
                 
         document.querySelector('term-assesment-sheet-card').setPage('cc-computer-onetofour-card');
         document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-computer-onetofour-card').importarr=overall;
         document.querySelector('cc-computer-onetofour-card').FnResetFlag();
-        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
-        }      
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);}      
+        
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"){   
                
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
@@ -2585,7 +2586,7 @@ if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorag
           arr[i].flag="Approved";
       } 
      document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
->>>>>>> origin/master
+
     },
 
     callUpdateStudentInfo:function(id,name,pname,pmail,alternatemail,mothername,address){
