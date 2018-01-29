@@ -219,6 +219,24 @@
         content-type="application/json"
         on-response="approvemarkResponse"
         debounce-duration="300"
+    >  <iron-ajax
+        method="post"
+        id="searchstudentinfoajax"
+        url="{{searchstudentinfourl}}"
+        params="{{searchstudentinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchstudentinfoResponse"
+        debounce-duration="300"
+    > <iron-ajax
+        method="post"
+        id="fnsarchstuclassinfoajax"
+        url="{{fnsarchstuclassinfourl}}"
+        params="{{fnsarchstuclassinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fnsarchstuclassinfoResponse"
+        debounce-duration="300"
     >  
   </template>
   <script>
@@ -272,6 +290,40 @@
          this.gradeparam= obj;
          this.$.gradeajax.generateRequest();      
       },
+    Fnsearchstudentinfo:function(e){
+    this.searchstudentinfourl=sessionStorage.getItem("addrinfo")+"/searchstudentinfo-service";
+         var obj={"schoolid":"","loggedid":"","roleid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         this.searchstudentinfoparam= obj;
+         this.$.searchstudentinfoajax.generateRequest(); 
+       },
+      searchstudentinfoResponse:function(e){
+        var arr=e.detail.response.returnval;
+    document.querySelector('cce-generate-score-card').autocompletearr(arr);
+
+       },
+       fnsarchstuclassinfo:function(id) {
+        this.fnsarchstuclassinfourl=sessionStorage.getItem("addrinfo")+"/fnsarchstuclassinfo-service";
+            var obj={"schoolid":"","academic_year":""};
+            obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+            obj.studentid=id;
+            this.fnsarchstuclassinfoparam=obj;
+            //alert(JSON.stringify(obj));
+          this.$.fnsarchstuclassinfoajax.generateRequest(); 
+        },
+      fnsarchstuclassinfoResponse:function(e){
+        var res=e.detail.response.returnval;
+
+           document.querySelector('cce-generate-score-card').searchgradid=res[0].gradeid;
+       document.querySelector('cce-generate-score-card').searchgradname=res[0].grade_name;
+      document.querySelector('cce-generate-score-card').seachcassid=res[0].classid;
+         
+       document.querySelector('cce-generate-score-card').searchsectionname=res[0].section_name; 
+        },
       gradeResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='feecollectionupdate')

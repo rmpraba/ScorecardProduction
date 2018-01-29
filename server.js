@@ -1455,7 +1455,40 @@ app.post('/grade1-service',  urlencodedParser,function (req, res)
 
 
 
+app.post('/searchstudentinfo-service',  urlencodedParser,function (req, res)
+{
+  var schoolid={school_id:req.query.schoolid};
+  var loggedid={id:req.query.loggedid};
+  var roleid={role_id:req.query.roleid};
+  console.log(roleid);
+  // var qur="select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where id='"+loggedid+"')";
+ 
+ var qur="select distinct(id),student_name from md_student where school_id='"+req.query.schoolid+"'";
 
+ 
+  console.log('-------------------Studentt----------------------');
+  console.log(qur);
+
+  // connection.query('select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where ? and ? and ?)',[roleid,schoolid,loggedid],
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
 
 
 
@@ -3659,9 +3692,13 @@ app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
   var qur3="select school_id,term_name,assesment_id,grade,section,subject from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and flag='1' group by school_id,term_name,assesment_id,grade,section,subject";
   var qur4="select school_id,term_name,assesment_id,grade,section,subject from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and flag='1' group by school_id,term_name,assesment_id,grade,section,subject";
   var count1=0,count2=0,count3=0;
+  console.log("-----------------------SUB-");
   console.log(qur1);
+  console.log("--------------");
   console.log(qur2);
+  console.log("--------------");
   console.log(qur3);
+  console.log("-------------------");
   console.log(qur4);
   if(req.query.gradeid=="g1"||req.query.gradeid=="g2"||req.query.gradeid=="g3"||req.query.gradeid=="g4")
   {
@@ -18508,6 +18545,27 @@ app.post('/fetchstudentinfo-service', urlencodedParser,function (req,res)
     var qur="SELECT admission_no as id, student_name FROM md_admission where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and flag='1'";
       console.log("..........................................");
   console.log("coming in fetchstudentinfo-service.........");
+  console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else{
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  });
+});
+
+app.post('/fnsarchstuclassinfo-service', urlencodedParser,function (req,res)
+{  
+    var qur="SELECT school_type,dob ,academic_year,id ,grade_id as gradeid,class_id as classid ,gender, ageinmonth, (select  grade_name from md_grade  where grade_id=gradeid)  as grade_name ,(select UPPER( section_id ) from mp_grade_section  where class_id=classid and  grade_id=gradeid and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' ) as section_name FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'  and  id='"+req.query.studentid+"'  and flag='active'";
+      console.log("..........................................");
+  console.log("search stu info.........");
   console.log(qur);
     connection.query(qur,
     function(err, rows)

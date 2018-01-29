@@ -821,13 +821,7 @@
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('studentlistcard','');
          } 
-  if(localStorage.getItem('curr_sess_loggedassesmenttype').trim()=="Scorecard") 
-         {
-          // alert('in');
-          document.querySelector('app-card').setPage('homepage','');
-          document.querySelector('home-page').setPage('scorecard','');
-          this.$.assesmentservice.callTermService("Term");
-         }  
+ 
          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Enrichment") 
          {
           this.$.bassesmentservice.callAssesmentService("Enrichment"); 
@@ -1045,8 +1039,13 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
       FnGenerateScorecard:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Scorecard');
         // this.$.scorecardservice.callFetchstudentnameService();
-        this.$.scorecardservice.callGradeService();
-        this.$.cdialog.toggle();    
+
+           document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('scorecard','');
+        //  this.$.assesmentservice.callTermService("Term");
+          this.$.scorecardservice.callGradeService();
+          this.$.assesmentservice.callAcademicService(); 
+         
       },
       FnSelectTermType:function(){
         localStorage.setItem('curr_sess_report','0');
