@@ -7,3 +7,7 @@ dist
 *.txt
 *.txt
 app/configfile/logfile.txt
+*.txt
+app/configfile/logfile.txt
+app/configfile/logfile.txt
+*.txt
