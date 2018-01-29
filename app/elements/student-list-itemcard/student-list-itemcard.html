@@ -71,11 +71,9 @@
     Polymer({
       is: 'student-list-itemcard', 
      Fnverified:function(e){
-         localStorage.setItem('curr_sess_verify','verifyid'); 
-        
-      document.querySelector('cce-generate-score-card').FnToggleSpinner(true);
-  this.$.newformatservice.passstudentverifyvalues(this.studentid,this.studentname);   
-           this.fngetViewvalues();
+         localStorage.setItem('curr_sess_verify','verifyid');         
+         document.querySelector('cce-generate-score-card').FnToggleSpinner(true);
+         this.$.newformatservice.passstudentverifyvalues(this.studentid,this.studentname); this.fngetViewvalues();
          },
        
     Fnundovalue:function(e){

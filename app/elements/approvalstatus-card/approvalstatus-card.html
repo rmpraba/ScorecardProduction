@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="approvalstatus-card">
@@ -50,13 +40,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-bottom: 1px solid #dedede; 
      }
    #apprualdialogfilterid{
-      border-radius: 25px;
-          width: 40%;
+      border-radius:10px;
+          width: 35%;
       },
-
-
-
-
 
       :host {
         display: block;
@@ -185,18 +171,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <approvelstatus-item-card academicyear="{{item.academic_year}}" termname="{{item.term_name}}" assesmentid="{{item.assesment_name}}" grade="{{item.grade_name}}" section="{{item.section_name}}" subject="{{item.subject_name}}" flag="{{item.flag}}"
       hideflag="{{item.hideflag}}" font="{{item.font}}" color="{{item.color}}"></approvelstatus-item-card>
     </div>
-  </template>
-
-    
-     
+  </template>     
  </div>
-
-
- 
-
      <term-assesment-service id="assesmentservice"></term-assesment-service>
      <scorecard-service id="scorecardservice"></scorecard-service>
- 
  </div>
  </template>
   <script>

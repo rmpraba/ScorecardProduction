@@ -669,7 +669,7 @@
 
       },
          callSubjectService:function(gradename,section){
-          this.subjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
+          this.subjecturl=sessionStorage.getItem("addrinfo")+"/fetchapprovalsubject-service";
               var obj={"schoolid":"","loggedid":"","roleid":"","gradename":"","section":"","subjectcategory":""};
           obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
           obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
@@ -690,7 +690,7 @@
             }
           }
 if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approval')
-     document.querySelector('approvalstatus-card').subjectarr=arr;  
+     document.querySelector('approve-one-to-four-card').subjectarr=arr;  
 if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
      document.querySelector('approvalstatus-card').subjectarr=arr;  
   
