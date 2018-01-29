@@ -1715,8 +1715,20 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(arr[0].result=='match')
           this.updateimportmarkService();
         else{
+    if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+    else{
           alert("Please make sure all the students entry!");
-          this.FnEnableordisablebtns();
+
+    }
+      this.FnEnableordisablebtns();
         }
     },
 
@@ -1742,7 +1754,21 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(arr[0].result=='match')
           this.updatefaimportmarkService();
         else
+         {
+           if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+    else{
           alert("Please make sure all the students entry!");
+
+    }
+}
     },
     updateimportmarkService:function(){
       // alert(localStorage.getItem("curr_sess_termname"));
@@ -1764,10 +1790,43 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },    
     updateimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=="exist")
-        alert('Already Submitted');
-      if(e.detail.response.returnval=="succ")
-        alert("Submitted!");
+     
+      if(e.detail.response.returnval=="exist"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+
+
+       }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+    else{
+          alert("Already Submitted");
+
+      }
+      }
+
+      if(e.detail.response.returnval=="succ"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+    else{
+          alert("Submitted!");
+
+    }
+      }
+        
+
+
+      
     },
 
 
@@ -1789,10 +1848,38 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },    
     updatefaimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=="exist")
-        alert('Already Submitted');
-      if(e.detail.response.returnval=="succ")
-        alert("Submitted!");
+      if(e.detail.response.returnval=="exist"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+
+
+       }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+    else{
+          alert("Already Submitted");
+
+      }
+      }
+
+      if(e.detail.response.returnval=="succ"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+    else{
+          alert("Submitted!");
+
+    }
+      }
     },
     updateflagResponse:function(e){
       // alert(e.detail.response.returnval);
@@ -2068,22 +2155,23 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('cc-eng-onetofour-card').FnResetFlag();
         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
-        if(localStorage.getItem("curr_sess_importsubject")=="GK"){ 
-             // alert("s");
-        document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');  
+      if(localStorage.getItem("curr_sess_importsubject")=="GK"){ 
+        
+         document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');  
         document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();    
         document.querySelector('cc-gk-onetofour-card').importarr=overall;
         document.querySelector('cc-gk-onetofour-card').FnResetFlag();
         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
-        if(localStorage.getItem("curr_sess_importsubject")=="Computer"){
+        if(localStorage.getItem("curr_sess_importsubject")=="Computer")
+        {
                 
         document.querySelector('term-assesment-sheet-card').setPage('cc-computer-onetofour-card');
         document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-computer-onetofour-card').importarr=overall;
         document.querySelector('cc-computer-onetofour-card').FnResetFlag();
-        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
-        }      
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);}      
+        
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"){   
                
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
@@ -2335,8 +2423,21 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         var arr=e.detail.response.returnval;
         if(arr[0].result=='match')
           this.updateimportmarkService();
-        else
+        else{
+if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+       }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Please make sure all the students entry!");
+
+    }
+    else{
           alert("Please make sure all the students entry!");
+
+    }
+}
     },
     updateattendanceimportmarkService:function(){
       // alert(localStorage.getItem("curr_sess_termname"));
@@ -2358,10 +2459,42 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },    
     updateattendanceimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=="exist")
-        alert('Already Submitted');
-      if(e.detail.response.returnval=="succ")
-        alert("Submitted!");
+     
+     if(e.detail.response.returnval=="exist"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("'Already Submitted");
+
+    }
+    else{
+          alert("'Already Submitted");
+
+    }
+      }
+
+      if(e.detail.response.returnval=="succ"){
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
+        document.querySelector("coscholastic-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+
+    else if(localStorage.getItem("curr_sess_subjectcategory")=="category1"){
+        document.querySelector("term-assesment-card").TermMarkdialog("Submitted!");
+
+    }
+    else{
+          alert("Submitted!");
+
+    }
+      }
+        
+
+
+      
     },
     FnFetchApprovalStatus:function(){
       var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};
@@ -2752,7 +2885,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     fnimporttermmarksResponse:function(e)
        {
         var res=e.detail.response.returnval;
-        if(res==='Updated')
+        if(res=='Updated')
         {
             alert('Removed Successfully');
             if(localStorage.getItem("curr_sess_filterid")=="fillteractive")
@@ -2790,7 +2923,7 @@ fnimporttermmarks11:function(termname,assesmentid,grade,section,subject)
        {
        // alert(JSON.stringify(e.detail.response.returnval));
         var res=e.detail.response.returnval;
-        if(res==='Updated')
+        if(res=='Updated')
         {
             alert('Removed Successfully');
            if(localStorage.getItem("curr_sess_filterid")=="fillteractive")

@@ -21,15 +21,9 @@ var connection = mysql.createConnection({
   // password : 'admin',
   // database : 'mlzsreportcard'
 
-  // host     : 'localhost',
-  // port     : '37506',
-  // user     : 'adminVwbmIka',
-  // password : '6RNH4TEavBhh',
-  // database : 'mlzscrm'
  });
 
-//var serverKey = "AAAAH0WgSPE:APA91bGgBTHNnBEeYG0V0aUlua0IZnuvF6xz1dcSGGjTuFU0PlR3H-LNMbvpSpA7IwU-e3A6-4nqMeW3wkePBbu9fVeM14OIXOsrjsTHVZzUxbkFFvhJM6lQIx-R3DVGO4loIKD8hf4U"; //put your server key here 
-//var fcm = new FCM(serverKey);
+
 var bodyParser = require('body-parser'); 
 var app = express();
 var logfile;
@@ -37,8 +31,7 @@ AWS.config.loadFromPath('app/configfile/credential.json');
 
 app.use(express.static('app'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
-app.get('/', function (req, res){
+  app.get('/', function (req, res){
   res.sendFile("app/index.html" );
 })
 app.post('/smis-fetchvisitortype',  urlencodedParser,function (req, res)
