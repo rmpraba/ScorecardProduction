@@ -7,19 +7,19 @@ var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({
   
-  host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
   database:"scorecarddb",
   port:'3306',
   user:"smis",
   password:"smispass",
   reconnect:true,
   data_source_provider:"rds",
-  type:"mysql"
+  type:"mysql"*/
   
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'scorecardtemp'
 
  });
 
@@ -3763,10 +3763,10 @@ app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
   " g.term_id='"+req.query.termname+"' and s.grade_id='"+req.query.gradeid+"' and g.grade_id='"+req.query.gradeid+"' and sub.type='Once' and sub.subject_id!='s14'";
   var qur3="select school_id,term_name,assesment_id,grade,section,subject from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and flag='1' group by school_id,term_name,assesment_id,grade,section,subject";
   var qur4="select school_id,term_name,assesment_id,grade,section,subject from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and flag='1' group by school_id,term_name,assesment_id,grade,section,subject";
-<<<<<<< HEAD
+
   var count1=0,count2=0,count3=0;
   console.log("-----------------------SUB-");
-=======
+
   var qur6="SELECT count(distinct(subject_id)) as count FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
   " and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
   var qur7="select count(distinct(s.subject_id)) as count from mp_grade_subject s join md_grade_assesment_mapping g on(s.grade_id=g.grade_id) join md_subject sub on(sub.subject_id=s.subject_id) where s.school_id='"+req.query.schoolid+"' and "+
@@ -3774,7 +3774,7 @@ app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
   " g.term_id='"+req.query.termname+"' and s.grade_id='"+req.query.gradeid+"' and g.grade_id='"+req.query.gradeid+"' and sub.type='Once' and sub.subject_id not in('s14','s15')";
   
   var count1=0,count2=0,count3=0,count4=0,count5=0;
->>>>>>> 9e0c594971d6c70cf43104b3f6f3a9b149cd2810
+
   console.log(qur1);
   console.log("--------------");
   console.log(qur2);

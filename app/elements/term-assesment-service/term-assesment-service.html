@@ -586,7 +586,7 @@
         this.$.academicajax.generateRequest();
       },
       academicResponse:function(e){
-        alert(JSON.stringify(e.detail.response));
+       // alert(JSON.stringify(e.detail.response));
         
      if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
         document.querySelector('cce-generate-score-card').academicarr=e.detail.response; 
