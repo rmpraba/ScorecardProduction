@@ -91,10 +91,8 @@
     <div>  
     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner><h4>{{spinnermsg}}</h4></paper-dialog></div>
     <div class="excelcard" align="right">
-      <div hidden$="{{hideheader}}">
-        <div id="hidetop" >
-         <paper-checkbox id="attendancecheckid" on-change="excelmark11">Excel Upload</paper-checkbox>
-       </div>
+      <div id="hidetop" hidden$="{{hideheader}}">
+      <paper-checkbox id="attendancecheckid" on-change="excelmark11">Excel Upload</paper-checkbox>
       </div>
       <div id="attendencefileid">
       <div class="hrspace">
@@ -267,8 +265,6 @@ excelmark11:function(e){
      },
       
       setDefaultHeaders:function(){   
-      alert('2');
-        
         this.$.hidetop.hidden=false;     
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");        
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -276,35 +272,29 @@ excelmark11:function(e){
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
         this.term=localStorage.getItem("curr_sess_termname");
-
-        alert(localStorage.getItem('curr_sess_report'));
-        alert(sessionStorage.getItem("curr_sess_loggedroleid"));
-      //alert(sessionStorage.getItem("curr_sess_loggedroleid"));
-
-    if(localStorage.getItem('curr_sess_report')=='0'){
+    
+ if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.attendancecheckid.hidden=true;
+        this.hidesavevalue=true;
+        this.$.attendencesubmit.hidden=true;
+       }
+    else{
 
   if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
       {
         this.importlabel='Approve';
         this.$.attendancecheckid.hidden=true;
-       this.hidesavevalue=false;
-       this.hideheader=true;
-      alert('1');
+        this.hidesavevalue=false;
+      
       }
    else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
         this.importlabel='Submit for approval';
         this.$.attendancecheckid.hidden=false;
        this.hidesavevalue=false;
-       this.hideheader=false;
 
        }
         
     }
-else if(localStorage.getItem('curr_sess_report')=='1'){
-        this.$.attendancecheckid.hidden=true;
-        this.hidesavevalue=true;
-        this.$.attendencesubmit.hidden=true;
-       }
        
       },
       importmark:function()
