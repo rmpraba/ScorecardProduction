@@ -37,13 +37,13 @@
         @apply(--layout-horizontal);
         margin-left: 45%;
       }
- .hrspace
+      .hrspace
       {
        /*padding-left: 87%;*/
        margin-left: 5%;
        @apply(--layout-horizontal);
       }
-    .exceldiv
+      .exceldiv
       {
         @apply(--layout-horizontal);
         /*margin-top: 3%;*/
@@ -108,39 +108,34 @@
       </div>
    </div> -->
    
-    <div hidden$="{{hideheader1}}">
-    
+    <div hidden$="{{hideheader1}}">    
     <center>
       <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
-      <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
- 
-    <template is="dom-repeat" items="{{studarr}}">
-     
+      <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4>
+    <template is="dom-repeat" items="{{studarr}}"> 
       <subject-dynamic-coscholastic-markentry-item-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-coscholastic-markentry-item-card>
-   </template> 
-      </center>
+    </template> 
+    </center>
     <div class="btndiv">
-      <paper-button  class="button" id="dynamicsavebtn1" on-click="FnApprove">{{btnlabel}}</paper-button>
+    <paper-button  class="button" id="dynamicsavebtn1" on-click="FnApprove">{{btnlabel}}</paper-button>
     </div> 
-      </div>
-     
-         
-  <term-assesment-service id="assesmentservice"></term-assesment-service>
-     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+    </div>           
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
 
-  <subject-dynamic-coscholastic-markentry-service id="cosubjectservice"></subject-dynamic-coscholastic-markentry-service>
-<paper-input value="{{categorylength}}" hidden></paper-input>
-   <div  id="coscolaticvaluedynamicreporttable" hidden>
+    <subject-dynamic-coscholastic-markentry-service id="cosubjectservice"></subject-dynamic-coscholastic-markentry-service>
+    <paper-input value="{{categorylength}}" hidden></paper-input>
+    <div  id="coscolaticvaluedynamicreporttable" hidden>
       <div width="{{tabwidth}}">
-       <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
+      <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
       <template is="dom-repeat" items="{{studarr1}}">
       <tr>
       <th width="5%">{{item.sno}}</th>
       <th width="15%">{{item.Studentno}}</th>
       <th width="15%">{{item.studentname}}</th>
       <template is="dom-repeat" items="{{item.category}}" as="i">
-   <th colspan$="{{i.categorycnt}}" width$="{{i.width}}">{{i.subcategoryname}}</th>
+      <th colspan$="{{i.categorycnt}}" width$="{{i.width}}">{{i.subcategoryname}}</th>
       </template>
       </tr>
       </template>

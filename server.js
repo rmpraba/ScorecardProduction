@@ -18,8 +18,8 @@ var connection = mysql.createConnection({
   
   host     : 'localhost',
   user     : 'root',
-  password : '',
-  database : 'scorecardtemp'
+  password : 'admin',
+  database : 'mlzsreportcard'
 
  });
 
@@ -4998,8 +4998,8 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   " where ta.student_id='"+req.query.studid+"' "+
   "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"' and th.school_id='"+req.query.schoolid+"' and th.academic_year='"+req.query.academicyear+"'";
   console.log('----------------------');
-   console.log(qur); 
-   console.log('----------------------');
+  console.log(qur); 
+  console.log('----------------------');
 
   var qur1="select distinct(term_id),school_id,academic_year,term_id,student_id,student_name,class_id,grade,section,attendance,working_days,speccomment,generic from tr_term_attendance "+
   " where student_id='"+req.query.studid+"' "+
@@ -5007,7 +5007,9 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var qur2="select distinct(term_id),school_id,academic_year,term_id,student_id,student_name,class_id,grade,section,height,weight,blood_group,vision_left,vision_right,dental,bmi,remark from tr_term_health "+
   " where student_id='"+req.query.studid+"' "+
   "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' order by term_id";
-
+  console.log('-----------health & attendance-----------');
+  console.log(qur1); 
+  console.log(qur2); 
   var attendance=[];
   var health=[];
   connection.query(qur,function(err, rows)
