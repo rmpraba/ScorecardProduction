@@ -7,19 +7,19 @@ var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({
   
-  // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  // database:"scorecarddb",
-  // port:'3306',
-  // user:"smis",
-  // password:"smispass",
-  // reconnect:true,
-  // data_source_provider:"rds",
-  // type:"mysql"
+  host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  database:"scorecarddb",
+  port:'3306',
+  user:"smis",
+  password:"smispass",
+  reconnect:true,
+  data_source_provider:"rds",
+  type:"mysql"
   
-  host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  // host     : 'localhost',
+  // user     : 'root',
+  // password : 'admin',
+  // database : 'mlzsreportcard'
 
  });
 
@@ -19814,6 +19814,48 @@ app.post('/performance-fetchlevelbasedstudents-service',  urlencodedParser,funct
         if(!err)
         {
         res.status(200).json({'returnval': arr,'levelarr': rows});
+        }
+        });
+      }  
+    });
+});
+
+app.post('/scorecard-fetchstudentacademicyear-service',  urlencodedParser,function (req, res)
+{ 
+    var qur="SELECT academic_year FROM md_student WHERE school_id='"+req.query.schoolid+"' AND id='"+req.query.studentid+"' order by academic_year";
+    console.log("------------------Fetch student academicyear----------------------");
+    console.log(qur);
+    var arr=[];
+
+        connection.query(qur,  function(err, rows)
+        {
+        if(!err)
+        {
+        res.status(200).json({'returnval': rows});
+        }
+        else
+          console.log(err);
+        });
+});
+
+app.post('/scorecard-fetchstudentterm-service',  urlencodedParser,function (req, res)
+{ 
+    var qur="SELECT distinct(term_name) FROM md_grade_assesment_mapping WHERE grade_id in(SELECT grade_id FROM md_student WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND id='"+req.query.studentid+"' order by academic_year) AND school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"'";
+    var qur1="SELECT *,(select grade_name from md_grade where grade_id=s.grade_id) as grade_name FROM md_student s join mp_grade_section g on(s.class_id=g.class_id) WHERE s.grade_id=g.grade_id AND g.school_id='"+req.query.schoolid+"' AND g.academic_year='"+req.query.academicyear+"' AND s.school_id='"+req.query.schoolid+"' AND s.academic_year='"+req.query.academicyear+"' AND s.id='"+req.query.studentid+"' "+
+    "";
+    console.log("------------------Fetch student academicyear----------------------");
+    console.log(qur);
+    var arr=[];
+    connection.query(qur,  function(err, rows)
+      {
+     if(!err)
+      {  
+        arr=rows;
+        connection.query(qur1,  function(err, rows)
+        {
+        if(!err)
+        {
+        res.status(200).json({'returnval': arr,'info': rows});
         }
         });
       }  

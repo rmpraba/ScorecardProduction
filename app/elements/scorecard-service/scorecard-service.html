@@ -238,6 +238,26 @@
         on-response="fnsarchstuclassinfoResponse"
         debounce-duration="300"
     >  
+    <iron-ajax
+        method="post"
+        id="fetchstudentacademicyearajax"
+        url="{{fetchstudentacademicyearurl}}"
+        params="{{fetchstudentacademicyearparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentacademicyearResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="fetchstudenttermajax"
+        url="{{fetchstudenttermurl}}"
+        params="{{fetchstudenttermparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudenttermResponse"
+        debounce-duration="300"
+    > 
   </template>
   <script>
   (function() {
@@ -260,15 +280,47 @@
       ready:function(){
         this.callFetchGrade();
       },
+      FnFetchStudentTermService:function(academicyear,studentid){
+        this.fetchstudenttermurl=sessionStorage.getItem("addrinfo")+"/scorecard-fetchstudentterm-service";
+         var obj={"schoolid":"","loggedid":"","roleid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.studentid=studentid;
+         obj.academicyear=academicyear;
+         this.fetchstudenttermparam= obj;
+         this.$.fetchstudenttermajax.generateRequest(); 
+      },
+      fetchstudenttermResponse:function(e){
+        var info=e.detail.response.info;
+        // alert(JSON.stringify(info));
+        document.querySelector('cce-generate-score-card').termarr1=e.detail.response.returnval;
+        if(info.length>0){
+        document.querySelector('cce-generate-score-card').searchgradid=info[0].grade_id;
+        document.querySelector('cce-generate-score-card').searchgradename=info[0].grade_name;
+        document.querySelector('cce-generate-score-card').searchclassid=info[0].class_id;
+        document.querySelector('cce-generate-score-card').searchsectionname=info[0].section_id;
+        }
+        else
+          alert('Student info not found!!');
+      },
+      Fnfetchstudentacademicyear:function(studentid){
+         this.fetchstudentacademicyearurl=sessionStorage.getItem("addrinfo")+"/scorecard-fetchstudentacademicyear-service";
+         var obj={"schoolid":"","loggedid":"","roleid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.studentid=studentid;
+         this.fetchstudentacademicyearparam= obj;
+         this.$.fetchstudentacademicyearajax.generateRequest();  
+      },
+      fetchstudentacademicyearResponse:function(e){
+        document.querySelector('cce-generate-score-card').academicarr1=e.detail.response.returnval;
+      },
       callSchoolService:function()
       {
         this.fetchschoolurl=sessionStorage.getItem("addrinfo")+"/fetchschool-service";
-      // var obj={"schoolid":"","loggedid":"","roleid":""};
-         // obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-         // obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
-         // obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
-         // this.gradeparam= obj;
-         this.$.fetchschoolajax.generateRequest();
+        this.$.fetchschoolajax.generateRequest();
       },
       fetchschoolResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval))
@@ -280,7 +332,6 @@
         document.querySelector('assesment-comparison-homecard').schoolarr=e.detail.response.returnval;
       },
        callGradeService:function(){
-
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade1-service";
          var obj={"schoolid":"","loggedid":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
