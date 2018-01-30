@@ -437,7 +437,7 @@ undotudentverifyvalues1Response:function(e){
           if(assesment[i].subject_id==temparr[j].subject){
             // alert('yes'+assesment[i].term_name);
           if(assesment[i].term_name=="Term1"){
-            // alert('in '+assesment[i].assesment_id);
+            // alert('in '+assesment[i].term_name+" "+assesment[i].assesment_id);
             if((assesment[i].assesment_id).trim()=="Periodic Test1"){
               // alert('in PT'+assesment[i].score);
               temparr[j].PT1=assesment[i].score;
@@ -453,13 +453,13 @@ undotudentverifyvalues1Response:function(e){
             }
           }
           if(assesment[i].term_name=="Term2"){
-            if(assesment[i].assesment_id=="Periodic Test2")
+            if((assesment[i].assesment_id).trim()=="Periodic Test2")
               temparr[j].PT2=assesment[i].score;
-            if(assesment[i].assesment_id=="Note Book")
+            if((assesment[i].assesment_id).trim()=="Note Book")
               temparr[j].NB2=assesment[i].score;
-            if(assesment[i].assesment_id=="SEA2")
+            if((assesment[i].assesment_id).trim()=="SEA2")
               temparr[j].SEA2=assesment[i].score;
-            if(assesment[i].assesment_id=="Yearly")
+            if((assesment[i].assesment_id).trim()=="Yearly")
               temparr[j].Y=assesment[i].score;
           }
           }
@@ -477,7 +477,7 @@ undotudentverifyvalues1Response:function(e){
           if(temparr[i].HY==""||temparr[i].HY==null)
             temparr[i].HY=0;
           temparr[i].mark1=parseFloat(parseFloat(temparr[i].PT1)+parseFloat(temparr[i].NB1)+parseFloat(temparr[i].SEA1)+parseFloat(temparr[i].HY)).toFixed(2);
-          if(localStorage.getItem("curr_sess_termname")=="term2"){
+          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="term2"){
           if(temparr[i].PT2==""||temparr[i].PT2==null)
             temparr[i].PT2=0;
           if(temparr[i].NB2==""||temparr[i].NB2==null)
@@ -491,7 +491,7 @@ undotudentverifyvalues1Response:function(e){
           for(var n=0;n<grade.length;n++){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
-            if(localStorage.getItem("curr_sess_termname")=="term2"){
+            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="term2"){
             if(parseFloat(temparr[i].mark2)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark2)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade2=grade[n].grade;
             }
@@ -585,29 +585,29 @@ undotudentverifyvalues1Response:function(e){
             }
           }
           if((assesment[i].term_name).toLowerCase()=="halfyearly"){
-            if(assesment[i].assesment_id=="Periodic Test2"){
+            if((assesment[i].assesment_id).trim()=="Periodic Test2"){
               temparr[j].MPT1=assesment[i].total;
               temparr[j].PT1=assesment[i].score;
             }
-            if(assesment[i].assesment_id=="Note Book"){
+            if((assesment[i].assesment_id).trim()=="Note Book"){
               temparr[j].MNB1=assesment[i].total;
               temparr[j].NB1=assesment[i].score;
             }
-            if(assesment[i].assesment_id=="SEA2"){
+            if((assesment[i].assesment_id).trim()=="SEA2"){
               temparr[j].MSEA1=assesment[i].total;
               temparr[j].SEA1=assesment[i].score;
             }
           }
           if((assesment[i].term_name).toLowerCase()=="preannual"){
-            if(assesment[i].assesment_id=="Periodic Test3"){
+            if((assesment[i].assesment_id).trim()=="Periodic Test3"){
               temparr[j].MPT1=assesment[i].total;
               temparr[j].PT1=assesment[i].score;
             }
-            if(assesment[i].assesment_id=="Note Book"){
+            if((assesment[i].assesment_id).trim()=="Note Book"){
               temparr[j].MNB1=assesment[i].total;
               temparr[j].NB1=assesment[i].score;
             }
-            if(assesment[i].assesment_id=="SEA3"){
+            if((assesment[i].assesment_id).trim()=="SEA3"){
               temparr[j].MSEA1=assesment[i].total;
               temparr[j].SEA1=assesment[i].score;
             }
@@ -625,7 +625,7 @@ undotudentverifyvalues1Response:function(e){
           if(temparr[i].MSEA1==""||temparr[i].MSEA1==null)
             temparr[i].MSEA1=0;
           temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
-          if(localStorage.getItem("curr_sess_termname")=="halfyearly"){
+          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="halfyearly"){
           if(temparr[i].MPT1==""||temparr[i].MPT1==null)
             temparr[i].MPT1=0;
           if(temparr[i].MNB1==""||temparr[i].MNB1==null)
@@ -634,7 +634,7 @@ undotudentverifyvalues1Response:function(e){
             temparr[i].MSEA1=0;
           temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
           }
-          if(localStorage.getItem("curr_sess_termname")=="preannual"){
+          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="preannual"){
           if(temparr[i].MPT1==""||temparr[i].MPT1==null)
             temparr[i].MPT1=0;
           if(temparr[i].MNB1==""||temparr[i].MNB1==null)
@@ -659,11 +659,11 @@ undotudentverifyvalues1Response:function(e){
           for(var n=0;n<grade.length;n++){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
-            if(localStorage.getItem("curr_sess_termname")=="halfyearly"){
+            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="halfyearly"){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
             }
-            if(localStorage.getItem("curr_sess_termname")=="preannual"){
+            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="preannual"){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
             }

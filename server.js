@@ -7,14 +7,14 @@ var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({
   
-  /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  database:"scorecarddb",
-  port:'3306',
-  user:"smis",
-  password:"smispass",
-  reconnect:true,
-  data_source_provider:"rds",
-  type:"mysql"*/
+  // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  // database:"scorecarddb",
+  // port:'3306',
+  // user:"smis",
+  // password:"smispass",
+  // reconnect:true,
+  // data_source_provider:"rds",
+  // type:"mysql"
   
   host     : 'localhost',
   user     : 'root',
@@ -3858,21 +3858,21 @@ app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
      {
       if(rows.length>0)
       count4=rows[0].count;
-    connection.query(qur6,function(err, rows)
-     {
-     if(!err)
-     {
-      if(rows.length>0)
-      count5=rows[0].count;
+    // connection.query(qur6,function(err, rows)
+    //  {
+    //  if(!err)
+    //  {
+    //   if(rows.length>0)
+    //   count5=rows[0].count;
       console.log(count1+" "+count2+" "+count3+" "+count4+" "+count5);
       if((parseInt(count1)+parseInt(count2)+parseInt(count4))==parseInt(count3)+parseInt(count5))
       res.status(200).json({'returnval': 'match'});
       else
       res.status(200).json({'returnval': 'nomatch'});
-     }
-     else
-      console.log(err);
-     });
+     // }
+     // else
+     //  console.log(err);
+     // });
      }
      else
       console.log(err);
@@ -4201,7 +4201,8 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid}; 
-  var qur="SELECT * FROM tr_term_overallfa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' order by subject_id"; 
+  var qur="SELECT * FROM tr_term_overallfa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"'))order by subject_id"; 
   console.log('----------------------fetch mark------------------------');
   //console.log(qur);
   connection.query(qur,
@@ -4229,9 +4230,10 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
   var studid={student_id:req.query.studid}; 
   var academicyear={academic_year:req.query.academicyear};  
   var qur="SELECT * FROM tr_term_assesment_overall_assesmentmarks am join "+
-  "md_grade_descriptor gd on(am.category=gd.category_check) WHERE school_id='"+req.query.schoolid+"' "+
+  " md_grade_descriptor gd on(am.category=gd.category_check) WHERE school_id='"+req.query.schoolid+"' "+
   " AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studid+"' and am.term_cat_grade=gd.grade and "+
-  "am.subject_id=gd.subject_name";
+  " am.subject_id=gd.subject_name and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"')) ";
   console.log('.........................Score card....................................');
   //console.log(qur);
   connection.query(qur,
@@ -5003,10 +5005,12 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
 
   var qur1="select distinct(term_id),school_id,academic_year,term_id,student_id,student_name,class_id,grade,section,attendance,working_days,speccomment,generic from tr_term_attendance "+
   " where student_id='"+req.query.studid+"' "+
-  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' order by term_id";
+  " and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' and term_id in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"')) order by term_id";
   var qur2="select distinct(term_id),school_id,academic_year,term_id,student_id,student_name,class_id,grade,section,height,weight,blood_group,vision_left,vision_right,dental,bmi,remark from tr_term_health "+
   " where student_id='"+req.query.studid+"' "+
-  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' order by term_id";
+  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' and term_id in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"')) order by term_id";
   console.log('-----------health & attendance-----------');
   console.log(qur1); 
   console.log(qur2); 
@@ -5087,7 +5091,8 @@ app.post('/fetchcoscholasticmetrics-service',  urlencodedParser,function (req,re
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
-  var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
+  var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"'))";
   // console.log(qur);
   connection.query(qur,
      function(err, rows)
@@ -5154,7 +5159,8 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
   var academicyear={academic_year:req.query.academicyear};  
   var qur="SELECT * FROM tr_coscholastic_assesment_marks am join "+
   "md_grade_coscholastic_descriptor gd on(am.sub_category=gd.category) WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' and am.category_grade=gd.grade and "+
-  "am.subject_id=gd.subject_name";
+  "am.subject_id=gd.subject_name and term_name in(select term_name from md_term "+
+  "where id <=(select id from md_term where term_name='"+req.query.termname+"'))";
   console.log('.........................Score card....................................');
   console.log(qur);
   connection.query(qur,
@@ -8327,10 +8333,11 @@ app.post('/sendmail-service', urlencodedParser,function (req, res){
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
 {  
     var qur="select student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
-    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
-    "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
-    "academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
-    " and  student_id='"+req.query.studid+"' group by term_name,subject_id,student_id";
+    " lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
+    " from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
+    " and  student_id='"+req.query.studid+"' and term_name in(select term_name from md_term "+
+    " where id <=(select id from md_term where term_name='"+req.query.termname+"')) group by term_name,subject_id,student_id";
     
 console.log('......................termwise..............................');
     console.log(qur);
@@ -14410,15 +14417,15 @@ app.post('/subjectapproval-service',  urlencodedParser,function (req,res)
     flag:req.query.flag
    } 
     if(req.query.flag=='0')
-    var checkqur="SELECT * FROM tr_term_fa_assesment_import_marks WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    var checkqur="SELECT * FROM tr_term_fa_assesment_import_marks WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and "+
     " grade='"+req.query.gradename+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and flag in('0','1')";
     else
-    var checkqur="SELECT * FROM tr_term_fa_assesment_import_marks WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    var checkqur="SELECT * FROM tr_term_fa_assesment_import_marks WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and "+
     " grade='"+req.query.gradename+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and flag in('1')";
     if(req.query.flag=='0')
     var qur="insert into tr_term_fa_assesment_import_marks set ? ";
     if(req.query.flag=="1")
-    var qur="update tr_term_fa_assesment_import_marks set ? WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    var qur="update tr_term_fa_assesment_import_marks set ? WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and "+
     " grade='"+req.query.gradename+"' and section='"+req.query.section+"' and subject='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and flag='0'";
 
     console.log('------------subject approval-------------');
@@ -16769,9 +16776,11 @@ app.post('/fetchstudinfofornewformat-service',  urlencodedParser,function (req,r
 
 app.post('/fetchnewformatscholasticsubjects-service',  urlencodedParser,function (req,res)
 {  
-  var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' group by term_name,assesment_id,subject_id,student_id,grade order by subject_id";
-  var scalequr="SELECT * FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' AND term_name='"+req.query.termname+"'";
-  var subqur="SELECT distinct(subject_id) FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studentid+"' order by subject_id";
+  var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
+  var scalequr="SELECT * FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"'))";
+  var subqur="SELECT distinct(subject_id) FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND term_name='"+req.query.termname+"' AND academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studentid+"' order by subject_id";
   var gradequr="SELECT * FROM newformat_scholastic_grademaster";
   console.log('----------------------------------------');
   console.log(qur);
@@ -16818,8 +16827,10 @@ app.post('/fetchnewformatscholasticsubjects-service',  urlencodedParser,function
 
 app.post('/fetchnewformatscholasticsubjects-service1',  urlencodedParser,function (req,res)
 {  
-  var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' group by term_name,assesment_id,subject_id,student_id,grade order by subject_id";
-  var scalequr="SELECT * FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' AND term_name='"+req.query.termname+"'";
+  var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
+  var scalequr="SELECT * FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' and term_name in(select term_name from md_term "+
+  " where id <=(select id from md_term where term_name='"+req.query.termname+"'))";
   var subqur="SELECT distinct(subject_id) FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studentid+"' order by subject_id";
   var gradequr="SELECT * FROM newformat_scholastic_grademaster";
   var scaleup="SELECT sum(actual_scale) as tot,subject_name,grade_name FROM scaledown_master group by subject_name,grade_name order by subject_id"
@@ -16886,7 +16897,7 @@ app.post('/fetchnewformatcoscholasticsubjects1-service',  urlencodedParser,funct
 {  
   var qur="SELECT student_id,avg(mark) as total,subject_id FROM "+
   "tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
-  "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' "+
+  "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' AND term_name='"+req.query.termname+"'"+
   "group by subject_id";
   var qur1="select * from md_coscholastic_grade_rating";
   console.log('----------------------------------------');
@@ -16914,8 +16925,8 @@ app.post('/fetchnewformatcoscholasticsubjects-service',  urlencodedParser,functi
 {  
   var qur="SELECT student_id,avg(mark) as total,subject_id FROM "+
   "tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
-  "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' "+
-  "group by subject_id";
+  "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name='"+req.query.termname+"' "+ 
+  "group by subject_id order by term_name";
   var qur1="select * from md_coscholastic_grade_rating";
   console.log('----------------------------------------');
   console.log(qur);

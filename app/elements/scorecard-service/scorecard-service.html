@@ -763,6 +763,8 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
         this.fetchmarkurl=sessionStorage.getItem("addrinfo")+"/fetchmark-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.studid=studid;
         this.fetchmarkparam=obj;
         this.$.fetchmarkajax.generateRequest();                
@@ -981,7 +983,9 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
         //alert('co');
         this.fetchcoscholasticmetricsurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmetrics-service";
         var obj={"scoolid":"","studid":""};
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.studid=studid;
         this.fetchcoscholasticmetricsparam=obj;
         this.$.fetchcoscholasticmetricsajax.generateRequest(); 
@@ -994,7 +998,9 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
         this.stid=studid;
         this.fetchcoscholasticinfourl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticinfo-service";
         var obj={"scoolid":"","studid":""};
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.studid=studid;
         this.fetchcoscholasticinfoparam=obj;
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
