@@ -11,7 +11,7 @@
       }
     </style>
     <div>
-      <term-assesment-card id="ass"></term-assesment-card>
+      <term-assesment-card id="ass" hidedrop="{{hidedrop}}"></term-assesment-card>
       <term-assesment-sheet-card></term-assesment-sheet-card>
       <!-- <subject-dynamic-markentrycard></subject-dynamic-markentrycard> -->
     </div>
@@ -23,7 +23,8 @@
       is: 'term-assesment',  
       hiddenpage:function()
       {
-      this.$.ass.hidden=true;
+      // this.$.ass.visibility="hidden";
+      // document.getElementById("ass").style.visibility = "hidden";
       }   
     });
   })();

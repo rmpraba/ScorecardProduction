@@ -66,9 +66,9 @@
       </div>
          
          <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
-            <paper-menu id="vgfgfdgdfgdfgdfgdfgdfgdfg"  class="dropdown-content"  on-iron-select="FnSelectacademicyear1"  attr-for-selected="value" required>  
+            <paper-menu id="searchacademicyear"  class="dropdown-content"  on-iron-select="FnSelectacademicyear1"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr1}}">
-                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+                <paper-item value="{{item.academic_year}}">{{item.academic_year}}</paper-item>                               
               </template>
             </paper-menu>
        </paper-dropdown-menu>
@@ -139,9 +139,9 @@
       <paper-button on-click="FnClose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
        </center>
      </paper-dialog>
-     <p hidden>{{searchgradid}}</p>
-     <p hidden>{{searchgradname}}</p>
-     <p hidden>{{seachcassid}}</p>
+     <p hidden>{{searchgradeid}}</p>
+     <p hidden>{{searchgradename}}</p>
+     <p hidden>{{seachclassid}}</p>
      <p hidden>{{searchsectionname}}</p>
       <term-assesment-service id='assesmentservice'></term-assesment-service>
       <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
@@ -169,7 +169,7 @@
   this.$.Filterstudentview.hidden=true;
   this.$.searchstudentid.hidden=false;
   this.$.scorecardservice.Fnsearchstudentinfo();
- this.hidecard=false; 
+ this.hidecard=true; 
        
  }
  else if(this.$.SingleStudentInfoid.checked==false){
@@ -179,32 +179,28 @@
    }
       this.value="";
       this.itemArray="";
-      document.querySelector('#vgfgfdgdfgdfgdfgdfgdfgdfg').selected=-1;
+      document.querySelector('#searchacademicyear').selected=-1;
       document.querySelector('#searchrtermid').selected=-1;
       document.querySelector('#scoreacademicyearid').selected=-1;
       document.querySelector('#scorertermid').selected=-1;
       document.querySelector('#scorergradeid').selected=-1;
       document.querySelector('#scorersectionid').selected=-1;
      },
-     
-       FnSelectacademicyear1:function(e){  
+     FnSelectacademicyear1:function(e){  
+        document.querySelector('#searchrtermid').selected=-1;
         academicarr2 = e.target.selectedItem.value.trim();
-      //alert(localStorage.getItem('curr_sess_loggedassesmenttype'));
         localStorage.setItem("curr_sess_academicyear",academicarr2); 
-        this.$.assesmentservice.callTermService("Term");
-
-  this.$.scorecardservice.fnsarchstuclassinfo(this.studentid);
-
-      },
-   FnSelectTerm1:function(e){
-
+        this.$.scorecardservice.FnFetchStudentTermService(academicarr2,this.studentid);
+        // this.$.scorecardservice.fnsarchstuclassinfo(this.studentid);
+     },
+     FnSelectTerm1:function(e){
         termname1 = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_termname",termname1);        
- // this.$.scorecardservice.Fnsearchstureportinfo(academicarr1,termname,this.studentid,this.searchgradid,this.searchgradname,this.seachcassid,this.searchsectionname);
+        // this.$.scorecardservice.Fnsearchstureportinfo(academicarr1,termname,this.studentid,this.searchgradid,this.searchgradname,this.seachcassid,this.searchsectionname);
         localStorage.setItem("curr_sess_section",this.searchsectionname); 
-        localStorage.setItem("curr_sess_grade",this.searchgradname);
-        localStorage.setItem("curr_sess_gradeid",this.searchgradid);
-
+        localStorage.setItem("curr_sess_grade",this.searchgradename);
+        localStorage.setItem("curr_sess_gradeid",this.searchgradeid);
+        // alert(localStorage.getItem("curr_sess_grade")+"  "+localStorage.getItem('curr_sess_academicyear'));
        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
@@ -255,6 +251,10 @@
 
        },
     FnSelectacademicyear:function(e){  
+      document.querySelector('#scorertermid').selected=-1;
+      document.querySelector('#scorergradeid').selected=-1;
+      document.querySelector('#scorersectionid').selected=-1;
+      this.hidecard=true;
         academicarr1 = e.target.selectedItem.value.trim();
       //alert(localStorage.getItem('curr_sess_loggedassesmenttype'));
         localStorage.setItem("curr_sess_academicyear",academicarr1); 
@@ -278,7 +278,7 @@
       FnRefresh:function()
       {
 
-      document.querySelector('#searchacadamicid11').selected=-1;
+      document.querySelector('#searchacadamicyear').selected=-1;
       document.querySelector('#searchrtermid').selected=-1;
       document.querySelector('#scoreacademicyearid').selected=-1;
       document.querySelector('#scorertermid').selected=-1;
@@ -291,21 +291,27 @@
       this.$.SingleStudentInfoid.checked=false;
       },
       FnSelectTerm:function(e){
+        this.hidecard=true;
+        document.querySelector('#scorergradeid').selected=-1;
+        document.querySelector('#scorersectionid').selected=-1;
         termname = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_termname",termname);        
-        if(this.flag==1)
-          this.callService();
+        // if(this.flag==1)
+          // this.callService();
       },
-      FnSelectGrade:function(e){        
+      FnSelectGrade:function(e){   
+        this.hidecard=true;
+        document.querySelector('#scorersectionid').selected=-1;     
         gradename = e.target.selectedItem.textContent.trim();       
         gradeid = e.target.selectedItem.value.trim();       
         localStorage.setItem("curr_sess_grade",gradename);
         localStorage.setItem("curr_sess_gradeid",gradeid);
         this.$.scorecardservice.callSectionService(gradename);
-        if(this.flag==1)
-          this.callService();
+        // if(this.flag==1)
+        //   this.callService();
         },
       FnSelectSection:function(e){
+        this.hidecard=true;
         section = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",section);                
         this.callService();
@@ -390,13 +396,15 @@
      },
  FnSelectstuinfo:function(e)
         {
+          document.querySelector('#searchacademicyear').selected=-1;
+          document.querySelector('#searchrtermid').selected=-1;
           this.querySelector('#seachinfostuid').style.visibility='hidden';
           this.value=e.target.selectedItem.textContent.trim();
           this.studentid=e.target.selectedItem.value;
           this.itemArray=[];
           document.querySelector('#seachinfostuid').selected=-1;
-         
           this.studid=this.studentid;
+          this.$.scorecardservice.Fnfetchstudentacademicyear(this.studentid);
       },
  /*FnItemSelected:function(e)
    {

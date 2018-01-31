@@ -57,7 +57,7 @@
     </style>
     <div class='card'>
      
-     <div class='drop'>
+     <div class='drop' hidedrop="{{hidedrop}}">
 
     <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu  id="gradenam2" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
@@ -107,7 +107,7 @@
     Polymer({
       is: 'coscholastic-assesment-card',
       ready:function(){
-     
+     this.hidedrop=false;
       },
       callDefaultService:function(){
         this.flag=0; 

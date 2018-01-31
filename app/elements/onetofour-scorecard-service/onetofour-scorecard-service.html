@@ -200,12 +200,12 @@
         document.querySelector('comparisonreport-card').parentname=arr[0].parent_name;
         document.querySelector('comparisonreport-card').parentemail=arr[0].email;
         }
-        }
-     
+        }     
       },
-callfetchhealthattendanceinfoService:function(studid){
+      callfetchhealthattendanceinfoService:function(studid){
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
         var obj={"schoolid":"","studid":"","academicyear":""};
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.studid=studid;
@@ -379,6 +379,7 @@ callfetchhealthattendanceinfoService:function(studid){
       callfetchscholasticmarkService:function(studid){
         this.fetchscholasticmarkurl=sessionStorage.getItem("addrinfo")+"/fetchscholasticmark-service";
         var obj={"schoolid":"","studid":"","academicyear":""};
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.studid=studid;
@@ -1100,6 +1101,7 @@ callfetchhealthattendanceinfoService:function(studid){
         var obj={"schoolid":"","studid":"","academicyear":"","grade":"section","":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.grade=localStorage.getItem("curr_sess_grade");
         obj.section=localStorage.getItem("curr_sess_section");
         obj.studid=studid;

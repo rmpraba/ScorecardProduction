@@ -4,7 +4,7 @@
 <link rel="import" href="..\..\bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../onetofour-scorecard-service/onetofour-scorecard-service.html">
 <dom-module id="cce-onetofour-score-card">
-<style>
+<style>    
   .buttoncard{
     @apply(--layout-horizontal);
     margin-left: 20%;
@@ -14,6 +14,8 @@
     border: 1px solid black;
     margin-left: 1%;
     margin-top: 2%;
+font-family: Arial, Helvetica, sans-serif;
+  
   }
   .logo{
     width:100%;
@@ -391,7 +393,7 @@
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
-        document.querySelector('#pimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+      document.querySelector('#pimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         // if(sessionStorage.getItem("curr_sess_loggedschoolid")=="SCH003")
         //   document.querySelector('#pimg2').src="../../images/Principal"+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         // else
@@ -424,7 +426,7 @@
         localStorage.setItem("curr_sess_parentmail",this.parentemail);
         localStorage.setItem("curr_sess_secmail",this.secemail);
         this.$.ss.mailReportcardService(this.parentname);
-      },
+       },
       FnSetArray:function(eng){
         // alert(JSON.stringify(eng));
         this.engArray=eng;
