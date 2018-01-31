@@ -152,14 +152,12 @@
      </tr>  
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
-      <td>{{item.serialno}}</td>
-      <td>{{item.id}}</td>
-      <td>{{item.student_name}}</td>
-      <td>{{item.attendance}}</td>
-      <td>{{item.generic}}</td>
-      <td>{{item.speccomment}}</td>
-          <!-- <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
-      </td> -->
+       <td>{{item.serialno}}</td>
+       <td>{{item.id}}</td>
+       <td>{{item.student_name}}</td>
+       <td>{{item.attendance}}</td>
+       <td>{{item.generic}}</td>
+       <td>{{item.speccomment}}</td>
       </tr>  
       </template> 
      </table> 
@@ -252,19 +250,19 @@
       FnSave:function(){
         alert('Attendance for this section is complete!');
       },
-excelmark11:function(e){
-  if(document.querySelector("#attendancecheckid").checked==true){
+   excelmark11:function(e){
+   if(document.querySelector("#attendancecheckid").checked==true){
        this.$.attendencefileid.hidden=false;
        localStorage.setItem("curr_sess_template_tef","active"); 
    }
-  if(document.querySelector("#attendancecheckid").checked==false){
+   if(document.querySelector("#attendancecheckid").checked==false){
     this.$.attendencefileid.hidden=true;
       document.getElementById("attendancefile").value ="";
        localStorage.setItem("curr_sess_template_tef","inactive"); 
        }
+
      },
-      
-      setDefaultHeaders:function(){   
+   setDefaultHeaders:function(){   
         this.$.hidetop.hidden=false;     
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");        
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -273,14 +271,14 @@ excelmark11:function(e){
         this.subject=localStorage.getItem("curr_sess_subject");
         this.term=localStorage.getItem("curr_sess_termname");
     
- if(localStorage.getItem('curr_sess_report')=='1'){
+   if(localStorage.getItem('curr_sess_report')=='1'){
         this.$.attendancecheckid.hidden=true;
         this.hidesavevalue=true;
         this.$.attendencesubmit.hidden=true;
        }
     else{
 
-  if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+   if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
       {
         this.importlabel='Approve';
         this.$.attendancecheckid.hidden=true;
@@ -292,24 +290,21 @@ excelmark11:function(e){
         this.$.attendancecheckid.hidden=false;
        this.hidesavevalue=false;
 
-       }
-        
-    }
+      }
+     }
        
       },
       importmark:function()
       {
         this.$.assesmentservice.Fnimportattendancemark();
       },
-      FnRefresh:function()
-      {
-            this.$.hidetop.hidden=true;
+       FnRefresh:function()
+       {
+        this.$.hidetop.hidden=true;
         this.studarr=[];
-       localStorage.setItem("curr_sess_template_tef","inactive"); 
-       document.querySelector("#attendancecheckid").checked=false;
-
-    
-      },
+        localStorage.setItem("curr_sess_template_tef","inactive"); 
+        document.querySelector("#attendancecheckid").checked=false;
+       },
        FnSpinnerrActive:function(flag){
         if(flag==true)
         this.$.spinner.opened=true;

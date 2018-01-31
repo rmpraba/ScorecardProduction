@@ -511,7 +511,14 @@
       document.querySelector('term-assesment-card').FnRefreshcard();
       document.querySelector('dynamic-scholastic-markentry-card').FnRefresh();      
     }
-    if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
+if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('coscholastic-assesment-card').FnRefreshcard();
+      document.querySelector('subject-dynamic-coscholastic-markentry-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
     {
       this.page="teacherhomecard";
       document.querySelector('teacherhome-card').FnRefresh();

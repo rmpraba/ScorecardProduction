@@ -246,14 +246,16 @@ if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markent
         // document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
         // document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(true);        
         // }      
-else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Performing Arts" ||subject=="Co-Curricular Activities" || subject=="Health and Physical Education"|| subject=="Discipline"){ 
+else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Performing Arts" ||subject=="Co-Curricular Activities" || subject=="Health and Physical Education"|| subject=="Discipline" || subject=="Attitudes And values"){ 
        // alert(3);
 
    if(localStorage.getItem('curr_sess_report')=='0'){
        document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr=[]; 
       
-          document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-card');
+  document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-card');
            this.$.subcoslosticservice.subjectsubmittedcheckService1(gradename,section,subject);
+ document.querySelector('subject-dynamic-coscholastic-markentry-card').FnRefresh();
+
           }
           if(localStorage.getItem('curr_sess_report')=='1'){
           

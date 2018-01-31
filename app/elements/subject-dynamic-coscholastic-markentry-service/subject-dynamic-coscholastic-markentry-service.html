@@ -379,7 +379,7 @@ document.querySelector('subject-dynamic-coscholastic-markentry-card').FnRefresh(
           if(overall[i].id==arr[j].student_id){
             for(var k=0;k<overall[i].category.length;k++){
 
-            if(overall[i].category[k].subjectname==arr[j].subject_id&&overall[i].category[k].categoryname==arr[j].sub_category){
+            if(overall[i].category[k].subjectname==arr[j].subject_id&&(overall[i].category[k].categoryname).toUpperCase()==(arr[j].sub_category).toUpperCase()){
               overall[i].category[k].score=arr[j].mark;
                
             }
@@ -418,8 +418,19 @@ templateincoscolasticsubject:function(gradename,section,subject){
        var arr1=e.detail.response.studentarr;
        var arr3=e.detail.response.categorycnt;
        var arr4=e.detail.response.cmtarr;
+       var finalgetarrr=e.detail.response.finalarr;
        var t=arr4[0].cmt;
     //   alert(t);
+for(var i=0;i<finalgetarrr.length;i++){
+  for(var j=0;j<arr3.length;j++){
+  if(arr3[j].sub_category==finalgetarrr[i].sub_category){
+      arr3[j].cmt1=finalgetarrr[i].counvalue;
+  }
+}
+
+}
+//alert(JSON.stringify(arr3));
+
 document.querySelector('subject-dynamic-coscholastic-markentry-card').fngenrategrade(arr3);
 document.querySelector('subject-dynamic-coscholastic-markentry-card').fnstudentarrvalue(arr1);
 
@@ -445,11 +456,11 @@ document.querySelector('subject-dynamic-coscholastic-markentry-card').fnstudenta
           obj.sub_category_id=arr[i].sub_category_id;
           obj.sub_category_name=arr[i].sub_category_name;
           obj.spancnt=t;
-          c+=parseFloat(t);
+         
           temp.push(obj);
           tempcnt+=parseFloat(t);
         }
-     
+       c=t;
         if(parseFloat(tempcnt)>=8){
           percent=80;
           tabwidth="100%";
@@ -517,7 +528,7 @@ document.querySelector('subject-dynamic-coscholastic-markentry-card').fnstudenta
               }
            
            overall1.push({"sno":i+1,"Studentno":arr1[i].id,"studentname":arr1[i].student_name,"tabwidth":tabwidth,"category":category});
-              }
+              }  
 document.querySelector('subject-dynamic-coscholastic-markentry-card').categorylength=c;
 document.querySelector('subject-dynamic-coscholastic-markentry-card').tabwidth=tabwidth;
 document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr1=overall1;

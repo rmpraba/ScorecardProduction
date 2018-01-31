@@ -1653,10 +1653,8 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     updatefaflagResponse:function(e)
     {
       // alert(e.detail.response.returnval);
-      if(e.detail.response.returnval=='exist')
-      alert("Already Approved!");
-      if(e.detail.response.returnval=='updated'){
-        alert('Approved!');
+     
+
       //this.callOveralltermmarkinsertService();
      // alert("33");
      if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
@@ -1668,12 +1666,17 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        else{
         this.callApproveService();   
         }
-      document.querySelector('home-page').setPage('approveassesment','');  
-   //   document.querySelector('approve-one-to-four-card').setDefaultHeaders();
-      }   
+   document.querySelector('home-page').setPage('approveassesment',''); 
+     if(e.detail.response.returnval=='exist')
+    document.querySelector('approve-one-to-four-card').TermMarkdialog(" All Ready Approved!");
+    if(e.detail.response.returnval=='updated'){
+    document.querySelector('approve-one-to-four-card').TermMarkdialog("Approved!");
+       
+      } 
+  if(e.detail.response.returnval=='not updated')
+    document.querySelector('approve-one-to-four-card').TermMarkdialog("Not Approved!");
       }
-      if(e.detail.response.returnval=='not updated')
-      alert("Unable to approve!");
+    
     },
     Fnimportmark:function()
     {   
@@ -1874,7 +1877,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       // alert(e.detail.response.returnval);
       if(e.detail.response.returnval=="exist"){
           if(localStorage.getItem("curr_sess_subjectcategory")=="category2" || localStorage.getItem("curr_sess_subjectcategory")=="category3"|| localStorage.getItem("curr_sess_subjectcategory")=="category4"){
-        document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
+    document.querySelector("coscholastic-assesment-card").TermMarkdialog("'Already Submitted");
 
 
        }
@@ -1909,7 +1912,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       // alert(e.detail.response.returnval);
       if(e.detail.response.returnval=='exist'){
           alert("Already Approved!");
-          document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+     document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
 
       }
     

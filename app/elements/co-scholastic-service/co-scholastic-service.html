@@ -453,8 +453,8 @@
          this.fetchstudentreportforhealthparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentreportforhealthajax.generateRequest();
-   }
-else{
+     }
+   else{
  this.fetchstudentreportforhealthurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforhealth-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -466,9 +466,7 @@ else{
          this.fetchstudentreportforhealthparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentreportforhealthajax.generateRequest();
-    }
-        
-        
+        }
       },
       fetchstudentreportforhealthResponse:function(e)
       {
@@ -744,7 +742,8 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
          this.insertcosubcategorymarkurl=sessionStorage.getItem("addrinfo")+"/insertcosubcategorymark-service";
          for(var i=0;i<subcategoryarr.length;i++)
          {
-         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","categorygrade":"","order_seq":""};
+
+   var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","categorygrade":"","order_seq":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.assesmentid=localStorage.getItem("curr_sess_assesment");
@@ -755,7 +754,7 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
          obj.grade=localStorage.getItem("curr_sess_grade");
          obj.section=localStorage.getItem("curr_sess_section");
          obj.subject=localStorage.getItem("curr_sess_subject");
-         obj.category=subcategoryarr[i].category;
+         obj.category=subcategoryarr[i].subcategoryid;
          obj.subcategory=subcategoryarr[i].subcategory;
          obj.mark=subcategoryarr[i].mark;         
          obj.categorygrade=subcategoryarr[i].grade; 
@@ -768,11 +767,18 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
 insertcosubcategorymarkResponse:function(e){
   this.temp++;
   if(this.sublength==this.temp){
-  //alert('Mark saved!');
-    if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive"){
+         
+   if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
+     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Mark Saved!");
+
+  }
+    else{
+      if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive"){
    document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
    document.querySelector("coscholastic-assesment-card").TermMarkdialog("Mark Saved!");
   }
+    }
+    
   this.sublength=0;
   this.temp=0;
   }

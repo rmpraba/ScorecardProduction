@@ -91,7 +91,7 @@
         <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
       </div>
       </div>
-    </div>
+    </div>   
     <!--  <div hidden$="{{hideheader1}}">
             <paper-checkbox style="margin-left: 67%;padding-left: 11%;" 
              id="coscolasticcheckid1" on-change="excelmark1">Excel Upload
@@ -131,7 +131,7 @@
 
   <subject-dynamic-coscholastic-markentry-service id="cosubjectservice"></subject-dynamic-coscholastic-markentry-service>
 <paper-input value="{{categorylength}}" hidden></paper-input>
-   <div  id="coscolaticvaluedynamicreporttable" hidden>
+   <div  id="coscolaticvaluedynamicreporttable" hidden >
       <div width="{{tabwidth}}">
        <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
       <template is="dom-repeat" items="{{studarr1}}">
@@ -240,7 +240,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
           obj.category=tempassesmetarr[k].category_name;
           obj.subcategoryid=tempassesmetarr[k].sub_category;
           obj.subcategory=tempassesmetarr[k].sub_metrics;
-          obj.tempvalu=setarr.length;
+          obj.tempvalu=tempassesmetarr[k].cmt1;
           obj.value=array[i][m];
           obj.grade="";
           temp.push(obj);
@@ -284,7 +284,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
   this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(temp);
     
    // alert(JSON.stringify(temp));
-document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+   //document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
    var finalarr=[];
      for( var i=0;i<tempstudentarr.length;i++){
           var c=0;
@@ -299,7 +299,7 @@ document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
           obj1.studid=temp[j].studid;
           obj1.studname=temp[j].studname;
           obj1.category=temp[j].category;
-          obj1.subcategory=temp[j].subcategoryid;
+          obj1.subcategory=(temp[j].subcategoryid).toUpperCase();
           obj1.avg=(parseFloat((parseFloat(c))/parseFloat(tempvalue))).toFixed(2);
           finalarr.push(obj1);
            c=0;
@@ -308,7 +308,7 @@ document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
          }
         }
       }
-   // alert(JSON.stringify(finalarr)); 
+ // alert(JSON.stringify(finalarr)); 
    localStorage.setItem("curr_sess_lenth",finalarr.length);
  //  alert(localStorage.getItem("curr_sess_lenth"));
    for(var i=0;i<finalarr.length;i++){

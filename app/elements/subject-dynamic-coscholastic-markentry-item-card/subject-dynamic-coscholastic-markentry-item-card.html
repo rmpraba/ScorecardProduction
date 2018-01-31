@@ -71,8 +71,8 @@ if(temps.length>0){
           {
         document.querySelector('coscholastic-assesment-card').FnToggleSpinner(true);
            }
-            this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(subarr1);
-    for(var i=0;i<temps.length;i++){
+        this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(subarr1);
+    for(var i=0;i<temps.length;i++){  
       var t=i+1;
   this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(temps[i].studid,temps[i].studname,temps[i].category,temps[i].subcategory,temps[i].summark,t);
          }
