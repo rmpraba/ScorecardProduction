@@ -1446,13 +1446,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(insertflag==insertcheckflag){
        //alert('Marks saved!');
           insertflag=0;
+          // alert(localStorage.getItem("curr_sess_single_studetmap")+"  "+localStorage.getItem("curr_sess_template_tef"));
      if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive"){
        if(localStorage.getItem("curr_sess_template_tef")=="active"){
          document.querySelector('term-assesment-card').callService();
        }
       if(localStorage.getItem("curr_sess_template_tef")=="inactive"){
-            document.querySelector("term-assesment-card").FnToggleSpinner(false);
-     document.querySelector("term-assesment-card").TermMarkdialog("Mark Saved!");
+        document.querySelector("term-assesment-card").FnToggleSpinner(false);
+        document.querySelector("term-assesment-card").TermMarkdialog("Mark Saved!");
      }
        if(localStorage.getItem("curr_sess_template_tef")=="coactive"){
          document.querySelector('coscholastic-assesment-card').callService();

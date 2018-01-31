@@ -11,7 +11,7 @@
       }
     </style>
     <div>
-      <coscholastic-assesment-card id="ass"></coscholastic-assesment-card>
+      <coscholastic-assesment-card id="ass" hidedrop="{{hidedrop}}"></coscholastic-assesment-card>
       <coscholastic-assesment-sheet-card></coscholastic-assesment-sheet-card>
     </div>
   </template>
@@ -22,7 +22,7 @@
       is: 'coscholastic-assesment',  
         hiddenpage:function()
       {
-      this.$.ass.hidden=true;
+      // this.$.ass.hidden=true;
       }   
     });
   })();

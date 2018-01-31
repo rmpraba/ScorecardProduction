@@ -49,7 +49,7 @@
     </style>
     <div class='card'>
      
-     <div class='drop'>
+     <div class='drop' hidden$="{{hidedrop}}">
 
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu id="gradenam1" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
@@ -120,6 +120,7 @@
       
       ready:function(){
        this.flag=0;
+       this.hidedrop=false;
        this.hideassesment=false;
       },
      TermMarkdialog:function(argvalue)
@@ -238,6 +239,7 @@
         if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4")
         {
           this.FnToggleSpinner(true);
+          this.spinnermsg="Please wait...Loading";
           if(localStorage.getItem('curr_sess_report')=='0'){
      document.querySelector('term-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
           document.querySelector('dynamic-scholastic-markentry-card').FnRefresh();
