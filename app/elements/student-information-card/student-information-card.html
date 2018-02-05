@@ -421,36 +421,36 @@ fnsetsubmit:function(e){
 
     },
   fnlan:function(e){
-    if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
+   //  if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
 
-             this.$.studservice.fnlaninfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.secondlan,this.value);
-   }
-   else{
+   //           this.$.studservice.fnlaninfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.secondlan,this.value);
+   // }
+   // else{
    
-             this.$.studservice.fnlaninfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.secondlan,this.value);
+             this.$.studservice.fnlaninfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.secondlan,this.value,this.thirdlen);
 
-             this.$.studservice.fnlaninfomation1(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.thirdlen,this.value);
-      }
+             // this.$.studservice.fnlaninfomation1(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.thirdlen,this.value);
+      // }
        },
 fnacadamics:function(e){
     if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
     this.langprefs="Second Language";
-    this.schooltype='primary';
-this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs);
-this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
-this.$.studservice.fnacadamicsinfomation1(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
-this.$.studservice.fetchstudentremove();
+    // this.schooltype='primary';
+this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs,this.schooltype,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames);
+// this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
+// this.$.studservice.fnacadamicsinfomation1(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
+// this.$.studservice.fetchstudentremove();
 
     }
   else{
       this.langprefs="Third Language";
      // alert(this.langprefs);
-    this.schooltype='high';
+    // this.schooltype='high';
 
-    this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs);
-    this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
-    this.$.studservice.fnacadamicsinfomation2(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
-    this.$.studservice.fetchstudentremove();
+    this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs,this.schooltype);
+    // this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
+    // this.$.studservice.fnacadamicsinfomation2(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
+    // this.$.studservice.fetchstudentremove();
 
     }
    },

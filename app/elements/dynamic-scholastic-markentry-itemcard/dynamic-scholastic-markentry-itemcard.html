@@ -56,12 +56,18 @@
         scorearr=arr;
        },
       FnSave:function(){
-    localStorage.setItem("curr_sess_template_tef","inactive"); 
+      localStorage.setItem("curr_sess_template_tef","inactive"); 
       if(scorearr.length>0){
          if(localStorage.getItem("curr_sess_single_studetmap")=="inmapactive")
          {
+          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Term"||localStorage.getItem('curr_sess_loggedassesmenttype')=="Approval"){
           document.querySelector('term-assesment-card').FnToggleSpinner(true);
           document.querySelector('term-assesment-card').spinnermsg='Please wait...saving';
+          }
+          else if(localStorage.getItem('curr_sess_loggedassesmenttype')=="singlestudentinfo"){
+          document.querySelector('single-student-mark-entery-card').FnToggleSpinner(true);
+          document.querySelector('single-student-mark-entery-card').spinnermsg='Please wait...saving';
+          }
          }     
         for(var i=0;i<scorearr.length;i++){
           var t=1;

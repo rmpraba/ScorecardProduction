@@ -103,7 +103,7 @@
        <center>
       <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
        </center>
-     </paper-dialog>
+     </paper-dialog>    
 
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <subject-dynamic-service id="subjectservice"></subject-dynamic-service>
@@ -132,6 +132,11 @@
      failureclose:function()
       {
       this.$.termmarkdialogid11.close();
+      if(this.hidedrop==true&&this.getindialogvalu!="Mark Saved!")
+      {
+        document.querySelector('home-page').setPage('approveassesment','');
+        document.querySelector('approve-one-to-four-card').FnCallService();
+      }
       },
     FnHideView:function(){
         this.flag=0;
@@ -241,9 +246,9 @@
           this.FnToggleSpinner(true);
           this.spinnermsg="Please wait...Loading";
           if(localStorage.getItem('curr_sess_report')=='0'){
-     document.querySelector('term-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
+          document.querySelector('term-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
           document.querySelector('dynamic-scholastic-markentry-card').FnRefresh();
-    this.$.scholasticsubjectservice.subjectsubmittedcheckService(gradename,section,subject);
+          this.$.scholasticsubjectservice.subjectsubmittedcheckService(gradename,section,subject);
      //this.$.scholasticsubjectservice.templateincoscolasticsubject(gradename,section,subject);
           }
           if(localStorage.getItem('curr_sess_report')=='1'){

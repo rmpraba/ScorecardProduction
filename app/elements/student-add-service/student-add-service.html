@@ -638,8 +638,16 @@ fnstudnameinfo:function(fname,lsname,midname,studid,gradename,gradeid,classid,se
            this.fetchstudentinfo();
            //alert(JSON.stringify(res));
         },
-    fnlaninfomation:function(studid,gradeidzzsss,gradenamez,classid,sectionid,secondlan,name)
+    fnlaninfomation:function(studid,gradeidzzsss,gradenamez,classid,sectionid,secondlan,name,thirdlan)
              {  
+            this.gradenamez=gradenamez;
+            this.studid=studid;
+            this.gradeidzzsss=gradeidzzsss;
+            this.gradenamez=gradenamez;
+            this.classid=classid;
+            this.sectionid=sectionid;
+            this.thirdlen=thirdlan;
+            this.value=name;
     this.fnlaninfomationurl=sessionStorage.getItem("addrinfo")+"/fnlaninfomation-service";
                var obj={"schoolid":"","schoolname":"","studentname":"","studnetid":"","grade":""};
                obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -657,10 +665,13 @@ fnstudnameinfo:function(fname,lsname,midname,studid,gradename,gradeid,classid,se
                //alert(JSON.stringify(obj));
                this.$.fnlaninfomationajax.generateRequest();
           },
-fnlaninfomationResponse:function(e)
+       fnlaninfomationResponse:function(e)
         {
           var res=e.detail.response.returnval;
+          if(this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4')
           document.querySelector('student-information-card').parentsubmitinfo();
+          else
+          this.fnlaninfomation1(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.thirdlen,this.value);
            //alert(JSON.stringify(res));
         },
 
@@ -685,10 +696,26 @@ fnlaninfomationResponse:function(e)
         },
 fnlaninfomation1Response:function(e)
         {
-          var res=e.detail.response.returnval
+          var res=e.detail.response.returnval;
+          document.querySelector('student-information-card').parentsubmitinfo();
         },
-   fnacadamicsinfomation:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid,name,date,gender,ageofyrs,langpref)
+   fnacadamicsinfomation:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid,name,date,gender,ageofyrs,langpref,schooltype,gradeidzzsss1,gradeidnames,classidszz,sectionnames)
            {  
+            this.studid=studid;
+            this.gradeidzzsss=gradeidzzsss;
+            this.gradenamez=gradenamez;
+            this.classid=classid;
+            this.sectionid=sectionid;
+            this.termid=termid;
+            this.value=name;
+            this.showdate=date;
+            this.gender=gender;
+            this.ageofyrs=ageofyrs;
+            this.schooltype=schooltype;
+            this.gradeidzzsss1=gradeidzzsss1;
+            this.gradeidnames=gradeidnames;
+            this.classidszz=classidszz;
+            this.sectionnames=sectionnames;
        this.fnacadamicsinfomationurl=sessionStorage.getItem("addrinfo")+"/fnacadamicsinfomation-service";
                var obj={};
                obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -712,7 +739,8 @@ fnlaninfomation1Response:function(e)
      fnacadamicsinfomationResponse:function(e)
         {
           var res=e.detail.response.returnval;
-          document.querySelector('student-information-card').parentsubmitinfo();
+          this.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
+          // document.querySelector('student-information-card').parentsubmitinfo();
         },
  fnacadamicsinfomation3:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid,name,date,gender,ageofyrs,schooltype)
            {  
@@ -738,7 +766,12 @@ fnlaninfomation1Response:function(e)
      },
      fnacadamicsinfomation3Response:function(e)
         {
-          var res=e.detail.response.returnval;        
+          var res=e.detail.response.returnval;  
+          if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
+          this.fnacadamicsinfomation1(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);  
+          }
+          else
+          this.fnacadamicsinfomation2(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);   
         },
       fnacadamicsinfomation1:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid){
              this.fnacadamicsinfomation1url=sessionStorage.getItem("addrinfo")+"/fnacadamicsinfomation1-service";
@@ -758,7 +791,9 @@ fnlaninfomation1Response:function(e)
       },
 fnacadamicsinfomation1Response:function(e)
         {
-          var res=e.detail.response.returnval
+          var res=e.detail.response.returnval;
+          document.querySelector('student-information-card').parentsubmitinfo();
+          // this.fetchstudentremove();
         },
      fnacadamicsinfomation2:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid){
              this.fnacadamicsinfomation2url=sessionStorage.getItem("addrinfo")+"/fnacadamicsinfomation2-service";
@@ -778,7 +813,8 @@ fnacadamicsinfomation1Response:function(e)
       },
 fnacadamicsinfomation2Response:function(e)
         {
-          var res=e.detail.response.returnval
+          var res=e.detail.response.returnval;
+          document.querySelector('student-information-card').parentsubmitinfo();
         },
 
 
@@ -1099,8 +1135,15 @@ fetchstudentinfoResponse:function(e)
             
         },
 
-        deletestudentinfo:function(id,gradeid,classid)
+        deletestudentinfo:function(id,gradeid,classid,grade,section,tremname,name)
         {
+          this.studentid=id;
+          this.gradeid=gradeid;
+          this.classid=classid;
+          this.grade=grade;
+          this.section=section;
+          this.tremname=tremname;
+          this.value=name;
             this.deletestudentinfourl=sessionStorage.getItem("addrinfo")+"/deletestudentremove-service";
             var obj={"schoolid":"","academic_year":"","flag":""};
             obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -1117,9 +1160,13 @@ fetchstudentinfoResponse:function(e)
         {
           //alert('student');
           var res=e.detail.response.updatearr1;
-          var res1=e.detail.response.delarr;
-          alert('Deleted Succesfully');
-       document.querySelector('student-remove-card').recall();
+          var res1=e.detail.response.delarr; 
+          if(this.grade=="Nursery" ||this.grade=="Junior KG" || this.grade=="Senior KG" || this.grade=="Grade-1" || this.grade=="Grade-2" ||this.grade=="Grade-3" || this.grade=="Grade-4" )
+          this.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
+          else
+          this.deletestudtermmarks1(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
+          // alert('Deleted Succesfully');
+       // document.querySelector('student-remove-card').recall();
           //alert(JSON.stringify(res));
           //alert(JSON.stringify(res1));
         },
@@ -1145,6 +1192,7 @@ fetchstudentinfoResponse:function(e)
           var res2=e.detail.response.trdeltarr;
           // alert("Deleted");
           var res3=e.detail.response.overdelarr;
+          this.flagupdatestud(this.studentid,this.grade);
           //alert(JSON.stringify(res3));
            //alert(JSON.stringify(res2));
         },
@@ -1166,10 +1214,7 @@ fetchstudentinfoResponse:function(e)
         deletestudtermmarks1Response:function(e)
         {
           var res=e.detail.response.returnval;
-          // if(res=='Deleted')
-          // {
-          //   alert('Deleted Succesfully');
-          // }
+          this.flagupdatestud(this.studentid,this.grade,this.value);
          },
 
          flagupdatestud:function(studentid,grade)
@@ -1187,6 +1232,8 @@ fetchstudentinfoResponse:function(e)
          flagupdatestudResponse:function(e)
          {
             var res=e.detail.response.returnval;
+            alert('Deleted Succesfully');
+            document.querySelector('student-remove-card').recall();
             //alert(JSON.stringify(res));
          },
          fngetstudname1:function(studentid)

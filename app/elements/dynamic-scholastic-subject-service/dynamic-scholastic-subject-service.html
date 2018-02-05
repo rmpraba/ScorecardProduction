@@ -153,41 +153,28 @@
         if(e.detail.response.returnval!='no rows'){
             if(e.detail.response.returnval=="0")
             {
-                // alert('Submitted!');
-        document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
+            document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
             }
             else if(e.detail.response.returnval=="1")
             {
-                if(e.detail.response.auditflag=='Assesment3'){
-                    this.$.termservice.callOveralltermmarkinsertService();
-                    this.$.termservice.calloveralltermassesmentinsertService();
-        if(localStorage.getItem("curr_sess_single_studetmap")=="mapactive"){
-
-        } 
-        else{
-        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
-
-        }
-
-         }
-                else{
-                    this.$.termservice.callOveralltermmarkinsertService();
-        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
-
-                }
-                
-                // if(localStorage.getItem("curr_sess_assesment")=="Assesment1"||localStorage.getItem("curr_sess_assesment")=="Assesment2"){
-                //     this.$.termservice.callOveralltermmarkinsertService();
-                // }
-                // else if(localStorage.getItem("curr_sess_assesment")=="Assesment3"){
-
-                // }
+            if(e.detail.response.auditflag=='Assesment3'){
+            this.$.termservice.callOveralltermmarkinsertService();
+            this.$.termservice.calloveralltermassesmentinsertService();
+            // if(localStorage.getItem("curr_sess_single_studetmap")=="mapactive"){
+            // } 
+            // else{
+            // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
+            // }
+            }
+            else{
+            this.$.termservice.callOveralltermmarkinsertService();
+            // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
             }
         }
-      },
-
+        }
+       },
        callSubjectApprovalAuditService:function(grade,section,subject,assesmentname){
-      this.subjectapprovalauditurl=sessionStorage.getItem("addrinfo")+"/subjectapprovalaudit-service";
+        this.subjectapprovalauditurl=sessionStorage.getItem("addrinfo")+"/subjectapprovalaudit-service";
          var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -197,16 +184,19 @@
          obj.gradename=grade;
          obj.section=section;
          obj.subject=subject;
+         this.grade=grade;
+         this.section=section;
+         this.subject=subject;
          obj.assesmentname=assesmentname;
          this.subjectapprovalauditparam=obj;
          this.$.subjectapprovalauditajax.generateRequest();
       },
       subjectapprovalauditResponse:function(e){
-     var arr=e.detail.response.returnval;
-  //s     alert(JSON.stringify(arr));
+      var arr=e.detail.response.returnval;
+      this.callSubjectApprovalService(this.grade,this.section,this.subject);
+      //s     alert(JSON.stringify(arr));
       },
-
-  callSubjectApprovalAuditCheckService:function(grade,section,subject,assesmentname){
+      callSubjectApprovalAuditCheckService:function(grade,section,subject,assesmentname){
         var obj={};   
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -215,6 +205,9 @@
          obj.subject=subject;
          obj.gradename=grade;
          obj.sectionname=section;
+         this.subject=subject;
+         this.grade=grade;
+         this.section=section;
          this.callsubjectapprovaladitcheckurl=sessionStorage.getItem("addrinfo")+"/callsubjectapprovaladitcheck-service";
          this.callsubjectapprovaladitcheckparam=obj;
          this.$.callsubjectapprovaladitcheckajax.generateRequest();
@@ -223,22 +216,30 @@
      {
       if(e.detail.response.returnval=='exist'){        
       //  alert('Assesment already approved!');
- document.querySelector('term-assesment-card').TermMarkdialog("Assesment already submitted!");
-      
+      document.querySelector('term-assesment-card').TermMarkdialog("Assesment already submitted!");
+      document.querySelector("term-assesment-card").FnToggleSpinner(false);
       }
       else if(e.detail.response.returnval=='not exist'){        
        // alert('Please approve the previous assesment of this term!');
- document.querySelector('term-assesment-card').TermMarkdialog("Please submit previous assesment of this term!");
-
+      document.querySelector('term-assesment-card').TermMarkdialog("Please submit previous assesment of this term!");
+      document.querySelector("term-assesment-card").FnToggleSpinner(false);
       }
       else
       {
-   if(e.detail.response.returnval=='updated')
- document.querySelector('dynamic-scholastic-markentry-card').Fngetmarkentry();
-        if(e.detail.response.returnval=='not updated')
+    if(e.detail.response.returnval=='revertapprove')
+     {
+        this.callSubjectApprovalService(this.grade,this.section,this.subject);
+    }
+     if(e.detail.response.returnval=='updated')
+     {
+        this.callSubjectApprovalService(this.grade,this.section,this.subject);
+     // document.querySelector('term-assesment-card').TermMarkdialog("Assesment submitted for approval!");
+      // document.querySelector("term-assesment-card").FnToggleSpinner(false);
+     }
+     // document.querySelector('dynamic-scholastic-markentry-card').Fngetmarkentry();
+     if(e.detail.response.returnval=='not updated')
       //   alert('Unable to approve!!');
-document.querySelector('term-assesment-card').TermMarkdialog("Unable to approve!!");
-
+     document.querySelector('term-assesment-card').TermMarkdialog("Unable to approve!!");
       }
      },
  callSubjectApprovalService:function(grade,section,subject){
@@ -265,27 +266,25 @@ document.querySelector('term-assesment-card').TermMarkdialog("Unable to approve!
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
             if(e.detail.response.returnval=='done'){
              //   alert('Submitted for approval!!');
-     document.querySelector('term-assesment-card').TermMarkdialog("Submitted for approval!!");
-
-                document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
+            document.querySelector('term-assesment-card').TermMarkdialog("Submitted for approval!!");
+            document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
+            document.querySelector("term-assesment-card").FnToggleSpinner(false);
             }
             if(e.detail.response.returnval=='exist'){
-                alert('Already submitted!!');
-
- document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
-
+            // alert('Already submitted!!');
+            document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
+            document.querySelector("term-assesment-card").FnToggleSpinner(true);
             }
         }
         else{
            if(e.detail.response.returnval=='done'){
-                alert('Approved!!');
- document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
-document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
-
-            } 
+            // alert('Approved!!');
+           document.querySelector('dynamic-scholastic-markentry-card').disablesave=true;
+           document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
+           } 
             if(e.detail.response.returnval=='exist'){
                 alert('Already approved!!');
- document.querySelector('term-assesment-card').TermMarkdialog("Already approved!!");
+            document.querySelector('term-assesment-card').TermMarkdialog("Already approved!!");
 
             }
         }
@@ -338,7 +337,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         if(e.detail.response.returnval=='exist'){
            // alert('Already Submitted!!');
         document.querySelector('term-assesment-card').FnToggleSpinner(false);
-         document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
+        document.querySelector('term-assesment-card').TermMarkdialog("Already submitted!!");
      
         }
         else{
@@ -348,8 +347,10 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"||sessionStorage.getItem("curr_sess_loggedrole")=="HeadMistress"){
         if(e.detail.response.returnval=='exist'){
-            alert('Already Approved!!');
-            document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+            // alert('Already Approved!!');
+            // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);
+            document.querySelector('term-assesment-card').FnToggleSpinner(false);
+            document.querySelector('term-assesment-card').TermMarkdialog("Already Approved!!");
         }
         else{
             this.callFetchInfoForSubjectTemplate(gradename,subject);
@@ -380,8 +381,7 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         }
           else{
         document.querySelector('term-assesment-card').FnToggleSpinner(false);
-        document.querySelector('term-assesment-card').TermMarkdialog("Please Check the Subject");
-       
+        document.querySelector('term-assesment-card').TermMarkdialog("Please Check the Subject");       
           }
 
           
@@ -579,9 +579,8 @@ document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
         document.querySelector('dynamic-scholastic-markentry-card').setDefaultHeaders();
         document.querySelector('dynamic-scholastic-markentry-card').studarr=overall;
         // document.querySelector('term-assesment-card').spinnermsg='Please wait...Loading';
-        this.templateincoscolasticsubject(gradename,section,subject);
-     
-     //   document.querySelector('term-assesment-card').FnToggleSpinner(false);
+        this.templateincoscolasticsubject(gradename,section,subject);     
+        document.querySelector('term-assesment-card').FnToggleSpinner(false);
         overall=[];
       },
       callFetchStudentInfo1:function(grad,sec,sub){

@@ -7,62 +7,44 @@
      :host {
         display: block;
       }
-       paper-dropdown-menu{
-      width: 24%;
-    margin-left: 7%;
-    text-align: center;
-    }
-    paper-dropdown-menu{
-   width: 24%;
-    margin-left: 7%;
+      paper-dropdown-menu{
+      width: 25%;
       --paper-input-container-label: { color: red };
-      text-align:center;
-    }
+      text-align: center;
+      margin-left: 5%;
+      }
+      /*#filter3{
+      width: 15%;
+      --paper-input-container-label: { color: red };
+      text-align: center;
+      }*/
      .card{
         @apply(--layout-vertical);
-    }
-
-    .drop{        
+      }
+      .drop{        
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
-        /*margin-top: 5%;*/
         margin-left: 5%;
         border-bottom: 1px solid #dedede; 
-    }
-       .viewdata{
+      }
+      .viewdata{
         margin-top: 5%;
-        /*font-size: 12px;*/
         cursor: pointer;
         color:blue;
       }
-       .outcard{
+      .outcard{
         margin-left: 0%;
         margin-top: 5%;
       }
       table{
         width: 90%;
-
-        /*border-collapse: collapse;*/
       }
-      .spinner{
-            margin-left: 50%;            
-           
-            /*color: #0f9d58;*/
-            /*border: none;*/
-          }
-          #dynamicapprovespinner{
-            margin: 0;
-            padding: 0;
-            border: none;
-            background-color: transparent;
-          }
-          .filterid{
-          margin-left: 42%;
+      .filterid{
+          text-align: right;
           margin-top: -5%;
-          }
+      }
       #itemcard:nth-child(odd) {
         background-color: white;
-       
       }
       #itemcard:nth-child(even) {
         background-color: #f1f1f1;
@@ -71,24 +53,43 @@
         margin-left: 7%;
         width: 83%;
       }
-       #termmarkdialogid111{
-        width: 20%;
-      border-radius: 25px;
-    }
+      #termmarkdialogid111{
+       width: 20%;
+       border-radius: 25px;
+      }
       #dialogfilterid{
         border-radius: 25px;
-          width: 40%;
-       }
-
+        width: 40%;
+      }
+      #dynamicapprovespinner{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+     }
+     h4{
+      color: #061E98;
+     }
+     #approvaldialog{
+      width: 20%;
+      border-radius: 25px;
+     }
+      #approvalstatusdialog{
+      width: 20%;
+      border-radius: 25px;
+    }
     </style> 
-    <div class="spinner"><paper-dialog id="dynamicapprovespinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+      <div class="spinner"><paper-dialog modal id="dynamicapprovespinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+      <paper-spinner active></paper-spinner>
+      <h4>{{spinnermsg}}</h4></paper-dialog></div>
    
       <center><h1>Mount Litera Zee School</h1>
          <div id="hidetop">
           <h3>Continuous Comprehensive Evaluation</h3>
 
       <div class="filterid">
-       <paper-dropdown-menu id="grade" label="Select Filter"  >
+       <paper-dropdown-menu id="grade" label="Filter By"  style="width: 15%;">
          <paper-menu  id="filter3" class="dropdown-content"  on-iron-select="FnSelectFilter"  attr-for-selected="value" required>     
            <paper-item value="Filter By Grade">Filter By Grade</paper-item>
            <paper-item value="Filter By Section">Filter By Section</paper-item>
@@ -159,9 +160,15 @@
        <center>
       <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
        </center>
- </paper-dialog>
-    <scorecard-service id="scorecardservice"></scorecard-service>
+   </paper-dialog>
+   <scorecard-service id="scorecardservice"></scorecard-service>
    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <paper-dialog id="approvalstatusdialog" modal>
+    <h3 style="color:green"><center>{{dialogmsg}}</center></h3>
+    <center>
+    <paper-button on-click="FnClose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+    </center>
+  </paper-dialog>
   </template>  
   <script>
   (function() {
@@ -169,19 +176,27 @@
     var gradename,section,subject,filtervalue;
 
     Polymer({
-    is: 'approve-one-to-four-card',
-   
-   ready:function(e){
-         localStorage.setItem("curr_sess_filterid","fillterinactive");
-
-       } ,
+    is: 'approve-one-to-four-card',   
+    ready:function(e){
+    localStorage.setItem("curr_sess_filterid","fillterinactive");
+    } ,
+     FnToggleDialog:function(message){
+        this.dialogmsg=message;
+        this.$.approvalstatusdialog.toggle();
+       },
+       FnClose:function(){
+        this.$.approvalstatusdialog.toggle();
+        this.FnCallService();
+       },
+    FnCallService:function(){
+      this.$.assesmentservice.callApproveService();
+    },
     FnSpinnerrActive:function(flag){
-      
+      this.spinnermsg="Please wait...Loading!";
       if(flag==true)
       this.$.dynamicapprovespinner.opened=true;
       if(flag==false)
       this.$.dynamicapprovespinner.opened=false;
-
        },
       FnSelectGrade1:function(e){
         gradename = e.target.selectedItem.textContent.trim();
@@ -194,30 +209,25 @@
          document.querySelector('#ggggggggggggggggg').selected=-1;
          document.querySelector('#subjectnam3').selected=-1;
       },
-     FnSelectSection1:function(e){
+      FnSelectSection1:function(e){
        section = e.target.selectedItem.textContent.trim();
          localStorage.setItem("curr_sess_section1",section);
          this.$.scorecardservice.callSubjectService(gradename,section);   
          if(filtervalue=="Filter By Section")
          {
-          this.$.assesmentservice.Fnfiltervalues();
-          
-
+          this.$.assesmentservice.Fnfiltervalues();         
          } 
-         document.querySelector('#subjectnam3').selected=-1;
-          
-     
+         document.querySelector('#subjectnam3').selected=-1;         
       },
        FnSelectSubject1:function(e){
         this.flag=1;
         subject = e.target.selectedItem.textContent.trim();
          localStorage.setItem("curr_sess_subject1",subject); 
        //  alert('1');
-      if(filtervalue=="Filter By Subject")
+        if(filtervalue=="Filter By Subject")
         {
-           this.$.assesmentservice.Fnfiltervalues();
-           
-         } 
+           this.$.assesmentservice.Fnfiltervalues();           
+        } 
        },
        fnsub:function(e){
        this.$.dialogfilterid.close();
@@ -275,7 +285,7 @@
      },
  TermMarkdialog:function(argvalue)
       {
-        alert(argvalue);
+        // alert(argvalue);
         this.getindialogvalu=argvalue;
        this.$.termmarkdialogid111.toggle();
       },

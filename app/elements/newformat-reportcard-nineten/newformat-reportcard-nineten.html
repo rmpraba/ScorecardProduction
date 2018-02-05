@@ -79,13 +79,6 @@
       </div>
       <br><br>
       <div class="tab">
-      <!-- <table style="border-collapse: collapse;" border="1">
-        <tr><th>Scholastic Areas</th><th colspan="5">Quartely</th><th colspan="5">Half Yearly</th><th colspan="5">Pre-Annual</th></tr>
-        <tr><th>Subjects</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrich ment (5)</th><th>Marks Obtained (100)</th><th>Grade</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrich ment (5)</th><th>Marks Obtained (100)</th><th>Grade</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrich ment (5)</th><th>Marks Obtained (100)</th><th>Grade</th></tr>
-        <template is="dom-repeat" items="{{arr}}">
-          <tr><td>{{item.subject}}</td><td>{{item.PT1}}</td><td>{{item.NB1}}</td><td>{{item.SEA1}}</td><td>{{item.mark1}}</td><td>{{item.grade1}}</td><td>{{item.PT2}}</td><td>{{item.NB2}}</td><td>{{item.SEA2}}</td><td>{{item.mark2}}</td><td>{{item.grade2}}</td><td>{{item.PT3}}</td><td>{{item.NB3}}</td><td>{{item.SEA3}}</td><td>{{item.mark3}}</td><td>{{item.grade3}}</td></tr>
-        </template>
-      </table> -->
       <table class="tab" style="border-collapse: collapse;" border="1">
         <tr><th>Scholastic Areas</th><th colspan="5">{{assesmentname}}</th></tr>
         <tr><th>Subjects</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrich ment (5)</th><th>Marks Obtained (100)</th><th>Grade</th></tr>
@@ -134,7 +127,6 @@
     <paper-button  id='email' class="button" on-click='fnemail'>Email</paper-button>
     </span>
     </div>
-
     <div>
       <paper-dialog id="showpopup1" modal>
         <div>
@@ -149,7 +141,6 @@
       </paper-dialog>
     </div>
    <reprotcard-newformat-service id="newformatservice"></reprotcard-newformat-service>
-
   </template>
   <script>
   (function() {

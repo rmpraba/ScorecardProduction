@@ -152,11 +152,11 @@
 function coloadFiles(event){
     alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
     array1=data; 
-  //alert(JSON.stringify(array1));
+  // alert(JSON.stringify(array1.length));
      for(var i=0;i<array1.length;i++){
        for(var j=0;j<tempstudentarr.length;j++){
        // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
-       if(array1[i].StudentId==tempstudentarr[j].id){
+       if((array1[i].StudentId).trim()==(tempstudentarr[j].id).trim()){
           array.push(array1[i]);
          }      
     }  
@@ -207,11 +207,12 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
       }
     },
     FnClick1:function(){
-    //alert(JSON.stringify(array));
+    // alert(JSON.stringify(array));
         var temp=[];
      
          if(array.length==0){
-        alert("Pls save the file in EXCEL WORKBOOK extension!");
+         document.querySelector("coscholastic-assesment-card").TermMarkdialog("Pls save the file in EXCEL WORKBOOK extension!");
+        // alert("Pls save the file in EXCEL WORKBOOK extension!");
         document.getElementById("coreadfiles").value = "";
        }
        else{ 
@@ -226,15 +227,16 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
     for(var k=0;k<tempassesmetarr.length;k++){
    
   if(this.categorylength==setarr.length){ 
-   
-    if(tempassesmetarr[k].sub_metrics.trim()==setarr[j].trim()){
-            // alert("1");
+    // alert(tempassesmetarr[k].sub_metrics.trim()+"("+tempassesmetarr[k].weightscore+")" +"   " +setarr[j].trim());
+    if(tempassesmetarr[k].sub_metrics.trim()+"("+tempassesmetarr[k].weightscore+")"==setarr[j].trim()){
+          // alert("in");
           var m=setarr[j];
           var obj={};
           obj.studid=array[i].StudentId;
           obj.studname=array[i].StudentName;
           obj.categoryid=tempassesmetarr[k].category_id;
-          obj.category=tempassesmetarr[k].category_name;
+          obj.categoryname=tempassesmetarr[k].category_name;
+          obj.category=tempassesmetarr[k].sub_category;
           obj.subcategoryid=tempassesmetarr[k].sub_category;
           obj.subcategory=tempassesmetarr[k].sub_metrics;
           obj.tempvalu=tempassesmetarr[k].cmt1;
@@ -248,10 +250,17 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
                       array1=[];
                       tempstudentarr=[];
                       setarr=[];
-                     alert("Pls import the corrcet file name");
+                     // alert("Pls import the corrcet file name");
                      document.getElementById("coreadfiles").value = "";
                      }}}}}
-  document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+      if(temp.length==0){
+      document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please check your sheet..All the fields must be entered!!");
+      }
+      else{
+      document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+      document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...uploading';
+      }             
+  
     //alert(JSON.stringify(temp));
     
       for(var i=0;i<temp.length;i++){
@@ -278,26 +287,27 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
   //alert(JSON.stringify(temp[i]));
   // this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length); 
    }
-  this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(temp);
-    
+   // alert('check for final arr'); 
    // alert(JSON.stringify(temp));
+   // alert(JSON.stringify(tempstudentarr));
    //document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
    var finalarr=[];
      for( var i=0;i<tempstudentarr.length;i++){
           var c=0;
           var tempvalue=0;
         for( var  j=0;j<temp.length;j++){
-            if(tempstudentarr[i].id==temp[j].studid){
+            if((tempstudentarr[i].id).trim()==(temp[j].studid).trim()){
                   c+=parseFloat(temp[j].mark);
                    tempvalue++;   
-       //alert(temp[j].tempvalu+"=="+tempvalue);
+       // alert(temp[j].tempvalu+"=="+tempvalue+" "+c);
           if(temp[j].tempvalu==tempvalue){
              var obj1={};
           obj1.studid=temp[j].studid;
           obj1.studname=temp[j].studname;
           obj1.category=temp[j].category;
-          obj1.subcategory=(temp[j].subcategoryid).toUpperCase();
-          obj1.avg=(parseFloat((parseFloat(c))/parseFloat(tempvalue))).toFixed(2);
+          obj1.subcategory=temp[j].subcategoryid;
+          obj1.summark=(parseFloat((parseFloat(c))/parseFloat(tempvalue))).toFixed(2);
+          // alert(JSON.stringify(obj1));
           finalarr.push(obj1);
            c=0;
           tempvalue=0;
@@ -305,13 +315,19 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
          }
         }
       }
- // alert(JSON.stringify(finalarr)); 
-   localStorage.setItem("curr_sess_lenth",finalarr.length);
+      for(var i=0;i<finalarr.length;i++){
+        finalarr[i].t=i+1;
+      }
+   // alert('final start');
+   // alert(JSON.stringify(temp));
+   // alert(JSON.stringify(finalarr)); 
+   // localStorage.setItem("curr_sess_lenth",finalarr.length);
  //  alert(localStorage.getItem("curr_sess_lenth"));
-   for(var i=0;i<finalarr.length;i++){
-    var t=i+1;
-     this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(finalarr[i].studid,finalarr[i].studname,finalarr[i].category,finalarr[i].subcategory,finalarr[i].avg,t);
-         }
+   // for(var i=0;i<finalarr.length;i++){
+   //  var t=i+1;
+   //   this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(finalarr[i].studid,finalarr[i].studname,finalarr[i].category,finalarr[i].subcategory,finalarr[i].avg,t);
+   //       }
+   this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(temp,finalarr);
          document.getElementById("coreadfiles").value ="";
             temp=[];
             array=[];
@@ -320,6 +336,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
             finalarr=[];
          document.getElementById("coreadfiles").value ="";
            this.categorylength="";
+        document.querySelector('#coscolasticcheckid1').checked=false;
        }
       }, 
   fngenrategrade:function(arr){
@@ -354,7 +371,8 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
         }
         else
         {
-          alert('Please complete markentry for all the students!!');
+          // alert('Please complete markentry for all the students!!');
+          document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please complete markentry for all the students!!");
         }
       },
       setDefaultHeaders:function(){
@@ -376,12 +394,16 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
         FnApprove:function(){
         // this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+        document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+        document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...';
         this.$.cosubjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         }
        else if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
          localStorage.setItem("curr_sess_assesmenttype","");
-          this.$.assesmentservice.Fnfaimportmark();
-         }
+         document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+        document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...';
+        this.$.assesmentservice.Fnfaimportmark();
+        }
 
       }
     });

@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="subject-dynamic-coscholastic-markentry-cards">
@@ -63,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var subcatarr=[];
     var arr=[];
     var sum1,name1,sum=0,t=0;
-    var setid,catname;
+    var setid,catname,subcategoryid;
     var temparr=[];
     Polymer({
       is: 'subject-dynamic-coscholastic-markentry-cards',
@@ -75,6 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         name=this.studentname;
         sname=this.subcategoryname;
         catname=this.categoryname;
+        subcategoryid=this.subcategoryid;
        // alert(idd+" "+name+" "+sname+" "+catname);
         this.$.coscholasticservice.fetchlifeskilldata(this.studentid,this.subcategoryname);
         var id ='healthandphysical';
@@ -137,6 +128,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         // alert(setid);
        // alert(document.getElementById(setid));
+       // alert(JSON.stringify(subcatarr));
+       // alert(JSON.stringify(subarr));
        var flag=0;  
          if(subcatarr.length>0)
         {
@@ -181,6 +174,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           obj1.studname=name;
           obj1.category=sname;
           obj1.subcategory=catname;
+          obj1.subcategoryid=subcategoryid;
           obj1.summark=sum1;
           temparr.push(obj1);
     document.querySelector('cs-sub-metrics-item-card').clearinputdata();

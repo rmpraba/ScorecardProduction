@@ -713,10 +713,10 @@
         document.querySelector('cce-fivetoten-score-card').fathername=arr[0].parent_name;
         if(arr[0].address1==null||arr[0].address1==""||arr[0].address2==null||arr[0].address2==""||arr[0].address3==null||arr[0].address3==""||arr[0].city==null||arr[0].city==""||arr[0].pincode==null||arr[0].pincode=="")
         {
-            document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].address2+" "+arr[0].address3+" "+arr[0].city+" "+arr[0].pincode;
+            document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].pincode;
         }
         else
-          document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].address2+" "+arr[0].address3+" "+arr[0].city+" "+arr[0].pincode;
+          document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].pincode;
         
         if(arr[0].mobile==null||arr[0].mobile==""){}
         else
@@ -802,6 +802,8 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Approvalstatus')
         this.fetchsubjectnameurl=sessionStorage.getItem("addrinfo")+"/fetchsubjectname-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.studid=studid;
         this.fetchsubjectnameparam=obj;
         this.$.fetchsubjectnameajax.generateRequest();

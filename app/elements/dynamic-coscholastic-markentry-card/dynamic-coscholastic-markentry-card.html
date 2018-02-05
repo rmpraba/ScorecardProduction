@@ -177,9 +177,8 @@
          this.hideheader=true;      
          this.$.dynamicsavebtn.hidden=true;
          this.$.cosolasticxluplodingid.hidden=true;
-        localStorage.setItem("curr_sess_template_tef","coinactive"); 
+         localStorage.setItem("curr_sess_template_tef","coinactive"); 
          localStorage.setItem("curr_sess_single_studetmap","inmapactive");
-
       },
       FnSetLabel:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
@@ -240,11 +239,17 @@
                       array1=[];
                       tempstudentarr=[];
                       setarr=[];
-                     alert("Pls import the corrcet file name");
+                     // alert("Pls import the corrcet file name");
                      document.getElementById("readfiles").value = "";
                      }}}}}
-document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
-document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...uploading';
+      if(temp.length==0){
+      document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please check your sheet..All the fields must be entered!!");
+      }
+      else{
+      document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+      document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...uploading';
+      }
+
      //  alert(JSON.stringify(temp));
     
       for(var i=0;i<temp.length;i++){
@@ -355,15 +360,21 @@ fngenrategrade:function(arr){
         }
         else
         {
-          alert('Please complete markentry for all the students!!');
+          // alert('Please complete markentry for all the students!!');
+          document.querySelector("coscholastic-assesment-card").TermMarkdialog("Please complete markentry for all the students!!");
+          document.querySelector("coscholastic-assesment-card").FnToggleSpinner(false);
         }
       },
       FnApprove:function(){
         // this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+        document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+        document.querySelector("coscholastic-assesment-card").spinnermsg="Please wait...submitting"
         this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+          document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
+          document.querySelector("coscholastic-assesment-card").spinnermsg="Please wait...";
           // this.$.assesmentservice.Fnauditterm();
           this.$.assesmentservice.Fnimportmark();
         }

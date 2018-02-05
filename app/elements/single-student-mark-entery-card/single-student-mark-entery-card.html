@@ -43,18 +43,20 @@
             font-family: Calibri;
             font-size: 17px;
           }
-      .mainbox {
-      margin-left:9%; 
-     }
+      /*.dropmainbox {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        width: 80%;
+      }*/
     .space1{
-    /*margin-left: 7%;*/
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
         width: 80%;
         margin-left: 5%;
     }
-      .mainbox1 {
+    .mainbox {
       margin-left:9%; 
+      margin-top: -2%;
      }
     .space11{
     margin-left: 7%;
@@ -63,15 +65,11 @@
    margin-left: 10%;
 
   }
-   paper-dropdown-menu{
-      width: 12%;
-       --paper-input-container-label: { color: red };
-      text-align:center;
-      }
-      paper-dropdown-menu{
-      width: 12%;
-       --paper-input-container-label: { color: red };
-      text-align:center;
+     paper-dropdown-menu{
+      width: 12%;      
+      text-align: center;
+      margin-left: 5%:
+      --paper-input-container-label: { color: red };
       }
       dynamic-category-option-card{
         margin-left: 2%;
@@ -86,7 +84,23 @@
             font-family: Calibri;
             font-size: 17px;          
       }
-
+      #markchangespinner{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+     }
+     #markchangedialog{
+      width: 20%;
+      border-radius: 25px;
+     }
+     h4{
+      color: #061E98;
+     }
+     paper-button{
+      text-transform: none;
+     }
     </style>
     <div>
     <div class="student">
@@ -97,144 +111,118 @@
           <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
         </template>
        </paper-listbox>
-     </div>
-  
-<span>
-<paper-input label="Grade Name" style="width:15%" hidden readonly value="{{gradename}}"  on-change="fnhi"></paper-input>
- </span>
-<span >
-<paper-input  label="Section Name" style="width:15%" hidden readonly  hiddenvalue="{{sectionname}}"></paper-input>
-</span>
-<div id=hiddenmainheader>
-  <center>
-  <h1>{{schoolname}}</h1>
-      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
-      <h4>  &nbsp;&nbsp;&nbsp; Grade: {{gradename}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{sectionname}} &nbsp;&nbsp; </h4> 
-  </center>
-  </div>
-<div class="mainbox">
-<span class="space1">
-<template is="dom-repeat" items="{{checkarr}}">
-  <dynamic-category-option-card categorytype="{{item.category_type}}" categoryname="{{item.category_name}}"></dynamic-category-option-card>     
-</template> 
-</span>
-<!-- <span class="space1">
-<paper-checkbox on-change="fnscolasticid" id="scolasticid"><h2>Scholastic</h2></paper-checkbox>
- </span>
-<span class="space1">
-<paper-checkbox on-change="fncoscolasticid" id="coscolasticid"><h2>Co-Scholastic</h2></paper-checkbox>
-</span>
- <span class="space1">
-  <paper-checkbox on-change="fncocurriculamid" id="cocurriculamid"><h2>Co-Curricular</h2></paper-checkbox>
- </span>
-<span class="space1">
- <paper-checkbox on-change="fngenderid" id="genderid"><h2>General</h2></paper-checkbox>
-</span>
-<span class="space1">
-  <paper-checkbox on-change="fntalentid" id="talentid"><h2>Talent</h2></paper-checkbox>
-</span> -->
-</div>
- <div class="mainbox">
-<span style="margin-left:7%">
-     <paper-dropdown-menu  id="scolasticsubjectid1" label="Select Assesment">
-            <paper-menu id="singlestudentassesmenserviceid" class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required>
-              <template is="dom-repeat" items="{{assesmentarr}}">
-                <paper-item value="{{item.assesment_name}}">{{item.assesment_name}}</paper-item>      
-              </template>
-            </paper-menu>
-     </paper-dropdown-menu> 
-       <paper-dropdown-menu  label="Scolastic"  id="scolasticsubjectid">
-             <paper-menu id="scolasticsubjectid2" class="dropdown-content" on-iron-select="fnselectScolastic" attr-for-selected="value">
-             <template is="dom-repeat" items="{{thirdarr1}}">
-              <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
-           </template>
-            </paper-menu>
-  </paper-dropdown-menu>
- </span>  
-<span style="margin-left:18%">
-  
+    </div>
+    <div hidden$="{{markentryview}}">
+    <span>
+    <paper-input label="Grade Name" style="width:15%" hidden readonly value="{{gradename}}"  on-change="fnhi"></paper-input>
+     </span>
+    <span >
+    <paper-input  label="Section Name" style="width:15%" hidden readonly  hiddenvalue="{{sectionname}}"></paper-input>
+    </span>
+    <div id="hiddenmainheader">
+      <center>
+      <h1>{{schoolname}}</h1>
+          <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+          <h3>  &nbsp;&nbsp;&nbsp; Grade: {{gradename}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{sectionname}} &nbsp;&nbsp; </h3> 
+      </center>
+    </div>
+    <div class="mainbox">
+    <span class="space1">
+    <template is="dom-repeat" items="{{checkarr}}">
+      <dynamic-category-option-card categorytype="{{item.category_type}}" categoryname="{{item.category_name}}"></dynamic-category-option-card>     
+    </template> 
+    </span>
+    </div>
+    <div class="mainbox">
+    <span class="space1">
+     <paper-dropdown-menu  label="Scolastic"  id="scolasticsubjectid">
+        <paper-menu id="scolasticsubjectid2" class="dropdown-content" on-iron-select="fnselectScolastic" attr-for-selected="value">
+          <template is="dom-repeat" items="{{thirdarr1}}">
+            <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <paper-dropdown-menu  id="scolasticsubjectid1" label="Select Assesment">
+        <paper-menu id="singlestudentassesmenserviceid" class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required>
+          <template is="dom-repeat" items="{{assesmentarr}}">
+          <paper-item value="{{item.assesment_name}}">{{item.assesment_name}}</paper-item>     
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>      
+    </span>  
+    <span class="space1">  
       <paper-dropdown-menu  label="Co-Scholastic" id="coscolasticsubjectid">
-             <paper-menu id="coscolasticsubjectid1" class="dropdown-content" on-iron-select="fnselectCoScholastic"  attr-for-selected="value" >
+        <paper-menu id="coscolasticsubjectid1" class="dropdown-content" on-iron-select="fnselectCoScholastic"  attr-for-selected="value" >
              <template is="dom-repeat" items="{{thirdarr2}}">
              <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
             </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-
-</span> 
-<span style="margin-left:21%">
-     <paper-dropdown-menu   label="Co-Curricular"  id="cocurricularscolasticsubjectid">
-             <paper-menu id="cocurricularscolasticsubjectid1" class="dropdown-content" on-iron-select="fnselectCoCurricular"  attr-for-selected="value" >
-            <template is="dom-repeat" items="{{thirdarr3}}">
-             <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
-            </template>
-           </paper-menu>
-    </paper-dropdown-menu>
- 
-   </span>
-<span style="margin-left:19%">
-    <paper-dropdown-menu  label="General" id="generalsubjectid">
-           <paper-menu id="generalsubjectid1" class="dropdown-content" on-iron-select="fnselectGeneral"  attr-for-selected="value" >
-            <template is="dom-repeat" items="{{thirdarr4}}">
-             <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
-            </template>
-          </paper-menu>
-  </paper-dropdown-menu>
-</span>
-<span style="margin-left:16%">
-   
-<paper-dropdown-menu  label="Talent" id="talentsubjectid" hidden>
-         <paper-menu id="talentsubjectid1" class="dropdown-content" on-iron-select="fnselectTalent"  attr-for-selected="value" >
-          <template is="dom-repeat" items="{{thirdarr5}}">
-           <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
+        </paper-menu>
+      </paper-dropdown-menu>
+    </span> 
+    <span class="space1">
+      <paper-dropdown-menu   label="Co-Curricular"  id="cocurricularscolasticsubjectid">
+        <paper-menu id="cocurricularscolasticsubjectid1" class="dropdown-content" on-iron-select="fnselectCoCurricular"  attr-for-selected="value" >            <template is="dom-repeat" items="{{thirdarr3}}">
+          <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
         </template>
         </paper-menu>
- </paper-dropdown-menu>
-</span>
-  </div>
- </div>
-<center>  
-<div id="onetofourhiddenvalue">
-   <template is="dom-repeat" items="{{studarr}}">
-      <dynamic-scholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-scholastic-markentry-itemcard>
-      <!-- <single-student-mark-entery-item-card id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></single-student-mark-entery-item-card> -->
- </template> 
- <paper-button on-click="FnSubmit">Submit</paper-button>    
-</div>
-</center>
-<center>
-<div id="fivetotenhiddenvalue">
-    <template is="dom-repeat" items="{{studarrs}}" >
-    <subject-dynamic-markentryitemcard id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-markentryitemcard>
-       </template>
-      <!--  <single-student-markentry-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" 
-      temp="{{temp}}"></single-student-markentry-card> -->      
-      <paper-button on-click="FnSubmit">Submit</paper-button>
-</div>
-</center>
-<center>
- <div id="onetofourcoslosandcocurrcohiddenvalue">
+      </paper-dropdown-menu>
+    </span>
+    <span class="space1">
+    <paper-dropdown-menu  label="General" id="generalsubjectid">
+      <paper-menu id="generalsubjectid1" class="dropdown-content" on-iron-select="fnselectGeneral"  attr-for-selected="value" >
+        <template is="dom-repeat" items="{{thirdarr4}}">
+          <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    </span>
+    <span class="space1">       
+    <paper-dropdown-menu  label="Talent" id="talentsubjectid" hidden>
+      <paper-menu id="talentsubjectid1" class="dropdown-content" on-iron-select="fnselectTalent"  attr-for-selected="value" >
+        <template is="dom-repeat" items="{{thirdarr5}}">
+          <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    </span>
+    </div>
+    </div>
+    <center>  
+    <div id="onetofourhiddenvalue">
+    <!-- <term-assesment hidedrop="{{hidedrop}}"></term-assesment> -->
+       <template is="dom-repeat" items="{{studarr}}">
+          <dynamic-scholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-scholastic-markentry-itemcard>
+       </template> 
+    <paper-button on-click="FnSubmit">Submit</paper-button>    
+    </div>
+    </center>
+    <center>
+    <div id="fivetotenhiddenvalue">
+        <template is="dom-repeat" items="{{studarrs}}" >
+        <subject-dynamic-markentryitemcard id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-markentryitemcard>
+        </template>
+        <paper-button on-click="FnSubmit">Submit</paper-button>
+    </div>
+    </center>
+    <center>
+    <div id="onetofourcoslosandcocurrcohiddenvalue">
     <template is="dom-repeat" items="{{studarr2}}">
-       <dynamic-coscholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-coscholastic-markentry-itemcard>   
-       <!-- <single-dynamic-coscholastic-markentry-card id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></single-dynamic-coscholastic-markentry-card> -->
-     </template>  
-     <paper-button on-click="FnSubmit">Submit</paper-button>   
- </div>
- </center> 
- <center>   
-   <div id="fivetotencoscholastichiddenvalue">
+      <dynamic-coscholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-coscholastic-markentry-itemcard>   
+    </template>  
+    <paper-button on-click="FnSubmit">Submit</paper-button>   
+    </div>
+    </center> 
+    <center>   
+      <div id="fivetotencoscholastichiddenvalue">
       <template is="dom-repeat" items="{{studarr1}}">
-      <subject-dynamic-coscholastic-markentry-item-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}">
-      </subject-dynamic-coscholastic-markentry-item-card>
-      
-      <!-- <single-subject-dynamic-coscholastic-markentry-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}">
-      </single-subject-dynamic-coscholastic-markentry-card> -->
-     </template>
-     <paper-button on-click="FnSubmit">Submit</paper-button>   
-   </div>   
-  </center> 
-  <center> 
-<div id="onetofourattendencehiddenvalue">
+        <subject-dynamic-coscholastic-markentry-item-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}">
+        </subject-dynamic-coscholastic-markentry-item-card>        
+      </template>
+      <paper-button on-click="FnSubmit">Submit</paper-button>   
+      </div>   
+    </center> 
+    <center> 
+    <div id="onetofourattendencehiddenvalue">
      <table border="1" >    
       <tr>   
        <th id="tb1">SNo</th>
@@ -243,8 +231,7 @@
        <th id="tb2">Generic Comment</th>
        <th id="tb2">Specific Comment</th>
        <th id="tb1"></th>
-     </tr>  
-     
+     </tr>
       <template is="dom-repeat" items="{{studarrss}}">
       <tr>
       <td colspan="6">
@@ -254,11 +241,11 @@
       </template>
       </table>
       <paper-button on-click="FnSubmit">Submit</paper-button>  
-  </div>
-  </center>
-  <center>
-   <div id="onetofourhealthhiddenvalue">
-    <table border="1">    
+      </div>
+      </center>
+      <center>
+      <div id="onetofourhealthhiddenvalue">
+      <table border="1">    
       <tr>
       <th id="tb33">SNo</th>
       <th id="tb22">Name</th>
@@ -278,14 +265,27 @@
       </table> 
       <paper-button on-click="FnSubmit">Submit</paper-button>  
     </div>
-</center>
+    </center>
+    </div>
  <paper-input value="{{gradeid}}" hidden></paper-input>
  <paper-input value="{{classid}}" hidden></paper-input>
  <paper-input value="{{assesmentids}}" hidden ></paper-input>
   <single-student-markentry-service id="singleservice"></single-student-markentry-service>
  <co-scholastic-service id="assesmentservice"></co-scholastic-service>
- <dynamic-scholastic-subject-service id="scholasticservice"></dynamic-scholastic-subject-service>
-  
+ <dynamic-scholastic-subject-service id="scholasticservice"></dynamic-scholastic-subject-service>  
+
+ <div class="spinner">
+  <paper-dialog modal id="markchangespinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+  <paper-spinner active></paper-spinner>
+  <h4>{{spinnermsg}}</h4></paper-dialog>
+ </div>
+ <paper-dialog id="markchangedialog" modal>
+    <h3><center>{{dialoginfo}}</center></h3>
+    <center>
+    <paper-button on-click="FnCloseDialog" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+    </center>
+ </paper-dialog>  
+
   </template>
   <script>
   (function() {
@@ -294,24 +294,39 @@
     Polymer({
       is: 'single-student-mark-entery-card',
       ready:function(e){
-
-        this.$.talentsubjectid.hidden=true; 
-        this.$.generalsubjectid.hidden=true
-        this.$.cocurricularscolasticsubjectid.hidden=true;
-        this.$.coscolasticsubjectid.hidden=true;
-        this.$.scolasticsubjectid.hidden=true;
-         this.$.scolasticsubjectid1.hidden=true;
-        this.assesmentids="";
-        this.$.onetofourhiddenvalue.hidden=true;
- this.$.fivetotenhiddenvalue.hidden=true; 
- this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
- this.$.fivetotencoscholastichiddenvalue.hidden=true;
- this.$.onetofourattendencehiddenvalue.hidden=true;  
- this.$.onetofourhealthhiddenvalue.hidden=true;
- this.$.hiddenmainheader.hidden=true;
+       this.$.talentsubjectid.hidden=true; 
+       this.$.generalsubjectid.hidden=true
+       this.$.cocurricularscolasticsubjectid.hidden=true;
+       this.$.coscolasticsubjectid.hidden=true;
+       this.$.scolasticsubjectid.hidden=true;
+       this.$.scolasticsubjectid1.hidden=true;
+       this.assesmentids="";
+       this.$.onetofourhiddenvalue.hidden=true;
+       this.$.fivetotenhiddenvalue.hidden=true; 
+       this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+       this.$.fivetotencoscholastichiddenvalue.hidden=true;
+       this.$.onetofourattendencehiddenvalue.hidden=true;  
+       this.$.onetofourhealthhiddenvalue.hidden=true;
+       this.$.hiddenmainheader.hidden=true;
+       this.markentryview=true;
+       this.querySelector('#singlestudentgerid').style.visibility='hidden';
+       this.hidedrop=true;
+       },
+       FnToggleDialog:function(msg)
+       {
+       this.dialoginfo=msg;
+       this.$.markchangedialog.toggle();
+       },
+       FnCloseDialog:function(){
+        this.$.markchangedialog.close();
+       },
+       FnToggleSpinner:function(flag){
+       this.$.markchangespinner.opened=flag; 
        },
        FnSubmit:function(){
         // alert(sessionStorage.getItem("curr_sess_category"));
+        this.FnToggleSpinner(true);
+        this.spinnermsg="Please wait...";
         if(sessionStorage.getItem("curr_sess_category")=="category1"||sessionStorage.getItem("curr_sess_category")=="category2"||sessionStorage.getItem("curr_sess_category")=="category3"){
         if(this.gradename=='Grade-1'||this.gradename=='Grade-2'||this.gradename=='Grade-3'||this.gradename=='Grade-4'){
           this.$.scholasticservice.FnCheckStatusUpdate(this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid);
@@ -346,44 +361,46 @@
         studentnamearr=arr;
       },
       fnselectScolastic:function(e){
-        var sname = e.target.selectedItem.value; 
+        document.querySelector('#singlestudentassesmenserviceid').selected=-1;
+        var sname = e.target.selectedItem.value.trim(); 
         this.subject=e.target.selectedItem.textContent.trim(); 
-        var inx=sname.indexOf("  ");
-        var pref=sname.substring(0,inx);
-        if(pref=="Second Language"||pref=="Third Language")
-        this.subjectid=sname.substring((inx+2));
-        else
-        this.subjectid=sname;
-        this.subject = e.target.selectedItem.textContent.trim(); 
-        localStorage.setItem("curr_sess_subject",this.subject);
-        localStorage.setItem("curr_sess_subjectid",this.subjectid);
-        localStorage.setItem("curr_sess_languagepref",pref);
-        localStorage.setItem("curr_sess_grade",this.gradename);
-        localStorage.setItem("curr_sess_section",this.sectionname);
-        localStorage.setItem("curr_sess_classid",this.classid);
-     
-  if(this.gradename=='Grade-1'||this.gradename=='Grade-2'||this.gradename=='Grade-3'||this.gradename=='Grade-4'){
- this.$.onetofourhiddenvalue.hidden=false;
-this.$.fivetotenhiddenvalue.hidden=true; 
-this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
-this.$.fivetotencoscholastichiddenvalue.hidden=true;
-this.$.onetofourattendencehiddenvalue.hidden=true;  
-this.$.onetofourhealthhiddenvalue.hidden=true;
-  this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category1");
-     
-   }
-   else{
-  this.$.onetofourhiddenvalue.hidden=true;
-this.$.fivetotenhiddenvalue.hidden=false; 
-this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
-this.$.fivetotencoscholastichiddenvalue.hidden=true;
-this.$.onetofourattendencehiddenvalue.hidden=true;  
-this.$.onetofourhealthhiddenvalue.hidden=true;
-    this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category1");
-       
-   }
-      
-
+        // alert(this.category);
+        this.$.singleservice.assesment1Service("category1",this.gradename,this.sectionname,this.studentid,this.subject);
+        // this.FnToggleSpinner(true);
+        // this.spinnermsg="Please wait...";
+        // var sname = e.target.selectedItem.value; 
+        // this.subject=e.target.selectedItem.textContent.trim(); 
+        // var inx=sname.indexOf("  ");
+        // var pref=sname.substring(0,inx);
+        // if(pref=="Second Language"||pref=="Third Language")
+        // this.subjectid=sname.substring((inx+2));
+        // else
+        // this.subjectid=sname;
+        // this.subject = e.target.selectedItem.textContent.trim(); 
+        // localStorage.setItem("curr_sess_subject",this.subject);
+        // localStorage.setItem("curr_sess_subjectid",this.subjectid);
+        // localStorage.setItem("curr_sess_languagepref",pref);
+        // localStorage.setItem("curr_sess_grade",this.gradename);
+        // localStorage.setItem("curr_sess_section",this.sectionname);
+        // localStorage.setItem("curr_sess_classid",this.classid);     
+        // if(this.gradename=='Grade-1'||this.gradename=='Grade-2'||this.gradename=='Grade-3'||this.gradename=='Grade-4'){
+        // this.$.onetofourhiddenvalue.hidden=false;
+        // this.$.fivetotenhiddenvalue.hidden=true; 
+        // this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+        // this.$.fivetotencoscholastichiddenvalue.hidden=true;
+        // this.$.onetofourattendencehiddenvalue.hidden=true;  
+        // this.$.onetofourhealthhiddenvalue.hidden=true;
+        // this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category1");
+        // }
+        // else{
+        // this.$.onetofourhiddenvalue.hidden=true;
+        // this.$.fivetotenhiddenvalue.hidden=false; 
+        // this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+        // this.$.fivetotencoscholastichiddenvalue.hidden=true;
+        // this.$.onetofourattendencehiddenvalue.hidden=true;  
+        // this.$.onetofourhealthhiddenvalue.hidden=true;
+        // this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category1");   
+        // }           
      },
    updatestudentmark:function(){
      
@@ -400,13 +417,46 @@ fngetvalues1:function(e){
  this.$.singleservice.fnoverallmarks1(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid);     
    },
     FnSelectAssesment:function(e){
-    this.assesmentid=e.target.selectedItem.value;
+    this.assesmentid=e.target.selectedItem.value;    
     // alert(this.assesmentid);
       localStorage.setItem("curr_sess_assesment",this.assesmentid);
-
+        this.FnToggleSpinner(true);
+        this.spinnermsg="Please wait...";
+        var sname = this.subject; 
+        var inx=sname.indexOf("  ");
+        var pref=sname.substring(0,inx);
+        if(pref=="Second Language"||pref=="Third Language")
+        this.subjectid=sname.substring((inx+2));
+        else
+        this.subjectid=sname;
+        localStorage.setItem("curr_sess_subject",this.subject);
+        localStorage.setItem("curr_sess_subjectid",this.subjectid);
+        localStorage.setItem("curr_sess_languagepref",pref);
+        localStorage.setItem("curr_sess_grade",this.gradename);
+        localStorage.setItem("curr_sess_section",this.sectionname);
+        localStorage.setItem("curr_sess_classid",this.classid);     
+        if(this.gradename=='Grade-1'||this.gradename=='Grade-2'||this.gradename=='Grade-3'||this.gradename=='Grade-4'){
+        this.$.onetofourhiddenvalue.hidden=false;
+        this.$.fivetotenhiddenvalue.hidden=true; 
+        this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+        this.$.fivetotencoscholastichiddenvalue.hidden=true;
+        this.$.onetofourattendencehiddenvalue.hidden=true;  
+        this.$.onetofourhealthhiddenvalue.hidden=true;
+        this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category1");
+        }
+        else{
+        this.$.onetofourhiddenvalue.hidden=true;
+        this.$.fivetotenhiddenvalue.hidden=false; 
+        this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+        this.$.fivetotencoscholastichiddenvalue.hidden=true;
+        this.$.onetofourattendencehiddenvalue.hidden=true;  
+        this.$.onetofourhealthhiddenvalue.hidden=true;
+        this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category1");   
+        }           
       },
      fnselectCoScholastic:function(e){
-
+      this.FnToggleSpinner(true);
+      this.spinnermsg="Please wait...";
      this.subjectid=e.target.selectedItem.value; 
        this.subject=e.target.selectedItem.textContent.trim(); 
        var pref=""; 
@@ -440,6 +490,8 @@ this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.
       }
       }, 
      fnselectCoCurricular:function(e){
+     this.FnToggleSpinner(true);
+     this.spinnermsg="Please wait...";
 this.$.onetofourhiddenvalue.hidden=true;
 this.$.fivetotenhiddenvalue.hidden=true; 
 this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=false;
@@ -461,6 +513,8 @@ this.$.onetofourhealthhiddenvalue.hidden=true;
   this.$.singleservice.getstudentinfo(this.studentid,this.value,this.gradeid,this.gradename,this.classid,this.sectionname,this.subjectid,this.subject,this.assesmentid,"category2");
      }, 
       fnselectGeneral:function(e){
+        this.FnToggleSpinner(true);
+        this.spinnermsg="Please wait...";
         this.subjectid=e.target.selectedItem.value; 
         this.subject=e.target.selectedItem.textContent.trim(); 
         var pref=""; 
@@ -486,17 +540,19 @@ this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
 this.$.fivetotencoscholastichiddenvalue.hidden=true;
 this.$.onetofourattendencehiddenvalue.hidden=false;  
 this.$.onetofourhealthhiddenvalue.hidden=true;       
-this.$.assesmentservice.callWorkingdaysService1(this.studentid);
-      
+this.$.assesmentservice.callWorkingdaysService1(this.studentid);      
     }
-       }, 
+      }, 
       fnselectTalent:function(e){
+         this.FnToggleSpinner(true);
+         this.spinnermsg="Please wait...";
          var subjectid5=e.target.selectedItem.value;
          var  subjectname5=e.target.selectedItem.textContent.trim();
-      },
-    
-   FnSelectstudent:function(e)
+      },    
+        FnSelectstudent:function(e)
         {
+          this.fnref();
+          this.markentryview=false;
           this.querySelector('#singlestudentgerid').style.visibility='hidden';
           this.value=e.target.selectedItem.textContent.trim();
           this.studentid=e.target.selectedItem.value;
@@ -504,21 +560,17 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
           localStorage.setItem("curr_sess_studentid",this.studentid);
           document.querySelector('#singlestudentgerid').selected=-1;
           this.$.singleservice.getsection(this.studentid);
-          this.$.hiddenmainheader.hidden=false;
-         localStorage.setItem("curr_sess_single_studetmap","mapactive"); 
-
+          this.$.hiddenmainheader.hidden=false;          
+          localStorage.setItem("curr_sess_single_studetmap","mapactive");
           },
-
           fnscolasticid:function(){
-          sessionStorage.setItem("curr_sess_category","category1");
-  
+          sessionStorage.setItem("curr_sess_category","category1");  
           this.$.onetofourhiddenvalue.hidden=true;
           this.$.fivetotenhiddenvalue.hidden=true; 
           this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
           this.$.fivetotencoscholastichiddenvalue.hidden=true;
           this.$.onetofourattendencehiddenvalue.hidden=true;  
-          this.$.onetofourhealthhiddenvalue.hidden=true;
-   
+          this.$.onetofourhealthhiddenvalue.hidden=true;   
         this.$.talentsubjectid.hidden=true;
         this.$.generalsubjectid.hidden=true;
         this.$.cocurricularscolasticsubjectid.hidden=true;
@@ -526,18 +578,9 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
         this.$.scolasticsubjectid.hidden=false;
         this.$.scolasticsubjectid1.hidden=false;
         this.$.singleservice.Fngetsubject("category1",this.gradename,this.sectionname,this.studentid);
-        this.$.singleservice.assesment1Service("category1",this.gradename,this.sectionname,this.studentid);
+        // this.$.singleservice.assesment1Service("category1",this.gradename,this.sectionname,this.studentid);
         this.subject="";
-        this.subjectid="";
-        //      if(document.querySelector("#scolasticid").checked==true){
-        //          this.$.singleservice.Fngetsubject("category1",this.gradename,this.sectionname,this.studentid);        
-        //        document.querySelector("#coscolasticid").checked=false;
-        //        document.querySelector("#cocurriculamid").checked=false;
-        //        document.querySelector("#genderid").checked=false;
-        //        document.querySelector("#talentid").checked=false;
-        // this.subject="";
-        // this.subjectid="";
-        //  }  
+        this.subjectid=""; 
          },
          fncoscolasticid:function(){
           sessionStorage.setItem("curr_sess_category","category2");
@@ -558,16 +601,6 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
           this.$.singleservice.Fngetsubject("category2",this.gradename,this.sectionname,this.studentid);
           this.subject="";
           this.subjectid="";
- // if(document.querySelector("#coscolasticid").checked==true){
- //           this.$.singleservice.Fngetsubject("category2",this.gradename,this.sectionname,this.studentid);
- //               document.querySelector("#scolasticid").checked=false;
- //               document.querySelector("#cocurriculamid").checked=false;
- //               document.querySelector("#genderid").checked=false;
- //               document.querySelector("#talentid").checked=false;
-         
- //        this.subject="";
- //        this.subjectid="";
- //           }
          },
          fncocurriculamid:function(){
           sessionStorage.setItem("curr_sess_category","category3");
@@ -588,18 +621,6 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
         this.subject="";
         this.subjectid="";
          this.$.talentsubjectid.hidden=true;
-       //       if(document.querySelector("#cocurriculamid").checked==true){
-       //     this.$.singleservice.Fngetsubject("category3",this.gradename,this.sectionname,this.studentid);
-       //         document.querySelector("#scolasticid").checked=false;
-       //         document.querySelector("#coscolasticid").checked=false;
-       //         document.querySelector("#genderid").checked=false;
-       //         document.querySelector("#talentid").checked=false;
-       //           this.$.talentsubjectid.hidden=true;
-      
- 
-       // this.subject="";
-       //  this.subjectid="";
-       //     }
          },
         fngenderid:function(){
           sessionStorage.setItem("curr_sess_category","category4");
@@ -619,17 +640,6 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
         this.$.singleservice.Fngetsubject("category4",this.gradename,this.sectionname,this.studentid);
         this.subject="";
         this.subjectid="";
-           //   if(document.querySelector("#genderid").checked==true){
-           // this.$.singleservice.Fngetsubject("category4",this.gradename,this.sectionname,this.studentid);
-           //     document.querySelector("#scolasticid").checked=false;
-           //     document.querySelector("#coscolasticid").checked=false;
-           //     document.querySelector("#cocurriculamid").checked=false;
-           //     document.querySelector("#talentid").checked=false;
-           //    this.subject="";
-           //    this.subjectid="";
-           // }
-           
-         
           },
      fntalentid:function(){
      sessionStorage.setItem("curr_sess_category","category5");
@@ -648,21 +658,6 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
         this.$.scolasticsubjectid.hidden=true;
         this.subject="";
         this.subjectid="";
-      // if(document.querySelector("#talentid").checked==true){
-      //         this.$.singleservice.Fngetsubject("category5");
-      //          document.querySelector("#scolasticid").checked=false;
-      //          document.querySelector("#coscolasticid").checked=false;
-      //          document.querySelector("#cocurriculamid").checked=false;
-      //          document.querySelector("#genderid").checked=false;
-      //   this.$.talentsubjectid.hidden=false;
-      //   this.$.generalsubjectid.hidden=true
-      //   this.$.cocurricularscolasticsubjectid.hidden=true;
-      //   this.$.coscolasticsubjectid.hidden=true;
-      //   this.$.scolasticsubjectid.hidden=true;
-      //  this.subject="";
-      //   this.subjectid="";
-      //      }
-         
           },
         FnSearchstudententry:function(e)
      {
@@ -726,13 +721,45 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
                 this.itemArray=arr;
               }
             } 
-          }     
+          }  
+        this.FnPageRefresh();
         },
-
-    fnref:function(e){
-     this.$.hiddenmainheader.hidden=true;
+      FnPageRefresh:function(e){
+      this.markentryview=true;
+      this.$.hiddenmainheader.hidden=true;
       this.checkarr="";
-
+      this.thirdarr1="";
+      this.thirdarr2="";
+      this.thirdarr3="";
+      this.thirdarr4="";
+      this.thirdarr5="";
+      this.assesmentarr="";
+      this.subject="";
+      this.subjectid="";
+      this.gradename="";
+      this.sectionname="";
+      this.classid="";
+      this.$.talentsubjectid.hidden=true; 
+      this.$.talentsubjectid.hidden=true; 
+      this.$.generalsubjectid.hidden=true
+      this.$.cocurricularscolasticsubjectid.hidden=true;
+      this.$.coscolasticsubjectid.hidden=true;
+      this.$.scolasticsubjectid.hidden=true;
+      this.$.scolasticsubjectid1.hidden=true;
+      this.assesmentids="";
+      this.$.onetofourhiddenvalue.hidden=true;
+      this.$.fivetotenhiddenvalue.hidden=true; 
+      this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+      this.$.fivetotencoscholastichiddenvalue.hidden=true;
+      this.$.onetofourattendencehiddenvalue.hidden=true;  
+      this.$.onetofourhealthhiddenvalue.hidden=true;
+      this.hidedrop=true;
+    },
+    fnref:function(e){
+      this.hidedrop=true;
+      this.markentryview=true;
+      this.$.hiddenmainheader.hidden=true;
+      this.checkarr="";
       this.value=""; 
       this.studentid=""; 
       this.itemArray="";
@@ -747,36 +774,22 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
       this.gradename="";
       this.sectionname="";
       this.classid="";
-
-      // document.querySelector("#scolasticid").checked=false;
-      // document.querySelector("#coscolasticid").checked=false;
-      // document.querySelector("#cocurriculamid").checked=false;
-      // document.querySelector("#genderid").checked=false;
-      // document.querySelector("#talentid").checked=false;
- this.$.talentsubjectid.hidden=true; 
-
-      /*document.querySelector("#scolasticid").checked=false;
-      document.querySelector("#coscolasticid").checked=false;
-      document.querySelector("#cocurriculamid").checked=false;
-      document.querySelector("#genderid").checked=false;
-      document.querySelector("#talentid").checked=false;*/
-  this.$.talentsubjectid.hidden=true; 
-
- this.$.generalsubjectid.hidden=true
- this.$.cocurricularscolasticsubjectid.hidden=true;
- this.$.coscolasticsubjectid.hidden=true;
- this.$.scolasticsubjectid.hidden=true;
- this.$.scolasticsubjectid1.hidden=true;
-  this.assesmentids="";
-  this.$.onetofourhiddenvalue.hidden=true;
- this.$.fivetotenhiddenvalue.hidden=true; 
- this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
- this.$.fivetotencoscholastichiddenvalue.hidden=true;
- this.$.onetofourattendencehiddenvalue.hidden=true;  
- this.$.onetofourhealthhiddenvalue.hidden=true;
- // document.querySelector("dynamic-category-option-card").ref();
-
-    },
+      this.$.talentsubjectid.hidden=true; 
+      this.$.talentsubjectid.hidden=true; 
+      this.$.generalsubjectid.hidden=true
+      this.$.cocurricularscolasticsubjectid.hidden=true;
+      this.$.coscolasticsubjectid.hidden=true;
+      this.$.scolasticsubjectid.hidden=true;
+      this.$.scolasticsubjectid1.hidden=true;
+      this.assesmentids="";
+      this.$.onetofourhiddenvalue.hidden=true;
+      this.$.fivetotenhiddenvalue.hidden=true; 
+      this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+      this.$.fivetotencoscholastichiddenvalue.hidden=true;
+      this.$.onetofourattendencehiddenvalue.hidden=true;  
+      this.$.onetofourhealthhiddenvalue.hidden=true;
+      this.querySelector('#singlestudentgerid').style.visibility='hidden';
+    }
     });
   })();
   </script>

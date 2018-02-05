@@ -175,7 +175,7 @@
      for(var i=0;i<array1.length;i++){
        for(var j=0;j<tempstudentarr.length;j++){
        // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
-       if(array1[i].StudentId==tempstudentarr[j].id){
+       if((array1[i].StudentId).trim()==(tempstudentarr[j].id).trim()){
           array.push(array1[i]);
          }      
     }  
@@ -272,11 +272,16 @@
                       array1=[];
                       tempstudentarr=[];
                       setarr=[];
-                     alert("Pls import the corrcet file name");
+                     // alert("Pls import the corrcet file name");
                      document.getElementById("readfile1").value = "";
                      }}}}}
-  document.querySelector("term-assesment-card").FnToggleSpinner(true);
-    
+      if(temp.length==0){
+      document.querySelector("term-assesment-card").TermMarkdialog("Please check your sheet..All the fields must be entered!!");
+      }
+      else{
+      document.querySelector("term-assesment-card").FnToggleSpinner(true);
+      document.querySelector("term-assesment-card").spinnermsg="Please wait...uploading"
+      }               
       for(var i=0;i<temp.length;i++){
          this.$.assesmentservice.callinsertfaassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].categoryname,temp[i].value,1,temp.length);     
       }
@@ -352,11 +357,14 @@ this.$.hiddenexcelheaderfiles1.hidden=true;
         }
         else
         {
-          alert('Please complete markentry for all the students!!');
+          // alert('Please complete markentry for all the students!!');
+          document.querySelector("term-assesment-card").FnToggleSpinner(false);
+          document.querySelector("term-assesment-card").TermMarkdialog("Please complete markentry for all the students!!");
         }
       },
       FnApprove:function(){
-
+        document.querySelector("term-assesment-card").FnToggleSpinner(true);
+        document.querySelector("term-assesment-card").spinnermsg="Please wait..."
         this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
       }
       // FnSetAlreadyEnteredMarks:function(arr){

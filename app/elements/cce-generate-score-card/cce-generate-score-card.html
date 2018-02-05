@@ -14,10 +14,12 @@
       .card{
       width: 100%;        
       @apply(--layout-vertical);
+      @apply(--layout-center-justified);
       }
       .inner{
       @apply(--layout-horizontal);
-      margin-left: 20%;
+      @apply(--layout-center-justified);
+      /*margin-left: 20%;*/
       }
       .list{
       /*margin-left: 10%;*/
@@ -46,16 +48,22 @@
     h4{  
       color: #061E98;
     }
+    paper-checkbox{
+      --paper-checkbox-label-color: #061E98;
+       --paper-checkbox-size: 15px;
+    }
+    .searchcheckbox{
+      text-align: right;
+    }
     </style>
-    <div hidden$="{{hidegetfistsirchid}}">
-     <paper-checkbox on-change="fnchange" style="margin-left:81%" id="SingleStudentInfoid">Search By Name</paper-checkbox>
+    <div class="searchcheckbox" hidden$="{{hidegetfistsirchid}}">
+     <paper-checkbox on-change="fnchange" id="SingleStudentInfoid">Search reportcard by name</paper-checkbox>
       
     </div>
   
       <div class="card" >
 
-         <div class="inner" id="searchstudentid">
-       
+       <div class="inner" id="searchstudentid">       
        <div class="student">
         <paper-input label="Enter Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
        <paper-listbox class="dropdown-content" id="seachinfostuid" on-iron-select="FnSelectstuinfo">
@@ -66,30 +74,25 @@
       </div>
          
          <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
-            <paper-menu id="searchacademicyear"  class="dropdown-content"  on-iron-select="FnSelectacademicyear1"  attr-for-selected="value" required>  
+            <paper-menu id="scorecardsearchacademicyear"  class="dropdown-content"  on-iron-select="FnSelectacademicyear1"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr1}}">
                 <paper-item value="{{item.academic_year}}">{{item.academic_year}}</paper-item>                               
               </template>
             </paper-menu>
        </paper-dropdown-menu>
      
-      <paper-dropdown-menu  label="Select Term" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="searchrtermid"  on-iron-select="FnSelectTerm1"  attr-for-selected="value" required> 
+        <paper-dropdown-menu  label="Select Term" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" id="scorecardsearchrterm"  on-iron-select="FnSelectTerm1"  attr-for-selected="value" required> 
                 <template is="dom-repeat" items="{{termarr1}}">
                 <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
                 </template>    
-                <!-- <paper-item value="Term1">Term1</paper-item>
-                <paper-item value="Term2">Term2</paper-item>
-                <paper-item value="Term3">Term3</paper-item>  -->
             </paper-menu>
           </paper-dropdown-menu>
-
-         </div>
-      
+         </div>     
 
           <div class="inner" id="Filterstudentview">
            <paper-dropdown-menu  label="Select Academic Year" required>
-            <paper-menu id="scoreacademicyearid" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+            <paper-menu id="scorecardacademicyear" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
                 <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
               </template>
@@ -97,7 +100,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="term" label="Select Term" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="scorertermid"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required> 
+            <paper-menu class="dropdown-content" id="scorecardterm"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required> 
                 <template is="dom-repeat" items="{{termarr}}">
                 <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
                 </template>    
@@ -105,7 +108,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="scorergradeid"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+            <paper-menu class="dropdown-content" id="scorecardgrade"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
                 <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
               </template>
@@ -113,7 +116,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="scorersectionid"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="scorecardsection"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
@@ -163,31 +166,31 @@
         this.hidecard=true;
          this.$.Filterstudentview.hidden=false;
            this.$.searchstudentid.hidden=true;         
-       },
+      },
       fnchange:function(e){
- if(this.$.SingleStudentInfoid.checked==true){
-  this.$.Filterstudentview.hidden=true;
-  this.$.searchstudentid.hidden=false;
-  this.$.scorecardservice.Fnsearchstudentinfo();
- this.hidecard=true; 
-       
- }
- else if(this.$.SingleStudentInfoid.checked==false){
-  this.$.Filterstudentview.hidden=false;
-  this.$.searchstudentid.hidden=true;
- this.hidecard=true; 
-   }
+      if(this.$.SingleStudentInfoid.checked==true){
+      this.$.Filterstudentview.hidden=true;
+      this.$.searchstudentid.hidden=false;
+      this.$.scorecardservice.Fnsearchstudentinfo();
+      this.hidecard=true; 
+      this.querySelector('#seachinfostuid').style.visibility='hidden'; 
+      }
+      else if(this.$.SingleStudentInfoid.checked==false){
+      this.$.Filterstudentview.hidden=false;
+      this.$.searchstudentid.hidden=true;
+      this.hidecard=true; 
+      }
       this.value="";
       this.itemArray="";
-      document.querySelector('#searchacademicyear').selected=-1;
-      document.querySelector('#searchrtermid').selected=-1;
-      document.querySelector('#scoreacademicyearid').selected=-1;
-      document.querySelector('#scorertermid').selected=-1;
-      document.querySelector('#scorergradeid').selected=-1;
-      document.querySelector('#scorersectionid').selected=-1;
+      document.querySelector('#scorecardsearchacademicyear').selected=-1;
+      document.querySelector('#scorecardsearchrterm').selected=-1;
+      document.querySelector('#scorecardacademicyear').selected=-1;
+      document.querySelector('#scorecardterm').selected=-1;
+      document.querySelector('#scorecardgrade').selected=-1;
+      document.querySelector('#scorecardsection').selected=-1;
      },
      FnSelectacademicyear1:function(e){  
-        document.querySelector('#searchrtermid').selected=-1;
+        document.querySelector('#scorecardterm').selected=-1;
         academicarr2 = e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_academicyear",academicarr2); 
         this.$.scorecardservice.FnFetchStudentTermService(academicarr2,this.studentid);
@@ -197,6 +200,7 @@
         termname1 = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_termname",termname1);        
         // this.$.scorecardservice.Fnsearchstureportinfo(academicarr1,termname,this.studentid,this.searchgradid,this.searchgradname,this.seachcassid,this.searchsectionname);
+        // alert(this.searchsectionname+" "+this.searchgradename+" "+this.searchgradeid);
         localStorage.setItem("curr_sess_section",this.searchsectionname); 
         localStorage.setItem("curr_sess_grade",this.searchgradename);
         localStorage.setItem("curr_sess_gradeid",this.searchgradeid);
@@ -209,11 +213,11 @@
         this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
         this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid);
       
-     document.querySelector('app-card').setPage('homepage','');
-     document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
-     document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
+        document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
         }
-    else
+        else
         {   
         if(localStorage.getItem('curr_sess_academicyear')=='2016-2017')
         {
@@ -235,6 +239,7 @@
           this.$.newformatservice.fetchnewformatscholasticsubjects1(this.studentid);
      document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('newformat-reportcard-nineten','');
+        document.querySelector('newformat-reportcard-nineten').FnSetHeaders();
          }
         else{
         this.$.newformatservice.fetchstudinfofornewformatService(this.studentid);
@@ -243,7 +248,7 @@
         this.$.newformatservice.fetchnewformatremark(this.studentid);
       document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('reprotcard-newformat-threetoeight','');
-      
+       document.querySelector('reprotcard-newformat-threetoeight').FnSetHeaders();
     
         }
         } 
@@ -251,9 +256,9 @@
 
        },
     FnSelectacademicyear:function(e){  
-      document.querySelector('#scorertermid').selected=-1;
-      document.querySelector('#scorergradeid').selected=-1;
-      document.querySelector('#scorersectionid').selected=-1;
+      document.querySelector('#scorecardterm').selected=-1;
+      document.querySelector('#scorecardgrade').selected=-1;
+      document.querySelector('#scorecardsection').selected=-1;
       this.hidecard=true;
         academicarr1 = e.target.selectedItem.value.trim();
       //alert(localStorage.getItem('curr_sess_loggedassesmenttype'));
@@ -277,13 +282,13 @@
       },
       FnRefresh:function()
       {
-
-      document.querySelector('#searchacadamicyear').selected=-1;
-      document.querySelector('#searchrtermid').selected=-1;
-      document.querySelector('#scoreacademicyearid').selected=-1;
-      document.querySelector('#scorertermid').selected=-1;
-      document.querySelector('#scorergradeid').selected=-1;
-      document.querySelector('#scorersectionid').selected=-1;
+      this.querySelector('#seachinfostuid').style.visibility='hidden';
+      document.querySelector('#scorecardsearchacademicyear').selected=-1;
+      document.querySelector('#scorecardsearchrterm').selected=-1;
+      document.querySelector('#scorecardacademicyear').selected=-1;
+      document.querySelector('#scorecardterm').selected=-1;
+      document.querySelector('#scorecardgrade').selected=-1;
+      document.querySelector('#scorecardsection').selected=-1;
          this.$.Filterstudentview.hidden=false;
         this.$.searchstudentid.hidden=true;     
       this.hidecard=true;
@@ -292,8 +297,8 @@
       },
       FnSelectTerm:function(e){
         this.hidecard=true;
-        document.querySelector('#scorergradeid').selected=-1;
-        document.querySelector('#scorersectionid').selected=-1;
+        document.querySelector('#scorecardgrade').selected=-1;
+        document.querySelector('#scorecardsection').selected=-1;
         termname = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_termname",termname);        
         // if(this.flag==1)
@@ -301,7 +306,7 @@
       },
       FnSelectGrade:function(e){   
         this.hidecard=true;
-        document.querySelector('#scorersectionid').selected=-1;     
+        document.querySelector('#scorecardsection').selected=-1;     
         gradename = e.target.selectedItem.textContent.trim();       
         gradeid = e.target.selectedItem.value.trim();       
         localStorage.setItem("curr_sess_grade",gradename);
@@ -393,11 +398,11 @@
             } 
           }
   
-     },
- FnSelectstuinfo:function(e)
+        },
+        FnSelectstuinfo:function(e)
         {
-          document.querySelector('#searchacademicyear').selected=-1;
-          document.querySelector('#searchrtermid').selected=-1;
+          document.querySelector('#scorecardsearchacademicyear').selected=-1;
+          document.querySelector('#scorecardsearchrterm').selected=-1;
           this.querySelector('#seachinfostuid').style.visibility='hidden';
           this.value=e.target.selectedItem.textContent.trim();
           this.studentid=e.target.selectedItem.value;
@@ -405,25 +410,7 @@
           document.querySelector('#seachinfostuid').selected=-1;
           this.studid=this.studentid;
           this.$.scorecardservice.Fnfetchstudentacademicyear(this.studentid);
-      },
- /*FnItemSelected:function(e)
-   {
-    this.querySelector('paper-listbox').style.visibility='hidden';
-    this.studname = e.target.selectedItem.textContent.trim();    
-    this.itemArray=[];
-    document.querySelector('#input1').selected=-1;
-    this.value=this.studname;    
-    this.$.scorecardservice.callFetchstudentinfoService(this.studname);
-    this.$.scorecardservice.callFetchsubjectinfoService(this.studname);
-    this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studname);
-    this.$.scorecardservice.callFetchmarkService(this.studname); 
-    this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studname);  
-    this.$.scorecardservice.callfetchcoscholasticinfoService(this.studname);
-    this.$.scorecardservice.callFetchmarkService(this.studname);   
-    document.querySelector('app-card').setPage('homepage','');
-    document.querySelector('home-page').setPage('ccefivetotenscorecard','');
-   }*/
-    
+        }
   });
   })();
   </script>

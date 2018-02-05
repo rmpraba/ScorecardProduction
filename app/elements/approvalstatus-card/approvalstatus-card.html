@@ -25,8 +25,8 @@
           width: 40%;
        }
     .filterid{
-       margin-left: 64%;
-      margin-top: -5%
+       text-align: right;
+       margin-top: -5%;
           }
     .card{
         @apply(--layout-vertical);
@@ -85,20 +85,24 @@
         margin-left: 6%;
         width: 83%;
       }
-      #spinner{
-            margin: 0;
-            padding: 0;
-            border: none;
-            background-color: transparent;
-          }
- .spinner{
-            margin-left: 50%;            
-           
-            /*color: #0f9d58;*/
-            /*border: none;*/
-          }
+    #approvalstatusdialog{
+      width: 20%;
+      border-radius: 25px;
+    }
+    #dynamicapprovestatusspinner{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+     }
+     h4{
+      color: #061E98;
+     }
     </style>
-    <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div class="spinner"><paper-dialog modal id="dynamicapprovestatusspinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+    <paper-spinner active></paper-spinner>
+    <h4>{{spinnermsg}}</h4></paper-dialog></div>
      <div>
      <center><h1>{{schoolname}}</h1>
      <div id="hidetop">
@@ -107,7 +111,7 @@
       </center>
 
    <div class="filterid">
-       <paper-dropdown-menu id="grade" label="Select Filter"  >
+       <paper-dropdown-menu id="grade" label="Select Filter" style="width: 15%;" >
          <paper-menu  id="approvefilter3" class="dropdown-content"  on-iron-select="FnSelectFilter"  attr-for-selected="value" required>     
            <paper-item value="Filter By Grade">Filter By Grade</paper-item>
            <paper-item value="Filter By Section">Filter By Section</paper-item>
@@ -169,13 +173,19 @@
   <template is="dom-repeat" items="{{approvalarr}}" as="item">
     <div id="itemcard">
       <approvelstatus-item-card academicyear="{{item.academic_year}}" termname="{{item.term_name}}" assesmentid="{{item.assesment_name}}" grade="{{item.grade_name}}" section="{{item.section_name}}" subject="{{item.subject_name}}" flag="{{item.flag}}"
-      hideflag="{{item.hideflag}}" font="{{item.font}}" color="{{item.color}}"></approvelstatus-item-card>
+      hideflag="{{item.hideflag}}" font="{{item.font}}" color="{{item.color}}" category="{{item.subject_category}}"></approvelstatus-item-card>
     </div>
   </template>     
  </div>
      <term-assesment-service id="assesmentservice"></term-assesment-service>
      <scorecard-service id="scorecardservice"></scorecard-service>
  </div>
+  <paper-dialog id="approvalstatusdialog" modal>
+    <h3 style="color:green"><center>{{dialogmsg}}</center></h3>
+    <center>
+    <paper-button on-click="FnClose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+    </center>
+  </paper-dialog>
  </template>
   <script>
   (function() {
@@ -186,23 +196,31 @@
       is: 'approvalstatus-card',
        ready:function(e){
          localStorage.setItem("curr_sess_filterid","fillterinactive");
-
        },
-
- FnSpinnerrActive:function(flag){
-        if(flag==true)
-        this.$.spinner.opened=true;
-        if(flag==false)
-        this.$.spinner.opened=false;
+       FnCallService:function(){
+        this.$.assesmentservice.FnFetchApprovalStatus();
+        this.$.dynamicapprovestatusspinner.toggle();
+        this.spinnermsg="Please wait...Loading";
+       },
+       FnToggleDialog:function(message){
+        this.dialogmsg=message;
+        this.$.approvalstatusdialog.toggle();
+       },
+       FnClose:function(){
+        this.$.approvalstatusdialog.toggle();
+        this.FnCallService();
+       },
+      FnSpinnerrActive:function(){
+      this.spinnermsg="Please wait...";
+      this.$.dynamicapprovestatusspinner.toggle();
       },
       FnRefresh:function(){
-          this.approvalarr="";
+        this.approvalarr="";
         document.querySelector('#approvegradenam3').selected=-1;
         document.querySelector('#approvefilter3').selected=-1;
         document.querySelector('#approvesectionnm3').selected=-1;
         document.querySelector('#approvesubjectnam3').selected=-1;
-         localStorage.setItem("curr_sess_filterid","fillterinactive");
-
+        localStorage.setItem("curr_sess_filterid","fillterinactive");
       },
       setDefaultHeaders:function()
       {
@@ -227,12 +245,8 @@
          if(filtervalue=="Filter By Section")
          {
           this.$.assesmentservice.AppruvalFnfiltervalues();
-          
-
          } 
-         document.querySelector('#approvesubjectnam3').selected=-1;
-          
-     
+         document.querySelector('#approvesubjectnam3').selected=-1;         
       },
        FnSelectSubject1:function(e){
         this.flag=1;
@@ -241,8 +255,7 @@
        //  alert('1');
       if(filtervalue=="Filter By Subject")
         {
-           this.$.assesmentservice.AppruvalFnfiltervalues();
-           
+           this.$.assesmentservice.AppruvalFnfiltervalues();           
          } 
        },
        fnsub:function(e){
@@ -268,19 +281,18 @@
               this.$.approvefiltersection.hidden=false;
               this.$.approvefiltersubject.hidden=true;
              localStorage.setItem("curr_sess_filterid","fillteractive");
-
             }
-
           if(filtervalue=="Filter By Subject"){
               this.$.apprualdialogfilterid.toggle();
               this.$.approvefiltergrade.hidden=false;
               this.$.approvefiltersection.hidden=false;
               this.$.approvefiltersubject.hidden=false;
              localStorage.setItem("curr_sess_filterid","fillteractive");
-           }
+          }
           if(filtervalue=="All"){
-              this.$.assesmentservice.FnFetchApprovalStatus();
-            }
+              // this.$.assesmentservice.FnFetchApprovalStatus();
+              this.FnCallService();
+          }
         document.querySelector('#approvegradenam3').selected=-1;
         document.querySelector('#approvesectionnm3').selected=-1;
         document.querySelector('#approvesubjectnam3').selected=-1;

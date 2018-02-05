@@ -166,6 +166,9 @@
       </template>
       </table>
        </div>
+       <center>
+     <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable1111', 'Mark Report')" value="Export to Excel" hidden$="{{hidedownload}}">
+    </center>
      <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
 
   </template>
@@ -205,7 +208,8 @@
       ready:function(){   
        this.$.heathovarallfileid.hidden=true;
        localStorage.setItem("curr_sess_template_tef","inactive"); 
-
+       this.$.healthsave.hidden=false;
+       this.hidedownload=true;
       },
       FnClick:function(){
         //alert(JSON.stringify(array));
@@ -334,13 +338,13 @@ this.$.heathovarallfileid.hidden=true;
         this.importlabel='Approve';
         this.$.heathcheckid.hidden=true;
         this.hidesavevalue=false;
-      
+        this.hidedownload=true;
       }
    else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
         this.importlabel='Submit for approval';
         this.$.heathcheckid.hidden=false;
        this.hidesavevalue=false;
-
+       this.hidedownload=true;
        }
         
     }
@@ -348,6 +352,7 @@ else if(localStorage.getItem('curr_sess_report')=='1'){
         this.$.heathcheckid.hidden=true;
         this.hidesavevalue=true;
         this.$.healthsave.hidden=true;
+        this.hidedownload=false;
        }
        
 
@@ -367,6 +372,8 @@ else if(localStorage.getItem('curr_sess_report')=='1'){
          this.$.hidetop.hidden=true;
        localStorage.setItem("curr_sess_template_tef","inactive"); 
       document.querySelector("#heathcheckid").checked=false;
+      this.$.healthsave.hidden=false;
+      this.hidedownload=true;
       },
        FnSpinnerrActive:function(flag){
         if(flag==true)

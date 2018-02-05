@@ -204,12 +204,12 @@
  //alert(document.querySelector("#templatecheckvalueid1").checked);
 
    if(document.querySelector("#templatecheckvalueid1").checked==true){
-this.$.hiddenexcelheaderfiles.hidden=false;
+       this.$.hiddenexcelheaderfiles.hidden=false;
        localStorage.setItem("curr_sess_template_tef","active"); 
 
    }
    if(document.querySelector("#templatecheckvalueid1").checked==false){
-this.$.hiddenexcelheaderfiles.hidden=true;
+       this.$.hiddenexcelheaderfiles.hidden=true;
        localStorage.setItem("curr_sess_template_tef","inactive"); 
       }
     },
@@ -265,13 +265,16 @@ this.$.hiddenexcelheaderfiles.hidden=true;
                       array1=[];
                       tempstudentarr=[];
                       setarr=[];
-                     alert("Pls import the corrcet file name");
+                     // alert("Pls import the correct file name");
                      document.getElementById("readfile").value = "";
                      }}}}}
-    
+  if(temp.length==0){
+    document.querySelector("term-assesment-card").TermMarkdialog("Please check your sheet..All the fields must be entered!!");
+  }
+  else{
   document.querySelector("term-assesment-card").FnToggleSpinner(true);
   document.querySelector("term-assesment-card").spinnermsg="Please wait...uploading"
-      
+  }
       for(var i=0;i<temp.length;i++){
     this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].value,temp[i].seq,temp.length);     
       }
@@ -331,22 +334,26 @@ this.$.hiddenexcelheaderfiles.hidden=true;
         }
         else
         {
-          alert('Please complete markentry for all the students!!');
+          // alert('Please complete markentry for all the students!!');
+          document.querySelector("term-assesment-card").TermMarkdialog("Please complete markentry for all the students!!");
+          document.querySelector("term-assesment-card").FnToggleSpinner(false);
         }
        },
        Fngetmarkentry:function(e){
-      this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
-     this.$.subjectservice.callSubjectApprovalAuditService(this.grade,this.section,this.subject,this.assesmentname);
-
+       // this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+       this.$.subjectservice.callSubjectApprovalAuditService(this.grade,this.section,this.subject,this.assesmentname);
        },
-      FnApprove:function(){
+       FnApprove:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+        document.querySelector("term-assesment-card").FnToggleSpinner(true);
+        document.querySelector("term-assesment-card").spinnermsg="Please wait...submitting"
         this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+          document.querySelector("term-assesment-card").FnToggleSpinner(true);
+          document.querySelector("term-assesment-card").spinnermsg="Please wait...";
           this.$.assesmentservice.Fnauditterm();
-         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
-
+         // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true);
         }
       }
     });

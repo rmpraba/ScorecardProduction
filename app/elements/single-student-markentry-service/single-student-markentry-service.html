@@ -224,8 +224,12 @@
          this.$.closeapprovalajax.generateRequest();
       },
       closeapprovalResponse:function(e){
-        if(e.detail.response.returnval=='succ')
-        alert("Updated Successfully!!");
+        if(e.detail.response.returnval=='succ'){
+        document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
+        document.querySelector('single-student-mark-entery-card').FnToggleDialog("Submitted Successfully!");
+        document.querySelector('single-student-mark-entery-card').fnref();
+        }
+        // alert("Updated Successfully!!");
       },
       getstudentinformation:function(){
         this.getstudentinformationurl=sessionStorage.getItem("addrinfo")+"/getstudentinformation-service";
@@ -280,8 +284,11 @@ this.fnputcoapruvalurl=sessionStorage.getItem("addrinfo")+"/fnputcoapruval-servi
          },
     fnputcoapruvalResponse:function(e){
          var res=e.detail.response.returnval;
-     // alert(JSON.stringify(res));
-        document.querySelector('student-coordinator-apruval-item-card').fnclose();
+         // alert(JSON.stringify(res));
+         if(e.detail.response.status=="completed")
+         document.querySelector('student-coordinator-apruval-item-card').FnToggleDialog(true);
+         else if(e.detail.response.status=="Reject")
+         document.querySelector('student-coordinator-apruval-item-card').FnToggleDialog(false);
       }, 
        singlestudentservice:function(studentid,studentname,subjectcategory,assesmentid,grade,section,subject,comments){
         this.singlestudentserviceurl=sessionStorage.getItem("addrinfo")+"/singlestudentservice-service";
@@ -357,7 +364,7 @@ fnoverallmarks1:function(studentid,value,gradeid,gradename,classid,sectionname,s
         subject=subjectname;  
         getstudentid=studentid;
         getcategory=category;
-  this.getstudentinfourl=sessionStorage.getItem("addrinfo")+"/fetchinfoforsubjecttemplate-service";
+       this.getstudentinfourl=sessionStorage.getItem("addrinfo")+"/fetchinfoforsubjecttemplate-service";
         var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -372,24 +379,19 @@ fnoverallmarks1:function(studentid,value,gradeid,gradename,classid,sectionname,s
          },
    getstudentinfoResponse:function(e){
     if(e.detail.response.auditarr.length>0)
-   document.querySelector('single-student-mark-entery-card').assesmentids=e.detail.response.auditarr[0].assesment_level2;
+    document.querySelector('single-student-mark-entery-card').assesmentids=e.detail.response.auditarr[0].assesment_level2;
         assesscategorycnt=e.detail.response.catarr;
         assesscategory=e.detail.response.returnval;
-       // alert(JSON.stringify(assesscategory));
- if(assesscategory.length>0){
-  if(getgradename=='Grade-1'||getgradename=='Grade-2'||getgradename=='Grade-3'||getgradename=='Grade-4'){
-        
-      this.callFetchStudentInfo(getgradename,section,subject,getstudentid);
-            }
-     else{
-     this.callFetchStudentInfo1(getgradename,section,subject,getstudentid);
-         }
-        }
-     
-      },
-
- callFetchStudentInfo1:function(getgradename,section,subject,getstudentid){
-       
+    if(assesscategory.length>0){
+    if(getgradename=='Grade-1'||getgradename=='Grade-2'||getgradename=='Grade-3'||getgradename=='Grade-4'){        
+    this.callFetchStudentInfo(getgradename,section,subject,getstudentid);
+    }
+    else{
+    this.callFetchStudentInfo1(getgradename,section,subject,getstudentid);
+    }
+    }     
+   },
+  callFetchStudentInfo1:function(getgradename,section,subject,getstudentid){     
         sgrade=getgradename;
         ssection=section;
         ssubject=subject;
@@ -482,6 +484,7 @@ fnoverallmarks1:function(studentid,value,gradeid,gradename,classid,sectionname,s
         studentarr=[];
         overall=[]; 
          document.querySelector('single-student-mark-entery-card').studarrs=overall;
+         document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
         }
      }
     else if(getcategory=="category2")
@@ -587,6 +590,7 @@ fnoverallmarks1:function(studentid,value,gradeid,gradename,classid,sectionname,s
         studentarr=[];
         overall=[]; 
         document.querySelector('single-student-mark-entery-card').studarr1=overall;
+        document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
        // document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr=overall;
     }
 }
@@ -630,6 +634,7 @@ fnoverallmarks1:function(studentid,value,gradeid,gradename,classid,sectionname,s
             overall[i].sno=i;
         }
     document.querySelector('single-student-mark-entery-card').studarrs=overall;
+    document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
     // alert(JSON.stringify(overall));
         overall=[];
    }
@@ -654,18 +659,17 @@ fnoverallmarks1:function(studentid,value,gradeid,gradename,classid,sectionname,s
             overall[i].sno=i;
         }
         document.querySelector('single-student-mark-entery-card').studarr1=overall;
-
+        document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
        // alert(JSON.stringify(overall));
         overall=[];
     }
-      },
-
-callFetchStudentInfo:function(grad,sec,sub,stuid){
+    },
+    callFetchStudentInfo:function(grad,sec,sub,stuid){
         sgrade=getgradename;
         ssection=section;
         ssubject=subject;
         sstudentid=getstudentid;
- this.fetchsubjectstudent1url=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent1-service";
+        this.fetchsubjectstudent1url=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent1-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -681,10 +685,10 @@ callFetchStudentInfo:function(grad,sec,sub,stuid){
         this.$.fetchsubjectstudent1ajax.generateRequest();        
       },   
       fetchsubjectstudent1Response:function(e){   
-          var arr=e.detail.response.returnval;
-          if(getcategory=="category2")
-       {
-       if(assesscategory.length>0){
+        var arr=e.detail.response.returnval;
+        if(getcategory=="category2")
+        {
+        if(assesscategory.length>0){
          studentarr=arr;
          var categorytitle=[];
          var title=[];
@@ -693,37 +697,37 @@ callFetchStudentInfo:function(grad,sec,sub,stuid){
          var divider=0;
          var percent=0;
          var tabwidth=0;
-        for(var i=0;i<assesscategorycnt.length;i++){
+         for(var i=0;i<assesscategorycnt.length;i++){
           var obj={};
           obj.category_id=assesscategorycnt[i].category_id;
           obj.category_name=assesscategorycnt[i].category_name;
           obj.spancnt=assesscategorycnt[i].cnt;
           temp.push(obj);
           tempcnt+=parseFloat(assesscategorycnt[i].cnt);
-        }
-        if(parseFloat(tempcnt)>=8){
+         }
+         if(parseFloat(tempcnt)>=8){
           percent=80;
           tabwidth="100%";
-        }
-        else if(parseFloat(tempcnt)>=3){
+         }
+         else if(parseFloat(tempcnt)>=3){
           percent=40;
           tabwidth="60%";
-        }
-        else{
+         }
+         else{
           percent=25;
           tabwidth="45%";
-        }
-        divider=parseFloat(percent)/(parseFloat(tempcnt));
+         }
+         divider=parseFloat(percent)/(parseFloat(tempcnt));
          categorytitle=[]
          temp=[];
-        for(var i=0;i<assesscategory.length;i++){
+         for(var i=0;i<assesscategory.length;i++){
           var obj={};
           obj.sub_category_id=assesscategory[i].sub_category_id;
           obj.sub_category_name=assesscategory[i].sub_category_name;
           obj.weight=assesscategory[i].weight;
           temp.push(obj);
-        }         
-        for(var i=0;i<temp.length;i++){
+         }         
+         for(var i=0;i<temp.length;i++){
             var cnt=1;
             var obj={};
             obj.hiddenlabel=false;
@@ -783,12 +787,12 @@ callFetchStudentInfo:function(grad,sec,sub,stuid){
         ssubject="";
         studentarr=[];
         overall=[]; 
-         document.querySelector('single-student-mark-entery-card').studarr2=overall;
-
+        document.querySelector('single-student-mark-entery-card').studarr2=overall;
+        document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
       }
    }
-else
-{
+   else
+   {
    if(assesscategory.length>0){
          studentarr=arr;
          var categorytitle=[];
@@ -826,13 +830,6 @@ else
             obj.hiddeninput=true;
             obj.studentname="Student Name";
             obj.subcategoryname=temp[i].category_name;
-            // for(var j=i+1;j<temp.length;j++){
-            //   if(temp[i].sub_category_name==temp[j].category_name){
-            //     cnt++;
-            //     temp.splice(j,1);
-            //     j--;
-            //   }
-            // }
             obj.categorycnt=temp[i].spancnt;
             obj.width=parseFloat(temp[i].spancnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
@@ -865,8 +862,7 @@ else
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
             categorytitle.push(obj);
          }
-         overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
-         
+         overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});         
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
           for(var j=0;j<assesscategory.length;j++){
@@ -908,14 +904,13 @@ else
         ssubject="";
         studentarr=[];
         overall=[]; 
-         document.querySelector('single-student-mark-entery-card').studarr=overall;
-          }
+        document.querySelector('single-student-mark-entery-card').studarr=overall;
+        document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
         }
-
+        }
        },
       fetchstudentforsubjectreportService:function(){
-
-          this.fetchstudentforsubjectreport1url=sessionStorage.getItem("addrinfo")+"/fetchstudentforscholasticsubjectreport2-service";
+        this.fetchstudentforsubjectreport1url=sessionStorage.getItem("addrinfo")+"/fetchstudentforscholasticsubjectreport2-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -931,19 +926,14 @@ else
       fetchstudentforsubjectreport1Response:function(e){
         var arr=e.detail.response.returnval;
         // alert(JSON.stringify(arr));
-     if(getcategory=='category1'){
+        if(getcategory=='category1'){
         if(arr.length>0){
         for(var i=0;i<overall.length;i++){
           for(var j=0;j<arr.length;j++){
-
-          if(overall[i].id==arr[j].student_id){
-          
-            for(var k=0;k<overall[i].category.length;k++){
-
-           
+          if(overall[i].id==arr[j].student_id){          
+            for(var k=0;k<overall[i].category.length;k++){           
             if(overall[i].category[k].subjectname==arr[j].subject_id&&overall[i].category[k].categoryname==arr[j].category&&overall[i].category[k].subcategoryname==arr[j].sub_category){
-             overall[i].category[k].score=arr[j].mark;
-            
+             overall[i].category[k].score=arr[j].mark;            
             }
             }
           }
@@ -954,11 +944,11 @@ else
           overall[i].serialno=i-1;
         }
          document.querySelector('single-student-mark-entery-card').studarr=overall;
-     //  alert(JSON.stringify(overall));
-          overall=[];
+         document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
+         //  alert(JSON.stringify(overall));
+         overall=[];
         }
-
-  if(getcategory=='category2'){
+     if(getcategory=='category2'){
      if(arr.length>0){
         for(var i=0;i<overall.length;i++){
           for(var j=0;j<arr.length;j++){
@@ -985,20 +975,20 @@ else
         }
         for(var i=1;i<overall.length;i++){
           overall[i].serialno=i;
-        }
-    
- 
-
-   document.querySelector('single-student-mark-entery-card').studarr2=overall;
+        } 
+     document.querySelector('single-student-mark-entery-card').studarr2=overall;
+     document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);
      // alert(JSON.stringify(overall));
       overall=[];
     }
-      },
-
-
- Fngetsubject:function(category,gradename,sectionname,studentid){
-      this.fngetsubjecturl=sessionStorage.getItem("addrinfo")+"/fngetsubject-service";
-     var obj={};
+    },
+    Fngetsubject:function(category,gradename,sectionname,studentid){
+          this.category=category;
+          this.gradename=gradename;
+          this.sectionname=sectionname;
+          this.studentid=studentid;
+          this.fngetsubjecturl=sessionStorage.getItem("addrinfo")+"/fngetsubject-service";
+          var obj={};
           obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
           obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
           obj.category=category;
@@ -1006,19 +996,22 @@ else
           obj.sectionname=sectionname;
           obj.studentid=studentid;
           this.fngetsubjectparam=obj;
-         this.$.fngetsubjectajax.generateRequest();
-         },
+          this.$.fngetsubjectajax.generateRequest();
+    },
    fngetsubjectResponse:function(e){
          var arr=e.detail.response.returnval;
        //  alert(JSON.stringify(res));
+    if(arr.length>0){
   for(var i=0;i<arr.length;i++){
             if(arr[i].language_pref=="Second Language"||arr[i].language_pref=="Third Language"){
                 arr[i].subject_id=arr[i].language_pref+"  "+arr[i].subject_id;
               }
           }
 
- if((sessionStorage.getItem("curr_sess_category"))=="category1")
+ if((sessionStorage.getItem("curr_sess_category"))=="category1"){
  document.querySelector('single-student-mark-entery-card').thirdarr1=arr;
+ // this.assesment1Service(this.category,this.gradename,this.sectionname,this.studentid);
+ }
 if((sessionStorage.getItem("curr_sess_category"))=="category2")
  document.querySelector('single-student-mark-entery-card').thirdarr2=arr;
 if((sessionStorage.getItem("curr_sess_category"))=="category3")
@@ -1027,7 +1020,9 @@ if((sessionStorage.getItem("curr_sess_category"))=="category4")
  document.querySelector('single-student-mark-entery-card').thirdarr4=arr;
 if((sessionStorage.getItem("curr_sess_category"))=="category5")
  document.querySelector('single-student-mark-entery-card').thirdarr5=arr;
-
+}
+else
+alert('Request not found!!');
 document.querySelector('single-student-mark-entery-card').FnRefreshcard();
 
       },
@@ -1078,7 +1073,7 @@ document.querySelector('single-student-mark-entery-card').FnRefreshcard();
         var arr=e.detail.response.returnval;
         document.querySelector('single-student-mark-entery-card').checkarr=arr;
     },
-    assesment1Service:function(category,gradename,sectionname,studentid){
+    assesment1Service:function(category,gradename,sectionname,studentid,subject){
         this.assesment1url=sessionStorage.getItem("addrinfo")+"/assesment1-service";
          var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -1088,16 +1083,17 @@ document.querySelector('single-student-mark-entery-card').FnRefreshcard();
          obj.gradename=gradename;
          obj.sectionname=sectionname;
          obj.studentid=studentid;
+         obj.subject=subject;
          this.assesment1param=obj;
-   //      alert(JSON.stringify(obj));
          this.$.assesment1ajax.generateRequest();
     },
       assesment1Response:function(e){
      var arr=e.detail.response.returnval;
      //alert(JSON.stringify(arr));
-     document.querySelector('single-student-mark-entery-card').assesmentarr=arr;
-
-     
+     if(arr!='invalid')
+     document.querySelector('single-student-mark-entery-card').assesmentarr=arr;     
+     else
+        alert('Request not found!');
       },
       FnFetchSubjectStatus:function(){
       var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};

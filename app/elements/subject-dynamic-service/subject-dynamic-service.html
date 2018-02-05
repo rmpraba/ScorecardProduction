@@ -119,29 +119,29 @@
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
             if(e.detail.response.returnval=='done'){
             // alert('Submitted for approval!!');
+            document.querySelector("term-assesment-card").FnToggleSpinner(false);
                 document.querySelector('subject-dynamic-markentrycard').disablesave=true;
-           document.querySelector('term-assesment-card').TermMarkdialog("Submitted for approval!!");
-          
+            document.querySelector('term-assesment-card').TermMarkdialog("Submitted for approval!!");          
             }
             if(e.detail.response.returnval=='exist'){
-             alert('Already submitted!!');
-             
-      document.querySelector('term-assesment-card').TermMarkdialog("'Already Approved!!'");
-
+             // alert('Already submitted!!');
+             document.querySelector("term-assesment-card").FnToggleSpinner(false);
+            document.querySelector('term-assesment-card').TermMarkdialog("'Already submitted!!'");
             }
         }
         else{
            if(e.detail.response.returnval=='done'){
-                alert('Approved!!');
-    document.querySelector('home-page').setPage('approveassesment',''); 
-        this.$.assmentservice.callApproveService();
-     document.querySelector('subject-dynamic-markentrycard').disablesave=true;
-
+                // alert('Approved!!');
+        document.querySelector("term-assesment-card").FnToggleSpinner(false);
+        document.querySelector('term-assesment-card').TermMarkdialog("Approved!!");
+        // document.querySelector('home-page').setPage('approveassesment',''); 
+        // this.$.assmentservice.callApproveService();
+        document.querySelector('subject-dynamic-markentrycard').disablesave=true;
             } 
             if(e.detail.response.returnval=='exist'){
-                alert('Already approved!!');
-            
-
+                document.querySelector("term-assesment-card").FnToggleSpinner(true);
+                // alert('Already approved!!');
+                document.querySelector('term-assesment-card').TermMarkdialog("Already approved!!");
             }
         }
       },
@@ -512,9 +512,9 @@ document.querySelector('subject-dynamic-markentrycard').fnstudentarrvalue(arr1);
             var cnt=1;
             var obj={};
             obj.studentname="StudentName";
-            obj.subcategoryname=temp[i].sub_category_name+"("+arr[i].weight+")";
+            obj.subcategoryname=(temp[i].sub_category_name).trim()+"("+arr[i].weight+")";
             for(var j=i+1;j<temp.length;j++){
-              if(temp[i].sub_category_name==temp[j].sub_category_name&&temp[i].sub_category_id==temp[j].sub_category_id){
+              if((temp[i].sub_category_name).trim()==(temp[j].sub_category_name).trim()&&(temp[i].sub_category_id).trim()==(temp[j].sub_category_id).trim()){
                 cnt++;
                 temp.splice(j,1);
                 j--;

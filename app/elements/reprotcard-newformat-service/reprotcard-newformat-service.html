@@ -625,7 +625,8 @@ undotudentverifyvalues1Response:function(e){
           if(temparr[i].MSEA1==""||temparr[i].MSEA1==null)
             temparr[i].MSEA1=0;
           temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
-          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="halfyearly"){
+          // alert(JSON.stringify(localStorage.getItem("curr_sess_termname")));
+          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="Half Yearly"){
           if(temparr[i].MPT1==""||temparr[i].MPT1==null)
             temparr[i].MPT1=0;
           if(temparr[i].MNB1==""||temparr[i].MNB1==null)
@@ -634,7 +635,7 @@ undotudentverifyvalues1Response:function(e){
             temparr[i].MSEA1=0;
           temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
           }
-          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="preannual"){
+          if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="Pre-Annual"){
           if(temparr[i].MPT1==""||temparr[i].MPT1==null)
             temparr[i].MPT1=0;
           if(temparr[i].MNB1==""||temparr[i].MNB1==null)
@@ -644,26 +645,22 @@ undotudentverifyvalues1Response:function(e){
           temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
           }
 
-          // alert(JSON.stringify(temparr));
-          // for(var i=0;i<temparr.length;i++){
             for(var j=0;j<scaleup.length;j++){
               if(localStorage.getItem("curr_sess_grade")==scaleup[j].grade_name&&temparr[i].subject==scaleup[j].subject_name){
-              // alert(localStorage.getItem("curr_sess_grade")+" "+scaleup[j].grade_name+" "+temparr[i].subject+" "+scaleup[j].subject_name);
-              // alert('in  '+temparr[i].mark1+"  "+scaleup[j].tot);
+              // alert(scaleup[j].subject_name+"  "+scaleup[j].tot);
               temparr[i].mark1=parseFloat((parseFloat(temparr[i].mark1)/parseFloat(scaleup[j].tot))*100).toFixed(2);
               // alert(temparr[i].mark1);
               }
             }
-          // }
 
           for(var n=0;n<grade.length;n++){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
-            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="halfyearly"){
+            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="Half Yearly"){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
             }
-            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="preannual"){
+            if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="Pre-Annual"){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
               temparr[i].grade1=grade[n].grade;
             }
@@ -673,9 +670,7 @@ undotudentverifyvalues1Response:function(e){
         document.querySelector('newformat-reportcard-nineten').FnSetHeaders();
         document.querySelector('newformat-reportcard-nineten').arr=temparr;
         globtemparr=temparr;
-        document.querySelector('newformat-reportcard-nineten').fnoverallvalus(globtemparr,globcoarr,globdisarr);
-
-        
+        document.querySelector('newformat-reportcard-nineten').fnoverallvalus(globtemparr,globcoarr,globdisarr);        
       },
       fetchnewformatcoscholasticsubjects1:function(id){
         this.fetchnewformatcoscholasticsubjects1url=sessionStorage.getItem("addrinfo")+"/fetchnewformatcoscholasticsubjects1-service";

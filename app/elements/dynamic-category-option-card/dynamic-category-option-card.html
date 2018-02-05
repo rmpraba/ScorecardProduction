@@ -35,19 +35,25 @@
             selectedname="";
           }
         }
+        localStorage.setItem("curr_sess_single_studetmap","inmapactive");
         if(selectedtype=="category1"){
+          localStorage.setItem("curr_sess_template_tef","inactive"); 
           document.querySelector('single-student-mark-entery-card').fnscolasticid();
         }
         if(selectedtype=="category2"){
+          localStorage.setItem("curr_sess_template_tef","coinactive"); 
           document.querySelector('single-student-mark-entery-card').fncoscolasticid();
         }
         if(selectedtype=="category3"){
+          localStorage.setItem("curr_sess_template_tef","coinactive"); 
           document.querySelector('single-student-mark-entery-card').fncocurriculamid();
         }
         if(selectedtype=="category4"){
+          localStorage.setItem("curr_sess_template_tef","coinactive"); 
           document.querySelector('single-student-mark-entery-card').fngenderid();
         }
         if(selectedtype=="category5"){
+          localStorage.setItem("curr_sess_template_tef","coinactive"); 
           document.querySelector('single-student-mark-entery-card').fntalentid();
         }
         // alert(selectedtype+" "+selectedname);

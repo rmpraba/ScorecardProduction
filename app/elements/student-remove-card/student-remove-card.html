@@ -295,19 +295,19 @@
          else{
 
             if(this.grade=="Nursery" ||this.grade=="Junior KG" || this.grade=="Senior KG" || this.grade=="Grade-1" || this.grade=="Grade-2" ||this.grade=="Grade-3" || this.grade=="Grade-4" ){
-         this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid);
-       this.$.studservice.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
-          this.$.studservice.flagupdatestud(this.studentid,this.grade);
-          this.$.studservice.fetchstudentinfo();
+         this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname,this.value);
+       // this.$.studservice.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
+       //    this.$.studservice.flagupdatestud(this.studentid,this.grade);
+       //    this.$.studservice.fetchstudentinfo();
 
           this.fnrefremve();
           this.openspinr();
          }
          else{
-          this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid);
-          this.$.studservice.deletestudtermmarks1(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
-           this.$.studservice.flagupdatestud(this.studentid,this.grade,this.value);
-          this.$.studservice.fetchstudentinfo();
+          this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname,this.value);
+          // this.$.studservice.deletestudtermmarks1(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
+          //  this.$.studservice.flagupdatestud(this.studentid,this.grade,this.value);
+          // this.$.studservice.fetchstudentinfo();
 
           this.fnrefremve();
           this.openspinr();

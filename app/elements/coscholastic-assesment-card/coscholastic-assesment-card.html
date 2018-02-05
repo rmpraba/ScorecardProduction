@@ -24,7 +24,7 @@
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
         /*margin-top: 5%;*/
-        margin-left: 5%;
+        /*margin-left: 5%;*/
         border-bottom: 1px solid #dedede; 
     }
     paper-dropdown-menu{
@@ -57,33 +57,31 @@
     </style>
     <div class='card'>
      
-     <div class='drop' hidedrop="{{hidedrop}}">
+     <div class='drop' hidden$="{{hidedrop}}">
 
-    <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu  id="gradenam2" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+    <paper-dropdown-menu id="grades" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu  id="coscholasticgrade" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
      </paper-dropdown-menu>
 
-          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu id="sectionnam2" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+          <paper-dropdown-menu id="sections" label="Select Section" disabled="{{read}}" required>
+            <paper-menu id="coscholasticsection" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
 
-          <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
-            <paper-menu id="subjectnam2" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
+          <paper-dropdown-menu id="subjects" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu id="coscholasticsubject" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
               <template is="dom-repeat" items="{{subjectarr}}">
-                <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
+                <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
               </template>
             </paper-menu>
-          </paper-dropdown-menu>   
-   
- 
+          </paper-dropdown-menu>     
      </div>
     </div>   
     <div class="spinner"><paper-dialog modal id="dynamiccospinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner><h4>{{spinnermsg}}</h4></paper-dialog></div>
@@ -115,53 +113,60 @@
         this.$.assesmentservice.callGradeService(); 
       },
       FnSelectGrade:function(e){
+        document.querySelector('#coscholasticsection').selected=-1;
+        document.querySelector('#coscholasticsubject').selected=-1;
         gradename = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.assesmentservice.callSectionService(gradename);
         if(this.flag==1)
           this.callService();
-
-        document.querySelector('#gradenam2').selected=-1;
-        document.querySelector('#sectionnam2').selected=-1;
-        document.querySelector('#subjectnam2').selected=-1;
-        
-if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
-   document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
-if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
-   document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;
-    
+        // document.querySelector('#cogradenam2').selected=-1;
+        document.querySelector('#coscholasticsection').selected=-1;
+        document.querySelector('#coscholasticsubject').selected=-1;        
+        if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
+        document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
+        if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
+        document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;    
       },
-       TermMarkdialog:function(argvalue)
-     {
+      TermMarkdialog:function(argvalue)
+      {
        this.getindialogvalu=argvalue;
         this.$.termmarkdialogid1.toggle();
-     },
-     failureclose:function()
+      },
+      failureclose:function()
       {
       this.$.termmarkdialogid1.close();
+      if(this.hidedrop==true&&this.getindialogvalu!="Mark Saved!")
+      {
+        document.querySelector('home-page').setPage('approveassesment','');
+        document.querySelector('approve-one-to-four-card').FnCallService();
+      }
       },
       FnSelectSection:function(e){
-
+        document.querySelector('#coscholasticsubject').selected=-1;
         section = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",section);
         this.$.termassesmentservice.callSubjectService(gradename,section);       
         if(this.flag==1)
           this.callService();
         if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
-   document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
-if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
-   document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;
+        document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
+        if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
+        document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;
       },
       FnSelectSubject:function(e){
         this.flag=1;
         subject = e.target.selectedItem.textContent.trim();
+        var subjectid = e.target.selectedItem.value.trim();
+        // alert(subjectid);
         localStorage.setItem("curr_sess_languagepref",'');              
-        localStorage.setItem("curr_sess_subject",subject);              
+        localStorage.setItem("curr_sess_subject",subject);  
+        localStorage.setItem("curr_sess_subjectid",subjectid);              
         this.callService();
-if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
-   document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
-if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
-   document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;
+        if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
+        document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
+        if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
+        document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;
       },
       callService:function(){
         this.FnRefresh();
@@ -246,27 +251,22 @@ if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markent
         // document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
         // document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(true);        
         // }      
-else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Performing Arts" ||subject=="Co-Curricular Activities" || subject=="Health and Physical Education"|| subject=="Discipline" || subject=="Attitudes And values"){ 
+       else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Performing Arts" ||subject=="Co-Curricular Activities" || subject=="Health and Physical Education"|| subject=="Discipline" || subject=="Attitudes And values"){ 
        // alert(3);
-
-   if(localStorage.getItem('curr_sess_report')=='0'){
+       this.FnToggleSpinner(true);
+       this.spinnermsg="Please wait...Loading";
+       if(localStorage.getItem('curr_sess_report')=='0'){
        document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr=[]; 
-      
-  document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-card');
-           this.$.subcoslosticservice.subjectsubmittedcheckService1(gradename,section,subject);
- document.querySelector('subject-dynamic-coscholastic-markentry-card').FnRefresh();
-
-          }
-          if(localStorage.getItem('curr_sess_report')=='1'){
-          
-    document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-report');
-     document.querySelector('subject-dynamic-coscholastic-markentry-report').studarr=[];
-     document.querySelector('subject-dynamic-coscholastic-markentry-report').FnRefresh();
-     this.$.subcoslosticservice.callFetchStudentInfo11(gradename,section,subject);
-          } 
-       
-           
-     
+       document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-card');
+       this.$.subcoslosticservice.subjectsubmittedcheckService1(gradename,section,subject);
+       document.querySelector('subject-dynamic-coscholastic-markentry-card').FnRefresh();
+       }
+       if(localStorage.getItem('curr_sess_report')=='1'){          
+       document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-report');
+       document.querySelector('subject-dynamic-coscholastic-markentry-report').studarr=[];
+       document.querySelector('subject-dynamic-coscholastic-markentry-report').FnRefresh();
+       this.$.subcoslosticservice.callFetchStudentInfo11(gradename,section,subject);
+       }     
        /* if(gradename=="Grade-9"||gradename=="Grade-10"){
         document.querySelector('cs-life-skill-card').studarr=[]; 
         document.querySelector('cs-life-skill-card').setDefaultHeaders();  
@@ -371,11 +371,11 @@ else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Pe
         }*/
       },
       FnRefreshcard:function(){
-        document.querySelector('#gradenam2').selected=-1;
-        document.querySelector('#sectionnam2').selected=-1;
-        document.querySelector('#subjectnam2').selected=-1;
-        var subject=localStorage.getItem("curr_sess_subject");
-        var gradename=localStorage.getItem("curr_sess_grade");
+        document.querySelector('#coscholasticgrade').selected=-1;
+        document.querySelector('#coscholasticsection').selected=-1;
+        document.querySelector('#coscholasticsubject').selected=-1;
+        // var subject=localStorage.getItem("curr_sess_subject");
+        // var gradename=localStorage.getItem("curr_sess_grade");
         this.flag=0;
         this.FnRefresh();
       },
