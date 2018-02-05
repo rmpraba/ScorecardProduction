@@ -14,11 +14,11 @@ var connection = mysql.createConnection({
   // reconnect:true,
   // data_source_provider:"rds",
   // type:"mysql"
-  
+   
   host     : 'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  password : '',
+  database : 'scorecardtemp'
  });
 
 var bodyParser = require('body-parser'); 

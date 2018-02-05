@@ -48,12 +48,18 @@
     h4{  
       color: #061E98;
     }
+<<<<<<< HEAD
     paper-checkbox{
       --paper-checkbox-label-color: #061E98;
        --paper-checkbox-size: 15px;
     }
     .searchcheckbox{
       text-align: right;
+=======
+     #termmarkdialogid1111{
+        width: 20%;
+      border-radius: 25px;
+>>>>>>> 6922d292aa94508f5d4ad7c601fdd7baf5a06428
     }
     </style>
     <div class="searchcheckbox" hidden$="{{hidegetfistsirchid}}">
@@ -132,7 +138,12 @@
 
 
     </div>
-    
+    <paper-dialog id="termmarkdialogid1111" modal>
+       <h3 style="color:green"><center>{{getindialogvalu}}</center></h3>
+       <center>
+      <paper-button on-click="failureclose" style="color:white;background-color:black;margin-top: 15%;">OK</paper-button>
+       </center>
+ </paper-dialog>
     <scorecard-service id="scorecardservice"></scorecard-service>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
      <div class="spinner"><paper-dialog modal id="dynamicspinneree" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
@@ -166,7 +177,21 @@
         this.hidecard=true;
          this.$.Filterstudentview.hidden=false;
            this.$.searchstudentid.hidden=true;         
+<<<<<<< HEAD
       },
+=======
+       },
+        TermMarkdialog:function(argvalue)
+      {
+        
+        this.getindialogvalu=argvalue;
+       this.$.termmarkdialogid1111.toggle();
+      },
+     failureclose:function()
+      {
+      this.$.termmarkdialogid1111.close();
+      },   
+>>>>>>> 6922d292aa94508f5d4ad7c601fdd7baf5a06428
       fnchange:function(e){
       if(this.$.SingleStudentInfoid.checked==true){
       this.$.Filterstudentview.hidden=true;
@@ -282,6 +307,7 @@
       },
       FnRefresh:function()
       {
+<<<<<<< HEAD
       this.querySelector('#seachinfostuid').style.visibility='hidden';
       document.querySelector('#scorecardsearchacademicyear').selected=-1;
       document.querySelector('#scorecardsearchrterm').selected=-1;
@@ -289,6 +315,15 @@
       document.querySelector('#scorecardterm').selected=-1;
       document.querySelector('#scorecardgrade').selected=-1;
       document.querySelector('#scorecardsection').selected=-1;
+=======
+
+      document.querySelector('#searchacademicyear').selected=-1;
+      document.querySelector('#searchrtermid').selected=-1;
+      document.querySelector('#scoreacademicyearid').selected=-1;
+      document.querySelector('#scorertermid').selected=-1;
+      document.querySelector('#scorergradeid').selected=-1;
+      document.querySelector('#scorersectionid').selected=-1;
+>>>>>>> 6922d292aa94508f5d4ad7c601fdd7baf5a06428
          this.$.Filterstudentview.hidden=false;
         this.$.searchstudentid.hidden=true;     
       this.hidecard=true;

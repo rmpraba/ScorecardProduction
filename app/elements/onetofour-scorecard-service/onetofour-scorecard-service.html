@@ -1075,10 +1075,11 @@
         this.mailreportcard1param=obj;
        //alert(JSON.stringify(obj));      
         this.$.mailreportcard1ajax.generateRequest();
-      },
+      },  
       mailreportcard1Response:function(e){
-        alert(e.detail.response.returnval);
-         if(e.detail.response.returnval=='converted'){
+       
+     if(e.detail.response.returnval=='converted'){
+        document.querySelector('cce-generate-score-card').TermMarkdialog("PDF converted and Saved");
          
         document.querySelector('scorecard-service').callFetchstudentnameService();
          }
