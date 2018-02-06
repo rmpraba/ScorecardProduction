@@ -63,6 +63,26 @@
         on-response="fetchnewformatcoscholasticsubjects1Response"
         debounce-duration="300"
     >
+     <iron-ajax
+        method="post"
+        id="fetchnewformatscholasticsubjectsajax2"
+        url="{{fetchnewformatscholasticsubjectsurl2}}"
+        params="{{fetchnewformatscholasticsubjectsparam2}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchnewformatscholasticsubjectsResponse2"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchnewformatcoscholasticsubjects2ajax"
+        url="{{fetchnewformatcoscholasticsubjects2url}}"
+        params="{{fetchnewformatcoscholasticsubjects2param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchnewformatcoscholasticsubjects2Response"
+        debounce-duration="300"
+    >
     <iron-ajax
         method="post"
         id="fetchnewformatcoscholasticsubjectsajax"
@@ -230,12 +250,12 @@ undotudentverifyvaluess:function(id,name){
         obj.studentname=name;
         obj.termname=localStorage.getItem("curr_sess_termname");
         this.undotudentverifyvalues1param= obj;
-        alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
         this.$.undotudentverifyvalues1ajax.generateRequest();
       },
 undotudentverifyvalues1Response:function(e){
      var arr=e.detail.response.returnval;
-   alert(JSON.stringify(arr));
+   // alert(JSON.stringify(arr));
  if(arr=="Deleted!")
   document.querySelector('scorecard-service').callFetchstudentnameService();
     },
@@ -276,7 +296,7 @@ undotudentverifyvalues1Response:function(e){
         obj.grade=localStorage.getItem("curr_sess_grade");
         obj.termname=localStorage.getItem("curr_sess_termname");
         this.ntotenoverallvalusparam=obj;
-        alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
         this.$.ntotenoverallvalusajax.generateRequest();
       },
       ntotenoverallvalusResponse:function(e){
@@ -391,6 +411,7 @@ undotudentverifyvalues1Response:function(e){
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.studentid=id;
+        obj.grade=localStorage.getItem("curr_sess_grade");
         this.fetchnewformatscholasticsubjectsparam= obj;
         this.$.fetchnewformatscholasticsubjectsajax.generateRequest();
       },
@@ -521,6 +542,7 @@ undotudentverifyvalues1Response:function(e){
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.studentid=id;
+        obj.grade=localStorage.getItem("curr_sess_grade");
         this.fetchnewformatscholasticsubjectsparam1= obj;
         this.$.fetchnewformatscholasticsubjectsajax1.generateRequest();
       },
@@ -584,7 +606,7 @@ undotudentverifyvalues1Response:function(e){
               temparr[j].SEA1=assesment[i].score;
             }
           }
-          if((assesment[i].term_name).toLowerCase()=="halfyearly"){
+          if((assesment[i].term_name).toLowerCase()=="half yearly"){
             if((assesment[i].assesment_id).trim()=="Periodic Test2"){
               temparr[j].MPT1=assesment[i].total;
               temparr[j].PT1=assesment[i].score;
@@ -598,7 +620,7 @@ undotudentverifyvalues1Response:function(e){
               temparr[j].SEA1=assesment[i].score;
             }
           }
-          if((assesment[i].term_name).toLowerCase()=="preannual"){
+          if((assesment[i].term_name).toLowerCase()=="pre-annual"){
             if((assesment[i].assesment_id).trim()=="Periodic Test3"){
               temparr[j].MPT1=assesment[i].total;
               temparr[j].PT1=assesment[i].score;
@@ -760,7 +782,155 @@ undotudentverifyvalues1Response:function(e){
           document.querySelector('newformat-reportcard-nineten').secemail=res[0].alternate_mail; 
    document.querySelector('reprotcard-newformat-threetoeight').parentemail=res[0].email;
     document.querySelector('reprotcard-newformat-threetoeight').secemail=res[0].alternate_mail;
-      }
+      },
+      fetchnewformatscholasticsubjects2:function(id){
+        this.fetchnewformatscholasticsubjectsurl2=sessionStorage.getItem("addrinfo")+"/fetchnewformatscholasticsubjects-service2";
+        var obj={"schoolid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.studentid=id;
+        this.fetchnewformatscholasticsubjectsparam2= obj;
+        this.$.fetchnewformatscholasticsubjectsajax2.generateRequest();
+      },
+      fetchnewformatscholasticsubjectsResponse2:function(e){
+        var assesment=e.detail.response.assesment;
+        var master=e.detail.response.master;
+        var subject=e.detail.response.subject;
+        var grade=e.detail.response.grade;
+        var scaleup=e.detail.response.scaleup;
+        // alert(JSON.stringify('start'));
+        // alert(JSON.stringify(assesment));
+        // alert(JSON.stringify(master));
+        // alert(JSON.stringify(subject));
+        // alert(JSON.stringify(grade));
+        // alert(JSON.stringify(scaleup));
+        // alert(JSON.stringify('end'));
+        for(var i=0;i<assesment.length;i++){
+          for(var j=0;j<master.length;j++){
+            // alert(assesment[i].term_name+" "+master[j].term_name+" "+assesment[i].assesment_id+" "+master[j].assesment_type+" "+assesment[i].grade+" "+master[j].grade_name+" "+assesment[i].subject_id+" "+master[j].subject_name);
+            // assesment[i].term_name).toLowerCase()==(master[j].term_name).toLowerCase()&&
+            if(assesment[i].assesment_id==master[j].assesment_type&&assesment[i].grade==master[j].grade_name&&assesment[i].subject_id==master[j].subject_name){
+              // alert('in');
+              if((master[j].scale_type)=="/")
+               assesment[i].score=parseFloat(parseFloat(assesment[i].total)/parseFloat(master[j].scalar)).toFixed(2);
+              if((master[j].scale_type)=="*")
+               assesment[i].score=parseFloat(parseFloat(assesment[i].total)*parseFloat(master[j].scalar)).toFixed(2);
+              if((master[j].scale_type)=="/*")
+               assesment[i].score=parseFloat((parseFloat(assesment[i].total)/parseFloat(assesment[i].actual_scale))*parseFloat(master[j].scalar)).toFixed(2);
+            }
+          }
+        }
+
+        // alert(JSON.stringify(assesment));
+        var temparr=[];
+        for(var i=0;i<subject.length;i++){
+          var obj={};
+          obj.subject=subject[i].subject_id;
+          obj.PT1='';
+          obj.NB1='';
+          obj.SEA1='';
+          obj.mark1='';
+          obj.grade1='';
+          obj.PT2='';
+          obj.NB2='';
+          obj.SEA2='';
+          obj.mark2='';
+          obj.grade2='';
+          obj.PT3='';
+          obj.NB3='';
+          obj.SEA3='';
+          obj.mark3='';
+          obj.grade3='';
+          temparr.push(obj);
+        }
+        for(var i=0;i<assesment.length;i++){
+          for(var j=0;j<temparr.length;j++){
+          if(assesment[i].subject_id==temparr[j].subject){
+          
+            if((assesment[i].assesment_id).trim()=="Periodic Test"){
+              temparr[j].MPT1=assesment[i].total;
+              temparr[j].PT1=assesment[i].score;
+            }
+            if((assesment[i].assesment_id).trim()=="Note Book"){
+              temparr[j].MNB1=assesment[i].total;
+              temparr[j].NB1=assesment[i].score;
+            }
+            if((assesment[i].assesment_id).trim()=="SEA"){
+              temparr[j].MSEA1=assesment[i].total;
+              temparr[j].SEA1=assesment[i].score;
+            }
+          
+          }
+          }
+          // alert(JSON.stringify(temparr));
+        }
+        // alert(JSON.stringify(temparr));
+        for(var i=0;i<temparr.length;i++){
+          if(temparr[i].MPT1==""||temparr[i].MPT1==null)
+            temparr[i].MPT1=0;
+          if(temparr[i].MNB1==""||temparr[i].MNB1==null)
+            temparr[i].MNB1=0;
+          if(temparr[i].MSEA1==""||temparr[i].MSEA1==null)
+            temparr[i].MSEA1=0;
+          temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
+
+            for(var j=0;j<scaleup.length;j++){
+              if(localStorage.getItem("curr_sess_grade")==scaleup[j].grade_name&&temparr[i].subject==scaleup[j].subject_name){
+              // alert(scaleup[j].subject_name+"  "+scaleup[j].tot);
+              temparr[i].mark1=parseFloat((parseFloat(temparr[i].mark1)/parseFloat(scaleup[j].tot))*100).toFixed(2);
+              // alert(temparr[i].mark1);
+              }
+            }
+
+          for(var n=0;n<grade.length;n++){
+            if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
+              temparr[i].grade1=grade[n].grade;
+          }
+        }
+        // alert(JSON.stringify(temparr));
+        document.querySelector('newformat-reportcard-nineten').FnSetHeaders();
+        document.querySelector('newformat-reportcard-nineten').arr=temparr;
+        globtemparr=temparr;
+        document.querySelector('newformat-reportcard-nineten').fnoverallvalus(globtemparr,globcoarr,globdisarr);        
+      },
+      fetchnewformatcoscholasticsubjects2:function(id){
+        this.fetchnewformatcoscholasticsubjects2url=sessionStorage.getItem("addrinfo")+"/fetchnewformatcoscholasticsubjects2-service";
+        var obj={"schoolid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.studentid=id;
+        this.fetchnewformatcoscholasticsubjects2param= obj;
+        this.$.fetchnewformatcoscholasticsubjects2ajax.generateRequest();
+      },
+      fetchnewformatcoscholasticsubjects2Response:function(e){
+        var coarr=e.detail.response.coarr;
+        var gradearr=e.detail.response.gradearr;
+        // alert(JSON.stringify(coarr));
+        // alert(JSON.stringify(gradearr));
+        for(var i=0;i<coarr.length;i++){
+          for(var j=0;j<gradearr.length;j++){
+            if(parseFloat(coarr[i].total)>=parseFloat(gradearr[j].lower_limit)&&parseFloat(coarr[i].total)<=parseFloat(gradearr[j].higher_limit))
+              coarr[i].grade=gradearr[j].grade;
+          }
+        }
+        // var temp=[];
+        var obj={};
+        for(var i=0;i<coarr.length;i++){
+          if(coarr[i].subject_id=="Discipline"){
+            obj=coarr.splice(i,1);
+            // alert(JSON.stringify(obj));
+            // temp.push(obj);
+          }
+        }
+        // alert(JSON.stringify(temp));
+        document.querySelector('newformat-reportcard-nineten').coarr=coarr;
+        document.querySelector('newformat-reportcard-nineten').disarr=obj;
+        globcoarr=coarr;
+        globdisarr=obj;
+
+    }
     });
   })();
   </script>
