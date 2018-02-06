@@ -1455,9 +1455,6 @@ app.post('/grade1-service',  urlencodedParser,function (req, res)
   });
 });
 
-
-
-
 app.post('/searchstudentinfo-service',  urlencodedParser,function (req, res)
 {
   var schoolid={school_id:req.query.schoolid};
@@ -8690,8 +8687,8 @@ app.post('/fetchapprovalstatus-service' ,  urlencodedParser,function (req, res)
 { 
 //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
 var qur="select * from mp_grade_subject s join md_grade_assesment_mapping g on(s.grade_id=g.grade_id) join md_subject sub on(sub.subject_id=s.subject_id) where s.school_id='"+req.query.schoolid+"' and "+
-  " g.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"' and g.academic_year='"+req.query.academicyear+"' and "+
-  " g.term_id='"+req.query.termname+"' and s.grade_id in(select grade_id from mp_teacher_grade where "+ 
+"g.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"' and g.academic_year='"+req.query.academicyear+"' and "+
+"g.term_id='"+req.query.termname+"' and s.grade_id in(select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"') and s.subject_id not in('s14') order by g.grade_name,g.assesment_name,sub.subject_name";
 
 var checkqur="select grade_id from mp_teacher_grade where "+ 
@@ -8699,11 +8696,11 @@ var checkqur="select grade_id from mp_teacher_grade where "+
 
 var qur1="select *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks where flag in('0','1') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
-"id='"+req.query.loggedid+"' and role_id='co-ordinator' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'))";
+"id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'))";
 
 var qur2="select *,(select subject_category from md_subject where subject_name=subject) as category,(select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_fa_assesment_import_marks where flag in('0','1') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
-"id='"+req.query.loggedid+"' and role_id='co-ordinator' and academic_year='"+req.query.academicyear+"'))";
+"id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and academic_year='"+req.query.academicyear+"'))";
 
 console.log('.......................subject approval fetch.....................');
 console.log(checkqur);

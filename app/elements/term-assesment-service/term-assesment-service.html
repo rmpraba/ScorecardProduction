@@ -2697,8 +2697,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           alert("Submitted!");
 
     }
-      }      
-      
+    }     
     },
     FnFetchApprovalStatus:function(){
       var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};
@@ -2716,16 +2715,24 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       // alert(JSON.stringify(e.detail.response.overall));
       var arr=e.detail.response.returnval;
       var overall=e.detail.response.overall;
-      
+      // alert(JSON.stringify(arr));
       // alert(JSON.stringify(overall));
       for(var i=0;i<overall.length;i++){
         overall[i].color="background-color:#E8ECE9";
         overall[i].flag="Yet to submit";
         overall[i].hideflag=true;
-        if(overall[i].subject_category!='category1'&&overall[i].assesment_id!='assesment3')
+        // if(overall[i].subject_category!='category1')
+            // alert(overall[i].subject_name+"---"+overall[i].assesment_name);
+        if(overall[i].grade_name=="Grade-1"||overall[i].grade_name=="Grade-2"||overall[i].grade_name=="Grade-3"||overall[i].grade_name=="Grade-4"){
+        if(overall[i].subject_category!='category1'&&(overall[i].assesment_id!='assesment3'))
         {
         overall.splice(i,1);
         i--;
+        }
+        }
+        else{
+        if(overall[i].subject_id=='s9'||overall[i].subject_id=='s10'||overall[i].subject_id=='s13'|overall[i].subject_id=='s36')
+            overall[i].assesment_name='';
         }
       }
       // alert(JSON.stringify(overall));
@@ -2741,17 +2748,20 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       }
       var final=[];
       for(var i=0;i<overall.length;i++){
-        for(var j=0;j<arr.length;j++){           
-            if((overall[i].school_id).toUpperCase()==arr[j].school_id&&overall[i].academic_year==arr[j].academic_year&&overall[i].term_name==arr[j].term_name&&overall[i].assesment_name==arr[j].assesment_id&&overall[i].grade_name==arr[j].grade&&overall[i].subject_name==arr[j].subject){
+        for(var j=0;j<arr.length;j++){  
+        // alert(overall[i].term_name+"  "+arr[j].term_name+"  "+(overall[i].assesment_name).trim()+"  "+(arr[j].assesment_id).trim()+"  "+overall[i].grade_name+"  "+arr[j].grade+"  "+overall[i].subject_name+"  "+arr[j].subject);         
+        // if(overall[i].subject_name=="Work Education")
+            // alert(overall[i].assesment_name+"  "+(arr[j].assesment_id));
+            if((overall[i].school_id).toUpperCase()==arr[j].school_id&&overall[i].academic_year==arr[j].academic_year&&overall[i].term_name==arr[j].term_name&&(overall[i].assesment_name).trim()==(arr[j].assesment_id).trim()&&overall[i].grade_name==arr[j].grade&&overall[i].subject_name==arr[j].subject){
+                // alert(overall[i].assesment_name+"  "+overall[i].subject_name);
                 overall[i].flag=arr[j].flag;
                 overall[i].hideflag=false;
                 overall[i].color=arr[j].color;
             }
             overall[i].section_name=arr[j].section;
         }
-      } 
-
-      var obj={"academic_year":"Academicyear","term_name":"Term","assesment_name":"Assesment","grade_name":"Grade","section_name":"Section","subject_name":"Subject","flag":"Status","hideflag":true,"font":"font-weight: bold;"};
+      }
+      var obj={"academic_year":"Academicyear","term_name":"Term","assesment_name":"Assesment","grade_name":"Grade","section_name":"Section","subject_name":"Subject","flag":"Status","hideflag":true,"font":"font-weight: bold;","color":"background-color:#f5f5f5"};
       var overallfinal=[];
       overallfinal.push(obj);
       for(var i=0;i<overall.length;i++){

@@ -1376,25 +1376,24 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
            // document.querySelector('attendance-card').setDefaultHeaders();
             // alert(localStorage.getItem('curr_sess_report'));
             
- if(localStorage.getItem('curr_sess_report')=='2') { 
- if(localStorage.getItem("curr_sess_page")=='single-student-mark-entery-card')
- document.querySelector('single-student-mark-entery-card').studarrss=attendancearr;
-
+       if(localStorage.getItem('curr_sess_report')=='2') { 
+       if(localStorage.getItem("curr_sess_page")=='single-student-mark-entery-card')
+          document.querySelector('single-student-mark-entery-card').studarrss=attendancearr;
           document.querySelector('home-page').setPage('coscholasticassesment',''); 
+          document.querySelector('coscholastic-assesment').hidedrop=true;
           document.querySelector('coscholastic-assesment').hiddenpage();
           document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
           document.querySelector('attendance-card').setDefaultHeaders();
           document.querySelector('attendance-card').studarr=attendancearr;
           document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);  
-            } 
-            else{ 
-
-if(localStorage.getItem("curr_sess_page")=='single-student-mark-entery-card')
-    document.querySelector('single-student-mark-entery-card').studarrss=attendancearr;
-    document.querySelector('attendance-card').studarr=attendancearr;
-    document.querySelector('attendance-card').FnSpinnerrActive(false);
-            }
-            attendancearr=[];
+       } 
+       else{ 
+        if(localStorage.getItem("curr_sess_page")=='single-student-mark-entery-card')
+        document.querySelector('single-student-mark-entery-card').studarrss=attendancearr;
+        document.querySelector('attendance-card').studarr=attendancearr;
+        document.querySelector('attendance-card').FnSpinnerrActive(false);
+        }
+        attendancearr=[];
       },
 
        callFetchStudentInfoforphysical:function(){
