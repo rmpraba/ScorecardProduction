@@ -16,8 +16,8 @@ var connection = mysql.createConnection({
   // type:"mysql"   
   host     : 'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  password : '',
+  database : 'scorecardtemp'
  });
 
 var bodyParser = require('body-parser'); 

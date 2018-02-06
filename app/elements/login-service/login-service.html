@@ -3,7 +3,7 @@
 <link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
 <dom-module id="login-service">
   <template>
-   <iron-ajax
+   <iron-ajax 
         auto
         id="addressajax"
         url="../../configfile/address.json"
@@ -178,7 +178,9 @@
       var rolearr=e.detail.response.returnval;
   
       if(rolearr=="invalid"){
-      alert("Please Enter Valid UserName and Password");
+    //  alert("Please Enter Valid UserName and Password");
+      document.querySelector('login-card').fnpswdialog("Please Enter Valid UserName and Password");
+     
       }
       else{
       document.querySelector('login-card').rolearr=rolearr;
