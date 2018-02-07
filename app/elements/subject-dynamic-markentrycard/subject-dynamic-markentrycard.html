@@ -270,7 +270,7 @@
                      // temp=[];
                       array=[];
                       array1=[];
-                      tempstudentarr=[];
+                  //    tempstudentarr=[];
                       setarr=[];
                      // alert("Pls import the corrcet file name");
                      document.getElementById("readfile1").value = "";
@@ -281,7 +281,6 @@
       else{
       document.querySelector("term-assesment-card").FnToggleSpinner(true);
       document.querySelector("term-assesment-card").spinnermsg="Please wait...uploading"
-      }               
       for(var i=0;i<temp.length;i++){
          this.$.assesmentservice.callinsertfaassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].categoryname,temp[i].value,1,temp.length);     
       }
@@ -292,6 +291,9 @@
             tempstudentarr=[];
             document.getElementById("readfile1").value ="";
            this.categorylength="";
+
+         }               
+     
        }
       },
       FnSetLabel:function(){

@@ -237,7 +237,7 @@
                      // temp=[];
                       array=[];
                       array1=[];
-                      tempstudentarr=[];
+                 //     tempstudentarr=[];
                       setarr=[];
                      // alert("Pls import the corrcet file name");
                      document.getElementById("readfiles").value = "";
@@ -248,10 +248,7 @@
       else{
       document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
       document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...uploading';
-      }
-
-     //  alert(JSON.stringify(temp));
-    
+     
       for(var i=0;i<temp.length;i++){
     
 if(Number.isInteger(parseFloat(temp[i].weight)))
@@ -289,7 +286,7 @@ var a = (temp[i].weight).split(",");
           temp[i].values=temp[i].value;
         } 
  // alert(JSON.stringify(temp[i]));
-}
+   }
 
   this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length);     
       }
@@ -301,7 +298,14 @@ var a = (temp[i].weight).split(",");
             tempstudentarr=[];
           document.getElementById("readfiles").value ="";
            this.categorylength="";
-       }
+
+
+
+
+      }
+
+     //  alert(JSON.stringify(temp));
+           }
       }, 
       excelmark:function(e){
 if(document.querySelector("#coscolasticcheckid").checked==true){

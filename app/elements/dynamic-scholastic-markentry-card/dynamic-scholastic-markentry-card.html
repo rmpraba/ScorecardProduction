@@ -89,10 +89,10 @@
       <!-- </div> -->
         <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
         <paper-tooltip for="upload">Upload</paper-tooltip>
-        <!-- <paper-button style="color: white;height: 25px;  background: #252626; font-family:Calibri;"  on-click="FnClick">Upload File</paper-button>     -->
+        
        </div>
        </div>
-       </div>
+     </div>
     <div hidden$="{{hideheader}}">
     <center>
       <h1>{{schoolname}}</h1>
@@ -190,15 +190,21 @@
        
       },
       fngenrategrade:function(arr){
-        tempassesmetarr=arr;
-  //   alert(JSON.stringify(tempassesmetarr));
-
-       },
+         tempassesmetarr=arr;
+      /* if(tempassesmetarr.length==0){
+         for(var i=0;i<arr.length;i++){
+          tempassesmetarr.push(arr[i]);
+         }
+       }*/
+    },
  fnstudentarrvalue:function(arr){
-      tempstudentarr=arr;
-   // alert(JSON.stringify(tempstudentarr));
-
-      },
+  tempstudentarr=arr;
+   /* if(tempstudentarr.length==0){
+    for(var i=0;arr.length;i++){
+      tempstudentarr.push(arr[i]);
+      }
+     } */
+   },
       excelmark:function(e){
 //alert("1");
  //alert(document.querySelector("#templatecheckvalueid1").checked);
@@ -214,7 +220,7 @@
       }
     },
        FnClick:function(){
-      //  alert(JSON.stringify(array));
+   //    alert(JSON.stringify(tempstudentarr));
         var temp=[];
    if(array.length==0){
         alert("Pls save the file in EXCEL WORKBOOK extension!");
@@ -263,7 +269,7 @@
                      // temp=[];
                       array=[];
                       array1=[];
-                      tempstudentarr=[];
+                   // tempstudentarr=[];
                       setarr=[];
                      // alert("Pls import the correct file name");
                      document.getElementById("readfile").value = "";
@@ -274,18 +280,20 @@
   else{
   document.querySelector("term-assesment-card").FnToggleSpinner(true);
   document.querySelector("term-assesment-card").spinnermsg="Please wait...uploading"
-  }
+ 
       for(var i=0;i<temp.length;i++){
     this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].value,temp[i].seq,temp.length);     
       }
-        
+       // alert("1");
             temp=[];
             array=[];
             array1=[];
             tempstudentarr=[];
+            tempassesmetarr=[];
             document.getElementById("readfile").value ="";
            this.categorylength="";
-       }
+        }
+        }
       },
       FnSetLabel:function(){
       if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){

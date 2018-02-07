@@ -69,7 +69,7 @@
                <paper-item  style="text-align: center;"  value="Cheque" id="schoolname">{{schname}}</paper-item>
             </div>
             <div class="field">
-                <paper-input label="Username" id="username" value="{{uname}}" required auto-validate error-message="needs username!"></paper-input>
+              <paper-input label="Username" id="username" value="{{uname}}" required auto-validate error-message="needs username!"></paper-input>
             </div>
            
             <div class="field">
@@ -77,13 +77,13 @@
             </div>
             <div class="field">
              <paper-dropdown-menu id="grade" label="Select Role" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="emploginroleid"  on-iron-select="FnSelectRole"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{rolearr}}">
+               <paper-menu class="dropdown-content" id="emploginroleid"  on-iron-select="FnSelectRole"  attr-for-selected="value" required>     
+               <template is="dom-repeat" items="{{rolearr}}">
                 <paper-item value="{{item.id}}">{{item.role_name}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-          </div>
+               </template>
+              </paper-menu>
+            </paper-dropdown-menu>
+           </div>
             <div class="button">
                 <paper-button raised  class="in" on-click="Fnlogin">Sign in</paper-button><br>
                 <u><ahref on-click="FnForgotPassword" class="link">Forgot Password?</ahref></u>

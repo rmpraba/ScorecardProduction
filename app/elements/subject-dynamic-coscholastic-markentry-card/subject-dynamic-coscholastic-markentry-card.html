@@ -248,7 +248,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
                    // temp=[];
                       array=[];
                       array1=[];
-                      tempstudentarr=[];
+                     // tempstudentarr=[];
                       setarr=[];
                      // alert("Pls import the corrcet file name");
                      document.getElementById("coreadfiles").value = "";
@@ -259,9 +259,8 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
       else{
       document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
       document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...uploading';
-      }             
-  
-    //alert(JSON.stringify(temp));
+ 
+//alert(JSON.stringify(temp));
     
       for(var i=0;i<temp.length;i++){
        var a = ("A,B,C,D").split(","); 
@@ -318,15 +317,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
       for(var i=0;i<finalarr.length;i++){
         finalarr[i].t=i+1;
       }
-   // alert('final start');
-   // alert(JSON.stringify(temp));
-   // alert(JSON.stringify(finalarr)); 
-   // localStorage.setItem("curr_sess_lenth",finalarr.length);
- //  alert(localStorage.getItem("curr_sess_lenth"));
-   // for(var i=0;i<finalarr.length;i++){
-   //  var t=i+1;
-   //   this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(finalarr[i].studid,finalarr[i].studname,finalarr[i].category,finalarr[i].subcategory,finalarr[i].avg,t);
-   //       }
+  
    this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(temp,finalarr);
          document.getElementById("coreadfiles").value ="";
             temp=[];
@@ -337,8 +328,9 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
          document.getElementById("coreadfiles").value ="";
            this.categorylength="";
         document.querySelector('#coscolasticcheckid1').checked=false;
-       }
-      }, 
+      }             
+     }
+    }, 
   fngenrategrade:function(arr){
           tempassesmetarr=arr;
     },

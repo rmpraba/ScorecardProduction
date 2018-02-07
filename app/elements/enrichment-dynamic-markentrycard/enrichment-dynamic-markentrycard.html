@@ -292,21 +292,26 @@
                       temp=[];
                       array=[];
                       array1=[];
-                      tempstudentarr=[];
-                     alert("Pls import the corrcet file name");
+                   //   tempstudentarr=[];
+                  //  alert("Pls import the corrcet file name");
                      document.getElementById("enrichreadfile").value = "";
-                     }}}}}
-           document.querySelector("beginner-assesment-card").FnToggleSpinner(true);
-           document.querySelector("beginner-assesment-card").spinnermsg="Please wait...Loading";
+                  }}}}}
+
+  if(temp.length==0){
+  alert("Pls import the corrcet file name");
+}
+else{
+ document.querySelector("beginner-assesment-card").FnToggleSpinner(true);
+          document.querySelector("beginner-assesment-card").spinnermsg="Please wait...Loading";
            this.$.beginnerservice.callbamarkinsertService(temp);
            temp=[];
            array=[];
            array1=[];
             tempstudentarr=[];
-
-           document.getElementById("enrichreadfile").value = "";
+        document.getElementById("enrichreadfile").value = "";
          this.categorylength="";
        }
+     }
       },
       FnSetGrade:function(arr,detail){
         gradearr=arr;
