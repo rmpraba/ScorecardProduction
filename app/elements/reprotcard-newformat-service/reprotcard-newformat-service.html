@@ -374,7 +374,12 @@ undotudentverifyvalues1Response:function(e){
         var obj={"schoolid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear="AY-"+localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear1=localStorage.getItem("curr_sess_academicyear");
         obj.studentid=id;
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+
         this.fetchstudinfofornewformatparam= obj;
         this.$.fetchstudinfofornewformatajax.generateRequest();
       },
@@ -393,6 +398,7 @@ undotudentverifyvalues1Response:function(e){
       },
       fetchstudinfofornewformatResponse:function(e){
         var arr=e.detail.response.returnval;
+        var arr1=e.detail.response.emparr;
         // alert(JSON.stringify(arr));
         document.querySelector('reprotcard-newformat-threetoeight').studentid=arr[0].admission_no;
         document.querySelector('reprotcard-newformat-threetoeight').studentname=arr[0].student_name;
@@ -403,6 +409,9 @@ undotudentverifyvalues1Response:function(e){
         document.querySelector('newformat-reportcard-nineten').studentname=arr[0].student_name;
         document.querySelector('newformat-reportcard-nineten').fathername=arr[0].father_name;
         document.querySelector('newformat-reportcard-nineten').dob=arr[0].dob;
+        document.querySelector('reprotcard-newformat-threetoeight').empsign=arr1[0].id+arr1[0].school_id+".jpg";
+        document.querySelector('newformat-reportcard-nineten').empsign=arr1[0].id+arr1[0].school_id+".jpg";
+
       },
       fetchnewformatscholasticsubjects:function(id){
         this.fetchnewformatscholasticsubjectsurl=sessionStorage.getItem("addrinfo")+"/fetchnewformatscholasticsubjects-service";

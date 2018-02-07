@@ -4110,24 +4110,35 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var studid={id:req.query.studid};
   var qur="select s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.mother_name,p.email,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode,p.alternate_mail "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and s.flag='active' and p.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"'";
+   var qur1 ="select UPPER(id) as id,UPPER(school_id) as school_id from  mp_teacher_grade where school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' and grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"')  and role_id='class-teacher'  and section_id='"+req.query.section+"' and flage='active'";
 
+var emparr=[];
+  console.log("------------stuinfo------------");
   console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+  console.log(qur1);
+  console.log("-------------------------------");
+
+  connection.query(qur1, function(err, rows)
+    {
+    if(!err)
+    {   
+    emparr=rows;   
+    connection.query(qur, function(err, rows)
     {
     if(!err)
     {       
       global.studentinfo=rows; 
       console.log(rows);
-      res.status(200).json({'returnval': rows});
+      res.status(200).json({'returnval': rows,'emparr':emparr});
     }
     else
     {
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
-
-  });
+   });
+    }  
+   });
 });
 
 //fetching subject info
@@ -16780,17 +16791,30 @@ app.post('/fetchnewformatremark-service1',  urlencodedParser,function (req,res)
 app.post('/fetchstudinfofornewformat-service',  urlencodedParser,function (req,res)
 {  
   var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_no='"+req.query.studentid+"' and flag='1'";
-  console.log('----------------------------------------');
+
+ var qur1 ="select UPPER(id) as id,UPPER(school_id) as school_id from  mp_teacher_grade where school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear1+"' and grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"')  and role_id='class-teacher'  and section_id='"+req.query.section+"' and flage='active'";
+
+
+  console.log('-----------------5to8 and 9to10 studentinfo ---------------');
+  console.log(qur1);
   console.log(qur);
-  connection.query(qur,function(err, rows){
+  console.log("---------------------------------------");
+  var emparr=[];
+  connection.query(qur1,function(err, rows){
+  if(!err)
+  { 
+    emparr=rows;
+   connection.query(qur,function(err, rows){
   if(!err)
   { 
     global.studentpersonalinfo=rows;
-    res.status(200).json({'returnval': rows});
+    res.status(200).json({'returnval':rows,"emparr":emparr});
   }
   else
     res.status(200).json({'returnval': ''});
   });
+   }
+   });
 });
 
 app.post('/fetchnewformatscholasticsubjects-service',  urlencodedParser,function (req,res)

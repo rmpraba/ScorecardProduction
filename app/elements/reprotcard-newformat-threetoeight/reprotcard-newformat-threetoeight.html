@@ -115,7 +115,7 @@
       <br><br>
       <div class="tab3">
         <table class="tab3">
-          <tr><th>{{date}}</th><th><img id="teimg1" width="100px;height:30px;"></th><th><img id="teimg2" width="100px;height:30px;"></th></tr>
+          <tr><th>{{date}}</th><th><img id="teimg1" src="../../images/{{empsign}}" width="100px;height:30px;"></th><th><img id="teimg2" width="100px;height:30px;"></th></tr>
           <tr><th>Date</th><th>Signature of Class Teacher's</th><th>Signature of Principal</th></tr>
         </table>
       </div>
@@ -162,7 +162,7 @@
       },
       FnSetHeaders:function(){
         // alert('yes'+document.querySelector('#pimg1'));
-        document.querySelector('#teimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+       // document.querySelector('#teimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         document.querySelector('#teimg2').src="../../images/principal"+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         this.class=localStorage.getItem("curr_sess_grade").toUpperCase();
         this.section=localStorage.getItem("curr_sess_section").toUpperCase();

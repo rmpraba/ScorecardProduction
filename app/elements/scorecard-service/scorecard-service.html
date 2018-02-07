@@ -662,15 +662,19 @@
 
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
         var obj={"scoolid":"","studid":""};
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studid=studid;
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+        obj.studid=studid;
         this.fetchstudinfoparam=obj;
         this.$.fetchstudinfoajax.generateRequest();
-      },
+       },
       fetchstudinfoResponse:function(e)
       {        
         var arr=e.detail.response.returnval; 
+        var arr1=e.detail.response.emparr; 
         // alert(JSON.stringify(arr));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){          
         document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
@@ -730,6 +734,9 @@
         else
         document.querySelector('cce-fivetoten-score-card').parentemail=arr[0].email;
         document.querySelector('cce-fivetoten-score-card').secemail=arr[0].alternate_mail;
+        document.querySelector('cce-fivetoten-score-card').secemail=arr[0].alternate_mail;
+        document.querySelector('cce-fivetoten-score-card').empsign=arr1[0].id+arr1[0].school_id+".jpg";
+
       }
         }       
       },

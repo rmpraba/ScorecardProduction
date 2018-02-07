@@ -241,7 +241,7 @@ table{
 <br><br><br><br><br><br><br>
 
   <table  class="signature">
-    <tr><th><img id='img1' width="100px;height:10px;"></th><th></th><th></th><th><img id='img2' width="100px;height:10px;"></th><th></th><th></th><th></th></tr>
+    <tr><th><img id='img1' src="../../images/{{empsign}}" width="100px;height:10px;"></th><th></th><th></th><th><img id='img2' width="100px;height:10px;"></th><th></th><th></th><th></th></tr>
     <tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>
     <th>----------------------------------</th><th></th><th></th></tr>
     <tr><th>Class Teacher</th><th></th><th></th><th>Principal</th><th></th><th></th><th>Parent</th><th></th><th></th></tr>
@@ -414,7 +414,7 @@ table{
   </paper-dialog>
   <scorecard-service id="ss"></scorecard-service>
   </template>
-  
+     
   <script>
   (function() {
     'use strict';
@@ -440,7 +440,7 @@ table{
         
       },
       callImage:function(){
-        document.querySelector('#img1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+       // document.querySelector('#img1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
          if(sessionStorage.getItem("curr_sess_loggedschoolid")=="SCH003")
           document.querySelector('#img2').src="../../images/principal"+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         else
@@ -474,8 +474,8 @@ table{
               this.$.print.hidden=false;
       },
         fnemail:function(){
-        this.$.fshowpopup.toggle();
-      },
+        this.$.fshowpopup.toggle();  
+      }, 
       FnSendEmail:function(){
         this.$.fshowpopup.toggle();
         localStorage.setItem("curr_sess_parentmail",this.parentemail);

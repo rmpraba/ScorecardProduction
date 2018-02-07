@@ -115,7 +115,7 @@
       <br><br>
       <div class="tab3">
         <table class="tab3">
-          <tr><th>{{date}}</th><th><img id="ntimg1" width="100px;height:30px;"></th><th><img id="ntimg2" width="100px;height:30px;"></th></tr>
+          <tr><th>{{date}}</th><th><img id="ntimg1" src="../../images/{{empsign}}" width="100px;height:30px;"></th><th><img id="ntimg2" width="100px;height:30px;"></th></tr>
           <tr><th>Date</th><th>Signature of Class Teacher's</th><th>Signature of Principal</th></tr>
         </table>
       </div>
@@ -170,7 +170,7 @@
 
       },
       FnSetHeaders:function(){
-        document.querySelector('#ntimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+      //  document.querySelector('#ntimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         document.querySelector('#ntimg2').src="../../images/principal"+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         this.assesmentname=localStorage.getItem("curr_sess_termname");
         this.class=localStorage.getItem("curr_sess_grade").toUpperCase();

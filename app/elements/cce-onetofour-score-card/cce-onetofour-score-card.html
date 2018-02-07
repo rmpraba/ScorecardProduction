@@ -245,7 +245,7 @@ font-family: Arial, Helvetica, sans-serif;
   <br><br><br><br><br><br>
 
   <table  class="signature">
-    <tr><th><img id='pimg1' width="100px;height:30px;"></th><th></th><th><img id='pimg2' width="130px;height:40px;"></th><th></th><th></th><th></th></tr>
+    <tr><th><img id='pimg1' src="../../images/{{empsign}}" width="100px;height:30px;"></th><th></th><th><img id='pimg2' width="130px;height:40px;"></th><th></th><th></th><th></th></tr>
     <tr><th>--------------------------</th><th></th><th>---------------------------</th><th></th>
     <th>--------------------------</th><th></th></tr>
     <tr><th>Class Teacher</th><th></th><th>Principal</th><th></th><th>Parent</th><th></th></tr>
@@ -393,10 +393,8 @@ font-family: Arial, Helvetica, sans-serif;
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
-      document.querySelector('#pimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
-        // if(sessionStorage.getItem("curr_sess_loggedschoolid")=="SCH003")
-        //   document.querySelector('#pimg2').src="../../images/Principal"+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
-        // else
+    //  document.querySelector('#pimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+       
         document.querySelector('#pimg2').src="../../images/principal"+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
       },
        print:function(){

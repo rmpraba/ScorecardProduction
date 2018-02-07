@@ -3,7 +3,7 @@
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="onetofour-scorecard-service">
-  <template>
+  <template>  
     <iron-ajax
         method="post"
         id="fetchsubjectnameajax"
@@ -179,21 +179,27 @@
         obj.section=localStorage.getItem("curr_sess_section");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.role=sessionStorage.getItem("curr_sess_loggedrole");
         obj.studid=studid;
-        this.fetchstudinfoparam=obj;
-        this.$.fetchstudinfoajax.generateRequest();
-      },
+       this.fetchstudinfoparam=obj;
+      this.$.fetchstudinfoajax.generateRequest();
+       },
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));       
+        var arr1=e.detail.response.emparr;
+         alert(JSON.stringify(arr1));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
-        document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
-        document.querySelector('cce-onetofour-score-card').studentname=arr[0].student_name;        
-        document.querySelector('cce-onetofour-score-card').parentname=arr[0].parent_name;
-        document.querySelector('cce-onetofour-score-card').parentemail=arr[0].email;
-       document.querySelector('cce-onetofour-score-card').secemail=arr[0].alternate_mail;
-        }
+       document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
+  document.querySelector('cce-onetofour-score-card').studentname=arr[0].student_name;        
+ document.querySelector('cce-onetofour-score-card').parentname=arr[0].parent_name;
+ document.querySelector('cce-onetofour-score-card').parentemail=arr[0].email;
+ document.querySelector('cce-onetofour-score-card').secemail=arr[0].alternate_mail;
+ document.querySelector('cce-onetofour-score-card').secemail=arr1[0].alternate_mail;
+ document.querySelector('cce-onetofour-score-card').empsign=arr1[0].id+arr1[0].school_id+".jpg";
+// document.querySelector('cce-onetofour-score-card').principalsigns=sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+     
+    }
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){
         document.querySelector('comparisonreport-card').enrno=arr[0].student_id;
         document.querySelector('comparisonreport-card').studentname=arr[0].student_name;        
@@ -201,7 +207,7 @@
         document.querySelector('comparisonreport-card').parentemail=arr[0].email;
         }
         }     
-      },
+      },   
       callfetchhealthattendanceinfoService:function(studid){
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
         var obj={"schoolid":"","studid":"","academicyear":""};
