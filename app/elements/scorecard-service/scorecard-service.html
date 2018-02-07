@@ -293,7 +293,7 @@
       },
       fetchstudenttermResponse:function(e){
         var info=e.detail.response.info;
-        // alert(JSON.stringify(info));
+      //alert(JSON.stringify(info));
         document.querySelector('cce-generate-score-card').termarr1=e.detail.response.returnval;
         if(info.length>0){
         document.querySelector('cce-generate-score-card').searchgradid=info[0].grade_id;

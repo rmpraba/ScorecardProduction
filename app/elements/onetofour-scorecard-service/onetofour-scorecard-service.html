@@ -170,7 +170,7 @@
     // var markarr=[]; 
     Polymer({
       is: 'onetofour-scorecard-service',
-      ready:function(){        
+      ready:function(){          
       },      
       callFetchstudentinfoService:function(studid){
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
@@ -187,7 +187,7 @@
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
         var arr1=e.detail.response.emparr;
-         alert(JSON.stringify(arr1));       
+      //   alert(JSON.stringify(arr1));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
        document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
