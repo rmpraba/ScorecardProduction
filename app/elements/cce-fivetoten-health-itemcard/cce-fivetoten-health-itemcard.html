@@ -19,18 +19,41 @@
       }
     </style>
     <div class="card">
-        <table border="1"><tr>        
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 10%;"><paper-item>{{studid}}</paper-item></td>
-        <td style="width: 20%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 8%;"><paper-input on-change="FnHeight" value="{{height}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input on-change="FnWeight" value="{{weight}}"></paper-input></td> 
-        <td style="width: 8%;"><paper-input on-change="FnBloodgroup" value="{{bloodgroup}}"></paper-input></td> 
-        <td style="width: 8%;"><paper-input on-change="FnVisionleft" value="{{visionleft}}"></paper-input></td> 
-        <td style="width: 8%;"><paper-input on-change="FnVisionright" value="{{visionright}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input on-change="FnDental" value="{{dental}}"></paper-input></td> 
-        <td style="width: 8%;" hidden$="{{hidesavevalue}}"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td> 
-        </tr>
+  <table border="1">
+     <tr>        
+        <td  style="{{fonts}}"><p>{{serialno}}</p></td>
+        <td  style="{{fonts}}"><p>{{studid}}</p></td>
+        <td  style="{{fonts}}"><p>{{studname}}</p></td>
+        <td  style="{{fonts}}"><paper-input hidden$="{{hidefist}}" on-change="FnHeight" value="{{height}}"></paper-input>
+           <p hidden$="{{hidesecond}}">{{height}}</p>
+
+        </td>
+        <td  style="{{fonts}}"><paper-input  hidden$="{{hidefist}}"  on-change="FnWeight" value="{{weight}}"></paper-input>
+           <p  hidden$="{{hidesecond}}">{{weight}}</p>
+             
+        </td> 
+        <td  style="{{fonts}}">
+          <paper-input on-change="FnBloodgroup" value="{{bloodgroup}}"  hidden$="{{hidefist}}"></paper-input>
+           <p  hidden$="{{hidesecond}}">{{bloodgroup}}</p>
+
+        </td> 
+        <td  style="{{fonts}}">
+         <paper-input on-change="FnVisionleft" value="{{visionleft}}" hidden$="{{hidefist}}"></paper-input>
+           <p  hidden$="{{hidesecond}}">{{visionleft}}</p>
+        </td> 
+        <td  style="{{fonts}}">
+          <paper-input on-change="FnVisionright" value="{{visionright}}" hidden$="{{hidefist}}"></paper-input>
+           <p  hidden$="{{hidesecond}}">{{visionright}}</p>
+        </td>  
+        <td  style="{{fonts}}">
+          <paper-input on-change="FnDental" value="{{dental}}" hidden$="{{hidefist}}"></paper-input>
+           <p  hidden$="{{hidesecond}}">{{dental}}</p>
+
+        </td> 
+        <td  hidden$="{{hidesavevalue}}"  style="{{fonts}}"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"  hidden$="{{hidefist}}"></paper-icon-button>
+           <p hidden$="{{hidesecond}}">{{savelabel}}</p>
+        </td> 
+     </tr>
         </table>
     </div>
     <co-scholastic-service id="assesmentservice"></co-scholastic-service>

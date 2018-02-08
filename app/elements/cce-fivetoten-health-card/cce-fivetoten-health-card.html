@@ -114,26 +114,14 @@
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1" id="MarkTable">    
-      <tr>
-      <th id="tb3">SNo</th>
-      <th id="tb2">Student Id</th>
-      <th id="tb2">Student Name</th>
-      <th id="tb1">Height</th>
-      <th id="tb1">Weight</th>
-      <th id="tb1">Blood Group</th>
-      <th id="tb1">Vision Left</th>
-      <th id="tb1">Vision Right</th>
-      <th id="tb1">Dental Hygiene</th>
-      <th id="healthsave" style="width:6%"></th>
-     </tr>  
-    </div>
-   
-      <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="10">
-      <cce-fivetoten-health-itemcard hidesavevalue="{{hidesavevalue}}" serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" height="{{item.height}}" weight="{{item.weight}}" bloodgroup="{{item.blood_group}}" visionleft="{{item.vision_left}}" visionright="{{item.vision_right}}" dental="{{item.dental}}"></cce-fivetoten-health-itemcard>
-      </td></tr>
+       <template is="dom-repeat" items="{{studarr}}">
+       <tr>
+          <cce-fivetoten-health-itemcard savelabel="Save" hidefist="{{item.hidefist}}" hidesecond="{{item.hidesecond}}" fonts="{{item.font}}" hidesavevalue="{{hidesavevalue}}" serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" height="{{item.height}}" weight="{{item.weight}}" bloodgroup="{{item.blood_group}}" visionleft="{{item.vision_left}}" visionright="{{item.vision_right}}" dental="{{item.dental}}"></cce-fivetoten-health-itemcard>
+       </tr>
       </template>
       </table>
+
+    </div>
       </center> 
     <!-- </template>      -->
     </div>

@@ -13,56 +13,92 @@
       table{
         border-collapse: collapse;
         width: 100%;
+
       }
+      table { table-layout:fixed; }
+     table td { overflow: hidden; }
       .card{
         height: 2%;
       }
+      
+.speccommentvalue
+      {
+        width: 90%;
+        height: 50%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+.gencommentvalue
+      { 
+        width: 90%;
+        height: 50%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+       #attendancegenericcmnt{
+      border-radius: 10px;
+      width: 37%;
+      height: 45%
+       }
+       #attendancespecificcmnt{
+       border-radius: 10px;
+    width: 37%;
+    height: 45%
+      }
+   /*   
       #tb1{
         width:15%
       }
       #tb2{
         width:20%
       }
-      .cmtcard
-      {
-        overflow-x: hidden;
-        overflow-y: scroll;
-      }
-      #attendancegenericcmnt,#attendancespecificcmnt{
-        border-radius: 10px;
-        width: 40%;
-        height: 30%;
-      }
+     /
+     
     </style>
     <div class="card">
-        <table border="1"><tr>
-        <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
-        <td id="tb1"><paper-item>{{studid}}</paper-item></td>
-        <td id="tb2"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>
-        <td id="tb2">
-        <paper-item on-click="FnGeneric" style="word-wrap: break-word;" value="{{genericcomment}}">{{genericcomment}}</paper-item>
+        <table border="1" >
+        <tr>
+        <td  style="{{fonts}}" width="5%"><paper-item hidden$="{{hidefist}}">{{serialno}}</paper-item>
+       <p  hidden$="{{hidesecond}}">{{serialno}}</p>
+        </td>
+        <td   style="{{fonts}}"> <p>{{studid}}</p></td>
+        <td   style="{{fonts}}"> <p>{{studname}}</p></td>
+
+        <td  style="{{fonts}}"><paper-input hidden$="{{hidefist}}" on-change="FnAttendance" value="{{attendance}}"></paper-input>
+       <p  hidden$="{{hidesecond}}" > {{attendance}}</p>
+        </td>
+        <td   style="{{fonts}}">
+        <paper-item on-click="FnGeneric"  hidden$="{{hidefist}}" s value="{{genericcomment}}">{{genericcomment}}</paper-item>
+         <p  hidden$="{{hidesecond}}" > {{genericcomment}}</p>
+
+
         </td>   
-        <td id="tb2"><paper-item style="word-wrap: break-word;" on-click="FnSpecific" value="{{specificcomment}}">{{specificcomment}}</paper-item></td>  
-        <td id="tb1" hidden$="{{hidesavevalue}}"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td></tr></table>
+        <td  style="{{fonts}}"><paper-item  on-click="FnSpecific" hidden$="{{hidefist}}" value="{{specificcomment}}">{{specificcomment}}</paper-item>
+          <p hidden$="{{hidesecond}}" > {{specificcomment}}</p>
+
+        </td>  
+         <td  style="{{fonts}}" hidden$="{{hidesavevalue}}"><paper-icon-button hidden$="{{hidefist}}"  id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+         <p  hidden$="{{hidesecond}}">{{savelabel}}</p>
+        </td>
+        </tr>
+        </table>
     </div>
     <paper-dialog id="attendancegenericcmnt" modal>
         <h3>Generic Comment</h3>
-        <div class="cmtcard">
+        <div class="gencommentvalue">
           <paper-textarea value="{{gencomment}}"></paper-textarea>     
         </div>  
-        <center style="margin-top: 5%;">
+        <center >
           <paper-button on-click="genericsubmit"  style="background-color:black;color:white">Submit</paper-button>
          <paper-button on-click="genericclose" style="background-color:black;color:white">Close</paper-button>
         </center>
     </paper-dialog>
     <paper-dialog id="attendancespecificcmnt" modal>
         <h3>Specific Comment</h3>
-        <div class="cmtcard">
+        <div class="speccommentvalue">
           <paper-textarea value="{{speccomment}}"></paper-textarea>     
         </div>  
-        <center style="margin-top: 5%;">
+        <center ">
           <paper-button on-click="specificsubmit"  style="background-color:black;color:white">Submit</paper-button>
          <paper-button on-click="specificclose" style="background-color:black;color:white">Close</paper-button>
         </center>

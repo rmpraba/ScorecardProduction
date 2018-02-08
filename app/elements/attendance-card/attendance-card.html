@@ -117,27 +117,18 @@
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Term : &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} : &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <h4>Total Working Days: {{workingdays}}</h4>
-      <table border="1" >    
-      <tr>   
-       <th id="tb1">SNo</th>
-       <th id="tb2">Student Id</th>
-       <th id="tb2">Student Name</th>
-       <th id="tb1">Total Attendance</th>
-       <th id="tb2">Generic Comment</th>
-       <th id="tb2">Specific Comment</th>
-       <th style="width:14%;" id='attendencesubmit'></th>
-     </tr>  
-      </div>
+      <table border="1">    
+     
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
-      <td colspan="7">
-      <attendance-item-card serialno="{{item.serialno}}" hidesavevalue="{{hidesavevalue}}"studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
-      </td>
-      </tr>
+        <attendance-item-card savelabel="Save" hidefist="{{item.hidefist}}" hidesecond="{{item.hidesecond}}" fonts="{{item.font}}" serialno="{{item.serialno}}" hidesavevalue="{{hidesavevalue}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
+    
+      </tr>  
       </template> 
     
       </table>      
       </center> 
+      </div>
       <paper-button class="button" id="attendencesubmit" on-click="importmark">{{importlabel}}</paper-button>
     </div>  
     <div  id="attendencetemplatefeildid" hidden>
@@ -245,7 +236,7 @@
             temp=[];
             array=[];
             array1=[];
-            tempstudentarr=[];
+          //  tempstudentarr=[];
             document.getElementById("attendancefile").value ="";
            this.categorylength="";
         }
