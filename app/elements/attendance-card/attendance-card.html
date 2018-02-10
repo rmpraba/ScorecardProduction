@@ -96,7 +96,7 @@
       </div>
       <div id="attendencefileid">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')"></paper-icon-button>
+      <paper-icon-button  icon="icons:file-download" onclick="exportToExcel1();"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -131,7 +131,7 @@
       </div>
       <paper-button class="button" id="attendencesubmit" on-click="importmark">{{importlabel}}</paper-button>
     </div>  
-    <div  id="attendencetemplatefeildid" hidden>
+    <div  id="attendencetemplatefeildid" >
        <table border="1" >    
       <tr>   
        <th id="tb1">SNo</th>
@@ -141,7 +141,7 @@
        <th id="tb2">GenericComment</th>
        <th id="tb2">SpecificComment</th>
      </tr>  
-      <template is="dom-repeat" items="{{studarr}}">
+      <template is="dom-repeat" items="{{studarr1}}">
       <tr>
        <td>{{item.serialno}}</td>
        <td>{{item.id}}</td>
@@ -156,11 +156,95 @@
     <center>
      <input type="button" id="btn2" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')" value="Export to Excel" hidden$="{{hidedownload}}">
     </center>
-    </div>  
+    </div> 
+
+ <table border="1"  id="DataTableId1" hidden>    
+      <tr>   
+       <th id="tb1">SNo</th>
+       <th id="tb1">StudentId</th>
+       <th id="tb2">StudentName</th>
+       <th id="tb1">TotalAttendance</th>
+       <th id="tb2">GenericComment</th>
+       <th id="tb2">SpecificComment</th>
+     </tr>  
+      <template is="dom-repeat" items="{{studarr1}}">
+      <tr>
+       <td>{{item.serialno}}</td>
+       <td>{{item.id}}</td>
+       <td>{{item.student_name}}</td>
+       <td>{{item.attendance}}</td>
+       <td>{{item.generic}}</td>
+       <td>{{item.speccomment}}</td>
+      </tr>  
+      </template> 
+     </table> 
+
      <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
      <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
+   <iframe id="txtArea1" style="display:none"></iframe>
    <script type="text/javascript">
+ 
+
+
+function exportToExcel1(){
+var htmls = "";
+alert("1");
+var tab_text = '<table border="1px" style="font-size:20px" ">';
+    var textRange; 
+    var j = 0;
+    var tab = document.getElementById('DataTableId1'); // id of table
+    var lines = tab.rows.length;
+
+    // the first headline of the table
+    if (lines > 0) {
+        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+    }
+
+    // table data lines, loop starting from 1
+    for (j = 1 ; j < lines; j++) {     
+        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+    }
+
+    tab_text = tab_text + "</table>";
+    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+    tab_text = tab_text.replace(/<img[^>]*>/gi,"");                 // remove if u want images in your table
+    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); 
+
+   var uri = 'data:application/vnd.ms-excel;base64,';
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'; 
+            var base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            };
+
+         htmls = tab_text
+
+            var ctx = {
+                worksheet : 'Worksheet',
+                table : htmls
+            }
+        var link = document.createElement("a");
+            link.download = "attendance";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+    }
+
+
+
+
+
+
+
+
+
+
+
   var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'

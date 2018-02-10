@@ -82,7 +82,7 @@
       </div>
       <div id="hiddenexcelheaderfiles1">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="tableToExcel('dynamicreporttable111', 'Mark Report')"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel5();"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -143,9 +143,9 @@
    
     </div>  
     <subject-dynamic-service id="subjectservice"></subject-dynamic-service>
-    <div  id="dynamicreporttable111" hidden>
-   <div width="{{tabwidth}}">
-    <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
+   
+   <div width="{{tabwidth}}" hidden>
+    <table id="DataTableId5" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
       <template is="dom-repeat" items="{{studarr1}}">
       <tr>
       <th width="5%">{{item.sno}}</th>
@@ -184,6 +184,58 @@
   }
   </script>
   <script type="text/javascript">
+  var exporthighersubjectnamecosolastic;
+function exportToExcel5(){
+var htmls = "";
+//alert("2");
+var tab_text = '<table border="1px" style="font-size:20px" ">';
+    var textRange; 
+    var j = 0;
+    var tab = document.getElementById('DataTableId5'); // id of table
+    var lines = tab.rows.length;
+
+    // the first headline of the table
+    if (lines > 0) {
+        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+    }
+
+    // table data lines, loop starting from 1
+    for (j = 1 ; j < lines; j++) {     
+        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+    }
+
+    tab_text = tab_text + "</table>";
+   
+    var uri = 'data:application/vnd.ms-excel;base64,';
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'; 
+            var base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            };
+
+         htmls = tab_text
+
+            var ctx = {
+                worksheet : 'Worksheet',
+                table : htmls
+            }
+        var link = document.createElement("a");
+            link.download = exporthighersubjectnamecosolastic;
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+  
+    }
+
+
+
+
+
+
   var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
@@ -327,6 +379,7 @@ this.$.hiddenexcelheaderfiles1.hidden=true;
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
         this.$.dynamicsavebtn.hidden=false;
+         exporthighersubjectnamecosolastic=localStorage.getItem("curr_sess_subject");
     if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
       this.$.templatecheckvalueid11.hidden=true;
          else
