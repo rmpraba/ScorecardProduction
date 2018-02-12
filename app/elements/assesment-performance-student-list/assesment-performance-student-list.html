@@ -14,14 +14,19 @@
       assesment-performance-student-list-itemcard{
         margin-left: 3%;
         margin-top: 1%;
+        width: 20%;
+      }
+      .name{
+        width: 30%;
       }
     </style>
     <div class="outdrop">
     <template is="dom-repeat" items="{{studentarr}}">
     <div class="indrop">
-    <h5>{{item.student_name}}</h5>
+    <h4 class="name">{{item.student_name}}</h4>
     <assesment-performance-student-list-itemcard levelarr="{{item.levelarr}}"></assesment-performance-student-list-itemcard>
     </div>
+    <hr>
     </template>
     </div>
   </template>

@@ -20,46 +20,73 @@
     .drop1,.drop2
     {
       @apply(--layout-vertical);
-      /*width: 100%;*/
     }
     .indrop{     
         width: 100%;   
         @apply(--layout-horizontal);
-        /*@apply(--layout-center-justified);*/
         border-bottom: 1px solid #dedede;
     }
-    /*assesment-performance-expandcard{
-      width: 100%;
-      margin-left: 5%;
-    }*/
     h3{
         color: #111AD9  ;
+      }
+       #dynamicspinner{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+     iron-icon.tiny {
+          --iron-icon-height: 12px;
+          --iron-icon-width: 12px;
+          margin-top: 2%;
+          --iron-icon-fill-color: #111AD9;
+      }
+      assesment-performance-student-list{
+        @apply(--layout-vertical);
+        width: 100%;
+      }
+      .incard{
+        @apply(--layout-horizontal);
+        width: 100%;
+      }
+      .cardd{
+        @apply(--layout-vertical);
+        width: 100%;
+        margin-left: 7%;
+      }
+      h3{
+        color: #111AD9;
+      }
+      #dialogstudentlist{
+        width: 90%;
       }
     </style>
     <div class='outcard'>
     <div class='drop'>
-      <paper-dropdown-menu id="spthcbranch" label="Select Branch" disabled="{{read}}" required>
+      <paper-dropdown-menu id="sspthcbranch" label="Select Branch" disabled="{{read}}" required>
         <paper-menu id="spthcbranch" class="dropdown-content"  on-iron-select="FnSelectBranch"  attr-for-selected="value" required>     
           <template is="dom-repeat" items="{{brancharr}}">
             <paper-item value="{{item.id}}">{{item.name}}</paper-item>
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-      <paper-dropdown-menu id="spthcacademicyear" label="Select Academic Year" disabled="{{read}}" required>
+      <paper-dropdown-menu id="sspthcacademicyear" label="Select Academic Year" disabled="{{read}}" required>
         <paper-menu id="spthcacademicyear" class="dropdown-content"  on-iron-select="FnSelectAcademicyear"  attr-for-selected="value" required>
           <template is="dom-repeat" items="{{academicarr}}">
             <paper-item value="{{item.academic_year}}">{{item.academic_year}}</paper-item>
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-      <paper-dropdown-menu id="spthcgrade" label="Select Grade" disabled="{{read}}" required>
+      <paper-dropdown-menu id="sspthcgrade" label="Select Grade" disabled="{{read}}" required>
         <paper-menu id="spthcgrade" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
           <template is="dom-repeat" items="{{gradearr}}">
             <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-      <paper-dropdown-menu id="spthcsection" label="Select Section" disabled="{{read}}" required>
+      <paper-dropdown-menu id="sspthcsection" label="Select Section" disabled="{{read}}" required>
         <paper-menu id="spthcsection" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
           <template is="dom-repeat" items="{{sectionarr}}">
             <paper-item value="{{item.section_name}}">{{item.section_id}}</paper-item>
@@ -70,27 +97,38 @@
     </div>
     <center>
     <h3>Total number of students: {{total}}</h3>
-    </center>
-    
+    </center>    
     <template is="dom-repeat" items="{{assesmentarr}}">
-    <!-- <div class='drop1'> -->
-    <assesment-performance-expandcard assesment="{{item.assesment}}" subjectarr="{{item.totalarr}}"></assesment-performance-expandcard>
-    <!-- </div> -->
-   <!--  <h3>Assesment Name:{{item.assesment}}</h3>   
-      <div class="indrop">        
-        <assesment-performance-card assesment="{{item.assesment}}" subjectarr="{{item.totalarr}}"></assesment-performance-card>
-      </div> -->
+    <assesment-performance-expandcard assesment="{{item.assesment}}" subjectarr="{{item.totalarr}}" detailarr="{{detailarr}}"></assesment-performance-expandcard>
     </template>
-    <!-- </div> -->
-    <!-- <div class='drop2'>
-    <h3>Assesment Name: </h3>
-    <template is="dom-repeat" items="{{assesmentarr}}">
-      <div class="indrop">
-        <assesment-performance-card></assesment-performance-card>
-      </div>
-    </template>
-    </div> -->
     <performance-report-service id='performancereportservice'></performance-report-service>
+
+    <div class="spinner"><paper-dialog modal id="dynamicspinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+    <paper-spinner active></paper-spinner>
+    <h4>{{spinnermsg}}</h4></paper-dialog></div>
+
+    <div>
+    <paper-dialog id="dialogstudentlist">
+    <h3>Student List</h3>
+    <h4>Subject:{{showsubject}}&nbsp;&nbsp;&nbsp;&nbsp;Category:{{showcategory}}&nbsp;&nbsp;&nbsp;&nbsp;Sub-Category:{{showsubcategory}}&nbsp;&nbsp;&nbsp;&nbsp;Level:{{showlevel}}</h4>
+    <!-- <br> -->
+    <paper-dialog-scrollable>
+    <div class="incard">
+    <template is="dom-repeat" items="{{studentarr}}">
+    <div class="cardd">
+    <h3>{{item.category}}</h3>
+    <assesment-performance-student-list studentarr="{{item.studarr}}"></assesment-performance-student-list>
+    </div>
+    </template>
+    </div>
+    </paper-dialog-scrollable>
+    <div class="buttons">
+    <paper-button dialog-dismiss>Cancel</paper-button>
+    </div>
+    </paper-dialog>
+    </div>
+
+
   </template>
   <script>
   (function() {
@@ -98,32 +136,79 @@
     Polymer({
       is: 'student-performance-tracking-homecard',
       FnCallService:function(){
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=='management')
+        this.$.sspthcbranch.hidden=false;
+        if(sessionStorage.getItem("curr_sess_loggedroleid")!='management'){
+        this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        this.$.sspthcbranch.hidden=true;
+        }
         this.$.performancereportservice.FnFetchBranchService();
         this.$.performancereportservice.FnFetchAcademicYear();
-        // this.$.performancereportservice.FnFetchGrade();
-        // this.$.performancereportservice.FnFetchSection();
+        // this.$.performancereportservice.FnFetchAssesmentCategory();
       },
       FnSelectBranch:function(e){
+        this.assesmentarr=[];
+        this.studentarr=[];
+        this.total="";
+        document.querySelector('#spthcacademicyear').selected=-1;
+        document.querySelector('#spthcgrade').selected=-1;
+        document.querySelector('#spthcsection').selected=-1;
         this.schoolid=e.target.selectedItem.value.trim();
         this.schoolname=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_schoolid",this.schoolid);
       },
       FnSelectAcademicyear:function(e){
+        this.assesmentarr=[];
+        this.studentarr=[];
+        this.total="";
+        document.querySelector('#spthcgrade').selected=-1;
+        document.querySelector('#spthcsection').selected=-1;
         this.academicyear=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_academicyear",this.academicyear);
         this.$.performancereportservice.FnFetchGrade(this.schoolid,this.academicyear);    
       },
       FnSelectGrade:function(e){
+        this.assesmentarr=[];
+        this.studentarr=[];
+        this.total="";
+        document.querySelector('#spthcsection').selected=-1;
         this.gradeid=e.target.selectedItem.value.trim();
         this.gradename=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_grade",this.gradename);
         this.$.performancereportservice.FnFetchSection(this.schoolid,this.academicyear,this.gradeid);        
       },
       FnSelectSection:function(e){
+        this.assesmentarr=[];
+        this.studentarr=[];
+        this.total="";
         this.sectionid=e.target.selectedItem.value.trim();
         this.sectionname=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",this.sectionname);
+        this.FnToggleSpinner(true);
+        this.spinnermsg="Please wait...";
         this.$.performancereportservice.FnFetchAssesmentInfo(this.schoolid,this.academicyear,this.gradeid,this.gradename,this.sectionid,this.sectionname);
+      },
+      FnToggleSpinner:function(flag){
+        this.$.dynamicspinner.opened=flag;
+      },
+      FnRefresh:function(){
+        this.assesmentarr=[];
+        this.studentarr=[];
+        this.total="";
+        localStorage.setItem("curr_sess_assesment","");
+        document.querySelector('#spthcbranch').selected=-1;
+        document.querySelector('#spthcacademicyear').selected=-1;
+        document.querySelector('#spthcgrade').selected=-1;
+        document.querySelector('#spthcsection').selected=-1;
+      },
+      FnShowDialog:function(subject,categoryname,subcategory,level){
+        this.showsubject=subject;
+        this.showcategory=categoryname;
+        this.showsubcategory=subcategory;
+        this.showlevel=level;
+        // alert(document.querySelector('#dialogstudentlist'+this.assesment));
+        document.querySelector('#dialogstudentlist').toggle();
+        // this.$.dialogstudentlist.toggle();
       }
     });
   })();

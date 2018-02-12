@@ -37,7 +37,7 @@
         width: 80%;
       }
     </style>
-    <div hidden>{{subcategory}}{{subject}}</div>
+    <div hidden>{{assesment}}{{subcategory}}{{subject}}{{configcolumn}}</div>
     <div>
     <div class="indrop">
       <h5 style="width: 80%;">Category : {{category}}</h5> 
@@ -46,29 +46,8 @@
         <assesment-performance-level-itemcard subject="{{subject}}" category="{{category}}" 
         subject="{{subject}}" categoryname="{{categoryname}}" subcategory="{{subcategory}}" level="{{level}}" configcolumn="{{configcolumn}}" assesment="{{assesment}}" levelarr="{{levelarr}}"></assesment-performance-level-itemcard>
     </div>
-
-    <div>
-    <paper-dialog id="dialogstudentlist">
-    <h3>Student List</h3>
-    <h4>Subject:{{showsubject}}&nbsp;&nbsp;&nbsp;&nbsp;Category:{{showcategory}}&nbsp;&nbsp;&nbsp;&nbsp;Sub-Category:{{showsubcategory}}&nbsp;&nbsp;&nbsp;&nbsp;Level:{{showlevel}}</h4>
-    <br>
-    <paper-dialog-scrollable>
-    <div class="incard">
-    <template is="dom-repeat" items="{{studentarr}}">
-    <div class="cardd">
-    <h3>{{item.category}}</h3>
-    <assesment-performance-student-list studentarr="{{item.studarr}}"></assesment-performance-student-list>
-    </div>
-    </template>
-    </div>
-    </paper-dialog-scrollable>
-    <div class="buttons">
-    <paper-button dialog-dismiss>Cancel</paper-button>
-    </div>
-    </paper-dialog>
-    </div>
-
     <performance-report-service id="performancereportservice"></performance-report-service>
+  
   </template>
   <script>
   (function() {
@@ -77,15 +56,9 @@
       is: 'assesment-performance-level-outitemcard',
       FnView:function(){
         // alert(this.configcolumn+" "+this.assesment);
-        // alert(this.subject+" "+this.categoryname+" "+this.subcategory+" "+this.level);
+        document.querySelector('student-performance-tracking-homecard').FnToggleSpinner(true);
+        document.querySelector('student-performance-tracking-homecard').spinnermsg="Please wait...";
         this.$.performancereportservice.FnFetchlevelbasedstudents(this.subject,this.categoryname,this.subcategory,this.level,this.configcolumn,this.assesment);
-      },
-      FnShowDialog:function(subject,categoryname,subcategory,level){
-        this.showsubject=subject;
-        this.showcategory=categoryname;
-        this.showsubcategory=subcategory;
-        this.showlevel=level;
-        this.$.dialogstudentlist.toggle();
       }
     });
   })();

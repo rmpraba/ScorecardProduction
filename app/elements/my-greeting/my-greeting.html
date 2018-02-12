@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 
@@ -17,33 +7,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-
-      span,
       input {
         @apply(--paper-font-body2);
       }
+      .symbolcard{
+        @apply(--layout-horizontal);
+      }
+      paper-icon-button{
+        margin-top: -16%;
+        margin-left: -3%;
+      }
     </style>
-
-    <h2 class="page-title">{{greeting}}</h2>
-    <span>Update text to change the greeting.</span>
-    <!-- Listens for "input" event and sets greeting to <input>.value -->
-    <input value="{{greeting::input}}">
+    <div class="symbolcard">
+    <template is="dom-if" if="{{diff}}">
+    <!-- indiff-{{diff}} -->
+    <template is="dom-repeat" items="{{levelcount}}">
+    <!-- levelicon-{{levelicon}} -->
+    <p hidden$="{{levelvisible}}"><paper-icon-button icon="icons:{{levelicon}}" style="color: {{levelcolor}};"></paper-icon-button></p>
+    </template>
+    <template is="dom-if" if="{{subleveldiff}}">
+    <!-- (subleveldiff-{{subleveldiff}} -->
+    <p style="margin-top: 16%;">(</p>
+    <template is="dom-repeat" items="{{sublevelcount}}">
+    <!-- sublevelicon-{{sublevelicon}} -->
+    <p hidden$="{{sublevelvisible}}"><paper-icon-button icon="icons:{{sublevelicon}}" style="color: {{sublevelcolor}};margin-left: -2%;"></paper-icon-button></p>
+    <p style="margin-top: 16%;">)</p>
+    </template>
+    </template>
+    <template is="dom-if" if="{{!subleveldiff}}">
+    <!-- (elsesubleveldiff-{{subleveldiff}} -->
+    <p style="margin-top: 16%;">(</p>
+    <template is="dom-repeat" items="{{sublevelcount}}">
+    <!-- elsesublevelicon{{sublevelicon}} -->
+    <p hidden$="{{sublevelvisible}}"><paper-icon-button icon="icons:{{sublevelicon}}" style="color: {{sublevelcolor}};margin-left: -2%;"></paper-icon-button></p>
+    </template>
+    <p style="margin-top: 16%;">)</p>
+    </template>
+    </template>
+    <template is="dom-if" if="{{!diff}}">
+    <!-- elsediff-{{diff}} -->
+    <template is="dom-repeat" items="{{levelcount}}">
+    <!-- elselevelicon-{{levelicon}} -->
+    <p hidden$="{{levelvisible}}"><paper-icon-button icon="icons:{{levelicon}}" style="color: {{levelcolor}};"></paper-icon-button></p>
+    </template>
+    </template>
+    </div>
   </template>
-
   <script>
     (function() {
       'use strict';
-
       Polymer({
         is: 'my-greeting',
-
-        properties: {
-          greeting: {
-            type: String,
-            value: 'Welcome!',
-            notify: true
-          }
-        }
       });
     })();
   </script>

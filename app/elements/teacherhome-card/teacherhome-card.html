@@ -66,10 +66,10 @@
     </div>
     <div class="inner1" hidden$="{{hidereportcardcontainer}}">
       <div  class="card" hidden$="{{TA}}">
-       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"><h4>Term Mark Entry</h4></paper-button>
       </div>
       <div class="card" hidden$="{{GenerateReport}}">
-       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"><h4>Excel Reports</h4></paper-button>
       </div> 
       <div class="card" hidden$="{{subjectstatus}}">
         <paper-button on-click="fnsubjectreport" no ink><img src="../../images/substatus.png" height="180px" width="180px">
@@ -101,7 +101,7 @@
     </div>
     <div class="inner1" hidden$="{{hidereportcardcontainer}}">
       <div  class="card" hidden$="{{TA}}">
-       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"><h4>Term Mark Entry</h4></paper-button>
       </div>
       <div class="card" hidden$="{{subjectstatus}}">
         <paper-button on-click="fnsubjectreport" no ink><img src="../../images/substatus.png" height="180px" width="180px">
@@ -114,25 +114,25 @@
         </paper-button>
       </div> 
       <div class="card" hidden$="{{GenerateReport}}">
-       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"><h4>Excel Reports</h4></paper-button>
       </div>
       <div class="card" hidden$="{{Report}}">
-       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"><h4>View Reportcards</h4></paper-button>
       </div>
       <div class="card" hidden$="{{editinfo}}">
-       <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"><h4>Edit Student Info</h4></paper-button>
       </div> 
-      <div class="card" hidden$="{{comparison}}">
+      <!--  <div class="card" hidden$="{{comparison}}">
        <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
-      </div>
+      </div> -->
       <div class="card" hidden$="{{ConsolidatedReport}}">
-       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"><h4>Categorywise Reports</h4></paper-button>
       </div>
       <!-- <div class="card" hidden$="{{dataanalysis}}">
        <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
       </div> -->
        <div class="card" hidden$="{{sendmails}}">
-       <paper-button on-click="fnsendmails" no ink><img src="../../images/emails.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="fnsendmails" no ink><img src="../../images/emails.jpg" height="180px" width="180px"><h4>Send Reportcards</h4></paper-button>
       </div>
     </div>
     <div class="inner1" hidden$="{{hidemasterscontainer}}">
@@ -181,35 +181,40 @@
        <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div> -->
       <div class="card" hidden$="{{Approve}}">
-       <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.jpg" height="180px" width="180px"><h4>Assesment Approval</h4></paper-button>
       </div>
       <div class="card" hidden$="{{Approvalstatus}}">
-       <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"><h4>Assesment Approval Status</h4></paper-button>
       </div> 
       <div class="card" hidden$="{{Report}}">
-       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"><h4>View Reportcards</h4></paper-button>
       </div>
 <!--       <div class="card" hidden$="{{feecollection}}">
        <paper-button on-click="FnFeeCollection" no ink><img src="../../images/feecollection.jpg" height="180px" width="180px"></paper-button>
       </div> -->
       <div class="card" hidden$="{{GenerateReport}}">
-       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px">
+       <h4>Excel Reports</h4></paper-button>
       </div>      
       <div class="card" hidden$="{{ConsolidatedReport}}">
-        <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
+        <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"><h4>Categorywise Reports</h4></paper-button>
       </div>
+      <div class="card" hidden$="{{studenttracking}}">
+      <paper-button on-click="FnStudentTracking" no ink><img src="../../images/studenttrack.jpg" height="180px" width="180px">
+      <h4>Student Performance Tracking</h4></paper-button>
+      </div>  
       <!-- <div class="card" hidden$="{{Analysis}}">
        <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
       </div> -->
       <div class="card" hidden$="{{dataanalysis}}">
-        <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
+        <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"><h4>Consolidated Reports</h4></paper-button>
       </div>
       <div class="card" hidden$="{{coodinatormarkentry}}">
      <paper-button on-click="fncoodinatormarkentry" no ink><img src="../../images/changeapprove.jpg" height="180px" width="180px"><h4>Mark Change Approval</h4></paper-button>
       </div>
-  <div class="card" hidden$="{{termcomparisonvalue}}">
+  <!-- <div class="card" hidden$="{{termcomparisonvalue}}">
      <paper-button on-click="fncomparisonvalue" no ink><img src="../../images/comparisonvalue.jpg" height="180px" width="180px"><h4>Comparison Report</h4></paper-button>
- </div>
+ </div> -->
     <!--  <div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px">
        </paper-button>
@@ -382,28 +387,33 @@
       <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"></paper-button>
     </div>
     <div class="card" hidden$="{{ConsolidatedReport}}">
-      <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"><h4>Categorywise Reports</h4></paper-button>
     </div>
     <div class="card" hidden$="{{Report}}">
-      <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"><h4>View Reportcards</h4></paper-button>
     </div>  
     <div class="card" hidden$="{{GenerateReport}}">
-      <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px">
+      <h4>Excel Reports</h4></paper-button>
     </div>
     <!-- <div class="card" hidden$="{{Analysis}}">
       <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
       </div> -->
-    <div class="card" hidden$="{{comparison}}">
+    <div class="card" hidden$="{{studenttracking}}">
+      <paper-button on-click="FnStudentTracking" no ink><img src="../../images/studenttrack.jpg" height="180px" width="180px">
+      <h4>Student Performance Tracking</h4></paper-button>
+    </div>  
+    <!-- <div class="card" hidden$="{{comparison}}">
       <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
-    </div>
-    <div class="card" hidden$="{{teach_obser}}">
-      <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
-    </div> 
-    <div class="card" hidden$="{{feecollection}}">
-     <paper-button on-click="FnFeeCollection" no ink><img src="../../images/feecollection.jpg" height="180px" width="180px"></paper-button>
-    </div>
+    </div> -->
+    <!-- <div class="card" hidden$="{{teach_obser}}"> -->
+      <!-- <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button> -->
+    <!-- </div>  -->
+    <!-- <div class="card" hidden$="{{feecollection}}"> -->
+     <!-- <paper-button on-click="FnFeeCollection" no ink><img src="../../images/feecollection.jpg" height="180px" width="180px"></paper-button> -->
+    <!-- </div> -->
     <div class="card" hidden$="{{dataanalysis}}">
-      <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"><h4>Consolidated Reports</h4></paper-button>
     </div>
     </div>
     <div class="inner1" hidden$="{{hidemasterscontainer}}">
@@ -488,16 +498,21 @@
       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
     </div>  --> 
     <div class="card" hidden$="{{GeneratemgmtReportt}}" >
-      <paper-button on-click="FnGeneratemgmtReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnGeneratemgmtReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px">
+      <h4>Excel Reports</h4>
+      </paper-button>
     </div>
     <div class="card" hidden$="{{ConsolidatedReportt}}">
-      <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px">
+      <h4>Categorywise Reports</h4></paper-button>
     </div>
     <div class="card" hidden$="{{dataanalysiss}}">
-      <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px">
+      <h4>Consolidated Reports</h4></paper-button>
     </div>
     <div class="card" hidden$="{{studenttracking}}">
-      <paper-button on-click="FnStudentTracking" no ink><img src="../../images/performance.png" height="180px" width="180px"></paper-button>
+      <paper-button on-click="FnStudentTracking" no ink><img src="../../images/studenttrack.jpg" height="180px" width="180px">
+      <h4>Student Performance Tracking</h4></paper-button>
     </div>  
     <!-- <div class="card" hidden$="{{Analysiss}}">
       <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>

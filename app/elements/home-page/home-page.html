@@ -1093,12 +1093,19 @@ if(localStorage.getItem("curr_sess_page")=="student-scorcard-mail-card")
           document.querySelector('teacherhome-card').FnRefresh();
           document.querySelector('student-scorcard-mail-card').FnRefresh();
       }
-if(localStorage.getItem("curr_sess_page")=="student-term-comparison-report")
+      if(localStorage.getItem("curr_sess_page")=="student-term-comparison-report")
        {
          this.page="teacherhomecard";
          document.querySelector('teacherhome-card').FnRefresh();
          document.querySelector('student-term-comparison-report').FnRefresh();
        }
+
+    if(localStorage.getItem("curr_sess_page")=="student-performance-tracking-homecard")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('student-performance-tracking-homecard').FnRefresh();
+    }
       
       localStorage.setItem("curr_sess_page",this.page);
     },

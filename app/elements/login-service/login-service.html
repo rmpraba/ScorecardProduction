@@ -162,25 +162,20 @@
       },
       rolecheck:function(uname,pass)
       {
-
-      this.rolecheckurl=sessionStorage.getItem("addrinfo")+"/rolecheck-service";
+        this.rolecheckurl=sessionStorage.getItem("addrinfo")+"/rolecheck-service";
         var obj={"username":"","password":""};
         obj.username=uname;
-        obj.password=pass;
-        
+        obj.password=pass; 
         this.rolecheckparam=obj;
         this.$.rolecheckajax.generateRequest();
       },
-
       rolecheckResponse:function(e)
       {
-   //alert(JSON.stringify(e.detail.response.returnval));
+      //alert(JSON.stringify(e.detail.response.returnval));
       var rolearr=e.detail.response.returnval;
-  
       if(rolearr=="invalid"){
-    //  alert("Please Enter Valid UserName and Password");
+      //  alert("Please Enter Valid UserName and Password");
       document.querySelector('login-card').fnpswdialog("Please Enter Valid UserName and Password");
-     
       }
       else{
       document.querySelector('login-card').rolearr=rolearr;
