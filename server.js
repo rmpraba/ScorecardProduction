@@ -1275,13 +1275,12 @@ if(req.query.roleid=='subject-teacher'||req.query.roleid=='class-teacher'||req.q
   });
 });
 /*app.post('/enrichassesment-service',  urlencodedParser,function (req, res)
-{
-  
-  
-  var qur="select distinct(assesment_type) from enrichment_subject_mapping where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subjectname+"'";
+  {
  
-  console.log('term service....');
-  console.log(qur);
+    var qur="select distinct(assesment_type) from enrichment_subject_mapping where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subjectname+"'";
+ 
+   console.log('term service....');
+   console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
