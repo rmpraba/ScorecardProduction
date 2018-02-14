@@ -37,8 +37,7 @@
       {
         margin-left: 5%;
         @apply(--layout-horizontal);
-       
-      }
+       }
       .exceldiv
       {
         @apply(--layout-horizontal);
@@ -52,10 +51,10 @@
       }
       #hiddenexcelheaderfiles{
         @apply(--layout-horizontal);
-      }
+       }
       #upload{
         margin-left: -10%;
-        /*padding-top: -2%;*/
+      /*padding-top: -2%;*/
       }
       .fileupload{
         @apply(--layout-vertical);
@@ -78,21 +77,18 @@
       </div>
       <div id="hiddenexcelheaderfiles">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel3();"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel3()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
       <div class="exceldiv" >
-      <!-- <div class="fileupload"> -->
         <input id="readfile" type="file" onchange="loadFile(event)"/>
         <xmp id="output"></xmp>
-      <!-- </div> -->
-        <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
+   <paper-icon-button  id="upload" icon="icons:file-upload" on-click="FnClick"></paper-icon-button>
         <paper-tooltip for="upload">Upload</paper-tooltip>
-        
+      </div>
        </div>
-       </div>
-     </div>
+     </div> 
     <div hidden$="{{hideheader}}">
     <center>
       <h1>{{schoolname}}</h1>
@@ -129,7 +125,7 @@
       </template>
       </table> 
     </div>
-</div>
+
 
 
   </template>
@@ -138,7 +134,8 @@
   var array1=[];
   var tempstudentarr=[];
   
-  function loadFile(event) {
+  function loadFile(event){
+
   alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
     array1=data;
     // alert(JSON.stringify(array1));
@@ -151,23 +148,22 @@
        if(array1[i].StudentId.trim()==tempstudentarr[j].id.trim()){
           array.push(array1[i]);
          }      
-    } 
-
+        } 
     // alert(JSON.stringify(array));
-
-    }       
-  });
-  }
+   }       
+  }); 
+  } 
   </script>
-  <script type="text/javascript">
-
+<script type="text/javascript">
+  
 var exportsubjectnamecosolastic;
 function exportToExcel3(){
+
 var htmls = "";
 //alert("2");
 var tab_text = '<table border="1px" style="font-size:20px" ">';
     var textRange; 
-    var j = 0;
+    var j=0;
     var tab = document.getElementById('DataTableId3'); // id of table
     var lines = tab.rows.length;
 
@@ -207,6 +203,11 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
             link.click();
     }
 
+
+
+</script>
+
+  <script type="text/javascript">
 
 
 
@@ -271,7 +272,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
       }
     },
        FnClick:function(){
-   //    alert(JSON.stringify(tempstudentarr));
+      //    alert(JSON.stringify(tempstudentarr));
         var temp=[];
    if(array.length==0){
         alert("Pls save the file in EXCEL WORKBOOK extension!");

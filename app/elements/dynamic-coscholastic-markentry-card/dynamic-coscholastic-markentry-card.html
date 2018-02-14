@@ -75,7 +75,7 @@
       </div>
       <div id="cosolasticxluplodingid">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel2();"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel2()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -151,7 +151,7 @@
   }
   </script>
   <script type="text/javascript">
-var exportsubjectnamesolastic;
+    var exportsubjectnamesolastic;
 function exportToExcel2(){
 var htmls = "";
 //alert("2");
@@ -196,6 +196,10 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
             link.href = uri + base64(format(template, ctx));
             link.click();
     }
+
+    
+  </script>
+  <script type="text/javascript">
 
 
   var tableToExcel = (function() {

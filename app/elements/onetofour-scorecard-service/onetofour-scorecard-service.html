@@ -168,9 +168,10 @@
     var coscholasticarr;
     var cocurriculararr; 
     // var markarr=[]; 
-    Polymer({
+    Polymer({   
       is: 'onetofour-scorecard-service',
       ready:function(){          
+     
       },      
       callFetchstudentinfoService:function(studid){
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
@@ -183,19 +184,19 @@
         obj.studid=studid;
        this.fetchstudinfoparam=obj;
       this.$.fetchstudinfoajax.generateRequest();
-       },
+       },  
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
         var arr1=e.detail.response.emparr;
       //   alert(JSON.stringify(arr1));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
-       document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
+        document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
   document.querySelector('cce-onetofour-score-card').studentname=arr[0].student_name;        
  document.querySelector('cce-onetofour-score-card').parentname=arr[0].parent_name;
  document.querySelector('cce-onetofour-score-card').parentemail=arr[0].email;
  document.querySelector('cce-onetofour-score-card').secemail=arr[0].alternate_mail;
- document.querySelector('cce-onetofour-score-card').secemail=arr1[0].alternate_mail;
+ 
  document.querySelector('cce-onetofour-score-card').empsign=arr1[0].id+arr1[0].school_id+".jpg";
 // document.querySelector('cce-onetofour-score-card').principalsigns=sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
      

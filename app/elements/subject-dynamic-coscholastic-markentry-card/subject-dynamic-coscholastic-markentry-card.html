@@ -77,7 +77,7 @@
       </div>
       <div id="subjectdynamiccoscholasticid">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel4();"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel4()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -127,7 +127,7 @@
 
     <subject-dynamic-coscholastic-markentry-service id="cosubjectservice"></subject-dynamic-coscholastic-markentry-service>
     <paper-input value="{{categorylength}}" hidden></paper-input>
-     <div width="{{tabwidth}}" hidden>
+      <div width="{{tabwidth}}" hidden>
       <table id="DataTableId4" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
       <template is="dom-repeat" items="{{studarr1}}">
       <tr>
@@ -141,6 +141,8 @@
       </template>
       </table> 
      </div>
+   
+     
    
   </template>
   <script type="text/javascript">
@@ -156,35 +158,25 @@ function coloadFiles(event){
        // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
        if((array1[i].StudentId).trim()==(tempstudentarr[j].id).trim()){
           array.push(array1[i]);
-         }      
-    }  
+          }      
+      }  
     }       
-  });
+   });
   }
   </script>
   <script type="text/javascript">
-  
-
-
-
-
-var exportsubjectnamesolastic1;
-function exportToExcel4(){
-var htmls = "";
-//alert("2");
-var tab_text = '<table border="1px" style="font-size:20px" ">';
+    var exportsubjectnamesolastic1;
+  function exportToExcel4(){
+    var htmls = "";
+    var tab_text = '<table border="1px" style="font-size:20px" ">';
     var textRange; 
     var j = 0;
     var tab = document.getElementById('DataTableId4'); // id of table
     var lines = tab.rows.length;
-
-    // the first headline of the table
-    if (lines > 0) {
+  if (lines > 0) {
         tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
     }
-
-    // table data lines, loop starting from 1
-    for (j = 1 ; j < lines; j++) {     
+  for (j = 1 ; j < lines; j++) {     
         tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
     }
 
@@ -212,13 +204,9 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
             link.download = exportsubjectnamesolastic1;
             link.href = uri + base64(format(template, ctx));
             link.click();
-    }
-
-
-
-
-
-
+     }
+ </script>
+  <script type="text/javascript">
   var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
@@ -302,7 +290,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
                    // temp=[];
                       array=[];
                       array1=[];
-                     // tempstudentarr=[];
+                  //    tempstudentarr=[];
                       setarr=[];
                      // alert("Pls import the corrcet file name");
                      document.getElementById("coreadfiles").value = "";
@@ -313,8 +301,9 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
       else{
       document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);
       document.querySelector("coscholastic-assesment-card").spinnermsg='Please wait...uploading';
- 
-//alert(JSON.stringify(temp));
+                  
+  
+    //alert(JSON.stringify(temp));
     
       for(var i=0;i<temp.length;i++){
        var a = ("A,B,C,D").split(","); 
@@ -371,7 +360,15 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
       for(var i=0;i<finalarr.length;i++){
         finalarr[i].t=i+1;
       }
-  
+   // alert('final start');
+   // alert(JSON.stringify(temp));
+   // alert(JSON.stringify(finalarr)); 
+   // localStorage.setItem("curr_sess_lenth",finalarr.length);
+ //  alert(localStorage.getItem("curr_sess_lenth"));
+   // for(var i=0;i<finalarr.length;i++){
+   //  var t=i+1;
+   //   this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(finalarr[i].studid,finalarr[i].studname,finalarr[i].category,finalarr[i].subcategory,finalarr[i].avg,t);
+   //       }
    this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(temp,finalarr);
          document.getElementById("coreadfiles").value ="";
             temp=[];
@@ -382,9 +379,9 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
          document.getElementById("coreadfiles").value ="";
            this.categorylength="";
         document.querySelector('#coscolasticcheckid1').checked=false;
-      }             
-     }
-    }, 
+         }
+       }
+      }, 
   fngenrategrade:function(arr){
           tempassesmetarr=arr;
     },
@@ -429,7 +426,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
-     exportsubjectnamesolastic1=localStorage.getItem("curr_sess_subject");
+        exportsubjectnamesolastic1=localStorage.getItem("curr_sess_subject");
         this.$.dynamicsavebtn1.hidden=false;
         this.hideheader1=false;
         this.FnSetLabel();
