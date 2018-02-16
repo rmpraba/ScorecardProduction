@@ -11598,6 +11598,71 @@ app.post('/fnsetpasssectinvalue-service',  urlencodedParser,function (req,res)
       res.status(200).json({'returnval': ''});  
   });
 });
+
+
+
+
+app.post('/fnsetpasssectinvalue2-service',  urlencodedParser,function (req,res)
+{  
+  var qur="SELECT * FROM md_school_grade_mapping where school_id='"+req.query.school_id+"' and school_type='"+req.query.schooltype+"'  and academic_year='"+req.query.acadamicyear+"'";
+
+  var qur1="SELECT * FROM md_workingdays where school_id='"+req.query.school_id+"' and school_type='"+req.query.schooltype+"' and academic_year='"+req.query.acadamicyear+"'";
+   console.log("--------------working 9to10-------------");
+   console.log(qur);
+   console.log(qur1);  
+   var dbarr=[]
+   connection.query(qur1,function(err, rows)
+    {   
+    if(!err) 
+      dbarr=rows;
+     connection.query(qur,function(err, rows)
+     {   
+    if(!err)      
+     { 
+       res.status(200).json({'returnval': rows,'dbarr':dbarr});
+      }
+    else{
+      res.status(200).json({'returnval': ''});  
+      }
+    });
+   });
+});
+
+
+app.post('/fnsetpasssectinvalue3-service',  urlencodedParser,function (req,res)
+{  
+  var qur="SELECT * FROM md_school_grade_mapping where school_id='"+req.query.school_id+"' and school_type='"+req.query.schooltype+"'  and academic_year='"+req.query.acadamicyear+"'";
+
+  var qur1="SELECT * FROM md_workingdays where school_id='"+req.query.school_id+"' and school_type='"+req.query.schooltype+"' and academic_year='"+req.query.acadamicyear+"'";
+  
+  var qur2="SELECT  DISTINCT(grade_id),grade_name,term_id FROM md_grade_assesment_mapping where school_id='"+req.query.school_id+"' and academic_year='"+req.query.acadamicyear+"'";
+   console.log("--------------working 9to10-------------");
+   console.log(qur);
+   console.log(qur1);  
+   console.log(qur2);  
+   var dbarr=[];
+   var dbarr1=[];
+   connection.query(qur1,function(err, rows)
+    {   
+    if(!err) 
+      dbarr=rows;
+     connection.query(qur2,function(err, rows)
+    {   
+    if(!err) 
+      dbarr1=rows;
+     connection.query(qur,function(err, rows)
+     {   
+    if(!err)      
+     { 
+       res.status(200).json({'returnval': rows,'dbarr':dbarr,'dbarr1':dbarr1});
+      }
+    else{
+      res.status(200).json({'returnval': ''});  
+      }
+    });
+   });});
+});
+
 app.post('/SchooltypetoGrademapping-service',  urlencodedParser,function (req,res)
 {  
      var e={school_id:req.query.schoolid};
@@ -13019,24 +13084,6 @@ app.post('/fnsetstudentinfo-service' , urlencodedParser,function (req, res)
    });
 });
 
-
-app.post('/fngetpasssectinvaluezzz-service',  urlencodedParser,function (req,res)
-  {  
-    /* var obj={"school_id":"","schooltype":"","acadamicyear":""};
-*/  var qur="SELECT * FROM md_workingdays where school_id='"+req.query.school_id+"' and school_type='"+req.query.schooltype+"' and academic_year='"+req.query.acadamicyear+"'";
-    //console.log(qur);
-     connection.query(qur,
-    function(err, rows)
-    {
-    if(!err)
-    { 
-      //console.log(JSON.stringify(rows));   
-      res.status(200).json({'returnval': rows});
-    }
-    else
-     res.status(200).json({'returnval': ''}); 
-  });
-});
 
 
 
