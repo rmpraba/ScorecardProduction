@@ -324,6 +324,9 @@
       <section data-category="student-performance-tracking-homecard">
           <student-performance-tracking-homecard></student-performance-tracking-homecard>
       </section> 
+      <section data-category="dashboard-homecard">
+          <dashboard-homecard></dashboard-homecard>
+      </section> 
         </iron-pages>
     </div>   
     <div class="footer"></div>
@@ -1106,7 +1109,12 @@ if(localStorage.getItem("curr_sess_page")=="student-scorcard-mail-card")
       document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('student-performance-tracking-homecard').FnRefresh();
     }
-      
+    if(localStorage.getItem("curr_sess_page")=="dashboard-homecard")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('dashboard-homecard').FnRefresh();
+    }
       localStorage.setItem("curr_sess_page",this.page);
     },
 

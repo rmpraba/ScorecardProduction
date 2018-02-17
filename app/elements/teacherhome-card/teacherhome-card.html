@@ -514,6 +514,10 @@
       <paper-button on-click="FnStudentTracking" no ink><img src="../../images/studenttrack.jpg" height="180px" width="180px">
       <h4>Student Performance Tracking</h4></paper-button>
     </div>  
+    <div class="card" hidden$="{{overalldashboard}}">
+      <paper-button on-click="FnOverallDashboard" no ink><img src="../../images/dashboard.gif" height="180px" width="180px">
+      <h4>Dashboard</h4></paper-button>
+    </div> 
     <!-- <div class="card" hidden$="{{Analysiss}}">
       <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
     </div>  --> 
@@ -1427,6 +1431,13 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('student-performance-tracking-homecard','');
         document.querySelector('student-performance-tracking-homecard').FnCallService();      
+      },
+      FnOverallDashboard:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Overalldashboard');
+        // document.querySelector('student-performance-tracking-homecard').FnHideSchool();
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('dashboard-homecard','');
+        document.querySelector('dashboard-homecard').FnCallService();
       },
       fnsendmails:function(e){
        localStorage.setItem('curr_sess_loggedassesmenttype','sendmailsid');

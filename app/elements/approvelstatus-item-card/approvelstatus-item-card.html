@@ -16,10 +16,11 @@
       .card{
         @apply(--layout-horizontal);
         margin-top: 0.5%;
+        width: 100%;
       } 
       p{
-        width: 25%;
-        margin-left: 10%;
+        width: 20%;
+        margin-left: 2%;
       } 
       paper-button{
         text-transform: none;
@@ -33,13 +34,13 @@
     </style>
     <div hidden>{{category}}</div>
         <div class="card" style="{{color}}">
-          <p class='p1' style="margin-left: 0%;{{font}}">{{academicyear}}</p>
-          <p class='p2' style="margin-left: 10%;{{font}}">{{termname}}</p>          
-          <p class='p4' style="margin-left: 5%;{{font}}">{{grade}}</p>
-          <p class='p5' style="margin-left: 5%;{{font}}">{{section}}</p>
-          <p class='p6' style="margin-left: 5%;{{font}}">{{subject}}</p>
-          <p class='p3' style="margin-left: 5%;{{font}}">{{assesmentid}}</p>
-          <p class='p6' style="margin-left: 5%;{{font}}">{{flag}}</p>
+          <p class='p1' style="{{font}}">{{academicyear}}</p>
+          <p class='p2' style="{{font}}">{{termname}}</p>          
+          <p class='p4' style="{{font}}">{{grade}}</p>
+          <p class='p5' style="{{font}}">{{section}}</p>
+          <p class='p6' style="{{font}}">{{subject}}</p>
+          <p class='p3' style="{{font}}">{{assesmentid}}</p>
+          <p class='p6' style="{{font}}">{{flag}}</p>
           <p class='p7' ><ahref hidden$="{{hideflag}}" class="viewdata" on-click="FnRemove"><u>Revert</u></ahref></p>
         </div>
         <term-assesment-service id="assesmentservice"></term-assesment-service>        
