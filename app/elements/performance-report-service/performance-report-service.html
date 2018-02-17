@@ -296,7 +296,7 @@
         // alert('category display');
         // alert(JSON.stringify(arr1[k].categoryarr));
         for(var i=0;i<arr1[k].categoryarr.length;i++){
-          category=arr1[k].categoryarr[i].sub_category_name+"-"+arr1[k].categoryarr[i].level+"-"+arr1[k].categoryarr[i].configcolumn;
+          category=arr1[k].categoryarr[i].sub_category_name+"-"+arr1[k].categoryarr[i].level;
           subcategoryname=arr1[k].categoryarr[i].sub_category_name;
           level=arr1[k].categoryarr[i].level;
           configcolumn=arr1[k].categoryarr[i].configcolumn;
@@ -342,6 +342,7 @@
         overallassesmentarr=[];
         localStorage.setItem("curr_sess_assesment","");
         }
+        document.querySelector('student-performance-tracking-homecard').FnToggleSpinner(false);
       },
       FnFetchlevelbasedstudents:function(subject,categoryname,subcategory,level,configcolumn,assesment){
         this.fetchlevelbasedstudentsurl=sessionStorage.getItem("addrinfo")+"/performance-fetchlevelbasedstudents-service";

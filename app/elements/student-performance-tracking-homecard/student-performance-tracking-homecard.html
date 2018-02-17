@@ -128,7 +128,6 @@
     </paper-dialog>
     </div>
 
-
   </template>
   <script>
   (function() {
@@ -140,6 +139,7 @@
         this.$.sspthcbranch.hidden=false;
         if(sessionStorage.getItem("curr_sess_loggedroleid")!='management'){
         this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        localStorage.setItem("curr_sess_schoolid",this.schoolid);
         this.$.sspthcbranch.hidden=true;
         }
         this.$.performancereportservice.FnFetchBranchService();
@@ -184,8 +184,8 @@
         this.sectionid=e.target.selectedItem.value.trim();
         this.sectionname=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",this.sectionname);
-        this.FnToggleSpinner(true);
-        this.spinnermsg="Please wait...";
+        // this.FnToggleSpinner(true);
+        // this.spinnermsg="Please wait...";
         this.$.performancereportservice.FnFetchAssesmentInfo(this.schoolid,this.academicyear,this.gradeid,this.gradename,this.sectionid,this.sectionname);
       },
       FnToggleSpinner:function(flag){

@@ -17072,7 +17072,7 @@ app.post('/fetchnewformatcoscholasticsubjects2-service',  urlencodedParser,funct
   // "tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
   // "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' AND term_name='"+req.query.termname+"'"+
   // "group by subject_id";
-  var qur="SELECT '"+req.query.termname+"',student_id,max(mark) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='SCH008' "+
+  var qur="SELECT '"+req.query.termname+"',student_id,max(mark) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
   " AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' group by '"+req.query.termname+"',subject_id";
   var qur1="select * from md_coscholastic_grade_rating";
   console.log('----------------------------------------');
