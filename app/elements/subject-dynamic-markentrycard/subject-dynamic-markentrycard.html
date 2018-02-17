@@ -382,7 +382,7 @@ this.$.hiddenexcelheaderfiles1.hidden=true;
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
         this.$.dynamicsavebtn.hidden=false;
-         exporthighersubjectnamecosolastic=localStorage.getItem("curr_sess_subject");
+         exporthighersubjectnamecosolastic=this.grade+"-"+this.section+"-"+localStorage.getItem("curr_sess_subject")+"-"+this.assesmentname;
     if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
       this.$.templatecheckvalueid11.hidden=true;
          else

@@ -424,7 +424,7 @@ this.$.subjectdynamiccoscholasticid.hidden=true;
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
-        exportsubjectnamesolastic1=localStorage.getItem("curr_sess_subject");
+        exportsubjectnamesolastic1=this.grade+"-"+this.section+"-"+localStorage.getItem("curr_sess_subject")+"-"+this.assesmentname;
         this.$.dynamicsavebtn1.hidden=false;
         this.hideheader1=false;
         this.FnSetLabel();

@@ -6,18 +6,18 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({  
-  host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  database:"scorecarddb",
-  port:'3306',
-  user:"smis",
-  password:"smispass",
-  reconnect:true,
-  data_source_provider:"rds",
-  type:"mysql"   
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
+  // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  // database:"scorecarddb",
+  // port:'3306',
+  // user:"smis",
+  // password:"smispass",
+  // reconnect:true,
+  // data_source_provider:"rds",
+  // type:"mysql"   
+  host     : 'localhost',
+  user     : 'root',
+  password : 'admin',
+  database : 'mlzsreportcard'
  });
 
 var bodyParser = require('body-parser'); 
@@ -1658,7 +1658,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   }
   else if(req.query.roleid=='class-teacher')
   {
-    var qur="select s.subject_id,s.subject_name,s.language_pref from md_subject s join "+
+    var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_subject s join "+
     " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
     " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
     " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
@@ -1671,7 +1671,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   }
    else if(req.query.roleid=='co-ordinator')
   {
-    var qur="select s.subject_id,s.subject_name,s.language_pref from md_subject s join "+
+    var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_subject s join "+
     " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
     " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
     " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
@@ -16991,7 +16991,7 @@ app.post('/fetchnewformatscholasticsubjects-service2',  urlencodedParser,functio
   // var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name in(select term_name from md_term "+
   // " where id <=(select id from md_term where term='"+req.query.termname+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
   var createqur="INSERT INTO tr_fa_overall SELECT grade,(select distinct(type) from subject_mapping where assesment_type=assesment_id) as type,category,subject_id,student_id, "+
-  " max(mark) as total FROM tr_term_fa_assesment_marks  WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' "+
+  " MAX(CAST(mark as UNSIGNED)) as total FROM tr_term_fa_assesment_marks  WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' "+
   " AND student_id='"+req.query.studentid+"' group by subject_id,(select distinct(type) from subject_mapping where assesment_type=assesment_id), "+
   " category,student_id,grade order by subject_id";
   var qur="select grade,type as assesment_id,subject_id,student_id,sum(total) as total from tr_fa_overall group by grade,type,subject_id,student_id "+
@@ -17119,7 +17119,7 @@ app.post('/fetchnewformatcoscholasticsubjects2-service',  urlencodedParser,funct
   // "tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
   // "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' AND term_name='"+req.query.termname+"'"+
   // "group by subject_id";
-  var qur="SELECT '"+req.query.termname+"',student_id,max(mark) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
+  var qur="SELECT '"+req.query.termname+"',student_id,MAX(CAST(mark as UNSIGNED)) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
   " AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' group by '"+req.query.termname+"',subject_id";
   var qur1="select * from md_coscholastic_grade_rating";
   console.log('----------------------------------------');
@@ -20145,7 +20145,7 @@ app.post('/reversalfetchauditlevel-service',  urlencodedParser,function (req, re
 { 
     var qur="select assesment_id as level from md_assesment where assesment_name in(SELECT assesment_level2 as level FROM tr_term_auditimport WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query
     .grade+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"')";
-    var qur1="SELECT MIN(assesment_id) as minlevel,MAX(assesment_id) as maxlevel FROM md_assesment";
+    var qur1="SELECT MIN(CAST(assesment_id as UNSIGNED)) as minlevel,MAX(CAST(assesment_id as UNSIGNED)) as maxlevel FROM md_assesment";
     var qur2="SELECT assesment_id as level FROM md_assesment WHERE assesment_name='"+req.query.assesment+"'";
     console.log("------------------Fetch student academicyear----------------------");
     console.log(qur);

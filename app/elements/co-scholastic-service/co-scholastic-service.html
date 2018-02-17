@@ -869,9 +869,12 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
       insertattendanceResponse:function(e){
         //alert(e.detail.response.returnval);
         temphealth++;
+        // alert(localStorage.getItem("curr_sess_template_tef"));
+        // alert(temphealth+"  "+localStorage.getItem("curr_sess_lenth"));
      if(localStorage.getItem("curr_sess_template_tef")=="active"){
         if(temphealth==(localStorage.getItem("curr_sess_lenth"))){
-        document.querySelector("coscholastic-assesment-card").TermMarkdialog();      
+        // document.querySelector("coscholastic-assesment-card").TermMarkdialog("Mark Saved!!"); 
+        document.querySelector("attendance-card").FnSpinnerrActive(false);     
         document.querySelector("coscholastic-assesment-card").callService();
         temphealth=0;
       }
@@ -913,8 +916,8 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
          temphealth++;
      if(localStorage.getItem("curr_sess_template_tef")=="active"){
         if(temphealth==(localStorage.getItem("curr_sess_lenth"))){
-     document.querySelector("coscholastic-assesment-card").TermMarkdialog("Health info Saved!");
-         
+     // document.querySelector("coscholastic-assesment-card").TermMarkdialog("Health info Saved!");
+        document.querySelector("cce-fivetoten-health-card").FnSpinnerrActive(false);
         document.querySelector("coscholastic-assesment-card").callService();
         temphealth=0;
       }
@@ -922,7 +925,7 @@ document.querySelector('subject-dynamic-coscholastic-markentry-cards').coarr=coa
      else{
        if(e.detail.response.returnval=="inserted"||e.detail.response.returnval=="updated"){
        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Term"||localStorage.getItem('curr_sess_loggedassesmenttype')=="Approval"){ 
-       document.querySelector("coscholastic-assesment-card").TermMarkdialog("Attendance Saved!");  
+       document.querySelector("coscholastic-assesment-card").TermMarkdialog("Health Info Saved!");  
        }
        else if(localStorage.getItem('curr_sess_loggedassesmenttype')=="singlestudentinfo"){
        document.querySelector('single-student-mark-entery-card').FnToggleSpinner(false);

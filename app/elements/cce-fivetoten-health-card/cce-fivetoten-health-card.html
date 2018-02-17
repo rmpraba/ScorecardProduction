@@ -191,7 +191,7 @@
   
 
 
-
+var filename;
 function exportToExcel(){
 var htmls = "";
 
@@ -235,7 +235,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
                 table : htmls
             }
         var link = document.createElement("a");
-            link.download = "healthinfo";
+            link.download = filename;
             link.href = uri + base64(format(template, ctx));
             link.click();
     }
@@ -398,7 +398,7 @@ this.$.heathovarallfileid.hidden=true;
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
                this.$.heathovarallfileid.hidden=true;
-
+        filename=this.grade+"-"+this.section+"-"+this.subject
 
 
  if(localStorage.getItem('curr_sess_report')=='0'){

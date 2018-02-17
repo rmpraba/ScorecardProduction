@@ -392,7 +392,7 @@ fngenrategrade:function(arr){
         var hour = dt.getHours();
         var mins = dt.getMinutes();
         var postfix = day + "." + month + "." + year + "_" + hour + "." + mins;
-        exportsubjectnamesolastic=localStorage.getItem("curr_sess_subject").trim();
+        exportsubjectnamesolastic=this.grade+"-"+this.section+"-"+localStorage.getItem("curr_sess_subject").trim()+"-"+this.assesmentname;
         this.$.dynamicsavebtn.hidden=false;
         this.disablesave=false;
         this.FnSetLabel();
