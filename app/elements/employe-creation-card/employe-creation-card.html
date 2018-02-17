@@ -1,9 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\employee-schooltype-to-category-basecard/employee-schooltype-to-category-basecard.html">
-
-
-<dom-module id="employe-creation-card">
+<dom-module id="employe-creation-card">  
   <template>
     <style>
       :host {
@@ -161,10 +159,7 @@
     
 
        },
-
-   
-   
-      f11:function(e){
+  f11:function(e){
         
          var c=empgetarr.length;
               if(empgetarr!=0){
@@ -183,14 +178,12 @@
             empgetarr.splice(obj);
            }
         },
-
-
-      deletesubjectzResponse:function(e){
+  deletesubjectzResponse:function(e){
      var res=e.detail.response.returnval; 
       //alert(JSON.stringify(res));
     
       },
-      FnSubmit:function(e)
+ FnSubmit:function(e)
       {
          var obj={"school_id":"","empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
                    obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid"); 
@@ -203,8 +196,7 @@
                document.querySelector('employe-schooltype-to-category-card').deldbarr(empgetarrdelarr); 
              this.$.empremapid.close();
            },
-   
-         Fnsubjectclean:function(e){
+  Fnsubjectclean:function(e){
           if(empgetarr.length!=0){
        for(var i=0;i<empgetarr.length;i++){
                var empty=empgetarr[i].id;
@@ -221,8 +213,7 @@
              empgetarr.splice(obj);
            }
         },
-   
-         stupersonalinfo13:function(arr)
+   stupersonalinfo13:function(arr)
         {
                 for(var k=0;k<arr.length;k++){
                 var  dbid=arr[k].dd;
@@ -230,18 +221,6 @@
         }
      },
        
-        /* fnnewsave:function(e)
-        {
-          if(empgetarr.length!=0) 
-          {
-            document.querySelector('employe-schooltype-to-category-card').fnndialogg();
-          }
-          else
-          {
-            document.querySelector('employe-schooltype-to-category-card').fnninput();
-          }
-        }
-  */
   });
   })();
   </script>

@@ -96,7 +96,7 @@
       </div>
       <div id="attendencefileid">
       <div class="hrspace">
-      <paper-icon-button  icon="icons:file-download" onclick="exportToExcel1();"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel1()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -111,8 +111,8 @@
        </div>
        </div>
        </div>
-    <div>  
-    <div id="hidetop">
+  
+     <div id="hidetop">
       <center><h1>{{schoolname}}</h1>      
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Term : &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} : &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
@@ -120,18 +120,19 @@
       <table border="1">    
      
       <template is="dom-repeat" items="{{studarr}}">
-      <tr>
-        <attendance-item-card savelabel="Save" hidefist="{{item.hidefist}}" hidesecond="{{item.hidesecond}}" fonts="{{item.font}}" serialno="{{item.serialno}}" hidesavevalue="{{hidesavevalue}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
+       <tr>
+           <attendance-item-card savelabel="Save" hidefist="{{item.hidefist}}" hidesecond="{{item.hidesecond}}" fonts="{{item.font}}" serialno="{{item.serialno}}" hidesavevalue="{{hidesavevalue}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
     
-      </tr>  
-      </template> 
+       </tr>  
+    </template> 
     
       </table>      
       </center> 
-      </div>
       <paper-button class="button" id="attendencesubmit" on-click="importmark">{{importlabel}}</paper-button>
-    </div>  
-    <div  id="attendencetemplatefeildid" >
+
+     </div>
+  
+    <div  id="attendencetemplatefeildid" hidden>
        <table border="1" >    
       <tr>   
        <th id="tb1">SNo</th>
@@ -141,7 +142,7 @@
        <th id="tb2">GenericComment</th>
        <th id="tb2">SpecificComment</th>
      </tr>  
-      <template is="dom-repeat" items="{{studarr1}}">
+      <template is="dom-repeat" items="{{studarr}}">
       <tr>
        <td>{{item.serialno}}</td>
        <td>{{item.id}}</td>
@@ -156,7 +157,8 @@
     <center>
      <input type="button" id="btn2" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')" value="Export to Excel" hidden$="{{hidedownload}}">
     </center>
-    </div> 
+    </div>  
+
 
  <table border="1"  id="DataTableId1" hidden>    
       <tr>   
@@ -177,13 +179,13 @@
        <td>{{item.speccomment}}</td>
       </tr>  
       </template> 
-     </table> 
+    </table> 
 
      <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
      <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
-   <iframe id="txtArea1" style="display:none"></iframe>
-   <script type="text/javascript">
+ <script type="text/javascript">
+   
  
 
 
@@ -237,14 +239,14 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
 
 
 
+ </script>
 
 
 
 
 
 
-
-
+   <script type="text/javascript">
   var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
@@ -320,7 +322,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
             temp=[];
             array=[];
             array1=[];
-          //  tempstudentarr=[];
+            tempstudentarr=[];
             document.getElementById("attendancefile").value ="";
            this.categorylength="";
         }
@@ -380,11 +382,15 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
       },
        FnRefresh:function()
        {
+       this.$.attendencefileid.hidden=true;
+
         this.hidedownload=true;
         this.$.hidetop.hidden=true;
         this.studarr=[];
         localStorage.setItem("curr_sess_template_tef","inactive"); 
         document.querySelector("#attendancecheckid").checked=false;
+        this.$.attendancecheckid.hidden=true;
+   
        },
        FnSpinnerrActive:function(flag){
         if(flag==true)

@@ -33,7 +33,7 @@
         <th width="25%" valign="top"><p>{{studentname}}</p></th>
        
         <template is="dom-repeat" items="{{category}}">
-          <td valign="top" colspan="{{item.categorycnt}}">
+          <td valign="top" colspan="{{item.categorycnt}}">  
      <subject-dynamic-coscholastic-markentry-cards id="sdmei" studentnamess="{{studentname}}" categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" weight="{{item.weight}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}" ids="{{item.ids}}"></subject-dynamic-coscholastic-markentry-cards>
           </td>
         </template>

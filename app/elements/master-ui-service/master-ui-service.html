@@ -1053,6 +1053,17 @@
         on-response="fnsetpasssectinvalueResponse"
         debounce-duration="300">
       </iron-ajax>
+        
+       <iron-ajax        
+        id="fnsetpasssectinvalue2ajax"
+        url="{{fnsetpasssectinvalue2url}}"
+        params="{{fnsetpasssectinvalue2param}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fnsetpasssectinvalue2Response"
+        debounce-duration="300">
+      </iron-ajax>
        <iron-ajax        
         id="fnsetfixdsectionajax"
         url="{{fnsetfixdsectionurl}}"
@@ -1083,16 +1094,7 @@
         on-response="fngetpasssectinvalueResponse"
         debounce-duration="300">
       </iron-ajax>
-       <iron-ajax        
-           id="fngetpasssectintermvalueajax"
-          url="{{fngetpasssectintermvalueurl}}"
-        params="{{fngetpasssectintermvalueparam}}"
-        handle-as="json"
-        content-type="application/json"
-        method="post"
-        on-response="fngetpasssectintermvalueResponse"
-        debounce-duration="300">
-      </iron-ajax>
+    
        <iron-ajax        
            id="fnsetfixdsection1ajax"
           url="{{fnsetfixdsection1url}}"
@@ -1454,7 +1456,79 @@ document.querySelector('student-list-pass-section-card').studentcheckinfo1(res);
         var res=e.detail.response.returnval; 
         //alert(JSON.stringify(res));
        document.querySelector('student-allow-card').scooltypgridval(res);
-       document.querySelector('working-days-card').scooltypgridvalzzz(res);
+      // document.querySelector('working-days-card').scooltypgridvalzzz(res);
+      },
+  
+     fnsetpasssectinvalue2:function(schooltype,acadamicyear){     
+     this.fnsetpasssectinvalue2url=sessionStorage.getItem("addrinfo")+"/fnsetpasssectinvalue3-service";
+        var obj={"school_id":"","schooltype":"","acadamicyear":""};
+         obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.schooltype=schooltype;
+         obj.acadamicyear=acadamicyear;
+         this.fnsetpasssectinvalue2param=obj;
+         this.$.fnsetpasssectinvalue2ajax.generateRequest();
+     },
+     fnsetpasssectinvalue2Response:function(e)
+     {
+        var res=e.detail.response.returnval; 
+        var res1=e.detail.response.dbarr;
+        var res2=e.detail.response.dbarr1;
+        var  overall=[];
+            for(var i=0;i<res2.length;i++){
+              for(var j=0;j<res1.length;j++){
+              if((res1[j].type).toLowerCase()==(res2[i].grade_name).toLowerCase()){
+                if((res1[j].term_name).toLowerCase()==(res2[i].term_id).toLowerCase()){
+                     res2[i].working=res1[j].no_of_days;
+                         }
+                      }}}  
+            
+    var c=0;
+       for(var i=0;i<res.length;i++){
+                var obj={};
+                    obj.gradeid=res[i].grade_id;
+                    obj.gradename=res[i].grade_name;
+                    obj.hideheadervalue=false;
+                    obj.hideheadervalue1=true;
+               var temparr=[];
+               
+                for(var j=0;j<res2.length;j++){
+                  if((res[i].grade_name).toLowerCase()==(res2[j].grade_name).toLowerCase()){
+                      var obj2={};
+                           obj2.termid=res2[j].term_id;
+                           obj2.working=res2[j].working;
+                           temparr.push(obj2);
+                          }
+                       }
+                      obj.subject=temparr;
+                      obj.count=temparr.length;
+                       if(c==0){
+                         var obj3={};
+                              obj3.gradename="Grade Name";
+                              obj3.gradeid="Grade id";
+                              obj3.subject=temparr;
+                              obj3.hideheadervalue=true;
+                              obj3.hideheadervalue1=false;
+                              obj3.fonts="font-weight: bold;text-transform: uppercase;text-align:center;"
+                              overall.push(obj3);
+                          
+                          }
+                       else if(c!=temparr.length){
+                           var obj4={};
+                              obj4.gradename="Grade Name";
+                              obj4.gradeid="Grade id";
+                              obj4.subject=temparr;
+                              obj4.hideheadervalue=true;
+                              obj4.hideheadervalue1=false;
+                              obj4.fonts="font-weight: bold;text-transform: uppercase;text-align:center;"
+                              overall.push(obj4);
+                        }  
+                      overall.push(obj);
+                      c=temparr.length;
+                       temparr=[];
+
+                     }
+
+        document.querySelector('working-days-card').category=overall;
       },
        fngetpasssectinvalue:function(schooltype,acadamicyear){     
        this.fngetpasssectinvalueurl=sessionStorage.getItem("addrinfo")+"/fngetpasssectinvalue-service";
@@ -2006,7 +2080,7 @@ fnschoolemployeerole:function( employeeid,employeename){
      var res=e.detail.response.returnval; 
      // alert(JSON.stringify(res));
      document.querySelector('new-employee-creation-card').selectschoolpersonalarr=res;
-     document.querySelector('new-employee-creation-card').clsspiner();
+     document.querySelector('new-employee-creation-card').FnToggleSpinner(false);
       }, 
     
     fnschoolemployeeschooltypeResponse:function(e)
@@ -3444,22 +3518,7 @@ insertschoolTypename:function(schooltypesarr)
           this.FnFetchGrade();
         }
       },
-       fngetpasssectinvaluezz:function(schooltype,acadamicyear){     
-       this.fngetpasssectintermvalueurl=sessionStorage.getItem("addrinfo")+"/fngetpasssectinvaluezzz-service";
-        var obj={"school_id":"","schooltype":"","acadamicyear":""};
-         obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-         obj.schooltype=schooltype;
-         obj.acadamicyear=acadamicyear;
-       this.fngetpasssectintermvalueparam=obj;
-       this.$.fngetpasssectintermvalueajax.generateRequest();
-     },
-     fngetpasssectintermvalueResponse:function(e)
-     {
-        var res=e.detail.response.returnval; 
-        //alert("get working");
-        //alert(JSON.stringify(res));
-        document.querySelector('working-days-card').scooltypgridval1(res);
-     },
+ 
 
        previoussection:function(admissionno,gradeid,schooltype)
         {

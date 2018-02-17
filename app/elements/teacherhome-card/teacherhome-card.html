@@ -820,8 +820,11 @@
           {
               document.querySelector('app-card').setPage('homepage','');
               document.querySelector('home-page').setPage('new-employee-creation-card','');
+        document.querySelector('new-employee-creation-card').FnToggleSpinner(true);
+            
               document.querySelector('new-employee-creation-card').fnnewemp();
               this.$.uiservice.fnschoolemployeepersonal();              
+              
               //alert('2');
         }
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentmanagement")
@@ -1581,7 +1584,6 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
         this.$.uiservice.fnempgenerateid();
         this.$.uiservice.selectschooltype();
         this.$.uiservice.selectrolename();
-        document.querySelector('new-employee-creation-card').openspinr();
         //document.querySelector('new-employee-creation-card').hidecreateemp=false;
         //document.querySelector('new-employee-creation-card').hideupdateemp=true;
         this.$.cdialog.toggle();   

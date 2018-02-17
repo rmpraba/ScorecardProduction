@@ -82,7 +82,7 @@
       </div>
       <div id="hiddenexcelheaderfiles1">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel5();"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel5()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -184,7 +184,7 @@
   }
   </script>
   <script type="text/javascript">
-  var exporthighersubjectnamecosolastic;
+     var exporthighersubjectnamecosolastic;
 function exportToExcel5(){
 var htmls = "";
 //alert("2");
@@ -236,6 +236,9 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
 
 
 
+  </script>
+  <script type="text/javascript">
+ 
   var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
