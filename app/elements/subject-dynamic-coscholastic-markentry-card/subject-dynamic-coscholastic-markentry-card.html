@@ -168,7 +168,7 @@ function coloadFiles(event){
     var exportsubjectnamesolastic1;
   function exportToExcel4(){
     var htmls = "";
-    var tab_text = '<table border="1px" style="font-size:20px" ">';
+    var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j = 0;
     var tab = document.getElementById('DataTableId4'); // id of table
@@ -197,7 +197,7 @@ function coloadFiles(event){
          htmls = tab_text
 
             var ctx = {
-                worksheet : 'Worksheet',
+                worksheet : exportsubjectnamesolastic1 || 'Worksheet',
                 table : htmls
             }
         var link = document.createElement("a");

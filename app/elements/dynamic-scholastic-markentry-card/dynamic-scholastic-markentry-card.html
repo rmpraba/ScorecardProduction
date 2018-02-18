@@ -157,7 +157,7 @@ var exportsubjectnamecosolastic;
 function exportToExcel3(){
 var htmls = "";
 //alert("2");
-var tab_text = '<table border="1px" style="font-size:20px" ">';
+var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j=0;
     var tab = document.getElementById('DataTableId3'); // id of table
@@ -190,7 +190,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
          htmls = tab_text
 
             var ctx = {
-                worksheet : 'Worksheet',
+                worksheet : exportsubjectnamecosolastic || 'Worksheet',
                 table : htmls
             }
         var link = document.createElement("a");
