@@ -142,7 +142,7 @@
           obj.width=parseFloat(assesment[i].spancount)*parseFloat(divider)+"%";
           temp.push(obj);
         }
-        overall.push({"sno":"","studentid":"","studentname":"","titlearr":temp});
+        overall.push({"sno":"Sno","studentid":"Student Id","studentname":"Student Name","titlearr":temp});
         var temp=[];
         for(var i=0;i<subject.length;i++){
           subject[i].spancount=(parseFloat(subject[i].subcatcount)*4);
@@ -192,7 +192,7 @@
           if(t==5)
             t=1;
         }
-        overall.push({"sno":"Sno","studentid":"Student Id","studentname":"Student Name","titlearr":temp});
+        overall.push({"sno":"","studentid":"","studentname":"","titlearr":temp});
         for(var x=0;x<student.length;x++){
         var temp=[];
         for(var i=0;i<subcategory.length;i++){
@@ -224,7 +224,10 @@
 
         // alert(JSON.stringify(overall));
         document.querySelector('student-performance-tracking-homecard').excelarr=overall;
-        
+        // document.querySelector('student-performance-tracking-homecard').FnToggleSpinner(false);
+        // document.querySelector('student-performance-tracking-homecard').exportToExcel();
+        document.querySelector('student-performance-tracking-homecard').hidedownloadicon=false;
+        document.querySelector('student-performance-tracking-homecard').downloadlabel="Download";
       },
       FnFetchBranchService:function(){
         this.fetchbranchurl=sessionStorage.getItem("addrinfo")+"/performance-fetchbranch-service";
