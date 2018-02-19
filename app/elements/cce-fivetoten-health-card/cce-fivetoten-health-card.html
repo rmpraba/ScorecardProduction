@@ -93,7 +93,7 @@
       </div>
       <div id="heathovarallfileid">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel()"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="healthexportToExcel1()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -127,7 +127,7 @@
     </div>
      
    
-   <div  id="dynamicreporttable1111" hidden>
+   <div  id="HealthDataTableId2" hidden>
       <table border="1" id="MarkTable">    
       <tr>
       <th id="tb3">SNo</th>
@@ -156,11 +156,11 @@
       </table>
        </div>
        <center>
-     <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable1111', 'Mark Report')" value="Export to Excel" hidden$="{{hidedownload}}">
+     <input type="button" id="btn2" onclick="healthexportToExcel1()" value="Export to Excel" hidden$="{{hidedownload}}">
     </center>
      <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
 
-<table border="1" id="DataTableId" hidden>    
+<table border="1" id="HealthDataTableId1" hidden>    
       <tr>
       <th id="tb3">SNo</th>
       <th id="tb3">StudentId</th>
@@ -188,17 +188,14 @@
       </table>
   </template>
 <script type="text/javascript">
-  
-
-
 var filename;
-function exportToExcel(){
+function healthexportToExcel1(){
 var htmls = "";
 
 var tab_text = '<table border="1px" style="font-size:20px" ">';
     var textRange; 
     var j = 0;
-    var tab = document.getElementById('DataTableId'); // id of table
+    var tab = document.getElementById('HealthDataTableId1'); // id of table
     var lines = tab.rows.length;
 
     // the first headline of the table
@@ -231,7 +228,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
          htmls = tab_text
 
             var ctx = {
-                worksheet : 'Worksheet',
+                worksheet : filename || 'Worksheet',
                 table : htmls
             }
         var link = document.createElement("a");
@@ -240,6 +237,53 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
             link.click();
     }
 
+function healthexportToExcel2(){
+var htmls = "";
+
+var tab_text = '<table border="1px" style="font-size:20px" ">';
+    var textRange; 
+    var j = 0;
+    var tab = document.getElementById('HealthDataTableId2'); // id of table
+    var lines = tab.rows.length;
+
+    // the first headline of the table
+    if (lines > 0) {
+        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+    }
+
+    // table data lines, loop starting from 1
+    for (j = 1 ; j < lines; j++) {     
+        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+    }
+
+    tab_text = tab_text + "</table>";
+    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+    tab_text = tab_text.replace(/<img[^>]*>/gi,"");                 // remove if u want images in your table
+    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); 
+
+   var uri = 'data:application/vnd.ms-excel;base64,';
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'; 
+            var base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            };
+
+         htmls = tab_text
+
+            var ctx = {
+                worksheet : filename || 'Worksheet',
+                table : htmls
+            }
+        var link = document.createElement("a");
+            link.download = filename;
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+    }
 
 
 </script>

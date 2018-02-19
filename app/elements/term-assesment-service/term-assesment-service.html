@@ -1534,6 +1534,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        insertassesmentmarkResponse:function(e){
         if(e.detail.response.returnval=='succ')
         insertflag++;
+        // alert(localStorage.getItem("curr_sess_single_studetmap")+"  "+localStorage.getItem("curr_sess_template_tef"));
         // alert(insertflag+"  "+insertcheckflag);
         if(insertflag==insertcheckflag){
        //alert('Marks saved!');

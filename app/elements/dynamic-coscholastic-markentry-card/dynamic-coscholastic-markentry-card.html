@@ -336,12 +336,10 @@ var a = (temp[i].weight).split(",");
           temp[i].value="";
           temp[i].values=temp[i].value;
         } 
- // alert(JSON.stringify(temp[i]));
-   }
-
-  this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length);     
+      // alert(JSON.stringify(temp[i]));
       }
-
+      this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length);     
+      }
          document.getElementById("readfiles").value ="";
             temp=[];
             array=[];
@@ -349,12 +347,7 @@ var a = (temp[i].weight).split(",");
             tempstudentarr=[];
           document.getElementById("readfiles").value ="";
            this.categorylength="";
-
-
-
-
       }
-
      //  alert(JSON.stringify(temp));
            }
       }, 
@@ -429,9 +422,6 @@ fngenrategrade:function(arr){
         }
       },
       FnApprove:function(){
-      
-      
-
         // this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
         document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);

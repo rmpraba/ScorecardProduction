@@ -182,8 +182,8 @@
          this.spinnermsg="Please wait...Loading";
          if(localStorage.getItem('curr_sess_report')=='0'){
           // alert("in");
-          document.querySelector('coscholastic-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
-          document.querySelector('dynamic-scholastic-markentry-card').FnRefresh();
+          document.querySelector('coscholastic-assesment-sheet-card').setPage('dynamic-coscholastic-markentry-card');
+          document.querySelector('dynamic-coscholastic-markentry-card').FnRefresh();
       this.$.scholasticsubjectservice.subjectsubmittedcheckService(gradename,section,subject);
           }
           if(localStorage.getItem('curr_sess_report')=='1'){
