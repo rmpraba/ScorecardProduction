@@ -227,6 +227,7 @@
         if(sessionStorage.getItem("curr_sess_loggedroleid")!='management'){
         this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         localStorage.setItem("curr_sess_schoolid",this.schoolid);
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.$.sspthcbranch.hidden=true;
         }
         this.$.performancereportservice.FnFetchBranchService();

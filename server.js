@@ -1594,7 +1594,7 @@ app.post('/fetchapprovalsubject-service',  urlencodedParser,function (req, res)
   }
   else if(req.query.roleid=='class-teacher')
   {
-    var qur="select s.subject_id,s.subject_name,s.language_pref from md_subject s join "+
+    var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_subject s join "+
     " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
     " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
     " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
@@ -1602,7 +1602,7 @@ app.post('/fetchapprovalsubject-service',  urlencodedParser,function (req, res)
   }
    else if(req.query.roleid=='co-ordinator')
   {
-    var qur="select s.subject_id,s.subject_name,s.language_pref from md_subject s join "+
+    var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_subject s join "+
     " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
     " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
     " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
@@ -1662,7 +1662,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
     " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
     " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
     " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
-    " t.role_id='"+req.query.roleid+"' and g.subject_category in('"+req.query.subjectcategory+"')";
+    " t.role_id='"+req.query.roleid+"' and g.subject_category in('"+req.query.subjectcategory+"') and t.grade_id in(select grade_id from md_grade where grade_name='"+req.query.gradename+"')";
     // var qur="select * from md_subject where subject_id in "+
     // "(select subject_id from mp_grade_subject where grade_id "+
     // "in(select grade_id from mp_teacher_grade where "+
@@ -6801,10 +6801,10 @@ app.post('/termwisereport-service',  urlencodedParser,function (req, res)
  
 
 
-var categorycnt="SELECT subject_id,subject_name FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and  subject_id in(select subject_id from mp_grade_subject where school_id='"+req.query.schoolid+"' and  grade_id='"+req.query.gradeid+"' and academic_year='"+req.query.academicyear+"' ) and grade_name='"+req.query.grade+"' group by ASSESMENT_TYPE,CHAR_LENGTH(subject_name)";
+var categorycnt="SELECT subject_id,subject_name FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and  subject_id in(select subject_id from mp_grade_subject where school_id='"+req.query.schoolid+"' and  grade_id='"+req.query.gradeid+"' and academic_year='"+req.query.academicyear+"' ) and grade_name='"+req.query.grade+"' group by assesment_type,CHAR_LENGTH(subject_name)";
 
-    var map="SELECT distinct( ASSESMENT_TYPE) FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and "+
-   "grade_name='"+req.query.grade+"' order by ASSESMENT_TYPE";
+    var map="SELECT distinct(assesment_type) FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and "+
+   "grade_name='"+req.query.grade+"' order by assesment_type";
 
 
 console.log('--------suibject report--------------');
@@ -9589,10 +9589,10 @@ app.post('/fetchconsolidatedtermwise-service',  urlencodedParser,function (req, 
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by student_id,term_name,assesment_id,CHAR_LENGTH(subject_id)";
 
-   var categorycnt="SELECT subject_id,subject_name FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and  subject_id in(select subject_id from mp_grade_subject where school_id='"+req.query.schoolid+"' and  grade_id='"+req.query.gradeid+"' and academic_year='"+req.query.academicyear+"' ) and grade_name='"+req.query.grade+"' group by ASSESMENT_TYPE,CHAR_LENGTH(subject_name)";
+   var categorycnt="SELECT subject_id,subject_name FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and  subject_id in(select subject_id from mp_grade_subject where school_id='"+req.query.schoolid+"' and  grade_id='"+req.query.gradeid+"' and academic_year='"+req.query.academicyear+"' ) and grade_name='"+req.query.grade+"' group by assesment_type,CHAR_LENGTH(subject_name)";
 
-    var map="SELECT distinct( ASSESMENT_TYPE) FROM subject_mapping WHERE school_id='"+req.query.schoolid+"'  and academic_year='"+req.query.academicyear+"' and "+
-   "grade_name='"+req.query.grade+"' order by ASSESMENT_TYPE ";
+    var map="SELECT distinct(assesment_type) FROM subject_mapping WHERE school_id='"+req.query.schoolid+"'  and academic_year='"+req.query.academicyear+"' and "+
+   "grade_name='"+req.query.grade+"' order by assesment_type ";
 
 
 console.log('--------SDFSFDSFSF--------------');
