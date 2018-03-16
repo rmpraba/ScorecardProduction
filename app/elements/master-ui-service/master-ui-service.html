@@ -3146,7 +3146,7 @@ insertschoolTypename:function(schooltypesarr)
         }
       },
 
-     FnSetSubjectInfo:function(subjectid,subjectname,category,preflang)
+     FnSetSubjectInfo:function(subjectid,subjectname,category,preflang,type)
       {
         this.subjectcreationurl=sessionStorage.getItem("addrinfo")+"/subjectcreation-service";
         var obj={"subjectid":"","subjectname":"","category":"","preflang":""};
@@ -3154,7 +3154,9 @@ insertschoolTypename:function(schooltypesarr)
         obj.subjectname=subjectname;
         obj.category=category;
         obj.preflang=preflang;
+        obj.type=type;
         this.subjectcreationparam=obj;
+
        // alert(JSON.stringify(obj)); 
         this.$.subjectcreationajax.generateRequest();
       },

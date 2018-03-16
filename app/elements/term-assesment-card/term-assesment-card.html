@@ -186,7 +186,10 @@
  if(localStorage.getItem("curr_sess_page")=="dynamic-scholastic-markentry-card")
    document.querySelector('dynamic-scholastic-markentry-card').hideheader=true;
     
-     },      
+     }, 
+     fnsubjectinfo:function(arr) {
+      this.subjectinfo=arr;
+     } ,     
       FnSelectSubject:function(e){
         this.flag=1;
         var sname = e.target.selectedItem.value; 
@@ -204,6 +207,15 @@
         localStorage.setItem("curr_sess_subjectid",subjectid);
         localStorage.setItem("curr_sess_languagepref",pref);
        // alert(localStorage.getItem("curr_sess_subjectid"));
+        for(var i=0;i<this.subjectinfo.length;i++)
+       {
+         if(subjectid==this.subjectinfo[i].subject_id)
+          {
+             this.type=this.subjectinfo[i].type;   
+          } 
+        }
+       localStorage.setItem("curr_sess_type",this.type);
+        //alert(this.type);
         this.callService(); 
   if(localStorage.getItem("curr_sess_page")=="subject-dynamic-markentrycard")
    document.querySelector('subject-dynamic-markentrycard').hideheader=true;

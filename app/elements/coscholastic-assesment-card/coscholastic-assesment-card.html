@@ -128,6 +128,10 @@
         if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markentry-card")
         document.querySelector('subject-dynamic-coscholastic-markentry-card').hideheader1=true;    
       },
+      fnsubjectinfo:function(arr) 
+      {
+       this.subjectinfo=arr;
+      }, 
       TermMarkdialog:function(argvalue)
       {
        this.getindialogvalu=argvalue;
@@ -161,7 +165,16 @@
         // alert(subjectid);
         localStorage.setItem("curr_sess_languagepref",'');              
         localStorage.setItem("curr_sess_subject",subject);  
-        localStorage.setItem("curr_sess_subjectid",subjectid);              
+        localStorage.setItem("curr_sess_subjectid",subjectid);
+          for(var i=0;i<this.subjectinfo.length;i++)
+       {
+         if(subjectid==this.subjectinfo[i].subject_id)
+          {
+             this.type=this.subjectinfo[i].type;   
+          } 
+        }
+       localStorage.setItem("curr_sess_type",this.type);
+       //              
         this.callService();
         if(localStorage.getItem("curr_sess_page")=="dynamic-coscholastic-markentry-card")
         document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;

@@ -96,16 +96,16 @@
         debounce-duration="300"
     >
 
-    <iron-ajax
+   <iron-ajax
         method="post"
-        id="assesmentajax"
-        url="{{assesmenturl}}"
-        params="{{assesmentparam}}"
+        id="finalvalueofGenerateajax"
+        url="{{finalvalueofGenerateurl}}"
+        params="{{finalvalueofGenerateparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="assesmentResponse"
+        on-response="finalvalueofGenerateResponse"
         debounce-duration="300"
-    >
+      ></iron-ajax>
     <iron-ajax
         method="post"
         id="fetchstudentajax"
@@ -814,8 +814,11 @@
           }
          // alert(JSON.stringify(arr));
           document.querySelector('term-assesment-card').subjectarr=arr;
+                    document.querySelector('term-assesment-card').fnsubjectinfo(arr);
+
           // if(localStorage.getItem("curr_sess_subjectcategory")=="category2"||localStorage.getItem("curr_sess_subjectcategory")=="category3"||localStorage.getItem("curr_sess_subjectcategory")=="category4")  
-          document.querySelector('coscholastic-assesment-card').subjectarr=arr;  
+          document.querySelector('coscholastic-assesment-card').subjectarr=arr;
+           document.querySelector('coscholastic-assesment-card').fnsubjectinfo(arr);  
       },
       callAssesmentService:function(gradename){
          this.assesmenturl=sessionStorage.getItem("addrinfo")+"/assesment-service";
@@ -2127,8 +2130,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('single-student-mark-entery-card').FnUpdateApprovalStatus();
         }
         }         
-        if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development")
-          this.calloveralltermassesmentinsertService();
+         if(localStorage.getItem("curr_sess_type")=="Each"){
+         this.FnfinalvalueofGenerate();
+      }
+     else if(localStorage.getItem("curr_sess_type")=="Once"){
+         this.calloveralltermassesmentinsertService();
+
+     }
         else{
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
           if(localStorage.getItem("curr_sess_filterid")=="fillteractive"){
@@ -2143,6 +2151,31 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          }
         }
        },
+       
+      FnfinalvalueofGenerate:function()
+       {
+      this.finalvalueofGenerateurl=sessionStorage.getItem("addrinfo")+"/finalvalueofGenerate-service";
+     var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");                
+         obj.subject=localStorage.getItem("curr_sess_subject");    
+         obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+         obj.studentid=localStorage.getItem("curr_sess_studentid"); 
+         this.finalvalueofGenerateparam=obj;
+         this.$.finalvalueofGenerateajax.generateRequest();
+      },
+finalvalueofGenerateResponse:function(e){  
+  // alert(e.detail.response.returnval);
+     var res=e.detail.response.returnval;
+      // alert(JSON.stringify(res));
+    //alert(res[0].assesmentname+"  "+localStorage.getItem("curr_sess_assesment"));
+       if(res[0].assesmentname==localStorage.getItem("curr_sess_assesment"))
+        this.calloveralltermassesmentinsertService();
+       
+  },
       calloveralltermassesmentinsertService:function()
       {
          this.overalltermassesmentinserturl=sessionStorage.getItem("addrinfo")+"/overalltermassesmentinsert-service";
