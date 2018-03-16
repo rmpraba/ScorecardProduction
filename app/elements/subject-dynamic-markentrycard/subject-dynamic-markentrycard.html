@@ -188,7 +188,7 @@
 function exportToExcel5(){
 var htmls = "";
 //alert("2");
-var tab_text = '<table border="1px" style="font-size:20px" ">';
+var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j = 0;
     var tab = document.getElementById('DataTableId5'); // id of table
@@ -221,7 +221,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
          htmls = tab_text
 
             var ctx = {
-                worksheet : 'Worksheet',
+                worksheet : exporthighersubjectnamecosolastic || 'Worksheet',
                 table : htmls
             }
         var link = document.createElement("a");
@@ -382,7 +382,7 @@ this.$.hiddenexcelheaderfiles1.hidden=true;
         this.subject=localStorage.getItem("curr_sess_subject");
         this.assesmentname=localStorage.getItem("curr_sess_assesment");
         this.$.dynamicsavebtn.hidden=false;
-         exporthighersubjectnamecosolastic=localStorage.getItem("curr_sess_subject");
+         exporthighersubjectnamecosolastic=this.grade+"-"+this.section+"-"+localStorage.getItem("curr_sess_subject")+"-"+this.assesmentname;
     if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
       this.$.templatecheckvalueid11.hidden=true;
          else

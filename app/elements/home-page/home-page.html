@@ -339,12 +339,18 @@
           <section data-category="assesment-creation-card">
           <assesment-creation-card></assesment-creation-card>
       </section> 
+
       <section data-category="term-assesment-to-grade-mapping">
           <term-assesment-to-grade-mapping></term-assesment-to-grade-mapping>
       </section> 
-      <section data-category="assesment-to-subject-mapping-card">
-          <assesment-to-subject-mapping-card></assesment-to-subject-mapping-card>
-      </section>  
+    <section data-category="assesment-to-subject-mapping-card">
+    <assesment-to-subject-mapping-card></assesment-to-subject-mapping-card>
+    </section>  
+
+      <section data-category="dashboard-homecard">
+          <dashboard-homecard></dashboard-homecard>
+      </section> 
+>>>>>>> origin/master
         </iron-pages>
     </div>   
     <div class="footer"></div>
@@ -1157,7 +1163,12 @@ if(localStorage.getItem("curr_sess_page")=="student-scorcard-mail-card")
       document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('student-performance-tracking-homecard').FnRefresh();
     }
-      
+    if(localStorage.getItem("curr_sess_page")=="dashboard-homecard")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('dashboard-homecard').FnRefresh();
+    }
       localStorage.setItem("curr_sess_page",this.page);
     },
 

@@ -461,6 +461,7 @@
          obj.grade=gradename;
          obj.section=section;
          obj.subject=subject;
+         this.subject=subject;
          this.fetchdynamicallyenteredmarksparam= obj;
          this.$.fetchdynamicallyenteredmarksajax.generateRequest();
       },
@@ -546,13 +547,19 @@
             categorytitle.push(obj);
         }
         overall.push({"id":"","studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
-
+        var m=[{"grade":'A',"mark":'8'},{"grade":'B',"mark":'7'},{"grade":'C',"mark":'5'},{"grade":'D',"mark":'3'}];
         for(var i=0;i<arr.length;i++){
             var obj={};
             var cnt=1;
             var category=[];
             obj.id=arr[i].student_id;
             obj.studentname=arr[i].student_name;
+            if(this.subject=="Personality Development"){
+                for(var x=0;x<m.length;x++){
+                    if(arr[i].mark==m[x].mark)
+                        arr[i].mark=m[x].grade;
+                }
+            }
             obj.subcategoryname=arr[i].mark;
             obj.categorycnt=cnt;
             obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
@@ -560,6 +567,12 @@
             for(var j=i+1;j<arr.length;j++){
             obj={};
             if(arr[i].student_id==arr[j].student_id){
+            if(this.subject=="Personality Development"){
+                for(var x=0;x<m.length;x++){
+                    if(arr[j].mark==m[x].mark)
+                        arr[j].mark=m[x].grade;
+                }
+            }
             obj.subcategoryname=arr[j].mark;
             arr.splice(j,1);
             j--;

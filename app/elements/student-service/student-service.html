@@ -33,7 +33,7 @@
       },
       fetchallstudentsResponse:function(e){
         var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
+        // alert(JSON.stringify(arr));
         document.querySelector('addnewstudent-card').FnView();
         document.querySelector('addnewstudent-card').studarr=arr;
         document.querySelector('addnewstudent-card').grade=localStorage.getItem("curr_sess_grade");

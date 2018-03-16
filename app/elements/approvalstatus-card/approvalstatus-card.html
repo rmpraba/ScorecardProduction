@@ -172,7 +172,7 @@
      
   <template is="dom-repeat" items="{{approvalarr}}" as="item">
     <div id="itemcard">
-      <approvelstatus-item-card academicyear="{{item.academic_year}}" termname="{{item.term_name}}" assesmentid="{{item.assesment_name}}" grade="{{item.grade_name}}" section="{{item.section_name}}" subject="{{item.subject_name}}" flag="{{item.flag}}"
+      <approvelstatus-item-card academicyear="{{item.academic_year}}" termname="{{item.term_name}}" assesmentid="{{item.assesment_name}}" grade="{{item.grade_name}}" section="{{item.section}}" subject="{{item.subject_name}}" flag="{{item.flag}}"
       hideflag="{{item.hideflag}}" font="{{item.font}}" color="{{item.color}}" category="{{item.subject_category}}"></approvelstatus-item-card>
     </div>
   </template>     
@@ -297,16 +297,16 @@
         document.querySelector('#approvesectionnm3').selected=-1;
         document.querySelector('#approvesubjectnam3').selected=-1;
         },
-   Fncloseconcpt:function(){
+      Fncloseconcpt:function(){
        this.$.apprualdialogfilterid.close();
         document.querySelector('#approvegradenam3').selected=-1;
         document.querySelector('#approvefilter3').selected=-1;
         document.querySelector('#approvesectionnm3').selected=-1;
         document.querySelector('#approvesubjectnam3').selected=-1;
-  },
-
-
-  
+      },
+      FnRefreshFilter:function(){
+        document.querySelector('#approvefilter3').selected=-1;
+      }  
     });
   })();
   </script>

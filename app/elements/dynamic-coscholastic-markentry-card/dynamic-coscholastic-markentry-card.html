@@ -155,7 +155,7 @@
 function exportToExcel2(){
 var htmls = "";
 //alert("2");
-var tab_text = '<table border="1px" style="font-size:20px" ">';
+var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j = 0;
     var tab = document.getElementById('DataTableId2'); // id of table
@@ -188,7 +188,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
          htmls = tab_text
 
             var ctx = {
-                worksheet : 'Worksheet',
+                worksheet : exportsubjectnamesolastic || 'Worksheet',
                 table : htmls
             }
         var link = document.createElement("a");
@@ -336,12 +336,10 @@ var a = (temp[i].weight).split(",");
           temp[i].value="";
           temp[i].values=temp[i].value;
         } 
- // alert(JSON.stringify(temp[i]));
-   }
-
-  this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length);     
+      // alert(JSON.stringify(temp[i]));
       }
-
+      this.$.assesmentservice.callinsertassesmentmarkService(temp[i].studentid,temp[i].studentname,temp[i].categoryname,temp[i].subcategoryname,temp[i].values,temp[i].seq,temp.length);     
+      }
          document.getElementById("readfiles").value ="";
             temp=[];
             array=[];
@@ -349,12 +347,7 @@ var a = (temp[i].weight).split(",");
             tempstudentarr=[];
           document.getElementById("readfiles").value ="";
            this.categorylength="";
-
-
-
-
       }
-
      //  alert(JSON.stringify(temp));
            }
       }, 
@@ -392,7 +385,7 @@ fngenrategrade:function(arr){
         var hour = dt.getHours();
         var mins = dt.getMinutes();
         var postfix = day + "." + month + "." + year + "_" + hour + "." + mins;
-        exportsubjectnamesolastic=localStorage.getItem("curr_sess_subject").trim();
+        exportsubjectnamesolastic=this.grade+"-"+this.section+"-"+localStorage.getItem("curr_sess_subject").trim()+"-"+this.assesmentname;
         this.$.dynamicsavebtn.hidden=false;
         this.disablesave=false;
         this.FnSetLabel();
@@ -429,9 +422,6 @@ fngenrategrade:function(arr){
         }
       },
       FnApprove:function(){
-      
-      
-
         // this.$.subjectservice.fetchMarkSavedStudents(this.grade,this.section,this.subject);
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
         document.querySelector("coscholastic-assesment-card").FnToggleSpinner(true);

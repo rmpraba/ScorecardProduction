@@ -87,6 +87,13 @@
       h4{
       color: #061E98;
       }
+     #spinner{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+    }
     </style>
     <div>  
     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner><h4>{{spinnermsg}}</h4></paper-dialog></div>
@@ -96,7 +103,7 @@
       </div>
       <div id="attendencefileid">
       <div class="hrspace">
-      <paper-icon-button id="download" icon="icons:file-download" onclick="exportToExcel1()"></paper-icon-button>
+      <paper-icon-button id="download" icon="icons:file-download" onclick="attendanceexportToExcel1()"></paper-icon-button>
       <paper-tooltip for="download">Download</paper-tooltip>
       <!-- <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template"> -->
       </div>
@@ -132,7 +139,7 @@
 
      </div>
   
-    <div  id="attendencetemplatefeildid" hidden>
+    <div  id="AttendanceDataTableId2" hidden>
        <table border="1" >    
       <tr>   
        <th id="tb1">SNo</th>
@@ -155,12 +162,12 @@
      </table> 
     </div>
     <center>
-     <input type="button" id="btn2" onclick="tableToExcel('attendencetemplatefeildid', 'Mark Report')" value="Export to Excel" hidden$="{{hidedownload}}">
+     <input type="button" id="btn2" onclick="attendanceexportToExcel1()" value="Export to Excel" hidden$="{{hidedownload}}">
     </center>
     </div>  
 
 
- <table border="1"  id="DataTableId1" hidden>    
+ <table border="1"  id="AttendanceDataTableId1" hidden>    
       <tr>   
        <th id="tb1">SNo</th>
        <th id="tb1">StudentId</th>
@@ -184,18 +191,15 @@
      <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
      <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
- <script type="text/javascript">
-   
- 
-
-
-function exportToExcel1(){
+ <script type="text/javascript"> 
+var filename;
+function attendanceexportToExcel1(){
 var htmls = "";
-alert("1");
-var tab_text = '<table border="1px" style="font-size:20px" ">';
+// alert("1");
+var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j = 0;
-    var tab = document.getElementById('DataTableId1'); // id of table
+    var tab = document.getElementById('AttendanceDataTableId1'); // id of table
     var lines = tab.rows.length;
 
     // the first headline of the table
@@ -228,23 +232,65 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
          htmls = tab_text
 
             var ctx = {
-                worksheet : 'Worksheet',
+                worksheet : filename || 'Worksheet',
                 table : htmls
             }
         var link = document.createElement("a");
-            link.download = "attendance";
+            link.download = filename;
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+    }
+
+function attendanceexportToExcel2(){
+var htmls = "";
+// alert("1");
+var tab_text = '<table border="1px" style="font-size:17px" ">';
+    var textRange; 
+    var j = 0;
+    var tab = document.getElementById('AttendanceDataTableId2'); // id of table
+    var lines = tab.rows.length;
+
+    // the first headline of the table
+    if (lines > 0) {
+        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+    }
+
+    // table data lines, loop starting from 1
+    for (j = 1 ; j < lines; j++) {     
+        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+    }
+
+    tab_text = tab_text + "</table>";
+    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+    tab_text = tab_text.replace(/<img[^>]*>/gi,"");                 // remove if u want images in your table
+    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); 
+
+   var uri = 'data:application/vnd.ms-excel;base64,';
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'; 
+            var base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            };
+
+         htmls = tab_text
+
+            var ctx = {
+                worksheet : filename || 'Worksheet',
+                table : htmls
+            }
+        var link = document.createElement("a");
+            link.download = filename;
             link.href = uri + base64(format(template, ctx));
             link.click();
     }
 
 
-
  </script>
-
-
-
-
-
 
    <script type="text/javascript">
   var tableToExcel = (function() {
@@ -350,6 +396,7 @@ var tab_text = '<table border="1px" style="font-size:20px" ">';
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
         this.term=localStorage.getItem("curr_sess_termname");
+        filename=this.grade+"-"+this.section+"-"+this.subject+"-"+this.term;
     
    if(localStorage.getItem('curr_sess_report')=='1'){
     // alert('in report');

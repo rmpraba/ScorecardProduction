@@ -886,7 +886,7 @@ undotudentverifyvalues1Response:function(e){
 
             for(var j=0;j<scaleup.length;j++){
               if(localStorage.getItem("curr_sess_grade")==scaleup[j].grade_name&&temparr[i].subject==scaleup[j].subject_name){
-              // alert(scaleup[j].subject_name+"  "+scaleup[j].tot);
+              // alert(scaleup[j].subject_name+"  "+temparr[i].mark1+"  "+scaleup[j].tot);
               temparr[i].mark1=parseFloat((parseFloat(temparr[i].mark1)/parseFloat(scaleup[j].tot))*100).toFixed(2);
               // alert(temparr[i].mark1);
               }
