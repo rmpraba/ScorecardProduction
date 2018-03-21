@@ -112,17 +112,17 @@
     </style>
 
 
-    <div class="titlediv" style="position: fixed;margin-top: -2%;">
+  <div class="titlediv" style="position: fixed;margin-top: -2%;">
       <div class="tit1" style="margin-left: 28em;">
         <h3><b>SUBJECTS</b></h3>
       </div>
       <div class="tit2" style="margin-left: 47em;">
         <h4><b>Current Subjects</b></h4>
       </div>
-      <div class="tit3" style="margin-top: -4%;margin-left: 11%;">
+     <div class="tit3" style="margin-top: -4%;margin-left: 11%;">
         <h4><b>Create New Subject</b></h4>
-      </div>
-    </div>
+     </div>
+   </div>
     
 
    <div class="outcard">
@@ -183,6 +183,14 @@
                  <paper-item value="3language">Third Language</paper-item>
             </paper-menu>
        </paper-dropdown-menu>
+
+          <paper-dropdown-menu label="Select The Type ">
+            <paper-menu id="langtypeid" class="dropdown-content" on-iron-select="Fnselecttype" attr-for-selected="value" required>
+                 <paper-item value="once">Once</paper-item>
+                 <paper-item value="each">Each</paper-item>
+                 
+            </paper-menu>
+         </paper-dropdown-menu>
                 </div>   
         <div class="buttons">
               <paper-button class="popup-btn" on-click="FnSubmit">Submit</paper-button>
@@ -217,8 +225,8 @@
       {
        document.querySelector('#category').selected=-1;
        this.subjectname="";
-       document.querySelector('#Languageprefernceid').selected=-1;
-     
+      document.querySelector('#Languageprefernceid').selected=-1;
+       document.querySelector('#langtypeid').selected=-1;
        //this.subjectid="";                  
       }, 
 
@@ -246,7 +254,7 @@
         {
          //alert(category+this.preflang);
 
-         this.$.uiservice.FnSetSubjectInfo(this.subjectid,subname,category,this.preflang);
+         this.$.uiservice.FnSetSubjectInfo(this.subjectid,subname,category,this.preflang,this.type);
          document.querySelector('subject-card').FnRefresh();
           this.$.Languageprefernce.hidden=true;  
          document.querySelector('#Languageprefernceid').selected=-1;
@@ -255,19 +263,23 @@
         else
        {
        // alert(this.subjectid);
-         this.$.uiservice.FnSetSubjectInfo(this.subjectid,subname,category);
+         this.$.uiservice.FnSetSubjectInfo(this.subjectid,subname,category,"",this.type);
          document.querySelector('subject-card').FnRefresh();
           this.$.Languageprefernce.hidden=true;  
          document.querySelector('#Languageprefernceid').selected=-1;   
       }
       this.$.mydialog.toggleDialog();
-  
+   document.querySelector('#langtypeid').selected=-1;  
     },
      toTitleCase:function(str)
     {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     },
-
+  Fnselecttype:function(e)
+      {
+      this.type=e.target.selectedItem.textContent.trim(); 
+       //alert(this.preflang);        
+      },
       fnselectlanprefercence:function(e)
       {
       this.preflang=e.target.selectedItem.textContent.trim(); 

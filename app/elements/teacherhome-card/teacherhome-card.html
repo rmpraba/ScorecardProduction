@@ -654,7 +654,21 @@
         <h4>Teacher Management</h4>
         </paper-button>
       </div>
+             <div class="card" hidden$="{{termcreation}}">
+         <paper-button on-click="FnTermcreation" no ink><img src="../../images/termcreation.jpg" height="180px" width="180px"></paper-button>
+     </div>
+       <div class="card" hidden$="{{assesmentcreation}}">
+         <paper-button on-click="FnAssesmentcreation" no ink><img src="../../images/assesmentcreation.jpg" height="180px" width="180px"></paper-button>
+     </div> 
+       <div class="card" hidden$="{{termassesmenttograde}}">
+         <paper-button on-click="FnTermassesmentcreation" no ink><img src="../../images/termassessmentmapping.jpg" height="180px" width="180px"></paper-button>
+     </div> 
+      <div class="card" hidden$="{{assesmenttosubject}}">
+         <paper-button on-click="FnAssesmenttosubject" no ink><img src="../../images/assesmenttosubject.jpg" height="180px" width="180px"></paper-button>
+     </div>
+
     </div>
+
     </div>
     <!-- General ssschooladmin master ends-->
     </div>
@@ -706,6 +720,7 @@
     <student-add-service id="studservice"></student-add-service>
     <single-student-markentry-service id="singleservice"></single-student-markentry-service>
     <student-term-comparison-report-service id="comparisonservice"></student-term-comparison-report-service>
+     <master-term-mapping-ui-service id="mastertermservice"></master-term-mapping-ui-service>
   </template>
   <script>
   (function() {
@@ -796,6 +811,7 @@
            document.querySelector('app-card').setPage('homepage','');
            document.querySelector('home-page').setPage('employe-schooltype-to-category-card','');
           }
+
           if(localStorage.getItem('curr_sess_loggedassesmenttype')=="EmployeeToGrade"){
               document.querySelector('app-card').setPage('homepage','');
               document.querySelector('home-page').setPage('employe-category-creation-card',''); 
@@ -1001,6 +1017,37 @@
              this.$.bookservice.fninnovategrade();
              //this.$.bookservice.fnselectinnovatesubject();
       }
+      if(localStorage.getItem('curr_sess_loggedassesmenttype')=="termcreation") 
+      {          
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('term-creation-card','');
+          this.$.mastertermservice.Fngettermvalue(); 
+           this.$.mastertermservice.fngenerateterm();
+     } 
+  if(localStorage.getItem('curr_sess_loggedassesmenttype')=="assesmentcreation") 
+     {          
+          document.querySelector('app-card').setPage('homepage','');
+      document.querySelector('home-page').setPage('assesment-creation-card','');
+          this.$.mastertermservice.Fngetassesmentvalue(); 
+           this.$.mastertermservice.fngenerateterm();
+
+      } 
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=="termassesmenttograde") 
+         {          
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('term-assesment-to-grade-mapping','');
+           this.$.mastertermservice.Fnschooltype(); 
+          // this.$.mastertermservice.fngenerateterm();
+          
+         } 
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=="assesmenttosubject") 
+         {          
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('assesment-to-subject-mapping-card','');
+           this.$.mastertermservice.Fnschooltype(); 
+          // this.$.mastertermservice.fngenerateterm();
+          
+         }   
  if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentinformation")
       {
           document.querySelector('app-card').setPage('homepage','');
@@ -1767,6 +1814,22 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
             localStorage.setItem('curr_sess_loggedassesmenttype','comparisonterm');
            this.$.cdialog.toggle();
 
+       },
+    FnTermcreation:function(e){
+     localStorage.setItem('curr_sess_loggedassesmenttype','termcreation');
+      this.$.cdialog.toggle();
+       }, 
+      FnAssesmentcreation:function(){
+     localStorage.setItem('curr_sess_loggedassesmenttype','assesmentcreation');
+     this.$.cdialog.toggle();
+      }, 
+       FnTermassesmentcreation:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','termassesmenttograde');
+          this.$.cdialog.toggle();
+       },
+        FnAssesmenttosubject:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','assesmenttosubject');
+          this.$.cdialog.toggle();
        },
     });
   })();

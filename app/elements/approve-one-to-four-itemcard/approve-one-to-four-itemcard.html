@@ -52,6 +52,7 @@
   <p hidden>{{langpref}}</p>
   <p hidden>{{subjectid}}</p>
   <p hidden>{{category}}</p>
+  <p hidden>{{types}}</p>
    <div class='card'>
     <p class='p1'>{{academic}}</p>
     <p class='p2'>{{term}}</p>
@@ -90,7 +91,8 @@
       localStorage.setItem("curr_sess_subjectid",this.subjectid);
       localStorage.setItem("curr_sess_grade",this.grade);
       localStorage.setItem("curr_sess_section",this.section);
-      localStorage.setItem("curr_sess_languagepref",this.langpref);
+    localStorage.setItem("curr_sess_languagepref",this.langpref);
+    localStorage.setItem("curr_sess_type",this.types);
       //document.querySelector("dynamic-scholastic-markentry-card").exuploadeonetofourid.hidden=true;
       // alert(this.langpref);
       //alert(localStorage.getItem("curr_sess_assesment"));
