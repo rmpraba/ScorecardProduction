@@ -100,7 +100,7 @@
     </div>
 
     <div class="downloaddiv">
-    <paper-icon-button disabled$="{{hidedownloadicon}}" id="download" icon="icons:file-download" onclick="performancereportexportToExcel()"></paper-icon-button>
+    <paper-icon-button  id="download" icon="icons:file-download" onclick="performancereportexportToExcel()"></paper-icon-button>
       <paper-tooltip for="download">{{downloadlabel}}</paper-tooltip>      
       ({{downloadlabel}})
     </div>
@@ -138,7 +138,7 @@
     </paper-dialog>
     </div>
 
-     <table id="PerformanceReportDataTableId" style="border-collapse: collapse;width: 165%;" border="1" hidden>
+     <table id="PerformanceReportDataTableIdd" style="border-collapse: collapse;width: 165%;" border="1" hidden>
       <template is="dom-repeat" items="{{excelarr}}">
       <tr style="text-align: center;"><th width="5%">{{item.sno}}</th><th width="15%">{{item.studentid}}</th><th width="25%">{{item.studentname}}</th>
       <!-- <td><table><tr> -->
@@ -158,7 +158,7 @@
     var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j = 0;
-    var tab = document.getElementById('PerformanceReportDataTableId'); // id of table
+    var tab = document.getElementById('PerformanceReportDataTableIdd'); // id of table
     var lines = tab.rows.length;
   if (lines > 0) {
         tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';

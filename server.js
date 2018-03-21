@@ -6,18 +6,18 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({  
-  host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  database:"scorecarddb",
-  port:'3306',
-  user:"smis",
-  password:"smispass",
-  reconnect:true,
-  data_source_provider:"rds",
-  type:"mysql"   
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
+  // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  // database:"scorecarddb",
+  // port:'3306',
+  // user:"smis",
+  // password:"smispass",
+  // reconnect:true,
+  // data_source_provider:"rds",
+  // type:"mysql"   
+  host     : 'localhost',
+  user     : 'root',
+  password : 'admin',
+  database : 'mlzsreportcard'
  });
 
 var bodyParser = require('body-parser'); 
@@ -14549,21 +14549,48 @@ app.post('/subjectapproval-service',  urlencodedParser,function (req,res)
 
 app.post('/fetchenrichmentgrade-service',  urlencodedParser,function (req,res)
 {  
-    var qur="SELECT * FROM enrichment_grade_master";
+    var qur="SELECT * FROM enrichment_grade_master WHERE subject_name='"+req.query.subject+"' and "+
+    " assesment_type='"+req.query.assesment+"' and subject_category in(SELECT category_name FROM "+
+    " enrichment_subject_mapping WHERE subject_name='"+req.query.subject+"' and "+
+    " assesment_type='"+req.query.assesment+"' and grade_name='"+req.query.grade+"' and "+
+    " school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
+    var qur1="SELECT * FROM enrichment_detail_grade_master WHERE"+
+    " assesment_type='"+req.query.assesment+"' and subject_category in(SELECT category_name FROM "+
+    " enrichment_subject_mapping WHERE subject_name='"+req.query.subject+"' and "+
+    " assesment_type='"+req.query.assesment+"' and grade_name='"+req.query.grade+"' and "+
+    " school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
+    var qur2=" SELECT * FROM enrichment_subject_mapping WHERE subject_name='"+req.query.subject+"' and "+
+    " assesment_type='"+req.query.assesment+"' and grade_name='"+req.query.grade+"' and "+
+    " school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
     console.log('------------enrichment grade master-------------');
     console.log(qur);
+    console.log(qur1);
+    console.log(qur2);
     var grade=[];
+    var detail=[];
     connection.query(qur,function(err, rows)
     {
     if(!err)
     {   
       grade=rows; 
-      connection.query("SELECT * FROM enrichment_detail_grade_master",function(err, rows)
+    connection.query(qur1,function(err, rows)
     {
     if(!err)
     { 
-      res.status(200).json({'detail': rows,'master':grade});
+      detail=rows;
+    connection.query(qur2,function(err, rows)
+    {
+    if(!err)
+    { 
+      console.log('length----------------------'+rows[0].weight);
+      res.status(200).json({'weight':rows[0].weight,'detail': detail,'master':grade});
     }
+    else
+      console.log(err);
+    });
+    }
+    else
+      console.log(err);
   });
     }
     else{
@@ -19965,13 +19992,15 @@ app.post('/performance-fetchsection-service',  urlencodedParser,function (req, r
 app.post('/performance-fetchassesmentinfo-service',  urlencodedParser,function (req, res)
 { 
     var qur="select school_id,academic_year,assesment_type,subject_name,grade_id,section_id,grade,level, "+
-    " count(distinct(student_id)) as count FROM tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+    " count(distinct(student_id)) as count FROM tr_beginner_assesment_marks b where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
     " and grade_id='"+req.query.grade+"' and section_id='"+req.query.section+"' group by school_id,academic_year,assesment_type, "+
-    " subject_name,grade_id,section_id,grade,level order by assesment_type,subject_name,grade";      
+    " subject_name,grade_id,section_id,grade,level order by (select id from enrichment_assesment_type where name=b.assesment_type),subject_name,grade";      
     var qur1="SELECT * FROM enrichment_grade_master";
     var qur2="SELECT count(id) as total FROM md_student WHERE class_id in(SELECT id FROM md_class_section WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and class='"+req.query.grade+"' and section='"+req.query.section+"')";
-    console.log("------------------Fetch section----------------------");
+    console.log("------------------Fetch performance1 data----------------------");
     console.log(qur);
+    console.log(qur1);
+    console.log(qur2);
     var arr=[];
     var grade=[];
     connection.query(qur,  function(err, rows)
@@ -19990,10 +20019,16 @@ app.post('/performance-fetchassesmentinfo-service',  urlencodedParser,function (
       { 
         res.status(200).json({'returnval': arr,'grade':grade,'total':rows[0].total});
       }
+      else
+        console.log(err);
       });
       }
+      else
+        console.log(err);
       });
-      }  
+      }
+      else
+        console.log(err);  
     });
 });
 
@@ -20020,8 +20055,12 @@ app.post('/performance-fetchassesmentcategory-service',  urlencodedParser,functi
       { 
         res.status(200).json({'returnval': overall,'levelconfig':rows});
       }
+      else
+        console.log(err);
       });
-      }  
+      } 
+      else
+        console.log(err); 
     });
 });
 
@@ -20059,8 +20098,12 @@ app.post('/performance-fetchsublevelstudent-service',  urlencodedParser,function
       {         
         res.status(200).json({'returnval': arr,'total':rows});
       }
+      else
+        console.log(err);
       });
-      }  
+      }
+      else
+        console.log(err);  
     });
 });
 
@@ -20070,12 +20113,12 @@ app.post('/performance-fetchlevelbasedstudents-service',  urlencodedParser,funct
     " (select distinct(id) from enrichment_detail_grade_master where level=t."+req.query.configcolumn+") as sublevel_id from tr_beginner_assesment_marks t "+
     " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.gradename+"' and section_id='"+req.query.sectionname+"' "+
     " and subject_name='"+req.query.subject+"' and category_name='"+req.query.categoryname+"' and sub_category_name='"+req.query.subcategory+"' group by student_id,student_name, "+
-    " subject_name,category_name,sub_category_name,"+req.query.configcolumn+",assesment_id,grade,level order by assesment_id,"+req.query.configcolumn+"";  
+    " subject_name,category_name,sub_category_name,"+req.query.configcolumn+",assesment_id,grade,level order by (select id from enrichment_assesment_type where name=t.assesment_id),"+req.query.configcolumn+"";  
     var qur1="select distinct(student_id),student_name,"+req.query.configcolumn+" as category,category_name,sub_category_name,level,grade,assesment_id,(select distinct(id) from enrichment_grade_master where category=t.level) as level_id, "+
     " (select distinct(id) from enrichment_detail_grade_master where level=t."+req.query.configcolumn+") as sublevel_id from tr_beginner_assesment_marks t "+
     " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.gradename+"' and section_id='"+req.query.sectionname+"' "+
     " and subject_name='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and category_name='"+req.query.categoryname+"' and sub_category_name='"+req.query.subcategory+"' and level='"+req.query.level+"' group by student_id,student_name, "+
-    " subject_name,assesment_id,category_name,sub_category_name,"+req.query.configcolumn+",assesment_id,grade,level order by "+req.query.configcolumn+"";    
+    " subject_name,(select id from enrichment_assesment_type where name=t.assesment_id),category_name,sub_category_name,"+req.query.configcolumn+",assesment_id,grade,level order by "+req.query.configcolumn+"";    
     var qur3="SELECT * FROM tr_level_config";
     var qur3="SELECT * FROM tr_sublevel_config";
     console.log("------------------Fetch level student info----------------------");
@@ -20094,8 +20137,12 @@ app.post('/performance-fetchlevelbasedstudents-service',  urlencodedParser,funct
         {
         res.status(200).json({'returnval': arr,'levelarr': rows});
         }
+        else
+        console.log(err);
         });
       }  
+      else
+        console.log(err);
     });
 });
 
@@ -20778,8 +20825,7 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
     " and grade_id='"+req.query.grade+"' and section_id='"+req.query.sectionname+"' and student_id in(select id from md_student where class_id "+
     " in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active'))";
 
-    var qur6="select * from md_student where class_id "+
-    " in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+    var qur6="select * from md_student where class_id in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
 
     console.log("---------------------excel performace tracking-------------------");
     console.log(qur1);
@@ -20824,6 +20870,8 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
         {
         res.status(200).json({'assesment':typearr,'subject':subarr,'category':catarr,'subcategory':subcatarr,'enrich':enricharr,'student':rows});
         }
+        else
+          console.log(err);
         });
         }
         else

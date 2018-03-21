@@ -220,7 +220,7 @@
   function loadFile(event) {
   alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
     array1=data; 
-    alert(JSON.stringify(array1));
+    // alert(JSON.stringify(array1));
      for(var i=0;i<array1.length;i++){
        for(var j=0;j<tempstudentarr.length;j++){
        // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
@@ -252,6 +252,7 @@
     var gradearr=[];
     var detailarr=[];
     var tempassesmetarr=[];
+    // var weight="";
      Polymer({
       is: 'enrichment-dynamic-markentrycard',
       ready:function(){
@@ -362,9 +363,11 @@ else{
        }
      }
       },
-      FnSetGrade:function(arr,detail){
+      FnSetGrade:function(arr,detail,weight){
         gradearr=arr;
         detailarr=detail;
+        this.weight=weight;
+        // alert("fncall"+this.weight);
       },
       FnGenerateGrade:function(e)
       {       
@@ -376,7 +379,7 @@ else{
         // alert(JSON.stringify(scorearr))
         // alert(JSON.stringify(gradearr))
         // alert(JSON.stringify(temparr))
-        if(localStorage.getItem("curr_sess_assesmentname")=="EBOY"||localStorage.getItem("curr_sess_assesmentname")=="EMOY"||localStorage.getItem("curr_sess_assesmentname")=="EEOY"){
+        if(localStorage.getItem("curr_sess_assesmentname")=="EBOY"||localStorage.getItem("curr_sess_assesmentname")=="EMOY"||(localStorage.getItem("curr_sess_assesmentname")=="EEOY")&&(this.grade=="Grade-1"||this.grade=="Grade-2"||this.grade=="Grade-3"||this.grade=="Grade-4")){
         if(this.subject=="English"){
         if((temparr.length)-2==((scorearr.length)/2)){        
         var total=0;
@@ -508,6 +511,7 @@ else{
           //alert(JSON.stringify(gradearr));
      if((temparr.length)-2==(scorearr.length))
      {
+      // alert("in"+this.weight);
       //alert(temparr.length);
         for(var i=2;i<temparr.length;i++)
         {
@@ -515,11 +519,9 @@ else{
           for(var k=0;k<temparr[i].category.length;k++)
           {
             //alert(parseFloat((parseFloat(temparr[i].category[k].score)/30)*100).toFixed(2));
-
-              var val=parseFloat((parseFloat(temparr[i].category[k].score)/30)*100).toFixed(2);
+              var val=parseFloat((parseFloat(temparr[i].category[k].score)/parseFloat(this.weight))*100).toFixed(2);
           //alert(val);
             for(var j=0;j<gradearr.length;j++){
-
         // alert(((parseFloat(val)+"  "+parseFloat(gradearr[j].minimum))+"  "+(parseFloat(val)+"  "+parseFloat(gradearr[j].maximum)))+"  "+gradearr[j].assesment_type+"  "+localStorage.getItem('curr_sess_assesmentname'));
         if(((parseFloat(val)>=parseFloat(gradearr[j].minimum))&&(parseFloat(val)<=parseFloat(gradearr[j].maximum)))&&gradearr[j].assesment_type==localStorage.getItem('curr_sess_assesmentname')){
           // alert(JSON.stringify(temparr));
@@ -568,6 +570,9 @@ else{
           }
         }
         } 
+        else{
+          alert('Please check your sheet!');
+        }
         }              
       },
       setDefaultHeaders:function(){
@@ -585,6 +590,7 @@ else{
         this.label=[];
         this.temp=[];
         scorearr=[];
+        this.weight="";
         this.disablesave=true;
       },
       FnSetInfoArray:function(arr){

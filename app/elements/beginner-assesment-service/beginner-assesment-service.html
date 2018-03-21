@@ -217,13 +217,22 @@
         document.querySelector('enrichment-dynamic-markentrycard').FnSetInfoArray(arr);
         document.querySelector('enrichment-dynamic-markentrycard').FnGenerateGradee();
       },
-      FnFetchEnrichmentGrade:function(){
+      FnFetchEnrichmentGrade:function(assesment,grade,section,subject){
+        // alert('calling');
         this.fetchenrichmentgradeurl=sessionStorage.getItem("addrinfo")+"/fetchenrichmentgrade-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=grade;
+        obj.section=section;
+        obj.subject=subject;
+        obj.assesment=assesment;
+        this.fetchenrichmentgradeparam=obj;
         this.$.fetchenrichmentgradeajax.generateRequest();
       },
       fetchenrichmentgradeResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
-       document.querySelector('enrichment-dynamic-markentrycard').FnSetGrade(e.detail.response.master,e.detail.response.detail);
+        // alert('come...'+JSON.stringify(e.detail.response.weight));
+       document.querySelector('enrichment-dynamic-markentrycard').FnSetGrade(e.detail.response.master,e.detail.response.detail,e.detail.response.weight);
       },
       callAcademicService:function(){
         this.$.academicajax.generateRequest();

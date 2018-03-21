@@ -185,7 +185,7 @@
         this.FnServiceCall(); 
       },
       FnServiceCall:function(){
-        document.querySelector('beginner-assesment-service').FnFetchEnrichmentGrade();
+        document.querySelector('beginner-assesment-service').FnFetchEnrichmentGrade(assesmentname,gradename,section,subject);
         document.querySelector('beginner-assesment-service').callFetchInfoForTemplate(gradename,section,subject);
         document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section,subject);
         document.querySelector('beginner-assesment-service').callFetchAssesmentStudentInfo(gradename,section,subject);

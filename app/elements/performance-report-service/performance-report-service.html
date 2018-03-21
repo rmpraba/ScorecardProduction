@@ -207,7 +207,7 @@
             if(n==2)
             obj.assesment=enrich[j].level;
             if(n==3){
-            if(enrich[j].sub_category_name=="Written")
+            if(enrich[j].sub_category_name=="Written"||enrich[j].sub_category_name=="Writing")
             obj.assesment=enrich[j].enrich_level;
             if(enrich[j].sub_category_name=="Speed")
             obj.assesment=enrich[j].speed_level;
@@ -336,6 +336,7 @@
         }
         overall=arr1;
         overall1=overall;
+        // alert(JSON.stringify(overall));
         document.querySelector('student-performance-tracking-homecard').assesmentarr=overall;
         document.querySelector('student-performance-tracking-homecard').total=total;
         // alert('in'+localStorage.getItem("curr_sess_assesment")+localStorage.getItem("curr_sess_assesment").length);

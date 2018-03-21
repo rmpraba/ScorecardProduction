@@ -17,10 +17,10 @@
     
     <div class="indrop">
     <template is="dom-repeat" items="{{levelarr}}">
-    &nbsp;&nbsp;<h5>{{item.assesment_id}}-{{item.level}}({{item.category}})</h5>
     <my-greeting diff="{{item.diff}}" levelicon="{{item.levelicon}}" levelcolor="{{item.levelcolor}}" levelcount="{{item.levelcount}}"
     subleveldiff="{{item.subleveldiff}}" sublevelicon="{{item.sublevelicon}}" sublevelcolor="{{item.sublevelcolor}}" sublevelcount="{{item.sublevelcount}}" levelvisible="{{item.levelvisible}}" sublevelvisible="{{item.sublevelvisible}}"></my-greeting>
-
+    &nbsp;&nbsp;<h5>{{item.assesment_id}}-{{item.level}}({{item.category}})</h5>
+    
     </template>
     </div>
     
