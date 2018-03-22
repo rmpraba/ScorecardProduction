@@ -371,7 +371,7 @@ fnsubmit:function(e){
     }
     else{
       if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
-  alert("primary");
+ // alert("primary");
     if(categoryvalus=="yes"){
     
          this.saveassesmentname1();
@@ -387,7 +387,7 @@ fnsubmit:function(e){
        }
       }
       else{
-         alert("High");
+       //  alert("High");
       if(categoryvalus=="yes"||categoryvalus=="no"){
         this.savesubassesmentname();
         this.$.categorytypeid.toggle(); 
@@ -615,12 +615,12 @@ fncollapsecategoryvalue:function()
  collapsecategoryvalueResponse:function(e)
       {
         var res=e.detail.response.returnval;
-        alert(JSON.stringify(res));
+     //   alert(JSON.stringify(res));
           for(var i=0;i<res.length;i++){
               res[i].cno=i+1;
              }
              this.categorryarr=res;
-        alert(JSON.stringify(this.categorryarr));
+     //   alert(JSON.stringify(this.categorryarr));
     
         
         if(res.length!=0){
