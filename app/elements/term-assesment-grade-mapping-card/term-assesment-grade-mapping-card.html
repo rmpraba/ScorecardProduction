@@ -66,10 +66,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'term-assesment-grade-mapping-card',
 
-     
-    
-fnchange:function(e){
-  
+ fnchange:function(e){
+//alert(this.id);
+//alert(this.check);
+//alert(document.querySelector("#"+this.id).checked);
 
   if(document.querySelector("#"+this.id).checked==true){
       var obj={};

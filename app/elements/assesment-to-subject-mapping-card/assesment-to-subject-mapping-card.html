@@ -79,24 +79,31 @@ paper-dialog.colored {
         <center><h2>Assesment To Subject Mapping</h2></center>
          <div class="mainclass">
            <h3> Select The School Type:</h3>
-            <template is="dom-repeat" items="{{schooltypearr}}" as="view">
-               <assesment-to-subject-mapping-item-card schooltypeid="{{view.school_type_id}}" schooltypename="{{view.school_type_name}}" id="assesment{{view.school_type_id}}"></assesment-to-subject-mapping-item-card>
+          <template is="dom-repeat" items="{{schooltypearr}}" as="view">
+              <assesment-to-subject-mapping-item-card schooltypeid="{{view.school_type_id}}" schooltypename="{{view.school_type_name}}" id="assesment{{view.school_type_id}}"></assesment-to-subject-mapping-item-card>
           </template>
         </div>
         <div class="gradeclass"  hidden$="{{hideassmentinfogradeid}}">
-          <h3> Select The Grade Type:</h3>
+          <h3>Select The Grade Type:</h3>
           <template is="dom-repeat" items="{{gradearr}}" as="view">
-               <assesment-to-subject-grade-card gradeid="{{view.grade_id}}" gradename="{{view.grade_name}}" schooltype="{{view.school_type}}" id="assesment{{view.grade_id}}"></assesment-to-subject-grade-card>
+              <assesment-to-subject-grade-card gradeid="{{view.grade_id}}" gradename="{{view.grade_name}}" schooltype="{{view.school_type}}" id="assesment{{view.grade_id}}"></assesment-to-subject-grade-card>
          </template>
         </div>
-        <div class="assessmentclass" hidden$="{{hideassmentinfosubid}}">
+<div class="gradeclass" hidden$="{{hideassmentinfogradeid3}}">
+          <h3> Select The Term Type:</h3>
+          <template is="dom-repeat" items="{{typearr}}" as="view">
+            <assesment-to-subject-type-card subjecttype="{{view.type}}" check="{{view.check}}" ></assesment-to-subject-type-card>
+          </template>
+       </div>
+
+<div class="assessmentclass" hidden$="{{hideassmentinfosubid}}">
          <h3> Select The Assesments:</h3>
-        <div class="assessmentclass1"   >
+        <div class="assessmentclass1">
         
-        <paper-checkbox id="selectallbox" on-change="fnchange">All Assesments</paper-checkbox></br>
+        <paper-checkbox  hidden$="{{hideassmentinfosubid1}}" id="selectallbox" on-change="fnchanges">All Assesments</paper-checkbox>
 
           <template is="dom-repeat" items="{{assesmentarr}}" as="view" >
-                <assesment-to-subject-card   assesmentid="{{view.assesment_id}}" assesmentname='{{view.assesment_name}}' id='{{view.id}}' check="{{view.check}}"></assesment-to-subject-card ></br>
+                <assesment-to-subject-card   assesmentid="{{view.assesment_id}}" assesmentname='{{view.assesment_name}}' id='{{view.id}}' check="{{view.check}}"></assesment-to-subject-card >
          </template>
         </div>  
         </div>  
@@ -104,8 +111,9 @@ paper-dialog.colored {
       <div class="subjectclass" hidden$="{{hideassmentinfoid}}">
      
           <template is="dom-repeat" items="{{subjectarr}}" as="view">
-                <assesment-to-subject-collapse-card hideinfovalus1="true"
-                 hideinfovalus="false" sno='{{view.sno}}' subjectname="{{view.subjectname}}" subjectid='{{view.subject_id}}' assesmentbulkvalue="{{view.assesmentbulkvalue}}"></assesment-to-subject-collapse-card>
+              <assesment-to-subject-collapse-card hideinfovalus1="true"
+                 hideinfovalus="false" sno='{{view.sno}}' subjectname="{{view.subjectname}}" subjectid='{{view.subject_id}}' assesmentbulkvalue="{{view.assesmentbulkvalue}}">
+              </assesment-to-subject-collapse-card>
          </template>
         </div>
   </div>
@@ -123,11 +131,12 @@ paper-dialog.colored {
     Polymer({
       is: 'assesment-to-subject-mapping-card',
   ready:function(e){
- this.hideassmentinfogradeid=true; 
- this.hideassmentinfosubid=true; 
- this.hideassmentinfoid=true; 
+  this.hideassmentinfogradeid=true; 
+  this.hideassmentinfosubid=true; 
+    this.hideassmentinfosubid1=true; 
+  this.hideassmentinfoid=true; 
   },
-fnchange:function(e){
+fnchanges:function(e){
   if(document.querySelector('#selectallbox').checked==true){
         localStorage.setItem("curr_sess_assesmentall","active");  
           document.querySelector('assesment-to-subject-card').fnsets();
@@ -136,20 +145,21 @@ fnchange:function(e){
      }
    else if(document.querySelector('#selectallbox').checked==false){
        localStorage.setItem("curr_sess_assesmentall","passive");
-         document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;  
+       document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;  
     }
   },
 fnset:function(){
    localStorage.setItem("curr_sess_assesmentall","passive");  
-document.querySelector('#selectallbox').checked=false;
-  document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;
+   document.querySelector('#selectallbox').checked=false;
+   document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;
 },
 FnRefreshcard:function(e){
  this.hideassmentinfogradeid=true; 
  this.hideassmentinfosubid=true; 
+ this.hideassmentinfosubid1=true; 
  this.hideassmentinfoid=true; 
  document.querySelector('assesment-to-subject-mapping-item-card').ref();
-},
+ },
 clear:function(e){
   this.hideassmentinfogradeid=false; 
   this.hideassmentinfosubid=false; 

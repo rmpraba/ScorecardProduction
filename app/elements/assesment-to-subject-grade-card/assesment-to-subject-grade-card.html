@@ -38,14 +38,21 @@
     Polymer({
       is: 'assesment-to-subject-grade-card',
    fnchange:function(e){
-    
+    document.querySelector('assesment-to-subject-mapping-card').hideassmentinfogradeid3=true;
+var c=[];
+document.querySelector('assesment-to-subject-mapping-card').assesmentarr=c;
+document.querySelector('assesment-to-subject-mapping-card').hideassmentinfosubid1=true;
+
      if(temp.length!=0){
        var c=[];
-       document.querySelector('assesment-to-subject-mapping-card').subjectarr=c;
-       document.querySelector('assesment-to-subject-mapping-card').fnset();
-       document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;
+document.querySelector('assesment-to-subject-mapping-card').subjectarr=c;
+document.querySelector('assesment-to-subject-mapping-card').fnset();
+document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;
+
        }
  document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;
+ document.querySelector('assesment-to-subject-mapping-card').hideassmentinfogradeid3=true;
+
      if(document.querySelector("#"+this.id).checked==true){
        var obj={};
            obj.id=this.id;
@@ -53,7 +60,7 @@
            localStorage.setItem("curr_sess_grade",this.gradename);
            localStorage.setItem("curr_sess_gradeid",this.gradeid); 
          
-           this.$.masteruiservice.Fngetassesmentandgrade();    
+           this.$.masteruiservice.Fngetassesmentandgrade3();    
         for(var i=0;i<temp.length;i++)
         {  
          if(temp[i].id!=this.id)
@@ -63,7 +70,7 @@
              temp.splice(i,1);
           }}}
        else if(document.querySelector('#'+this.id).checked==false){
-     for(var i=0;i<temp.length;i++){
+       for(var i=0;i<temp.length;i++){
           if(temp[i].id==this.id){
             temp.splice(i,1);
           }}}
