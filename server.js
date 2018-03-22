@@ -6,7 +6,7 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({  
-<<<<<<< HEAD
+
   // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
   // database:"scorecarddb",
   // port:'3306',
@@ -15,11 +15,8 @@ var connection = mysql.createConnection({
   // reconnect:true,
   // data_source_provider:"rds",
   // type:"mysql"   
-  host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
-=======
+ 
+
   /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
   database:"scorecarddb",
   port:'3306',
@@ -36,7 +33,7 @@ var connection = mysql.createConnection({
   user     : 'root',
   password : '',
   database : 'scorecardtemp'
->>>>>>> origin/master
+
  });
 
 var bodyParser = require('body-parser'); 
@@ -4015,10 +4012,11 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
-  // console.log(type);
-  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
- 
-  connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category=?",[type],
+   // console.log(type);
+    // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+ console.log("SELECT * FROM md_coscholastic_metrics where sub_category='"+req.query.termtype+"' and school_id='"+req.query.schoolid+"'and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"'");
+
+  connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category='"+req.query.termtype+"' and school_id='"+req.query.schoolid+"'and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"'",
     function(err, rows)
     {
     if(!err)
@@ -4040,7 +4038,7 @@ app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
  var qur= "SELECT sub_category,mark FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
-  //console.log(qur);
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -17435,14 +17433,17 @@ else{
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'  and flag='active' order by student_name";
 }
 
- var qur1="SELECT * ,(SELECT count(sub_metrics) FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' order by sub_category) as cmt FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+ var qur1="SELECT * ,(SELECT count(sub_metrics) FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"'  and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and  grade_name='"+req.query.gradename+"' order by sub_category) as cmt FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
     " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesmenttype+"' order by sub_category_id";
 
-   var qur2="SELECT * FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' order by sub_category";
+   var qur2="SELECT * FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' order by sub_category";
 
-   var qur3="SELECT count(sub_metrics)as cmt FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' order by sub_category";
+   var qur3="SELECT count(sub_metrics)as cmt FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"'and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' order by sub_category";
 
-  var qur4=" SELECT count(sub_category)as counvalue,sub_category,category_name FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"'group by sub_category order by sub_category";
+  var qur4=" SELECT count(sub_category)as counvalue,sub_category,category_name FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' group by sub_category order by sub_category";
 
     var enricharr=[];
     var studentarr=[]; 
@@ -20920,10 +20921,10 @@ console.log(err);
 app.post('/submatricscategoryinsert-service' ,  urlencodedParser,function (req, res)
 {
  var data={
-     /*  school_id:req.query.school_id,
+       school_id:req.query.school_id,
        academic_year: req.query.academic_year,
        grade_id:req.query.gradeid,
-       grade_name:req.query.gradename,*/
+       grade_name:req.query.gradename,
        subject_id:req.query.subjectid,
        category_name:req.query.subjectname,
        category_id:req.query.subsubject,
@@ -20935,7 +20936,7 @@ app.post('/submatricscategoryinsert-service' ,  urlencodedParser,function (req, 
          };
 
      var qur="select * from md_coscholastic_metrics where  subject_id='"+req.query.subjectid+"' "+
-    " and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"'and sub_metrics='"+req.query.subcategoryname+"' and category_name='"+req.query.categoryname+"'";
+    " and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"'and sub_metrics='"+req.query.subcategoryname+"' and category_name='"+req.query.categoryname+"' and school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"'";
     console.log('...............subjectto category info info ..........');
     console.log(data);
     console.log('.............. ..........');
@@ -21156,10 +21157,10 @@ app.post('/submatricscategory-service',  urlencodedParser,function (req, res)
 { 
   var qur;
    
-  qur="SELECT sub_metrics_id AS sub_category_id ,sub_metrics AS sub_category_name, subject_id, category_name AS subject_name,   sub_category_id as category_id   , sub_category as category_name from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and   sub_category='"+req.query.categoryname+"'and   sub_category_id='"+req.query.categoryid+"'  ";
+  qur="SELECT sub_metrics_id AS sub_category_id ,sub_metrics AS sub_category_name, subject_id, category_name AS subject_name,   sub_category_id as category_id, sub_category as category_name ,grade_id,grade_name from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and   sub_category='"+req.query.categoryname+"'and   sub_category_id='"+req.query.categoryid+"' and school_id='"+req.query.school_id+"' and grade_id='"+req.query.gradeid+"' and academic_year='"+req.query.academic_year+"'";
     
    
-    console.log("-----------------Sub-matrics---------------------");
+    console.log("------Sub-matrics---------------------");
     console.log(qur);
     console.log("--------------------------------=----------------");
  connection.query(qur,
@@ -21182,12 +21183,11 @@ app.post('/CategoryEditinfo1-service',  urlencodedParser,function (req, res)
 { 
   var qur;
    
-  qur="update sub_category from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and sub_category_id='"+req.query.categoryid+"' subject_id='"+req.query.subjectid+"'";
+  qur="update sub_category from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and sub_category_id='"+req.query.categoryid+"' subject_id='"+req.query.subjectid+"' and school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"' and grade_id='"+req.query.gradeid+"'";
        console.log("-----------------Sub-matrics edit info---------------------");
        console.log(qur);
        console.log("--------------------------------=----------------");
- connection.query(qur,
-      function(err, rows)
+ connection.query(qur, function(err, rows)
       {
         if(!err)
         {    
@@ -21204,9 +21204,9 @@ app.post('/CategoryEditinfo1-service',  urlencodedParser,function (req, res)
 
 app.post('/Fnsubcategoryeditinfo-service',  urlencodedParser,function (req, res)
 {
-var qur1="update md_coscholastic_metrics  set sub_metrics='"+req.query.subcategoryname+"'  where  subject_id='"+req.query.subjectid+"'  and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"'";
+var qur1="update md_coscholastic_metrics  set sub_metrics='"+req.query.subcategoryname+"'  where  subject_id='"+req.query.subjectid+"'  and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"' and grade_id='"+req.query.gradeid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.acadamic_year+"'";
 
- var qur3="select * from md_coscholastic_metrics  where category_name='"+req.query.subjectname+"' and subject_id='"+req.query.subjectid+"' and sub_category_id='"+req.query.categoryid+"' and sub_metrics='"+req.query.subcategoryname+"'";
+ var qur3="select * from md_coscholastic_metrics  where category_name='"+req.query.subjectname+"' and subject_id='"+req.query.subjectid+"' and sub_category_id='"+req.query.categoryid+"' and sub_metrics='"+req.query.subcategoryname+"' and grade_id='"+req.query.gradeid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.acadamic_year+"'";
 
  console.log('----subject-subcategory-mapping-----------');
  console.log('----------------------------------------');

@@ -607,15 +607,14 @@
         obj.termname=localStorage.getItem("curr_sess_termname");
          obj.studid=this.stdid;
          obj.subcategory=this.subcat;
-         this.fetchstudentlifeskillparam= obj;
-        // alert(JSON.stringify(obj));
-
-         this.$.fetchstudentlifeskillajax.generateRequest();        
+         this.fetchstudentlifeskillparam=obj;
+       //  alert(JSON.stringify(obj));
+       this.$.fetchstudentlifeskillajax.generateRequest();        
       },
        fetchstudentlifeskillResponse:function(e)
       {
          categoryarr=e.detail.response.returnval;
-        // alert(JSON.stringify(categoryarr));
+       // alert(JSON.stringify(categoryarr));
  // if(localStorage.getItem("curr_sess_page")=="single-student-mark-entery-card")
  //  {
  //  document.querySelector('single-subject-dynamic-coscholastic-markentry-item-card').FnSubcategory(categoryarr);
@@ -648,14 +647,18 @@
         document.querySelector('cs-discipline-itemcard').FnSubcategory(categoryarr);
          this.fetchlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchlifeskill";
          var obj={"schoolid":"","termtype":""};
-         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-         obj.termtype=this.subcat;        
-         this.fetchlifeskillparam= obj;
-         this.$.fetchlifeskillajax.generateRequest();
+        
+ obj.termtype=this.subcat;
+ obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+ obj.academicyear=localStorage.getItem("curr_sess_academicyear");  
+ obj.grade=localStorage.getItem("curr_sess_grade");      
+  this.fetchlifeskillparam= obj;
+  this.$.fetchlifeskillajax.generateRequest();
       },
       fetchlifeskillResponse:function(e)
       {
-        var coarr=e.detail.response.returnval;
+         var coarr=e.detail.response.returnval;
+         // alert(JSON.stringify(coarr));
         for(var i=0;i<coarr.length;i++)
         {
           for(var j=0;j<categoryarr.length;j++)

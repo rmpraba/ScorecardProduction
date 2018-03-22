@@ -77,13 +77,11 @@
   <paper-checkbox id="assesmentnoid{{subjectid}}" on-change="fnclickno">No</paper-checkbox>
   </div>
    <paper-input id="categorygetids" value="{{categorynames}}" label="Category"></paper-input>
-  <paper-input value="{{mark}}"  id="markid" label="Mark"></paper-input>
+       <paper-input value="{{mark}}"  id="markid" label="Mark"></paper-input>
     <center>
     <paper-button id="fnsubmitid" on-click="fnsubmit" style="color:black;border:2px solid black">Submit</paper-button>
-   <!--<paper-button hidden id="fncloseid" on-click="fnclose"  style="color:black;border:2px solid black">Close</paper-button> -->
-  </center>
-
-  </span>
+   </center>
+</span>
  </paper-dialog>
   <master-term-mapping-ui-service id="masteruiservice"></master-term-mapping-ui-service>
       <iron-ajax        
@@ -461,8 +459,8 @@ saveassesmentname1:function(){
            obj.subjectname=this.subjectname;
            obj.categoryvalus=categoryvalus;
           // alert(JSON.stringify(obj));
-         this.saveassesmentnameparam=obj;
-        this.$.saveassesmentnameajax.generateRequest();
+          this.saveassesmentnameparam=obj;
+         this.$.saveassesmentnameajax.generateRequest();
    }
           
       
@@ -485,7 +483,7 @@ if(localStorage.getItem("curr_sess_assesmentall")=="active"){
    
     }
    else if(localStorage.getItem("curr_sess_assesmentall")=="passive"){
-          this.categorygetseqnumber();
+           this.categorygetseqnumber();
            this.subseqvalue();
            this.fncollapsecategoryvalue();
            this.categorynames="";  
@@ -632,7 +630,7 @@ fncollapsecategoryvalue:function()
 
         this.categorytitle="";
        this.$.papercategoryid.hidden=true;
-        document.querySelector('#views'+this.subjectid).hidden=false;
+      document.querySelector('#views'+this.subjectid).hidden=false;
        document.querySelector('#close'+this.subjectid).hidden=true;
 
         }

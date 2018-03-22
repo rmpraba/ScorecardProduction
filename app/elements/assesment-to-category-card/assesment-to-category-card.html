@@ -69,9 +69,10 @@
   <div class="content">
      <div>
       <h3>{{subcategorytitle}}:</h3>
-    <template is="dom-repeat" items="{{subcategorryarr}}" as="view">
-                <assesment-to-sub-category-card serialno="{{view.Snos}}" categoryid="{{view.category_id}}" categoryname='{{view.category_name}}' subjectname="{{subjectname}}" subjectid='{{subjectid}}' subcategoryid='{{view.sub_category_id}}' gradeid='{{view.grade_id}}' gradename='{{view.grade_name}}' subcategoryname='{{view.sub_category_name}}' assesmenttype='{{view.assesment_type}}'></assesment-to-sub-category-card>
-    </template>
+  <template is="dom-repeat" items="{{subcategorryarr}}" as="view">
+          <assesment-to-sub-category-card serialno="{{view.Snos}}" categoryid="{{view.category_id}}" categoryname='{{view.category_name}}' subjectname="{{subjectname}}" subjectid='{{subjectid}}' subcategoryid='{{view.sub_category_id}}' gradeid='{{view.grade_id}}' gradename='{{view.grade_name}}' subcategoryname='{{view.sub_category_name}}' assesmenttype='{{view.assesment_type}}'>
+         </assesment-to-sub-category-card>
+   </template>
    </div>
   </div>
    </paper-card>  
@@ -227,10 +228,14 @@ Fnsubcategoryeditinfo:function(gradeid,gradename,subjectid,subjectname,categoryi
      this.fnsubcategory();
       },
 
-Fnsubmatrixditinfo:function(subjectid,subjectname,categoryid,categoryname,subcategoryid,subcategoryname,)     
+Fnsubmatrixditinfo:function(gradeid,gradename,subjectid,subjectname,categoryid,categoryname,subcategoryid,subcategoryname,)     
        {
         this.Fnsubmatrixditinfourl=sessionStorage.getItem("addrinfo")+"/Fnsubcategoryeditinfo-service";
         var obj={};
+            obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+           obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+            obj.gradeid=gradeid;
+            obj.gradename=gradename;
             obj.categoryid=categoryid;
             obj.categoryname=categoryname;
             obj.subjectid=subjectid;
@@ -334,7 +339,7 @@ submatricscategoryinsert:function(e){
        var obj={};
         
             var subsubject=this.subjectname.replace(/[^\w\s]/gi, '').trim();
-            alert(subsubject);
+        //    alert(subsubject);
            obj.subjectid=this.subjectid;
            obj.subjectname=this.subjectname;
            obj.gradeid=localStorage.getItem("curr_sess_gradeid");
@@ -361,7 +366,7 @@ submatricscategoryinsert:function(e){
 
 submatricscategoryinsertResponse:function(e){
   var res=e.detail.response.returnval;
-  alert(JSON.stringify(res));
+  //alert(JSON.stringify(res));
    this.subseqvalue11();
    this.submatricscategory();
 },
@@ -483,13 +488,12 @@ submatricscategoryinsertResponse:function(e){
         },
    submatricscategoryResponse:function(e){
   var res=e.detail.response.returnval;
-      alert(JSON.stringify(res));
+    //  alert(JSON.stringify(res));
           for(var k=0;k<res.length;k++){
               res[k].Snos=k+1;
              }
-      alert(JSON.stringify(res));
- 
-        this.subcategorryarr=res;
+    //  alert(JSON.stringify(res));
+    this.subcategorryarr=res;
         if(res.length!=0){
           this.subcategorytitle="Sub Category Name";
           this.$.subcategorypapercard.hidden=false;
@@ -497,8 +501,8 @@ submatricscategoryinsertResponse:function(e){
         else{
           this.$.subcategorypapercard.hidden=true;
           this.subcategorytitle="";
-        }
-    },
+          }
+     },
  collapsesubcategoryvalueResponse:function(e)
       {
           var res=e.detail.response.returnval;

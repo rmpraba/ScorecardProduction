@@ -47,7 +47,7 @@ fnsubcategorysave:function(){
   else{
      
      if(localStorage.getItem("curr_sess_type")=="Once"){
-     document.querySelector('assesment-to-category-card').Fnsubmatrixditinfo(this.subjectid,this.subjectname,this.categoryid,this.categoryname,this.subcategoryid,this.subcategoryname);
+     document.querySelector('assesment-to-category-card').Fnsubmatrixditinfo(this.gradeid,this.gradename,this.subjectid,this.subjectname,this.categoryid,this.categoryname,this.subcategoryid,this.subcategoryname);
      }
      else{
        document.querySelector('assesment-to-category-card').Fnsubcategoryeditinfo(this.gradeid,this.gradename,this.subjectid,this.subjectname,this.categoryid,this.categoryname,this.subcategoryid,this.subcategoryname,this.assesmenttype)
