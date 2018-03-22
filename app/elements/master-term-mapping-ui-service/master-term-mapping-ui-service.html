@@ -1,4 +1,4 @@
-@@ -0,0 +1,598 @@
+
 <!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -179,6 +179,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="assesmentandgrade1Response"
         debounce-duration="300">
        </iron-ajax>
+        <iron-ajax        
+        id="assesmentandgrade3ajax"
+        url="{{assesmentandgrade3url}}"
+        params="{{aassesmentandgrade3param}}"
+        handle-as="json"   
+        content-type="application/json"
+        method="post"
+        on-response="assesmentandgrade3Response"
+        debounce-duration="300">
+       </iron-ajax>
     </div>
      <term-dialog-card id="dialog1"></term-dialog-card>
   </template>
@@ -203,8 +213,10 @@ gettermvalueResponse:function(e)
       {
      //   alert("1");
         var res=e.detail.response.returnval;
+
+ 
         document.querySelector('term-creation-card').termarr=res;
-      },
+            },
 
  fngenerateterm:function(e){
       this.generatetermurl=sessionStorage.getItem("addrinfo")+"/generateterm-service";
@@ -379,20 +391,20 @@ gettermvalueResponse:function(e)
         },
   schooltypemappingResponse:function(e)
       {
-          var res=e.detail.response.returnval;
-        //  alert(JSON.stringify(res));
-          document.querySelector('term-assesment-to-grade-mapping').schooltypearr=res;
-          document.querySelector('assesment-to-subject-mapping-card').schooltypearr=res;
+       var res=e.detail.response.returnval;
+      document.querySelector('term-assesment-to-grade-mapping').schooltypearr=res;
+      document.querySelector('assesment-to-subject-mapping-card').schooltypearr=res;
+      //this.Fngetassesmentandgrade3();
       },
       Fngetassesmentgrade:function(schooltypeid,schooltypename)     
        {
         this.schooltypegrademappingurl=sessionStorage.getItem("addrinfo")+"/assesmentgrade-service";
         var obj={};
-        obj.board=localStorage.getItem("curr_sess_board");
-        obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
-        obj.schooltypeid=schooltypeid;
-        obj.schooltypename=schooltypename;
+       obj.board=localStorage.getItem("curr_sess_board");
+       obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+      obj.schooltypeid=schooltypeid;
+      obj.schooltypename=schooltypename;
         this.schooltypegrademappingparam=obj;
         this.$.schooltypegrademappingajax.generateRequest();
         },
@@ -449,7 +461,6 @@ gettermvalueResponse:function(e)
                    obj2.dbvalue=false;
                     assarr.push(obj2);
                   }
-                   
                    obj.fonts="font-weight: bold;text-transform: uppercase;text-align:center;"
                    obj.assesments=assarr;
                    temp.push(obj);
@@ -466,15 +477,21 @@ gettermvalueResponse:function(e)
                  var m=d.replace(/ /g,'');
                
              if(temp[i].assesments[k].id==m){
-                       temp[i].assesments[k].check=true;
-                       temp[i].assesments[k].dbvalue=true;
+                      temp[i].assesments[k].check=true;
+                      temp[i].assesments[k].dbvalue=true;
                   }
                  }    
                }  
              }
            
       var temp1=[] ;
-        temp1.push({"assesment_name":"Assesment name","assesment_id":"Assesment Id","assesments":c,"hideheadervalue":true,"hideheadervalue1":false,"fonts":"font-weight:bold;text-transform:uppercase;text-align:center;" });
+      
+     
+ //alert(JSON.stringify(res1));
+
+
+
+        temp1.push({"assesment_name":"Assesment name","assesment_id":"Assesment Id","assesments":res1,"hideheadervalue":true,"hideheadervalue1":false,"fonts":"font-weight:bold;text-transform:uppercase;text-align:center;" });
 
     for(var i=0;i<temp.length;i++){
           temp1.push(temp[i]);
@@ -489,8 +506,7 @@ gettermvalueResponse:function(e)
       else{
        document.querySelector('term-assesment-to-grade-mapping').mappingarr=temp1;
        document.querySelector('term-assesment-to-grade-mapping').hiddenvalues=false;
-
-      }},
+    }},
     Fntermtogrademappingvalue:function(termname,termid,assesmentid,assesmentname,gradename,gradeid,seq)   {
   c=seq;
         this.termtogrademappingvalueurl=sessionStorage.getItem("addrinfo")+"/termtogrademappingvalue-service";
@@ -536,6 +552,23 @@ gettermvalueResponse:function(e)
         // alert(JSON.stringify(res));
       document.querySelector('assesment-to-subject-mapping-card').gradearr=res;
 }, 
+
+Fngetassesmentandgrade3:function()     
+       {
+       this.assesmentandgrade3url=sessionStorage.getItem("addrinfo")+"/getassesmentandgrade3-service";
+        this.$.assesmentandgrade3ajax.generateRequest();
+      },
+ assesmentandgrade3Response:function(e)
+      {
+  var res=e.detail.response.returnval;
+    for(var i=0;i<res.length;i++){
+      res[i].check=false;
+    }
+    
+   document.querySelector('assesment-to-subject-mapping-card').hideassmentinfogradeid3=false;
+   document.querySelector('assesment-to-subject-mapping-card').typearr=res;  
+      },
+
 Fngetassesmentandgrade:function()     
        {
        this.assesmentandgradeurl=sessionStorage.getItem("addrinfo")+"/getassesmentandgrade-service";
@@ -544,6 +577,7 @@ Fngetassesmentandgrade:function()
            obj.gradename=localStorage.getItem("curr_sess_grade");
            obj.schooltype=localStorage.getItem("curr_sess_schooltype");
            obj.board=localStorage.getItem("curr_sess_board");
+           obj.type=localStorage.getItem("curr_sess_type"); 
            obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
            this.assesmentandgradeparam=obj;
@@ -553,6 +587,9 @@ Fngetassesmentandgrade:function()
       {
         var res=e.detail.response.returnval;
         var res1=e.detail.response.subarr;
+      /*  alert(JSON.stringify(res));
+        alert(JSON.stringify(res1));*/
+
   for(var i=0;i<res.length;i++){
             var assesment=res[i].assesment_id;
                 assesment.toLowerCase().replace(/[^\w\s]/gi, '').trim()
@@ -577,9 +614,10 @@ document.querySelector('assesment-to-subject-mapping-card').subjectarr=res1;
            obj.board=localStorage.getItem("curr_sess_board");
            obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+            obj.type=localStorage.getItem("curr_sess_type"); 
            this.assesmentandgrade1param=obj;
            this.$.assesmentandgrade1ajax.generateRequest();
-      },
+       },
  assesmentandgrade1Response:function(e)
       {
         var res=e.detail.response.returnval;

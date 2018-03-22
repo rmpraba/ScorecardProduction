@@ -200,21 +200,21 @@
         var name=e.detail.response.returnval[0].name;
         var address=e.detail.response.returnval[0].addr;
         var uname=e.detail.response.returnval[0].uname;
+        var board=e.detail.response.returnval[0].board;
 
-       // alert(name);    
-       //var roleid=e.detail.response.retur
+        
         sessionStorage.setItem("curr_sess_loggedid",username);
         
         sessionStorage.setItem("curr_sess_loggedschoolid",school);
         sessionStorage.setItem("curr_sess_loggedschoolname",name);
         sessionStorage.setItem("curr_sess_loggeduname",uname);
         sessionStorage.setItem("curr_sess_loggedschooladdress",address);   
-
+       localStorage.setItem("curr_sess_board",board);
         sessionStorage.setItem("curr_sess_loggedaffliationid",e.detail.response.returnval[0].affno);
         sessionStorage.setItem("curr_sess_emailid",e.detail.response.returnval[0].email);
         sessionStorage.setItem("curr_sess_website",e.detail.response.returnval[0].website);
         sessionStorage.setItem("curr_sess_telno",e.detail.response.returnval[0].telno);
-
+     
         this.$.bassesmentservice.callAcademicService(); 
         localStorage.setItem('curr_sess_report','0');        
         document.querySelector('app-card').setPage('homepage','Assesment Screen'); 

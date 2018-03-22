@@ -36,7 +36,7 @@
     </style>
     <div  class='itemcard' hidden$="{{hideitemcard}}">
            <paper-item hidden$="{{termid}}"></paper-item>
-        <paper-item hidden$="{{hideschooltypenameitem}}">{{termname}}</paper-item>
+        <paper-item hidden$="{{hideschooltypenameitem}}" style="text-transform:uppercase">{{termname}}</paper-item>
         <paper-input value="{{termname}}" hidden$="{{hideschooltypenameinput}}"></paper-input>
         <paper-icon-button  id="btn1" icon="icons:create" on-click='FnEdit' hidden$="{{hideschooltypenameitem}}"></paper-icon-button>
         <paper-tooltip for="btn1">Edit</paper-tooltip>

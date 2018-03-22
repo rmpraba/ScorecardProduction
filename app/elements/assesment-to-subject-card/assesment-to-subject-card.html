@@ -63,12 +63,15 @@ document.querySelector('assesment-to-subject-mapping-card').subjectarr=c;
      },
    fnsets:function(e){
     document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=true;
-  for(var i=0;i<temp.length;i++)
+  if(temp.length!=0){
+     for(var i=0;i<temp.length;i++)
          {
             var stype=temp[i].assesmentid;  
           document.querySelector('#'+stype).checked=false;
          }
          temp=[];
+  }
+ 
    },
     });
   })();
