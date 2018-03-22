@@ -6,7 +6,6 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({  
-<<<<<<< HEAD
   // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
   // database:"scorecarddb",
   // port:'3306',
@@ -19,7 +18,7 @@ var connection = mysql.createConnection({
   user     : 'root',
   password : 'admin',
   database : 'mlzsreportcard'
-=======
+
   /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
   database:"scorecarddb",
   port:'3306',
@@ -32,11 +31,6 @@ var connection = mysql.createConnection({
   // user     : 'root',
   // password : 'admin',
   // database : 'mlzsreportcard'
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'scorecardtemp'
->>>>>>> origin/master
  });
 
 var bodyParser = require('body-parser'); 
@@ -17041,7 +17035,7 @@ app.post('/fetchnewformatscholasticsubjects-service2',  urlencodedParser,functio
   // var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name in(select term_name from md_term "+
   // " where id <=(select id from md_term where term='"+req.query.termname+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
   var createqur="INSERT INTO tr_fa_overall SELECT grade,(select distinct(type) from subject_mapping where assesment_type=assesment_id) as type,category,subject_id,student_id, "+
-  " MAX(CAST(mark as UNSIGNED)) as total FROM tr_term_fa_assesment_marks  WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' "+
+  " MAX(CAST(mark as DECIMAL(9,2))) as total FROM tr_term_fa_assesment_marks  WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' "+
   " AND student_id='"+req.query.studentid+"' group by subject_id,(select distinct(type) from subject_mapping where assesment_type=assesment_id), "+
   " category,student_id,grade order by subject_id";
   var qur="select grade,type as assesment_id,subject_id,student_id,sum(total) as total from tr_fa_overall group by grade,type,subject_id,student_id "+
@@ -17169,7 +17163,7 @@ app.post('/fetchnewformatcoscholasticsubjects2-service',  urlencodedParser,funct
   // "tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
   // "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' AND term_name='"+req.query.termname+"'"+
   // "group by subject_id";
-  var qur="SELECT '"+req.query.termname+"',student_id,MAX(CAST(mark as UNSIGNED)) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
+  var qur="SELECT '"+req.query.termname+"',student_id,MAX(CAST(mark as DECIMAL(9,2))) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
   " AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' group by '"+req.query.termname+"',subject_id";
   var qur1="select * from md_coscholastic_grade_rating";
   console.log('----------------------------------------');
@@ -21599,7 +21593,149 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
         });
 });
 
+app.post('/fetchnewformatscholasticsubjects-service3',  urlencodedParser,function (req,res)
+{  
+  // var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name in(select term_name from md_term "+
+  // " where id <=(select id from md_term where term='"+req.query.termname+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
+  var createqur="INSERT INTO tr_fa_overall SELECT grade,(select distinct(type) from subject_mapping where assesment_type=assesment_id) as type,category,subject_id,student_id, "+
+  " MAX(CAST(mark as DECIMAL(9,2))) as total FROM tr_term_fa_assesment_marks  WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' "+
+  " AND student_id='"+req.query.studentid+"' and term_name not in('Annual') group by subject_id,(select distinct(type) from subject_mapping where assesment_type=assesment_id), "+
+  " category,student_id,grade order by subject_id";
+  var qur="select grade,type as assesment_id,subject_id,student_id,sum(total) as total from tr_fa_overall group by grade,type,subject_id,student_id "+
+  " order by subject_id";
+  var scalequr="SELECT * FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' and term_name in('"+req.query.termname+"')";
+  var subqur="SELECT distinct(subject_id) FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studentid+"' order by subject_id";
+  var gradequr="SELECT * FROM newformat_scholastic_grademaster";
+  var scaleup="SELECT sum(actual_scale) as tot,subject_name,grade_name FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' group by subject_name,grade_name order by subject_id"
+  var dropqur="DELETE FROM tr_fa_overall";
+  var annualqur="SELECT * FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' "+
+  " AND student_id='"+req.query.studentid+"' AND term_name in('Annual')";
+  console.log('--------------------fivetoten reportcard fetch--------------------');
+  console.log(createqur);
+  console.log(qur);
+  console.log(dropqur);
+  console.log('----------------------------------------');
+  console.log(scalequr);
+  console.log('----------------------------------------');
+  console.log(subqur);
+  console.log('----------------------------------------');
+  console.log(gradequr);
+  console.log('----------------------------------------');
+  console.log(scaleup);
+  console.log('----------------------------------------');
+  console.log(annualqur);
+  var assesment=[];
+  var master=[];
+  var subject=[];
+  var grade=[];
+  var scaleupp=[];
+  var annual=[];
+  connection.query(createqur,function(err, rows){
+  if(!err)
+  { 
+  connection.query(qur,function(err, rows){
+  if(!err)
+  { 
+    global.assesmentarrs=rows;
+    assesment=rows;
+  
+    connection.query(scalequr,function(err, rows){
+    if(!err)
+    {
+    master=rows;
+    global.masterarrs=rows;
+    connection.query(subqur,function(err, rows){
+    if(!err)
+    {
+      global.subjectarrs=rows;
+    subject=rows;
+    connection.query(gradequr,function(err, rows){
+    if(!err)
+    {
+      global.gradearrs=rows;
+    grade=rows;
+    connection.query(scaleup,function(err, rows){
+    if(!err)
+    {
+      global.scaleuparrs=rows;
+      scaleupp=rows;
+    connection.query(annualqur,function(err, rows){
+    if(!err)
+    {
+      console.log(annual);
+      // global.annualarrs=rows;
+      annual=rows;
+    connection.query(dropqur,function(err, rows){
+    if(!err)
+    {
+    res.status(200).json({'annual':annual,'assesment': assesment,'master':master,'subject':subject,'grade':grade,'scaleup':scaleupp});
+    }
+    else{
+      console.log('error in drop'+err);
+    }
+    });
+    }
+    else
+      console.log('error in annual');
+    });
+    }
+    else
+      console.log("err...lastin scholastic"+err);
+    });
+    }
+    else
+      console.log("err...last"+err);
+    });
+    }
+    else
+      console.log("err...last before"+err);
+    });
+    }
+    else
+      console.log(err);
+    });
+  }
+  else{
+    console.log(err);
+    res.status(200).json({'returnval': ''});
+  }
+  });
+  }
+  else{
+   console.log('error in table creation...'+err); 
+  }
+  });
+});
 
+app.post('/fetchnewformatcoscholasticsubjects-service3',  urlencodedParser,function (req,res)
+{  
+  // var qur="SELECT student_id,mark as total,subject_id FROM "+
+  // "tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
+  // "AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' AND term_name='"+req.query.termname+"'"+
+  // "group by subject_id";
+  var qur="SELECT '"+req.query.termname+"',student_id,MAX(CAST(mark as DECIMAL(9,2))) as total,subject_id FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' "+
+  " AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' group by '"+req.query.termname+"',subject_id";
+  var qur1="select * from md_coscholastic_grade_rating";
+  console.log('----------------------------------------');
+  console.log(qur);
+  var cs=[];
+  connection.query(qur,function(err, rows){
+  if(!err)
+  { 
+    cs=rows;
+    global.coarrsvalus=rows;
+    connection.query(qur1,function(err, rows){
+    if(!err)
+    {
+      global.gradearrss=rows;
+    res.status(200).json({'coarr': cs,'gradearr':rows});
+    }
+    });
+  }
+  else
+    res.status(200).json({'returnval': ''});
+  });
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

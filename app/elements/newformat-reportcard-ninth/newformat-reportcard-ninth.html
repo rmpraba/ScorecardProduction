@@ -1,7 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="newformat-reportcard-nineten">
+<dom-module id="newformat-reportcard-ninth">
   <template>
     <style>
     .outcard{
@@ -80,10 +80,10 @@
       <br><br>
       <div class="tab">
       <table class="tab" style="border-collapse: collapse;" border="1">
-        <tr><th>Scholastic Areas</th><th colspan="5">{{assesmentname}}</th></tr>
-        <tr><th>Subjects</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrichment (5)</th><!-- <th>Marks Obtained (100)</th><th>Grade</th> --></tr>
+        <tr><th>Scholastic Areas</th><th colspan="6">{{assesmentname}}</th></tr>
+        <tr><th>Subjects</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrichment (5)</th><th>Annual Examination(80)</th><th>Marks Obtained (100)</th><th>Grade</th></tr>
         <template is="dom-repeat" items="{{arr}}">
-          <tr><td>{{item.subject}}</td><td>{{item.PT1}}</td><td>{{item.NB1}}</td><td>{{item.SEA1}}</td><!-- <td>{{item.mark1}}</td><td>{{item.grade1}}</td> --></tr>
+          <tr><td>{{item.subject}}</td><td>{{item.PT1}}</td><td>{{item.NB1}}</td><td>{{item.SEA1}}</td><td>{{item.ANNUAL}}</td><td>{{item.mark1}}</td><td>{{item.grade1}}</td></tr>
         </template>
       </table>
       </div>
@@ -149,7 +149,7 @@
    var globcoarr=[];
     var globdisarr=[];
     Polymer({
-      is: 'newformat-reportcard-nineten',
+      is: 'newformat-reportcard-ninth',
       FnRefresh:function(){
         this.studentid="";
         this.studentname="";
@@ -165,9 +165,7 @@
       fnoverallvalus:function(arr1,arr2,arr3){
          globtemparr=arr1;
          globcoarr=arr2;
-         globdisarr=arr3;
-     
-
+         globdisarr=arr3;    
       },
       FnSetHeaders:function(){
       //  document.querySelector('#ntimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
@@ -199,15 +197,13 @@
       {
        this.$.showpopup1.toggle();
       },
-   FnSendEmail:function(e){
- this.$.newformatservice.ntotenoverallvalus(this.class,this.section,this.remark,this.result,this.date);
+     FnSendEmail:function(e){
+     this.$.newformatservice.ntotenoverallvalus(this.class,this.section,this.remark,this.result,this.date);
        this.$.showpopup1.toggle();
-
-   },
-    fnpdfconvection:function(){
+     },
+     fnpdfconvection:function(){
          this.$.newformatservice.ntoteneightpdfconvection(this.class,this.section,this.remark,this.result,this.date);
-
-      },
+     }
     });
   })();
   </script>

@@ -346,12 +346,13 @@
     <section data-category="assesment-to-subject-mapping-card">
     <assesment-to-subject-mapping-card></assesment-to-subject-mapping-card>
     </section>  
-
-      <section data-category="dashboard-homecard">
-          <dashboard-homecard></dashboard-homecard>
-      </section> 
->>>>>>> origin/master
-        </iron-pages>
+    <section data-category="dashboard-homecard">
+      <dashboard-homecard></dashboard-homecard>
+    </section> 
+    <section data-category="newformat-reportcard-ninth">
+      <newformat-reportcard-ninth></newformat-reportcard-ninth>
+    </section>       
+    </iron-pages>
     </div>   
     <div class="footer"></div>
   </div>
@@ -769,6 +770,15 @@ if(localStorage.getItem("curr_sess_page")=="subject-dynamic-coscholastic-markent
       document.querySelector('teacherhome-card').FnRefresh();
       // document.querySelector('cce-generate-score-card').FnRefresh();
       document.querySelector('newformat-reportcard-nineten').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="newformat-reportcard-ninth")
+    {
+      // this.page="teacherhomecard";
+      this.page="scorecard";
+      localStorage.setItem("curr_sess_page",this.page);
+      document.querySelector('teacherhome-card').FnRefresh();
+      // document.querySelector('cce-generate-score-card').FnRefresh();
+      document.querySelector('newformat-reportcard-ninth').FnRefresh();      
     }
     if(localStorage.getItem("curr_sess_page")=="approveassesment")
     {

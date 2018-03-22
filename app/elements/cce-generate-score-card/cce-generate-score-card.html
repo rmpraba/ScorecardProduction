@@ -252,12 +252,13 @@
         document.querySelector('cce-fivetoten-score-card').callImage();
         }
         else{
+          // alert(localStorage.getItem("curr_sess_termname")+"  "+localStorage.getItem("curr_sess_grade"));
         if(localStorage.getItem("curr_sess_grade")=="Grade-10"||localStorage.getItem("curr_sess_grade")=="Grade-9"){
           // alert('in');
           this.$.newformatservice.fetchstudinfofornewformatService(this.studentid);
           this.$.newformatservice.fetchnewformatremark1(this.studentid);
           // alert("display term"+localStorage.getItem("curr_sess_termname"));
-          if(localStorage.getItem("curr_sess_termname").toLowerCase()=="annual"){
+          if(localStorage.getItem("curr_sess_termname").toLowerCase()=="annual"&&localStorage.getItem("curr_sess_grade")=="Grade-10"){
             // alert('in');
           this.$.newformatservice.fetchnewformatcoscholasticsubjects2(this.studentid);
           this.$.newformatservice.fetchnewformatscholasticsubjects2(this.studentid);
@@ -265,7 +266,16 @@
           document.querySelector('home-page').setPage('newformat-reportcard-nineten','');
           document.querySelector('newformat-reportcard-nineten').FnSetHeaders();
           }
+          else if(localStorage.getItem("curr_sess_termname").toLowerCase()=="annual"&&localStorage.getItem("curr_sess_grade")=="Grade-9"){
+            // alert('in in');
+          this.$.newformatservice.fetchnewformatcoscholasticsubjects3(this.studentid);
+          this.$.newformatservice.fetchnewformatscholasticsubjects3(this.studentid);
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('newformat-reportcard-ninth','');
+          document.querySelector('newformat-reportcard-ninth').FnSetHeaders();
+          }
           else{
+            // alert('out');
           this.$.newformatservice.fetchnewformatcoscholasticsubjects1(this.studentid);
           this.$.newformatservice.fetchnewformatscholasticsubjects1(this.studentid);
           document.querySelector('app-card').setPage('homepage','');
