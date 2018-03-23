@@ -20737,8 +20737,7 @@ app.post('/checktermmapping-service' , urlencodedParser,function (req, res)
 {  
  var qur="select * from md_school_grade_mapping where school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"' and school_type='"+req.query.schooltypid+"'";
    console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+  connection.query(qur,function(err, rows)
     {
     if(!err)
     { 
@@ -20980,8 +20979,22 @@ console.log(err);
 });
 
 
+app.post('/finalvalueofGenerate-service',  urlencodedParser,function (req, res)
+{ 
+    var qur="select max(assesment_name) as assesmentname from md_grade_assesment_mapping where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and term_id='"+req.query.termname+"' order by assesment_name";      
+    console.log("------------------Fetch FinalGradevalue----------------------");
+    console.log(qur);
+    connection.query(qur,  function(err, rows)
+      {
+     if(!err)
+      {  
+        res.status(200).json({'returnval': rows});
+      }  
+    });
+});
 app.post('/savesubassesmentname-service' ,  urlencodedParser,function (req, res)
 {
+ 
  var data={
        school_id:req.query.school_id,
        academic_year: req.query.academic_year,
@@ -20997,17 +21010,27 @@ app.post('/savesubassesmentname-service' ,  urlencodedParser,function (req, res)
        weight:req.query.mark,
        flag:req.query.categoryvalus,
        sub_seq:req.query.seq,
+    
          };
     var qur="select * from subject_mapping where school_id='"+req.query.school_id+"' and "+
     "academic_year='"+req.query.academic_year+"' and grade_id='"+req.query.gradeid+"' and subject_id='"+req.query.subjectid+"' "+
     " and category_id='"+req.query.categoryid+"' and assesment_type='"+req.query.assesmentname+"'and sub_category_name='"+req.query.subcategoryname+"'";
+    var qur4="select assesment_type from assesment_to_type_mapping where  assesment_id ='"+req.query.assesmentname+"'"
     console.log('...............subjectto category info info ..........');
     console.log(data);
     console.log('.............. ..........');
     console.log(qur);
+    console.log(qur4);
     console.log('.............. ..........');
-
-    connection.query(qur, function(err, rows)
+    
+  
+ connection.query(qur4,function(err, rows)
+    {
+    if(!err)
+    { 
+       data.type=rows[0].assesment_type;
+     
+   connection.query(qur, function(err, rows)
       { 
       if(!err)
       {        
@@ -21041,6 +21064,15 @@ app.post('/savesubassesmentname-service' ,  urlencodedParser,function (req, res)
 else
 console.log(err);
 });
+
+ }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }  
+
+  });
 });
 
 app.post('/CategoryEditinfo-service',  urlencodedParser,function (req, res)
