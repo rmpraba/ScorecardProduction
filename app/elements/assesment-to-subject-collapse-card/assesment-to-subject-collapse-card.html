@@ -20,9 +20,9 @@
         text-align: left;
       } 
       #categorytypeid{
-       width: 30%;
-       height: 44%;
-         border-radius: 25px;
+      width: 32%;
+      height: 45%;
+      border-radius: 25px;
       }
       .viewdata{
         margin-top: 5%;
@@ -77,13 +77,11 @@
   <paper-checkbox id="assesmentnoid{{subjectid}}" on-change="fnclickno">No</paper-checkbox>
   </div>
    <paper-input id="categorygetids" value="{{categorynames}}" label="Category"></paper-input>
-  <paper-input value="{{mark}}"  id="markid" label="Mark"></paper-input>
+       <paper-input value="{{mark}}"  id="markid" label="Mark"></paper-input>
     <center>
     <paper-button id="fnsubmitid" on-click="fnsubmit" style="color:black;border:2px solid black">Submit</paper-button>
-   <!--<paper-button hidden id="fncloseid" on-click="fnclose"  style="color:black;border:2px solid black">Close</paper-button> -->
-  </center>
-
-  </span>
+   </center>
+</span>
  </paper-dialog>
   <master-term-mapping-ui-service id="masteruiservice"></master-term-mapping-ui-service>
       <iron-ajax        
@@ -386,18 +384,30 @@ fnsubmit:function(e){
         }
        }
       }
-      else{
-       //  alert("High");
-      if(categoryvalus=="yes"||categoryvalus=="no"){
+    else if(localStorage.getItem("curr_sess_grade")=="Grade-5"||localStorage.getItem("curr_sess_grade")=="Grade-6"||localStorage.getItem("curr_sess_grade")=="Grade-7"||localStorage.getItem("curr_sess_grade")=="Grade-8"||localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10"){
+        alert("High");
+    if(localStorage.getItem("curr_sess_type")=="Once"){
+
+      if(categoryvalus=="no"){
         this.savesubassesmentname();
         this.$.categorytypeid.toggle(); 
       }
-     
-      }
-  
+    }
+    else{
+         if(categoryvalus=="yes"){
+    
+         this.saveassesmentname1();
+        this.$.categorytypeid.toggle(); 
      }
-   
-     },
+     else if(categoryvalus=="no"){
+        if(this.mark=="")
+        alert("please check the mark entry");
+        else{
+     this.savesubassesmentname();
+     this.$.categorytypeid.toggle(); 
+        }
+       }
+      } } } },
      ready:function(){
   
   this.$.markid.hidden=true;
@@ -461,8 +471,8 @@ saveassesmentname1:function(){
            obj.subjectname=this.subjectname;
            obj.categoryvalus=categoryvalus;
           // alert(JSON.stringify(obj));
-         this.saveassesmentnameparam=obj;
-        this.$.saveassesmentnameajax.generateRequest();
+          this.saveassesmentnameparam=obj;
+         this.$.saveassesmentnameajax.generateRequest();
    }
           
       
@@ -485,7 +495,7 @@ if(localStorage.getItem("curr_sess_assesmentall")=="active"){
    
     }
    else if(localStorage.getItem("curr_sess_assesmentall")=="passive"){
-          this.categorygetseqnumber();
+           this.categorygetseqnumber();
            this.subseqvalue();
            this.fncollapsecategoryvalue();
            this.categorynames="";  
@@ -505,15 +515,15 @@ if(localStorage.getItem("curr_sess_assesmentall")=="active"){
                   this.savesubassesmentnameurl=sessionStorage.getItem("addrinfo")+"/savesubassesmentname-service";
 
        var obj={};
+           obj.assesmentname=this.assesmentbulkvalue[i].assesment_name;
+           obj.assesmentid=this.assesmentbulkvalue[i].assesment_id;
            obj.gradeid=localStorage.getItem("curr_sess_gradeid");
            obj.gradename=localStorage.getItem("curr_sess_grade");
            obj.schooltype=localStorage.getItem("curr_sess_schooltype");
            obj.board=localStorage.getItem("curr_sess_board");
-           obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-           obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
-           obj.assesmentname=localStorage.getItem("curr_sess_assesmentname");
-           obj.assesmentid=localStorage.getItem("curr_sess_assesmentname");
-            obj.assesmentset=localStorage.getItem("curr_sess_assesmentall");
+         obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+           obj.assesmentset=localStorage.getItem("curr_sess_assesmentall");
            obj.subjectid=this.subjectid;
            obj.subjectname=this.subjectname;
            obj.categoryid=this.subjectid+"-c"+d;
@@ -527,7 +537,7 @@ if(localStorage.getItem("curr_sess_assesmentall")=="active"){
            obj.subjectname=this.subjectname;
            obj.categoryvalus=categoryvalus;
             obj.type=localStorage.getItem("curr_sess_type");
-        //    alert(JSON.stringify(obj));
+          //alert(JSON.stringify(obj));
            this.savesubassesmentnameparam=obj;
            this.$.savesubassesmentnameajax.generateRequest();
 
@@ -575,10 +585,10 @@ if(localStorage.getItem("curr_sess_assesmentall")=="active"){
       {
         c4++;
 
-         var res=e.detail.response.returnval;
-       //   alert(JSON.stringify(res));
+  var res=e.detail.response.returnval;
+         //alert(JSON.stringify(res));
          
- if(localStorage.getItem("curr_sess_assesmentall")=="active"){
+  if(localStorage.getItem("curr_sess_assesmentall")=="active"){
   if(c3==c4){
    this.saveassesmentname1(); 
    c3=0;
@@ -627,12 +637,17 @@ fncollapsecategoryvalue:function()
        
           this.categorytitle="Category Name";
           this.$.papercategoryid.hidden=false;
+           document.querySelector('#'+this.subjectid).opened=true;
+         document.querySelector('#views'+this.subjectid).hidden=true;
+         document.querySelector('#close'+this.subjectid).hidden=false;
+
+
         }
         else{
 
         this.categorytitle="";
        this.$.papercategoryid.hidden=true;
-        document.querySelector('#views'+this.subjectid).hidden=false;
+      document.querySelector('#views'+this.subjectid).hidden=false;
        document.querySelector('#close'+this.subjectid).hidden=true;
 
         }

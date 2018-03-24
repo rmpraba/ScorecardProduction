@@ -548,9 +548,9 @@ gettermvalueResponse:function(e)
         },
    getassesmentResponse:function(e)
       {
-         var res=e.detail.response.returnval;
+    var res=e.detail.response.returnval;
         // alert(JSON.stringify(res));
-      document.querySelector('assesment-to-subject-mapping-card').gradearr=res;
+       document.querySelector('assesment-to-subject-mapping-card').gradearr=res;
 }, 
 
 Fngetassesmentandgrade3:function()     
@@ -591,11 +591,14 @@ Fngetassesmentandgrade:function()
         alert(JSON.stringify(res1));*/
 
   for(var i=0;i<res.length;i++){
-            var assesment=res[i].assesment_id;
-                assesment.toLowerCase().replace(/[^\w\s]/gi, '').trim()
-                res[i].id=assesment;
+               var assesment=res[i].assesment_id;
+               var c= assesment.toLowerCase();
+                   c.replace(/[^\w\s]/gi, '')
+               var ddddd=c.replace(/ /g,'');
+                res[i].id=ddddd;
                 res[i].check=false
         }
+        // alert(JSON.stringify(res));
     for(var i=0;i<res1.length;i++){
               res1[i].sno=i+1;
               res1[i].assesmentbulkvalue=res; 

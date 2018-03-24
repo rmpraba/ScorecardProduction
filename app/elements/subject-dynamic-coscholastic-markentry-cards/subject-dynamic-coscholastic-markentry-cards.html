@@ -18,7 +18,8 @@
       <paper-fab style="background: grey;margin-top: -3%;margin-left: 96%;width:40px;height: 40px;" icon="close" on-click="FnClose"></paper-fab>
       <paper-dialog-scrollable style="height: 80%;">
       <template is="dom-repeat" items="{{coarr}}">
-      <cs-sub-metrics-item-card errormessage="{{item.errormessage}}" submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
+        <cs-sub-metrics-item-card errormessage="{{item.errormessage}}" submetric="{{item.sub_metrics}}" score1="{{item.mark}}">
+       </cs-sub-metrics-item-card>
       </template>
       <center>  
       <div class="submitbutton">
@@ -66,8 +67,8 @@
         sname=this.subcategoryname;
         catname=this.categoryname;
         subcategoryid=this.subcategoryid;
-       // alert(idd+" "+name+" "+sname+" "+catname);
-        this.$.coscholasticservice.fetchlifeskilldata(this.studentid,this.subcategoryname);
+      //  alert(idd+" "+name+" "+sname+" "+catname+" "+subcategoryid);
+         this.$.coscholasticservice.fetchlifeskilldata(this.studentid,this.subcategoryname);
         var id ='healthandphysical';
         sessionStorage.setItem("category",this.subcategoryname);
         var dialog = document.getElementById(id);
@@ -166,7 +167,7 @@
         var id = 'healthandphysical';
         var dialog = document.getElementById(id);
         dialog.opened=false;
-        sum1=(parseFloat((parseFloat(sum))/parseFloat(t))).toFixed(2);
+     sum1=(parseFloat((parseFloat(sum))/parseFloat(t))).toFixed(2);
         document.getElementById(setid).value=sum1;
             
       var obj1={}

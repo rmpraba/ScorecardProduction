@@ -31,14 +31,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'assesment-to-subject-card',
    fnassesmentchange:function(e){
+   
+
     if(document.querySelector("#"+this.id).checked==true){
        var c=[];   
-document.querySelector('assesment-to-subject-mapping-card').subjectarr=c;
+   document.querySelector('assesment-to-subject-mapping-card').subjectarr=c;
    document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=false;      
        var obj={};
            obj.assesmentid=this.id;
            temp.push(obj);
-          localStorage.setItem("curr_sess_assesmentname",this.assesmentname);
+        localStorage.setItem("curr_sess_assesmentname",this.assesmentname);
+
            this.$.masteruiservice.Fngetassesmentandgrade1();    
         for(var i=0;i<temp.length;i++)
          {  
