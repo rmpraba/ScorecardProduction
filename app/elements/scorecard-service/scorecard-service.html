@@ -675,7 +675,7 @@
       {        
         var arr=e.detail.response.returnval; 
         var arr1=e.detail.response.emparr; 
-        // alert(JSON.stringify(arr));       
+        alert(JSON.stringify(arr1));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){          
         document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
         document.querySelector('cce-onetofour-score-card').studname=arr[0].student_name;        
@@ -742,31 +742,43 @@
       },
       callfetchhealthattendanceinfoService:function(studid)
       {
-        alert(2);
+        // alert(2);
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.studid=studid;
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
         this.fetchhealthattendanceinfoparam=obj;
         this.$.fetchhealthattendanceinfoajax.generateRequest();
       },
       fetchhealthattendanceinfoResponse:function(e){        
-        var arr=e.detail.response.returnval;
-        alert('s'+JSON.stringify(arr));
+        var arr=e.detail.response.attendance;
+        var arr1=e.detail.response.health;
+        // alert('s'+JSON.stringify(arr));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard")
         {
-          alert(arr[0].working_days);
-        document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
-        document.querySelector('cce-fivetoten-score-card').term2attendance=arr[1].attendance;
-        document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
-        document.querySelector('cce-fivetoten-score-card').term2wday=arr[1].working_days;
-        document.querySelector('cce-fivetoten-score-card').height=arr[0].height;
-        document.querySelector('cce-fivetoten-score-card').width=arr[0].width;
-        document.querySelector('cce-fivetoten-score-card').bloodgroup=arr[0].blood_group;
-        document.querySelector('cce-fivetoten-score-card').leftvision=arr[0].left_vision;
-        document.querySelector('cce-fivetoten-score-card').rightvision=arr[0].right_vision;
-        document.querySelector('cce-fivetoten-score-card').dental=arr[0].dental;
+          // alert(arr[0].working_days);
+        if(localStorage.getItem("curr_sess_termname").toLowerCase()=="term1"||localStorage.getItem("curr_sess_termname").toLowerCase()=="term2"){
+          document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
+          document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
+          document.querySelector('cce-fivetoten-score-card').height=arr1[0].height;
+          document.querySelector('cce-fivetoten-score-card').width=arr1[0].width;
+          document.querySelector('cce-fivetoten-score-card').bloodgroup=arr1[0].blood_group;
+          document.querySelector('cce-fivetoten-score-card').leftvision=arr1[0].left_vision;
+          document.querySelector('cce-fivetoten-score-card').rightvision=arr1[0].right_vision;
+          document.querySelector('cce-fivetoten-score-card').dental=arr1[0].dental;
+          if(localStorage.getItem("curr_sess_termname").toLowerCase()=="term2"){
+          document.querySelector('cce-fivetoten-score-card').term2attendance=arr[1].attendance;        
+          document.querySelector('cce-fivetoten-score-card').term2wday=arr[1].working_days;
+          document.querySelector('cce-fivetoten-score-card').height=arr1[1].height;
+          document.querySelector('cce-fivetoten-score-card').width=arr1[1].width;
+          document.querySelector('cce-fivetoten-score-card').bloodgroup=arr1[1].blood_group;
+          document.querySelector('cce-fivetoten-score-card').leftvision=arr1[1].left_vision;
+          document.querySelector('cce-fivetoten-score-card').rightvision=arr1[1].right_vision;
+          document.querySelector('cce-fivetoten-score-card').dental=arr1[1].dental;
+          }
+        }        
       }
       if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport")
         {

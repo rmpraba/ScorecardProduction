@@ -6,18 +6,18 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({  
-  // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  // database:"scorecarddb",
-  // port:'3306',
-  // user:"smis",
-  // password:"smispass",
-  // reconnect:true,
-  // data_source_provider:"rds",
-  // type:"mysql"   
-  host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'
+  host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  database:"scorecarddb",
+  port:'3306',
+  user:"smis",
+  password:"smispass",
+  reconnect:true,
+  data_source_provider:"rds",
+  type:"mysql"   
+  // host     : 'localhost',
+  // user     : 'root',
+  // password : 'admin',
+  // database : 'mlzsreportcard'
 
   /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
   database:"scorecarddb",
@@ -4127,7 +4127,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var studid={id:req.query.studid};
   var qur="select s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.mother_name,p.email,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode,p.alternate_mail "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and s.flag='active' and p.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"'";
-   var qur1 ="select UPPER(id) as id,UPPER(school_id) as school_id from  mp_teacher_grade where school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' and grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"')  and role_id='class-teacher'  and section_id='"+req.query.section+"' and flage='active'";
+   var qur1 ="select UPPER(id) as id,UPPER(school_id) as school_id from  mp_teacher_grade where school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' and grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"')  and role_id='class-teacher'  and section_id='"+req.query.section+"'";
 
 var emparr=[];
   console.log("------------stuinfo------------");
@@ -21703,28 +21703,28 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
     " count(distinct(sub_category_id)) as subcatcount FROM enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and "+
     " academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and assesment_type in(select distinct(assesment_id) "+
     " from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
-    " grade_id='"+req.query.grade+"') group by assesment_type order by assesment_type";
+    " grade_id='"+req.query.grade+"') group by assesment_type order by (SELECT id FROM enrichment_assesment_type where name=assesment_type)";
 
     var qur2="SELECT assesment_type,subject_id,subject_name,count(distinct(subject_id)) as subcount,count(distinct(category_id)) as catcount, "+
     " count(distinct(sub_category_id)) as subcatcount FROM enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and "+
     " academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and assesment_type in(select distinct(assesment_id) "+
     " from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
-    " grade_id='"+req.query.grade+"') group by assesment_type,subject_id,subject_name order by assesment_type,subject_id";
+    " grade_id='"+req.query.grade+"') group by assesment_type,subject_id,subject_name order by (SELECT id FROM enrichment_assesment_type where name=assesment_type),subject_id";
 
     var qur3="SELECT assesment_type,subject_id,subject_name,category_id,category_name,count(distinct(subject_id)) as subcount,count(distinct(category_id)) as catcount, "+
     " count(distinct(sub_category_id)) as subcatcount FROM enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and "+
     " academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and assesment_type in(select distinct(assesment_id) "+
     " from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
-    " grade_id='"+req.query.grade+"') group by assesment_type,subject_id,subject_name,category_id,category_name order by assesment_type,subject_id,category_id";
+    " grade_id='"+req.query.grade+"') group by assesment_type,subject_id,subject_name,category_id,category_name order by (SELECT id FROM enrichment_assesment_type where name=assesment_type),subject_id,category_id";
 
     var qur4="SELECT assesment_type,subject_id,subject_name,category_id,category_name,sub_category_id,sub_category_name FROM "+
     " enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' "+
     " and assesment_type in(select distinct(assesment_id) from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' "+
-    " and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"') group by assesment_type,subject_id,subject_name,category_id,category_name,sub_category_id,sub_category_name order by assesment_type,subject_id,category_id,sub_category_id";
+    " and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"') group by assesment_type,subject_id,subject_name,category_id,category_name,sub_category_id,sub_category_name order by (SELECT id FROM enrichment_assesment_type where name=assesment_type),subject_id,category_id,sub_category_id";
 
     var qur5="select * from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
     " and grade_id='"+req.query.grade+"' and section_id='"+req.query.sectionname+"' and student_id in(select id from md_student where class_id "+
-    " in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active'))";
+    " in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active')) order by (SELECT id FROM enrichment_assesment_type where name=assesment_type)";
 
     var qur6="select * from md_student where class_id in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
 

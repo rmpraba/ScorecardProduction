@@ -195,7 +195,7 @@
         overall.push({"sno":"","studentid":"","studentname":"","titlearr":temp});
         for(var x=0;x<student.length;x++){
         var temp=[];
-        for(var i=0;i<subcategory.length;i++){
+        for(var i=0;i<subcategory.length;i++){          
         for(var j=0;j<enrich.length;j++){
           if(student[x].id==enrich[j].student_id&&subcategory[i].assesment_type==enrich[j].assesment_id&&subcategory[i].subject_id==enrich[j].subject_id&&subcategory[i].subject_name==enrich[j].subject_name&&subcategory[i].category_id==enrich[j].category_id&&subcategory[i].category_name==enrich[j].category_name&&subcategory[i].sub_category_id==enrich[j].sub_category_id&&subcategory[i].sub_category_name==enrich[j].sub_category_name){            
             for(var n=0;n<4;n++){
@@ -222,7 +222,11 @@
         overall.push({"sno":x+1,"studentid":student[x].id,"studentname":student[x].student_name,"titlearr":temp});
         }
 
-        // alert(JSON.stringify(overall));
+        for(var i=0;i<overall.length;i++){
+
+        }
+
+        alert(JSON.stringify(overall[6]));
         document.querySelector('student-performance-tracking-homecard').excelarr=overall;
         // document.querySelector('student-performance-tracking-homecard').FnToggleSpinner(false);
         // document.querySelector('student-performance-tracking-homecard').exportToExcel();
