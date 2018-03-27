@@ -18,19 +18,6 @@ var connection = mysql.createConnection({
   // user     : 'root',
   // password : 'admin',
   // database : 'mlzsreportcard'
-
-  /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  database:"scorecarddb",
-  port:'3306',
-  user:"smis",
-  password:"smispass",
-  reconnect:true,
-  data_source_provider:"rds",
-  type:"mysql"   */
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
  });
 
 var bodyParser = require('body-parser'); 
@@ -2368,8 +2355,9 @@ app.post('/fetchstudentforattendance-service',  urlencodedParser,function (req, 
 
 app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function (req, res)
 {
-  var qur="select student_id as id ,student_name,attendance,working_days,speccomment,generic from tr_term_attendance where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by student_name";
- //console.log(qur);
+ var qur="select distinct(student_id) as id ,student_name,attendance,working_days,speccomment,generic from tr_term_attendance where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by student_name";
+ console.log('---------------student for attendance-----------');
+ console.log(qur);
  connection.query(qur,
     function(err, rows)
     {
@@ -4009,10 +3997,11 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
-  // console.log(type);
-  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
- 
-  connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category=?",[type],
+   // console.log(type);
+    // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+ console.log("SELECT * FROM md_coscholastic_metrics where sub_category='"+req.query.termtype+"' and school_id='"+req.query.schoolid+"'and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"'");
+
+  connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category='"+req.query.termtype+"' and school_id='"+req.query.schoolid+"'and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"'",
     function(err, rows)
     {
     if(!err)
@@ -4034,7 +4023,7 @@ app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
  var qur= "SELECT sub_category,mark FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
-  //console.log(qur);
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -16865,7 +16854,7 @@ app.post('/fetchnewformatremark-service',  urlencodedParser,function (req,res)
 app.post('/fetchnewformatremark-service1',  urlencodedParser,function (req,res)
 {  
  var qur="SELECT * FROM tr_term_attendance WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_id='"+req.query.termname+"'";
-  console.log('----------------------------------------');
+  console.log('------------------9to10 attendance----------------------');
   console.log(qur);
   connection.query(qur,function(err, rows){
   if(!err)
@@ -17429,14 +17418,17 @@ else{
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'  and flag='active' order by student_name";
 }
 
- var qur1="SELECT * ,(SELECT count(sub_metrics) FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' order by sub_category) as cmt FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+ var qur1="SELECT * ,(SELECT count(sub_metrics) FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"'  and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and  grade_name='"+req.query.gradename+"' order by sub_category) as cmt FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
     " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesmenttype+"' order by sub_category_id";
 
-   var qur2="SELECT * FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' order by sub_category";
+   var qur2="SELECT * FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' order by sub_category";
 
-   var qur3="SELECT count(sub_metrics)as cmt FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' order by sub_category";
+   var qur3="SELECT count(sub_metrics)as cmt FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"'and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' order by sub_category";
 
-  var qur4=" SELECT count(sub_category)as counvalue,sub_category,category_name FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"'group by sub_category order by sub_category";
+  var qur4=" SELECT count(sub_category)as counvalue,sub_category,category_name FROM md_coscholastic_metrics WHERE subject_id='"+req.query.subjectid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_name='"+req.query.gradename+"' group by sub_category order by sub_category";
 
     var enricharr=[];
     var studentarr=[]; 
@@ -20730,8 +20722,7 @@ app.post('/checktermmapping-service' , urlencodedParser,function (req, res)
 {  
  var qur="select * from md_school_grade_mapping where school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"' and school_type='"+req.query.schooltypid+"'";
    console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+  connection.query(qur,function(err, rows)
     {
     if(!err)
     { 
@@ -20914,10 +20905,10 @@ console.log(err);
 app.post('/submatricscategoryinsert-service' ,  urlencodedParser,function (req, res)
 {
  var data={
-     /*  school_id:req.query.school_id,
+       school_id:req.query.school_id,
        academic_year: req.query.academic_year,
        grade_id:req.query.gradeid,
-       grade_name:req.query.gradename,*/
+       grade_name:req.query.gradename,
        subject_id:req.query.subjectid,
        category_name:req.query.subjectname,
        category_id:req.query.subsubject,
@@ -20929,7 +20920,7 @@ app.post('/submatricscategoryinsert-service' ,  urlencodedParser,function (req, 
          };
 
      var qur="select * from md_coscholastic_metrics where  subject_id='"+req.query.subjectid+"' "+
-    " and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"'and sub_metrics='"+req.query.subcategoryname+"' and category_name='"+req.query.categoryname+"'";
+    " and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"'and sub_metrics='"+req.query.subcategoryname+"' and category_name='"+req.query.categoryname+"' and school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"'";
     console.log('...............subjectto category info info ..........');
     console.log(data);
     console.log('.............. ..........');
@@ -20973,8 +20964,22 @@ console.log(err);
 });
 
 
+app.post('/finalvalueofGenerate-service',  urlencodedParser,function (req, res)
+{ 
+    var qur="select max(assesment_name) as assesmentname from md_grade_assesment_mapping where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and term_id='"+req.query.termname+"' order by assesment_name";      
+    console.log("------------------Fetch FinalGradevalue----------------------");
+    console.log(qur);
+    connection.query(qur,  function(err, rows)
+      {
+     if(!err)
+      {  
+        res.status(200).json({'returnval': rows});
+      }  
+    });
+});
 app.post('/savesubassesmentname-service' ,  urlencodedParser,function (req, res)
 {
+ 
  var data={
        school_id:req.query.school_id,
        academic_year: req.query.academic_year,
@@ -20990,17 +20995,27 @@ app.post('/savesubassesmentname-service' ,  urlencodedParser,function (req, res)
        weight:req.query.mark,
        flag:req.query.categoryvalus,
        sub_seq:req.query.seq,
+    
          };
     var qur="select * from subject_mapping where school_id='"+req.query.school_id+"' and "+
     "academic_year='"+req.query.academic_year+"' and grade_id='"+req.query.gradeid+"' and subject_id='"+req.query.subjectid+"' "+
     " and category_id='"+req.query.categoryid+"' and assesment_type='"+req.query.assesmentname+"'and sub_category_name='"+req.query.subcategoryname+"'";
+    var qur4="select assesment_type from assesment_to_type_mapping where  assesment_id ='"+req.query.assesmentname+"'"
     console.log('...............subjectto category info info ..........');
     console.log(data);
     console.log('.............. ..........');
     console.log(qur);
+    console.log(qur4);
     console.log('.............. ..........');
-
-    connection.query(qur, function(err, rows)
+    
+  
+ connection.query(qur4,function(err, rows)
+    {
+    if(!err)
+    { 
+       data.type=rows[0].assesment_type;
+     
+   connection.query(qur, function(err, rows)
       { 
       if(!err)
       {        
@@ -21034,6 +21049,15 @@ app.post('/savesubassesmentname-service' ,  urlencodedParser,function (req, res)
 else
 console.log(err);
 });
+
+ }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }  
+
+  });
 });
 
 app.post('/CategoryEditinfo-service',  urlencodedParser,function (req, res)
@@ -21150,10 +21174,10 @@ app.post('/submatricscategory-service',  urlencodedParser,function (req, res)
 { 
   var qur;
    
-  qur="SELECT sub_metrics_id AS sub_category_id ,sub_metrics AS sub_category_name, subject_id, category_name AS subject_name,   sub_category_id as category_id   , sub_category as category_name from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and   sub_category='"+req.query.categoryname+"'and   sub_category_id='"+req.query.categoryid+"'  ";
+  qur="SELECT sub_metrics_id AS sub_category_id ,sub_metrics AS sub_category_name, subject_id, category_name AS subject_name,   sub_category_id as category_id, sub_category as category_name ,grade_id,grade_name from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and   sub_category='"+req.query.categoryname+"'and   sub_category_id='"+req.query.categoryid+"' and school_id='"+req.query.school_id+"' and grade_id='"+req.query.gradeid+"' and academic_year='"+req.query.academic_year+"'";
     
    
-    console.log("-----------------Sub-matrics---------------------");
+    console.log("------Sub-matrics---------------------");
     console.log(qur);
     console.log("--------------------------------=----------------");
  connection.query(qur,
@@ -21176,12 +21200,11 @@ app.post('/CategoryEditinfo1-service',  urlencodedParser,function (req, res)
 { 
   var qur;
    
-  qur="update sub_category from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and sub_category_id='"+req.query.categoryid+"' subject_id='"+req.query.subjectid+"'";
+  qur="update sub_category from md_coscholastic_metrics where  category_name='"+req.query.subjectname+"' and sub_category_id='"+req.query.categoryid+"' subject_id='"+req.query.subjectid+"' and school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"' and grade_id='"+req.query.gradeid+"'";
        console.log("-----------------Sub-matrics edit info---------------------");
        console.log(qur);
        console.log("--------------------------------=----------------");
- connection.query(qur,
-      function(err, rows)
+ connection.query(qur, function(err, rows)
       {
         if(!err)
         {    
@@ -21198,9 +21221,9 @@ app.post('/CategoryEditinfo1-service',  urlencodedParser,function (req, res)
 
 app.post('/Fnsubcategoryeditinfo-service',  urlencodedParser,function (req, res)
 {
-var qur1="update md_coscholastic_metrics  set sub_metrics='"+req.query.subcategoryname+"'  where  subject_id='"+req.query.subjectid+"'  and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"'";
+var qur1="update md_coscholastic_metrics  set sub_metrics='"+req.query.subcategoryname+"'  where  subject_id='"+req.query.subjectid+"'  and sub_category_id='"+req.query.categoryid+"' and sub_metrics_id='"+req.query.subcategoryid+"' and grade_id='"+req.query.gradeid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.acadamic_year+"'";
 
- var qur3="select * from md_coscholastic_metrics  where category_name='"+req.query.subjectname+"' and subject_id='"+req.query.subjectid+"' and sub_category_id='"+req.query.categoryid+"' and sub_metrics='"+req.query.subcategoryname+"'";
+ var qur3="select * from md_coscholastic_metrics  where category_name='"+req.query.subjectname+"' and subject_id='"+req.query.subjectid+"' and sub_category_id='"+req.query.categoryid+"' and sub_metrics='"+req.query.subcategoryname+"' and grade_id='"+req.query.gradeid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.acadamic_year+"'";
 
  console.log('----subject-subcategory-mapping-----------');
  console.log('----------------------------------------');
@@ -21728,6 +21751,14 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
 
     var qur6="select * from md_student where class_id in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
 
+    var qur7="select school_id,academic_year,assesment_id,student_id,subject_name,category_name,grade,level, "+
+    " ASCII(grade) as ascii from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"' and "+
+    " section_id='"+req.query.sectionname+"' and assesment_id in('EBOY','EMOY','EEOY') "+
+    " group by school_id,academic_year,assesment_id,student_id,subject_name,grade,level,category_name "+
+    " order by (select id from enrichment_assesment_type where assesment_id=name)";
+
+    var qur8="SELECT * FROM enrichment_analysis_legend";
     console.log("---------------------excel performace tracking-------------------");
     console.log(qur1);
     console.log(qur2);
@@ -21735,11 +21766,15 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
     console.log(qur4);
     console.log(qur5);
     console.log(qur6);
+    console.log(qur7);
+    console.log(qur8);
     var typearr=[];
     var subarr=[];
     var catarr=[];
     var subcatarr=[];
     var enricharr=[];
+    var student=[];
+    var ascii=[];
         connection.query(qur1,  function(err, rows)
         {
         typearr=rows;
@@ -21769,7 +21804,150 @@ app.post('/performance-fetchexcelassesmentinfo-service',  urlencodedParser,funct
         {
         if(!err)
         {
-        res.status(200).json({'assesment':typearr,'subject':subarr,'category':catarr,'subcategory':subcatarr,'enrich':enricharr,'student':rows});
+        student=rows;
+        connection.query(qur7,  function(err, rows)
+        {
+        if(!err)
+        {
+        ascii=rows;
+        connection.query(qur8,  function(err, rows)
+        {
+        if(!err)
+        {
+        res.status(200).json({'assesment':typearr,'subject':subarr,'category':catarr,'subcategory':subcatarr,'enrich':enricharr,'student':student,'ascii':ascii,'indicator':rows});
+        }
+        });
+        }
+        else
+          console.log(err);
+        });
+        }
+        else
+          console.log(err);
+        });
+        }
+        else
+          console.log('1....'+err);
+        });
+        }
+        else
+          console.log('2....'+err);
+        });
+        }
+        else
+          console.log('3....'+err);
+        });
+        }
+        else
+          console.log('4....'+err);
+        });
+        }
+        else
+          console.log('5....'+err);
+        });
+});
+
+app.post('/performance-fetchexceptionexcelassesmentinfo-service',  urlencodedParser,function (req, res)
+{ 
+    var qur1="SELECT assesment_type,count(distinct(subject_id)) as subcount,count(distinct(category_id)) as catcount, "+
+    " count(distinct(sub_category_id)) as subcatcount FROM enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and assesment_type in(select distinct(assesment_id) "+
+    " from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_id='"+req.query.grade+"') and assesment_type in('EBOY','EMOY','EEOY') group by assesment_type order by (SELECT id FROM enrichment_assesment_type where name=assesment_type)";
+
+    var qur2="SELECT assesment_type,subject_id,subject_name,count(distinct(subject_id)) as subcount,count(distinct(category_id)) as catcount, "+
+    " count(distinct(sub_category_id)) as subcatcount FROM enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and assesment_type in(select distinct(assesment_id) "+
+    " from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_id='"+req.query.grade+"') and assesment_type in('EBOY','EMOY','EEOY') group by assesment_type,subject_id,subject_name order by (SELECT id FROM enrichment_assesment_type where name=assesment_type),subject_id";
+
+    var qur3="SELECT assesment_type,subject_id,subject_name,category_id,category_name,count(distinct(subject_id)) as subcount,count(distinct(category_id)) as catcount, "+
+    " count(distinct(sub_category_id)) as subcatcount FROM enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' and assesment_type in(select distinct(assesment_id) "+
+    " from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+    " grade_id='"+req.query.grade+"') and assesment_type in('EBOY','EMOY','EEOY') group by assesment_type,subject_id,subject_name,category_id,category_name order by (SELECT id FROM enrichment_assesment_type where name=assesment_type),subject_id,category_id";
+
+    var qur4="SELECT assesment_type,subject_id,subject_name,category_id,category_name,sub_category_id,sub_category_name FROM "+
+    " enrichment_subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade_name='"+req.query.grade+"' "+
+    " and assesment_type in(select distinct(assesment_id) from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' "+
+    " and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"') and assesment_type in('EBOY','EMOY','EEOY') group by assesment_type,subject_id,subject_name,category_id,category_name,sub_category_id,sub_category_name order by (SELECT id FROM enrichment_assesment_type where name=assesment_type),subject_id,category_id,sub_category_id";
+
+    var qur5="select * from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+    " and grade_id='"+req.query.grade+"' and section_id='"+req.query.sectionname+"' and student_id in(select id from md_student where class_id "+
+    " in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active')) and assesment_type in('EBOY','EMOY','EEOY') order by (SELECT id FROM enrichment_assesment_type where name=assesment_type)";
+
+    var qur6="select * from md_student where class_id in(select id from md_class_section where class='"+req.query.grade+"' and section='"+req.query.sectionname+"' and flag='active') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+
+    var qur7="select school_id,academic_year,assesment_id,student_id,subject_name,category_name,grade,level, "+
+    " ASCII(grade) as ascii from tr_beginner_assesment_marks where school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"' and "+
+    " section_id='"+req.query.sectionname+"' and assesment_id in('EBOY','EMOY','EEOY') "+
+    " group by school_id,academic_year,assesment_id,student_id,subject_name,grade,level,category_name "+
+    " order by (select id from enrichment_assesment_type where assesment_id=name)";
+
+    var qur8="SELECT * FROM enrichment_analysis_legend";
+    console.log("---------------------excel performace tracking-------------------");
+    console.log(qur1);
+    console.log(qur2);
+    console.log(qur3);
+    console.log(qur4);
+    console.log(qur5);
+    console.log(qur6);
+    console.log(qur7);
+    console.log(qur8);
+    var typearr=[];
+    var subarr=[];
+    var catarr=[];
+    var subcatarr=[];
+    var enricharr=[];
+    var student=[];
+    var ascii=[];
+        connection.query(qur1,  function(err, rows)
+        {
+        typearr=rows;
+        if(!err)
+        {
+        connection.query(qur2,  function(err, rows)
+        {
+        if(!err)
+        {
+        subarr=rows;
+        connection.query(qur3,  function(err, rows)
+        {
+        if(!err)
+        {
+        catarr=rows;
+        connection.query(qur4,  function(err, rows)
+        {
+        if(!err)
+        {
+        subcatarr=rows;
+        connection.query(qur5,  function(err, rows)
+        {
+        if(!err)
+        {
+        enricharr=rows;
+        connection.query(qur6,  function(err, rows)
+        {
+        if(!err)
+        {
+        student=rows;
+        connection.query(qur7,  function(err, rows)
+        {
+        if(!err)
+        {
+        ascii=rows;
+        connection.query(qur8,  function(err, rows)
+        {
+        if(!err)
+        {
+        res.status(200).json({'assesment':typearr,'subject':subarr,'category':catarr,'subcategory':subcatarr,'enrich':enricharr,'student':student,'ascii':ascii,'indicator':rows});
+        }
+        });
+        }
+        else
+          console.log(err);
+        });
         }
         else
           console.log(err);
