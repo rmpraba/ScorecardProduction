@@ -75,38 +75,40 @@ paper-dialog.colored {
            margin-left: 20%;  
       }
     </style>
-    <div>
+    <div>  
         <center><h2>Assesment To Subject Mapping</h2></center>
          <div class="mainclass">
            <h3> Select The School Type:</h3>
           <template is="dom-repeat" items="{{schooltypearr}}" as="view">
-              <assesment-to-subject-mapping-item-card schooltypeid="{{view.school_type_id}}" schooltypename="{{view.school_type_name}}" id="assesment{{view.school_type_id}}"></assesment-to-subject-mapping-item-card>
+             <assesment-to-subject-mapping-item-card schooltypeid="{{view.school_type_id}}" schooltypename="{{view.school_type_name}}" id="assesment{{view.school_type_id}}"></assesment-to-subject-mapping-item-card>
           </template>
         </div>
         <div class="gradeclass"  hidden$="{{hideassmentinfogradeid}}">
-          <h3>Select The Grade Type:</h3>
-          <template is="dom-repeat" items="{{gradearr}}" as="view">
-              <assesment-to-subject-grade-card gradeid="{{view.grade_id}}" gradename="{{view.grade_name}}" schooltype="{{view.school_type}}" id="assesment{{view.grade_id}}"></assesment-to-subject-grade-card>
-         </template>
+           <h3>Select The Grade Type:</h3>
+           <template is="dom-repeat" items="{{gradearr}}" as="view">
+              <assesment-to-subject-grade-card gradeid="{{view.grade_id}}" gradename="{{view.grade_name}}" schooltype="{{view.school_type}}" id="assesment{{view.grade_id}}">
+                </assesment-to-subject-grade-card>
+          </template>
         </div>
-<div class="gradeclass" hidden$="{{hideassmentinfogradeid3}}">
+       <div class="gradeclass" hidden$="{{hideassmentinfogradeid3}}">
           <h3> Select The Term Type:</h3>
           <template is="dom-repeat" items="{{typearr}}" as="view">
-            <assesment-to-subject-type-card subjecttype="{{view.type}}" check="{{view.check}}" ></assesment-to-subject-type-card>
+            <assesment-to-subject-type-card subjecttype="{{view.type}}" check="{{view.check}}">
+                    
+            </assesment-to-subject-type-card>
           </template>
        </div>
 
 <div class="assessmentclass" hidden$="{{hideassmentinfosubid}}">
          <h3> Select The Assesments:</h3>
-        <div class="assessmentclass1">
-        
-        <paper-checkbox  hidden$="{{hideassmentinfosubid1}}" id="selectallbox" on-change="fnchanges">All Assesments</paper-checkbox>
-
-          <template is="dom-repeat" items="{{assesmentarr}}" as="view" >
-                <assesment-to-subject-card   assesmentid="{{view.assesment_id}}" assesmentname='{{view.assesment_name}}' id='{{view.id}}' check="{{view.check}}"></assesment-to-subject-card >
+     <div class="assessmentclass1">
+       <paper-checkbox  hidden$="{{hideassmentinfosubid1}}" id="selectallbox" on-change="fnchanges">All Assesments</paper-checkbox>
+            <template is="dom-repeat" items="{{assesmentarr}}" as="view" >
+                <a`ssesment-to-subject-card   assesmentid="{{view.assesment_id}}" assesmentname='{{view.assesment_name}}' id='{{view.id}}' check="{{view.check}}">
+               </assesment-to-subject-card >
          </template>
         </div>  
-        </div>  
+   </div>  
  
       <div class="subjectclass" hidden$="{{hideassmentinfoid}}">
      
@@ -138,10 +140,10 @@ paper-dialog.colored {
   },
 fnchanges:function(e){
   if(document.querySelector('#selectallbox').checked==true){
-        localStorage.setItem("curr_sess_assesmentall","active");  
-          document.querySelector('assesment-to-subject-card').fnsets();
+     localStorage.setItem("curr_sess_assesmentall","active");  
+    document.querySelector('assesment-to-subject-card').fnsets();
      this.$.masteruiservice.Fngetassesmentandgrade1();  
-       document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=false;
+    document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=false;
      }
    else if(document.querySelector('#selectallbox').checked==false){
        localStorage.setItem("curr_sess_assesmentall","passive");
@@ -158,7 +160,7 @@ FnRefreshcard:function(e){
  this.hideassmentinfosubid=true; 
  this.hideassmentinfosubid1=true; 
  this.hideassmentinfoid=true; 
- document.querySelector('assesment-to-subject-mapping-item-card').ref();
+document.querySelector('assesment-to-subject-mapping-item-card').ref();
  },
 clear:function(e){
   this.hideassmentinfogradeid=false; 

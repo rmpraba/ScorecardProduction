@@ -162,7 +162,7 @@
       },
       FnGenerate:function(){
         if(roleid=='class-teacher')
-        this.$.mappingservice.FnGenerateMappingInfo(type,gradeid,gradename,roleid);
+  this.$.mappingservice.FnGenerateMappingInfo(type,gradeid,gradename,roleid);
         else
         this.$.mappingservice.FnGenerateMappingInfo1(type,roleid);
       },
@@ -170,8 +170,8 @@
         mappingarr=arr;
       },
       FnSave:function(){
-        // alert(mappingarr.length);
-        // alert(JSON.stringify(mappingarr));
+     alert(mappingarr.length);
+     alert(JSON.stringify(mappingarr));
         this.$.mappingservice.FnDeleteMappingService(mappingarr);
       },
       FnCancel:function(){

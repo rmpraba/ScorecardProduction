@@ -35,7 +35,7 @@
         margin-left: 4%;
       }
       .p7{
-        margin-left: 7%;
+      margin-left: 7%;
       }
       .spinner{
       margin-left: 50%;            
@@ -81,18 +81,18 @@
      is: 'approve-one-to-four-itemcard',
      Fnview:function()
      {
-      localStorage.setItem("curr_sess_approvalflag",1);
-      localStorage.setItem("curr_sess_academicyear",this.academic);
-      localStorage.setItem("curr_sess_termname",this.term);
-      localStorage.setItem("curr_sess_assesment",this.assesment);
-      localStorage.setItem("curr_sess_assesmenttype",this.assesment);
-      localStorage.setItem("curr_sess_subject",this.subject);
-      localStorage.setItem("curr_sess_subjectcategory",this.category);
-      localStorage.setItem("curr_sess_subjectid",this.subjectid);
-      localStorage.setItem("curr_sess_grade",this.grade);
-      localStorage.setItem("curr_sess_section",this.section);
-     localStorage.setItem("curr_sess_languagepref",this.langpref);
-     localStorage.setItem("curr_sess_type",this.types);
+       localStorage.setItem("curr_sess_approvalflag",1);
+       localStorage.setItem("curr_sess_academicyear",this.academic);
+       localStorage.setItem("curr_sess_termname",this.term);
+       localStorage.setItem("curr_sess_assesment",this.assesment);
+       localStorage.setItem("curr_sess_assesmenttype",this.assesment);
+       localStorage.setItem("curr_sess_subject",this.subject);
+       localStorage.setItem("curr_sess_subjectcategory",this.category);
+       localStorage.setItem("curr_sess_subjectid",this.subjectid);
+       localStorage.setItem("curr_sess_grade",this.grade);
+       localStorage.setItem("curr_sess_section",this.section);
+       localStorage.setItem("curr_sess_languagepref",this.langpref);
+       localStorage.setItem("curr_sess_type",this.types);
       //document.querySelector("dynamic-scholastic-markentry-card").exuploadeonetofourid.hidden=true;
       // alert(this.langpref);
       //alert(localStorage.getItem("curr_sess_assesment"));
@@ -117,11 +117,11 @@
       //   // document.querySelector('coscholastic-assesment').hiddenpage();
       //   // document.querySelector('co-scholastic-service').callFetchStudentInfo();
       // }
-      else if(this.assesment=="FA1"||this.assesment=="FA2"||this.assesment=="SA1"||this.assesment=="FA3"||this.assesment=="FA4"||this.assesment=="SA2")
+    else if(this.assesment=="FA1"||this.assesment=="FA2"||this.assesment=="SA1"||this.assesment=="FA3"||this.assesment=="FA4"||this.assesment=="SA2")
       {
         this.$.assesmentservice.callFetchFaStudentInfo();  
       }
-      else if(this.grade=='Grade-5'||this.grade=='Grade-6'||this.grade=='Grade-7'||this.grade=='Grade-8'||this.grade=='Grade-9'||this.grade=='Grade-10'){
+    else if(this.grade=='Grade-5'||this.grade=='Grade-6'||this.grade=='Grade-7'||this.grade=='Grade-8'||this.grade=='Grade-9'||this.grade=='Grade-10'){
         // alert('coming'+this.category);
         if(this.category=='category1'){
         document.querySelector('home-page').setPage('termassesment','');
