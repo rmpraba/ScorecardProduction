@@ -99,13 +99,14 @@
     </div>  
     </div>
 
-    <div class="downloaddiv">
+    <div class="downloaddiv" hidden$="{{hidetitle}}">
+    <paper-icon-button  id="download" icon="icons:file-download" onclick="performanceexceptionreportexportToExcel()"></paper-icon-button>Exception Report
     <paper-icon-button  id="download" icon="icons:file-download" onclick="performancereportexportToExcel()"></paper-icon-button>
       <paper-tooltip for="download">{{downloadlabel}}</paper-tooltip>      
       ({{downloadlabel}})
     </div>
 
-    <center>
+    <center hidden$="{{hidetitle}}">
     <h3>Total number of students: {{total}}</h3>
     </center>    
     <template is="dom-repeat" items="{{assesmentarr}}">
@@ -137,34 +138,99 @@
     </div>
     </paper-dialog>
     </div>
-
-     <table id="PerformanceReportDataTableIdd" style="border-collapse: collapse;width: 165%;" border="1" hidden>
-      <template is="dom-repeat" items="{{excelarr}}">
-      <tr style="text-align: center;"><th width="5%">{{item.sno}}</th><th width="15%">{{item.studentid}}</th><th width="25%">{{item.studentname}}</th>
+     <table id="PerformanceReportDataTableIdd" style="border-collapse: collapse;width: 180%;" border="1" hidden>
+      <template is="dom-repeat" items="{{excelarrr}}">
+      <tr style="text-align: center;background-color:{{item.colorcode}}"><th width="5%">{{item.sno}}</th><th width="15%">{{item.studentid}}</th><th width="25%">{{item.studentname}}</th>
       <!-- <td><table><tr> -->
       <template is="dom-repeat" items="{{item.titlearr}}" as="i">
         <th colspan$="{{i.spancount}}" width$="{{i.width}}">{{i.assesment}}</th>
       </template>
       <!-- </tr></table></td> -->
+      <th>{{item.legend}}</th><th>{{item.level}}</th>
       </tr>
       </template>
     </table>
-
+     <table id="PerformanceReportDataTableIdd1" style="border-collapse: collapse;width: 180%;" border="1" hidden>
+      <template is="dom-repeat" items="{{excelarr}}">
+      <tr style="text-align: center;background-color:{{item.colorcode}}"><th width="5%">{{item.sno}}</th><th width="15%">{{item.studentid}}</th><th width="25%">{{item.studentname}}</th>
+      <!-- <td><table><tr> -->
+      <template is="dom-repeat" items="{{item.titlearr}}" as="i">
+        <th colspan$="{{i.spancount}}" width$="{{i.width}}">{{i.assesment}}</th>
+      </template>
+      <!-- </tr></table></td> -->
+      <!-- <th>{{item.legend}}</th><th>{{item.level}}</th> -->
+      </tr>
+      </template>
+    </table>
   </template>
   <script type="text/javascript">
     var filename,sheetname;
+    // var excelarr=[];
   function performancereportexportToExcel(){
+    var htmls = "";
+    var tab_text = '<table border="1px" style="font-size:17px" ">';
+    var textRange; 
+    var j = 0;
+    var tab = document.getElementById('PerformanceReportDataTableIdd1'); // id of table
+    var lines = tab.rows.length;
+    // alert(JSON.stringify(excelarr));
+  if (lines > 0) {
+        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+    }
+  for (j = 1 ; j < lines; j++) {   
+        // if(j<5)
+        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+        // else{
+        // tab_text = tab_text + "<tr bgcolor="+excelarr[j].colorcode+">" + tab.rows[j].innerHTML + "</tr>";
+        // }
+    }
+
+    tab_text = tab_text + "</table>";
+   
+    var uri = 'data:application/vnd.ms-excel;base64,';
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'; 
+            var base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            };
+
+         htmls = tab_text
+
+            var ctx = {
+                worksheet : sheetname || 'Worksheet',
+                table : htmls
+            }
+        var link = document.createElement("a");
+            link.download = filename;
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+     }
+ </script>
+  <script type="text/javascript">
+    // var filename,sheetname;
+    var excelarr=[];
+  function performanceexceptionreportexportToExcel(){
     var htmls = "";
     var tab_text = '<table border="1px" style="font-size:17px" ">';
     var textRange; 
     var j = 0;
     var tab = document.getElementById('PerformanceReportDataTableIdd'); // id of table
     var lines = tab.rows.length;
+    // alert(JSON.stringify(excelarr));
   if (lines > 0) {
         tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
     }
-  for (j = 1 ; j < lines; j++) {     
+  for (j = 1 ; j < lines; j++) {   
+        if(j<5)
         tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+        else{
+        tab_text = tab_text + "<tr bgcolor="+excelarr[j].colorcode+">" + tab.rows[j].innerHTML + "</tr>";
+        }
     }
 
     tab_text = tab_text + "</table>";
@@ -211,6 +277,9 @@
     'use strict';
     Polymer({
       is: 'student-performance-tracking-homecard',
+      setExcelArray:function(arr){
+        excelarr=arr;
+      },
       exportToExcel:function(){
          performancereportexportToExcel();
       },
@@ -235,6 +304,8 @@
         // this.$.performancereportservice.FnFetchAssesmentCategory();
       },
       FnSelectBranch:function(e){
+        this.hidetitle=true;
+        this.downloadlabel="Please wait";
         this.assesmentarr=[];
         this.studentarr=[];
         this.total="";
@@ -246,6 +317,8 @@
         localStorage.setItem("curr_sess_schoolid",this.schoolid);
       },
       FnSelectAcademicyear:function(e){
+        this.hidetitle=true;
+        this.downloadlabel="Please wait";
         this.assesmentarr=[];
         this.studentarr=[];
         this.total="";
@@ -256,6 +329,8 @@
         this.$.performancereportservice.FnFetchGrade(this.schoolid,this.academicyear);    
       },
       FnSelectGrade:function(e){
+        this.hidetitle=true;
+        this.downloadlabel="Please wait";
         this.assesmentarr=[];
         this.studentarr=[];
         this.total="";
@@ -266,18 +341,21 @@
         this.$.performancereportservice.FnFetchSection(this.schoolid,this.academicyear,this.gradeid);        
       },
       FnSelectSection:function(e){
+        this.hidetitle=true;
         this.assesmentarr=[];
         this.studentarr=[];
         this.total="";
         this.sectionid=e.target.selectedItem.value.trim();
         this.sectionname=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",this.sectionname);
-        filename=this.schoolname+"-"+this.academicyear+"-"+this.gradename+"-"+this.sectionname;
+        var sectionnam=(this.sectionname).replace('.','');
+        filename=this.schoolname+"-"+this.academicyear+"-"+this.gradename+"-"+sectionnam;
         sheetname=this.gradename+"-"+this.sectionname;
         this.hidedownloadicon=true;
         this.downloadlabel="Please wait";
         // this.FnToggleSpinner(true);
         // this.spinnermsg="Please wait...";
+        this.$.performancereportservice.FnFetchExceptionExcelAssesmentInfo(this.schoolid,this.academicyear,this.gradeid,this.gradename,this.sectionid,this.sectionname);
         this.$.performancereportservice.FnFetchExcelAssesmentInfo(this.schoolid,this.academicyear,this.gradeid,this.gradename,this.sectionid,this.sectionname);
         this.$.performancereportservice.FnFetchAssesmentInfo(this.schoolid,this.academicyear,this.gradeid,this.gradename,this.sectionid,this.sectionname);
       },
@@ -294,6 +372,8 @@
         document.querySelector('#spthcacademicyear').selected=-1;
         document.querySelector('#spthcgrade').selected=-1;
         document.querySelector('#spthcsection').selected=-1;
+        this.hidetitle=true;
+        this.downloadlabel="Please wait";
       },
       FnShowDialog:function(subject,categoryname,subcategory,level){
         this.showsubject=subject;
