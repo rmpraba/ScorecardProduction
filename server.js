@@ -14,13 +14,13 @@ var connection = mysql.createConnection({
   // reconnect:true,
   // data_source_provider:"rds",
   // type:"mysql"   
-<<<<<<< HEAD
+/*
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
   database : 'mlzsreportcard'
- });
-=======
+ });*/
+
   /* host     : 'localhost',
   user     : 'root',
   password : 'admin',
@@ -45,7 +45,7 @@ var connection = mysql.createConnection({
   database : 'scorecardtemp'
 
 });
->>>>>>> af9e2c16ca8137628ac260e8bd56a875defaeac5
+
 
 var bodyParser = require('body-parser'); 
 var app = express();
@@ -116,7 +116,7 @@ app.post('/smis-fetchvisitingtype',  urlencodedParser,function (req, res)
 
 app.post('/smis-fetchvisitingstudent',  urlencodedParser,function (req, res)
 {
-    connection.query("SELECT * FROM md_student s JOIN md_class_section c on(s.class_id=c.id) WHERE s.school_id='"+req.body.school_id+"' and s.academic_year='"+req.body.academic_year+"' and c.school_id='"+req.body.school_id+"' and c.academic_year='"+req.body.academic_year+"'",
+    connection.query("SELECT * FROM md_student s JOIN md_class_section c on(s.class_id=c.id) WHERE s.school_id='"+req.body.school_id+"' and s.academic_year='"+req.body.academic_year+"' and c.school_id='"+req.body.school_id+"' and c.academic_year='"+req.body.academic_year+"' and  flag='active'",
     function(err, rows)
     {
     if(!err)
@@ -1896,7 +1896,7 @@ app.post('/fngetstudentterm-service',  urlencodedParser,function (req,res)
 
  app.post('/getalltermmarks-service',  urlencodedParser,function (req,res)
   {  
-   var qur1="Select * from md_student where id='"+req.query.studentid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'";
+   var qur1="Select * from md_student where id='"+req.query.studentid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' AND flag='active'";
     console.log(qur1);
     var qur;    
     connection.query(qur1,function(err, rows){
@@ -1935,7 +1935,7 @@ app.post('/fngetstudentterm-service',  urlencodedParser,function (req,res)
 
  app.post('/getalltermmarks-service1',  urlencodedParser,function (req,res)
   {  
-   var qur1="Select * from md_student where id='"+req.query.studentid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'";
+   var qur1="Select * from md_student where id='"+req.query.studentid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' AND flag='active'";
     console.log(qur1);
     var qur;    
     connection.query(qur1,function(err, rows){
@@ -22305,7 +22305,7 @@ app.post('/fetchnewformatcoscholasticsubjects-service3',  urlencodedParser,funct
 
 app.post('/schoolstudentinfo-service',  urlencodedParser,function (req,res)
 {  
-     var qur="select * from md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'";
+     var qur="select * from md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
     connection.query(qur,
     function(err, rows)
     {
@@ -22386,7 +22386,7 @@ app.post('/schoolsection-service',  urlencodedParser,function (req,res)
 });
 app.post('/previousschoolinfo-service',  urlencodedParser,function (req,res)
  {  
-    var qur="select * from md_student r  join   md_class_section p  on (r.class_id=p.id)  where r.school_id='"+req.query.schoolid+"' and r.academic_year='"+req.query.academic_year+"' and r.id='"+req.query.stuid+"' and p.school_id='"+req.query.schoolid+"' and p.academic_year='"+req.query.academic_year+"'";
+    var qur="select * from md_student r  join   md_class_section p  on (r.class_id=p.id)  where r.school_id='"+req.query.schoolid+"' and r.academic_year='"+req.query.academic_year+"' and r.id='"+req.query.stuid+"' and p.school_id='"+req.query.schoolid+"' and p.academic_year='"+req.query.academic_year+"' and r.flag='active'";
    console.log(qur);
    connection.query(qur,
     function(err, rows)
