@@ -18,21 +18,21 @@
 <dom-module id="teacherhome-card">
   <template>
     <style>
-      .container{
+    .container{
         width: 100%;
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
       }
-      .homecontainer{
+    .homecontainer{
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
         width: 80%;
         margin-left: 10%;
       }
-      .imgcard{
+    .imgcard{
         width: 33.3%;
       }
-      .inner1{
+    .inner1{
       @apply(--layout-horizontal);
       @apply(--layout-center-justified);
       @apply(--layout-wrap);
@@ -402,7 +402,8 @@
     <div class="card" hidden$="{{studenttracking}}">
       <paper-button on-click="FnStudentTracking" no ink><img src="../../images/studenttrack.jpg" height="180px" width="180px">
       <h4>Student Performance Tracking</h4></paper-button>
-    </div>  
+    </div> 
+
     <!-- <div class="card" hidden$="{{comparison}}">
       <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
     </div> -->
@@ -568,9 +569,23 @@
     </div>
     </div>
     </div>
-    <!-- General ssuperadmin master ends-->
-    <!-- General sschooladmin master starts-->
-    <div class="schooladmin" hidden$="{{hideschooladmin}}">
+
+    <div class="studentadmin" hidden$="{{hidestudentadmin}}">
+      <div class="inner1" hidden$="{{hidemasterscontainer}}">
+       <div class="card" hidden$="{{studentinformation}}">
+        <paper-button on-click="Fnstudentinformation" no ink><img src="../../images/studentinformation.png" height="180px" width="180px">
+        <h4>Student Management</h4>
+        </paper-button>
+      </div>
+     </div>
+     <div class="inner1" hidden$="{{hidereportcardcontainer}}">
+      <div class="card" hidden$="{{Report}}">
+       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"><h4>View Reportcards</h4></paper-button>
+      </div>
+     </div>
+    </div>
+
+<div class="schooladmin" hidden$="{{hideschooladmin}}">
     <div class="inner1" hidden$="{{hidemasterscontainer}}">
     <div class="card" hidden$="{{createemployeee}}">
       <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.jpg" height="180px" width="180px">
@@ -664,7 +679,10 @@
          <paper-button on-click="FnTermassesmentcreation" no ink><img src="../../images/termassessmentmapping.jpg" height="180px" width="180px"></paper-button>
      </div> 
       <div class="card" hidden$="{{assesmenttosubject}}">
-         <paper-button on-click="FnAssesmenttosubject" no ink><img src="../../images/assesmenttosubject.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnAssesmenttosubject" no ink><img src="../../images/assesmenttosubject.jpg" height="180px" width="180px"></paper-button>
+     </div>
+      <div class="card" hidden$="{{schooltransfer}}">
+       <paper-button on-click="fnschooltranfer" no ink><img src="../../images/StudentTransfers.jpg" height="180px" width="180px"></paper-button>
      </div>
 
     </div>
@@ -729,7 +747,8 @@
     Polymer({
       is: 'teacherhome-card',
       ready:function(){
-        this.hidesuperadmin=true;
+        this.hidesuperadmin=true; 
+        this.hidestudentadmin=true;
         this.hideschooladmin=true;
         this.rolescontainer=true;
         this.homecontainer=false;
@@ -739,6 +758,7 @@
         this.highlevelcommon=true;
         this.hidemanagementreport=true;
         this.subcoordinator=true;
+
         // this.createschooltype=true;
         // this.createsubject=true;
         // this.createrole=true;
@@ -1047,8 +1067,14 @@
            this.$.mastertermservice.Fnschooltype(); 
           // this.$.mastertermservice.fngenerateterm();
           
-         }   
- if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentinformation")
+         }
+   if(localStorage.getItem('curr_sess_loggedassesmenttype')=="schooltransfer") {          
+   document.querySelector('app-card').setPage('homepage','');
+   document.querySelector('home-page').setPage('school-transfer-card','');
+      this.$.studservice.fnschoolname(); 
+       this.$.studservice.fnschoolstudentinfo(); 
+    }
+if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentinformation")
       {
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('student-information-card','');
@@ -1213,6 +1239,9 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
       },
       
       FnHideView:function(){ 
+
+
+
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='management'){
           // alert(sessionStorage.getItem("curr_sess_loggedroleid")+"  "+this.containerview);
           this.hidemanagementreport=false;
@@ -1241,7 +1270,41 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
             this.hideleasonplancontainer=false;
           }
         }
-        if(sessionStorage.getItem("curr_sess_loggedroleid")=='schooladmin')
+
+   if(sessionStorage.getItem("curr_sess_loggedroleid")=='studentadmin'){
+      this.hidestudentadmin=false;
+
+ if(this.containerview=="Reportcard"){
+            this.hidereportcardcontainer=false;
+            this.hideenrichmentcontainer=true;
+            this.hidemasterscontainer=true;
+            this.hideleasonplancontainer=true;
+          }
+          else if(this.containerview=="Enrichment"){
+            this.hidereportcardcontainer=true;
+            this.hideenrichmentcontainer=false;
+            this.hidemasterscontainer=true;
+            this.hideleasonplancontainer=true;
+          }
+          else if(this.containerview=="Master"){
+            this.hidereportcardcontainer=true;
+            this.hideenrichmentcontainer=true;
+            this.hidemasterscontainer=false;
+            this.hideleasonplancontainer=true;
+          }
+          else if(this.containerview=="Leasonplan"){
+            this.hidereportcardcontainer=true;
+            this.hideenrichmentcontainer=true;
+            this.hidemasterscontainer=true;
+            this.hideleasonplancontainer=false;
+          }
+
+
+
+   }
+
+
+     if(sessionStorage.getItem("curr_sess_loggedroleid")=='schooladmin')
           {
            this.hideschooladmin=false;
            if(this.containerview=="Reportcard"){
@@ -1829,6 +1892,10 @@ document.querySelector('home-page').setPage('student-scorcard-mail-card','');
        },
         FnAssesmenttosubject:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','assesmenttosubject');
+          this.$.cdialog.toggle();
+       },
+       fnschooltranfer:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','schooltransfer');
           this.$.cdialog.toggle();
        },
     });

@@ -71,19 +71,16 @@
 
       <div class="fullhorizontal" style="width: 120%;">
       <div class="horizontalframe">
-        <div class="fields" >
-
-
-
-        <paper-dropdown-menu id="admnyr" label="Select Acadamic year">
+    <div class="fields" >
+      <paper-dropdown-menu id="admnyr" label="Select Acadamic year">
             <paper-menu id="{{studadyear}}" class="dropdown-content"   on-iron-select="Fnadminyr" attr-for-selected="value" required>
                 <paper-item value="2016-2017">AY-2016-2017</paper-item>
                 <paper-item value="2017-2018">AY-2017-2018</paper-item>
                 <paper-item value="2018-2019">AY-2018-2019</paper-item>
                 <paper-item value="2019-2020">AY-2019-2020</paper-item>
             </paper-menu>
-          </paper-dropdown-menu>
-        </div>
+      </paper-dropdown-menu>
+    </div>
 
 
          <div class="fields" style="margin-left: 3%" >
@@ -216,7 +213,6 @@
       </div>
     </div>
       <student-add-service id="studservice"></student-add-service> 
-
       <demosumbit-card id="mydialog"></demosumbit-card>  
   </template>
   <script>

@@ -192,7 +192,7 @@
           <section-period-itme-card></section-period-itme-card>
         </section>
         <section data-category="Student-to-section-mapping-card">
-          <Student-to-section-mapping-card></Student-to-section-mapping-card>
+      <Student-to-section-mapping-card></Student-to-section-mapping-card>
         </section>
         <section data-category="studentlistcard">
           <generate-studentlist-outcard></generate-studentlist-outcard>
@@ -350,15 +350,18 @@
 
     <section data-category="newformat-reportcard-ninth">
       <newformat-reportcard-ninth></newformat-reportcard-ninth>
-    </section>       
+    </section> 
+     <section data-category="dashboard-homecard">
+          <dashboard-homecard></dashboard-homecard>
+      </section>
+       <section data-category="school-transfer-card">
+          <school-transfer-card></school-transfer-card>
+      </section>       
     </iron-pages>
 
 
-      <section data-category="dashboard-homecard">
-          <dashboard-homecard></dashboard-homecard>
-      </section> 
+     
 
-        </iron-pages>
 
     </div>   
     <div class="footer"></div>
@@ -393,8 +396,15 @@
       document.querySelector('teacherhome-card').ready();
       document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('teacherhome-card').FnInitializeContainers();
+   } 
+   if(localStorage.getItem("curr_sess_page")=="school-transfer-card"){
+      this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('term-creation-card').FnRefreshcard(); 
+       document.querySelector('school-transfer-card').fnref(); 
    }
-    if(localStorage.getItem("curr_sess_page")=="term-creation-card")
+   
+ if(localStorage.getItem("curr_sess_page")=="term-creation-card")
     {
        this.page="teacherhomecard";
        document.querySelector('teacherhome-card').FnRefresh();

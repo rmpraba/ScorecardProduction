@@ -121,7 +121,7 @@
          <paper-checkbox on-change="fnrmovestudent" id="removestudentid"><h2>Student Remove</h2></paper-checkbox>
        </span>
        <span class="space1">
-         <paper-checkbox on-change="fnupdatestudent" id="updatestudentid"><h2>Student Update</h2></paper-checkbox>
+     <paper-checkbox on-change="fnupdatestudent" id="updatestudentid"><h2>Student Update</h2></paper-checkbox>
        </span>
     </div>
        <div id="addstudentinfoid">
@@ -162,7 +162,7 @@
   <div style="border:2px solid black;width:31%">  
       <div class="horizontalframe1">
         <div class="fields">
-        <paper-input label="Father's Name" value="{{fathername1}}"></paper-input>
+            <paper-input label="Father's Name" value="{{fathername1}}"></paper-input>
         </div>
         <div class="fields">
           <paper-input label="Mother's Name" id="momname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{mothername1}}"></paper-input>
@@ -370,15 +370,16 @@
             <paper-button style="background-color:black;color:white" on-click="fnsetsubmit" dialog-confirm autofocus>Cancel</paper-button>
          </center>
         </paper-dialog>
-<paper-input  hidden  value="{{schooltype}}"></paper-input>       
-<paper-input  hidden  value="{{classidszz}}"></paper-input>
-<paper-input  hidden value="{{sectionnames}}"></paper-input>
-<paper-input  hidden value="{{gradeidnames}}"></paper-input>
-<paper-input  hidden value="{{gradeidzzsss1}}"></paper-input>
-<student-add-service id="studservice"></student-add-service>
-<demosumbit-card id="mydialog"></demosumbit-card> 
+  <paper-input  hidden  value="{{schooltype}}"></paper-input>       
+  <paper-input  hidden  value="{{classidszz}}"></paper-input>
+  <paper-input  hidden value="{{sectionnames}}"></paper-input>
+  <paper-input  hidden value="{{gradeidnames}}"></paper-input>
+  <paper-input  hidden value="{{gradeidzzsss1}}"></paper-input>
+  <student-add-service id="studservice"></student-add-service>
+  <demosumbit-card id="mydialog"></demosumbit-card> 
 </div>
-<div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+<div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+<paper-spinner active></paper-spinner></paper-dialog></div>
 </template>
   <script>
   (function() {
@@ -408,10 +409,12 @@ fnsetsubmit:function(e){
      this.$.termarrinformationid.close();
       }, 
       fnparents:function(e){
+     this.FnSpinnerActive(true);
   this.$.studservice.fnparentinfomation(this.studid,this.fathername1,this.mothername1,this.fathermob,this.mothermob,this.motheremail,this.fatheremail,this.address1,this.address2,this.address3,this.city,this.pincode);
       },
       fnpersonal:function(e)
       {
+         this.FnSpinnerActive(true);
  this.$.studservice.fnpersonalinfomation(this.academicyear,this.fname,this.lsname,this.midname,this.showdate,this.ageofyrs,this.studid,gender,this.gradenamez,this.gradeidzzsss,this.classid,this.sectionid);
 
   this.$.studservice.fnstudpersonalinfo(this.academicyear,this.fname,this.lsname,this.midname,this.showdate,this.ageofyrs,this.studid,gender,this.gradenamez,this.gradeidzzsss,this.classid,this.sectionid);
@@ -436,7 +439,7 @@ fnacadamics:function(e){
     if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
     this.langprefs="Second Language";
     // this.schooltype='primary';
-this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs,this.schooltype,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames);
+         this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs,this.schooltype,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames);
 // this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
 // this.$.studservice.fnacadamicsinfomation1(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
 // this.$.studservice.fetchstudentremove();

@@ -1,13 +1,4 @@
 
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
@@ -65,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         params="{{deletepasstermvalueparam}}"
         handle-as="json"   
         content-type="application/json"
-        method="post"
+        method="post"  
         on-response="deletepasstermvalueResponse"
         debounce-duration="300">
       </iron-ajax> 
@@ -200,16 +191,15 @@ var c=0,c2=0;
       is: 'master-term-mapping-ui-service',
    Fngettermvalue:function()     
        {
-        this.gettermvalueurl=sessionStorage.getItem("addrinfo")+"/gettermvalue-service";
+    this.gettermvalueurl=sessionStorage.getItem("addrinfo")+"/gettermvalue-service";
         var obj={};
         obj.board=localStorage.getItem("curr_sess_board");
         obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
         this.gettermvalueparam=obj;
         this.$.gettermvalueajax.generateRequest();
-     //   this.fngenerateterm();
-       },
-gettermvalueResponse:function(e)
+        },
+ gettermvalueResponse:function(e)
       {
      //   alert("1");
         var res=e.detail.response.returnval;
@@ -596,6 +586,7 @@ Fngetassesmentandgrade:function()
                    c.replace(/[^\w\s]/gi, '')
                var ddddd=c.replace(/ /g,'');
                 res[i].id=ddddd;
+               // alert()
                 res[i].check=false
         }
         // alert(JSON.stringify(res));
@@ -631,7 +622,8 @@ document.querySelector('assesment-to-subject-mapping-card').subjectarr=res1;
               res1[i].sno=i+1;
               res1[i].assesmentbulkvalue=res; 
           }
-      document.querySelector('assesment-to-subject-mapping-card').subjectarr=res1;
+  document.querySelector('assesment-to-subject-mapping-card').subjectarr=res1;
+      document.querySelector('assesment-to-subject-mapping-card').hideassmentinfoid=false;
   
        },
     });

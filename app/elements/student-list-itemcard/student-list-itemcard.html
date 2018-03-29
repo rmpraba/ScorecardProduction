@@ -85,7 +85,7 @@
        },
       fngetViewvalues:function(e){
      localStorage.setItem("curr_sess_viewstudid",this.studentid);
-        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
+     if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
@@ -95,9 +95,9 @@
         this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid);
        if(localStorage.getItem('curr_sess_verify')=='unverifyid')    
           {
-     document.querySelector('app-card').setPage('homepage','');
-     document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
-     document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
+document.querySelector('app-card').setPage('homepage','');
+document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
+  document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
          }
        else{
        //alert("1");
