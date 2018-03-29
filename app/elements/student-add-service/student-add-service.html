@@ -645,10 +645,10 @@ currentschoolinsertdataResponse:function(e)
      this.deletestudentinfo(this.studentid,this.oldgradeid,this.oldsectionid,this.oldgradename,this.oldsectionname,this.termname,this.name,1);
         }
       else if(this.flage==0){
-       //alert('school transfer Succesfully');
+       
     document.querySelector('school-transfer-card').FnToggleSpinner(false);
     document.querySelector('school-transfer-card').schooldialog("School Transfer Succesfully");
-    
+    this.fnschoolstudentinfo();
       }
 
   
@@ -1605,7 +1605,8 @@ fetchstudentinfoResponse:function(e)
           else if(this.flag==1){
     
      document.querySelector('school-transfer-card').FnToggleSpinner(false);
-      document.querySelector('school-transfer-card').schooldialog("School info Deleted Succesfully");
+      document.querySelector('school-transfer-card').schooldialog("School info Transfer Succesfully");
+          this.fnschoolstudentinfo();
           }
            
             //alert(JSON.stringify(res));
