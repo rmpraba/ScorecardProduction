@@ -6,18 +6,18 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var FCM = require('fcm-node');
 var connection = mysql.createConnection({  
-  host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  database:"scorecarddb",
-  port:'3306',
-  user:"smis",
-  password:"smispass",
-  reconnect:true,
-  data_source_provider:"rds",
-  type:"mysql"   
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
+  // host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
+  // database:"scorecarddb",
+  // port:'3306',
+  // user:"smis",
+  // password:"smispass",
+  // reconnect:true,
+  // data_source_provider:"rds",
+  // type:"mysql"   
+  host     : 'localhost',
+  user     : 'root',
+  password : 'admin',
+  database : 'mlzsreportcard'
  });
 
 var bodyParser = require('body-parser'); 
@@ -2593,7 +2593,7 @@ app.post('/fetchstudentreportforartverticals-service',  urlencodedParser,functio
 
 app.post('/fetchstudentreportforhealth-service',  urlencodedParser,function (req, res)
 {
-  var qur="select student_id as id,student_name,grade,section,height,weight,blood_group,vision_left,vision_right,dental from tr_term_health where  term_id='"+req.query.termname+"' and grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by student_name";
+  var qur="select distinct(student_id) as id,student_name,grade,section,height,weight,blood_group,vision_left,vision_right,dental from tr_term_health where  term_id='"+req.query.termname+"' and grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' order by student_name";
  connection.query(qur,
     function(err, rows)
     {
