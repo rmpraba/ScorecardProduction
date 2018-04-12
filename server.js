@@ -14,38 +14,12 @@ var connection = mysql.createConnection({
   // reconnect:true,
   // data_source_provider:"rds",
   // type:"mysql"   
-<<<<<<< HEAD
+
   host     : 'localhost',
   user     : 'root',
   password : 'admin',
-  database : 'mlzsreportcard'
+  database : 'samsidhreportcard'
  });
-=======
-  /* host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
-  database : 'mlzsreportcard'*/
-  
-  /*host:"smis.cpldg3whrhyv.ap-south-1.rds.amazonaws.com",
-  database:"scorecarddb",
-  port:'3306',
-  user:"smis",
-  password:"smispass",
-  reconnect:true,
-  data_source_provider:"rds",
-  type:"mysql"   */
-  // host     : 'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'mlzsreportcard'
-
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'scorecardtemp'
-
-});
->>>>>>> af9e2c16ca8137628ac260e8bd56a875defaeac5
 
 var bodyParser = require('body-parser'); 
 var app = express();
@@ -2682,7 +2656,7 @@ app.post('/fetchstudentreportforhealth1-service',  urlencodedParser,function (re
 });
 app.post('/getinmailinfo-service',  urlencodedParser,function (req, res)
 {
- var qur="select * from tr_student_varified_table v  join parent p on(v.student_id=p.student_id) where v.school_id='"+req.query.schoolid+"' and p.school_id='"+req.query.schoolid+"' and v.academic_year='"+req.query.academicyear+"' and v.grade_name='"+req.query.grade+"' and v.section_name='"+req.query.section+"'";
+ var qur="select * from tr_student_varified_table v  join parent p on(v.student_id=p.student_id) where v.school_id='"+req.query.schoolid+"' and p.school_id='"+req.query.schoolid+"' and v.academic_year='"+req.query.academicyear+"' and p.academic_year='"+req.query.academicyear+"' and v.grade_name='"+req.query.grade+"' and v.section_name='"+req.query.section+"'";
  connection.query(qur,
     function(err, rows)
     {
@@ -4164,7 +4138,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
   var qur="select s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.mother_name,p.email,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode,p.alternate_mail "+
-  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and s.flag='active' and p.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"'";
+  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and s.flag='active' and p.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"' and p.academic_year='"+req.query.academicyear+"'";
    var qur1 ="select UPPER(id) as id,UPPER(school_id) as school_id from  mp_teacher_grade where school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' and grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"')  and role_id='class-teacher'  and section_id='"+req.query.section+"' and flage='active'";
 
 var emparr=[];
@@ -9367,12 +9341,12 @@ var qur1="select student_id,student_name,subject_category,(select category_name 
 app.post('/updatestudentinfo-service' ,  urlencodedParser,function (req, res)
 {    
  var qur="update md_student set student_name='"+req.query.name+"' where school_id='"+req.query.schoolid+"' and "+
- " id='"+req.query.enrno+"' and flag='active'";
+ " id='"+req.query.enrno+"' and flag='active' and academic_year='"+req.query.academicyear+"'";
  var qur1="update parent set mother_name='"+req.query.mothername+"',address1='"+req.query.address+"',parent_name='"+req.query.pname+"',alternate_mail='"+req.query.alternatemail+"',email='"+req.query.pmail+"' where school_id='"+req.query.schoolid+"' and "+
- " student_id='"+req.query.enrno+"'"; 
+ " student_id='"+req.query.enrno+"' and academic_year='"+req.query.academicyear+"'"; 
  var qur2=" select * from parent where school_id='"+req.query.schoolid+"' and "+
- " student_id='"+req.query.enrno+"'";
- var qur3="insert into parent values('"+req.query.schoolid+"','"+req.query.enrno+"','"+req.query.pname+"','"+req.query.pmail+"','','"+req.query.address+"','','','',0,'','"+req.query.mothername+"')";  
+ " student_id='"+req.query.enrno+"' and academic_year='"+req.query.academicyear+"'";
+ var qur3="insert into parent values('"+req.query.schoolid+"','"+req.query.enrno+"','"+req.query.pname+"','"+req.query.pmail+"','','"+req.query.address+"','','','',0,'','"+req.query.mothername+"','"+req.query.academicyear+"')";  
  console.log('--------------updateinfo status------------------');
  console.log(qur);
  console.log(qur1);
@@ -9412,7 +9386,7 @@ app.post('/updatestudentinfo-service' ,  urlencodedParser,function (req, res)
 
 app.post('/studentinfo-service' ,  urlencodedParser,function (req, res)
 {    
- var qur="select * from md_student where school_id='"+req.query.schoolid+"' and id='"+req.query.enrno+"' and flag='active'";
+ var qur="select * from md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and id='"+req.query.enrno+"' and flag='active'";
   
  console.log('--------------studinf status------------------');
  console.log(qur);
@@ -9428,7 +9402,7 @@ app.post('/studentinfo-service' ,  urlencodedParser,function (req, res)
 
 app.post('/studentparentinfo-service' ,  urlencodedParser,function (req, res)
 {    
- var qur="select * from parent where school_id='"+req.query.schoolid+"' and student_id='"+req.query.enrno+"'";
+ var qur="select * from parent where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.enrno+"'";
   
  console.log('--------------studparent status------------------');
  console.log(qur);
@@ -12913,7 +12887,7 @@ app.post('/FnSecondLangSubjectToStudent-service' , urlencodedParser,function (re
       student_name:req.query.studentname,
       class_id:req.query.sectionid,
      lang_pref:req.query.langugagepref,
-     flag:req.query.flag,
+     flag:'active'
     }; 
      // console.log(response);
 
@@ -12923,8 +12897,8 @@ var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoo
  
   var qur1=  "update tr_student_to_subject set subject_id='"+req.query.subjectid+"' where school_id='"+req.query.schoolnames+"' and flag='active' and academic_year='"+req.query.Acadamicyear+"' and grade='"+req.query.gradeid+"' and student_id='"+req.query.studentid+"' and class_id='"+req.query.sectionid+"' and lang_pref='"+req.query.langugagepref+"'";
    
-    //console.log(qur);
-   // console.log(qur1);
+    console.log(qur);
+   console.log(qur1);
    
    connection.query(qur,
     function(err, rows)
@@ -12970,22 +12944,24 @@ app.post('/FnSecondLangSubjectToStudentsets-service' , urlencodedParser,function
       student_name:req.query.studentname,
       class_id:req.query.sectionid,
      lang_pref:req.query.langugagepref,
+     flag:'active'
       //studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang,thirdlang,Sectionnameseeee
     }; 
-     // console.log(response);
-
-var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.Acadamicyear+"' and grade='"+req.query.gradeid+"' and  class_id='"+req.query.sectionid+"' and lang_pref='"+req.query.langugagepref+"' and grade='"+req.query.grade+"' and flag='active'";
+     console.log(response);
+// 
+var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.Acadamicyear+"' and grade='"+req.query.gradeid+"' and  class_id='"+req.query.sectionid+"' and lang_pref='"+req.query.langugagepref+"' and flag='active'";
  
 
  
-  var qur1=  "update tr_student_to_subject set subject_id='"+req.query.subjectid+"' where school_id='"+req.query.schoolnames+"' and academic_year='"+req.query.Acadamicyear+"' and grade='"+req.query.gradeid+"' and student_id='"+req.query.studentid+"' and class_id='"+req.query.sectionid+"' and lang_pref='"+req.query.langugagepref+"' and grade='"+req.query.grade+"' and flag='active'";
+  var qur1=  "update tr_student_to_subject set subject_id='"+req.query.subjectid+"' where school_id='"+req.query.schoolnames+"' and academic_year='"+req.query.Acadamicyear+"' and grade='"+req.query.gradeid+"' and student_id='"+req.query.studentid+"' and class_id='"+req.query.sectionid+"' and lang_pref='"+req.query.langugagepref+"' and flag='active'";
    
-    //console.log(qur);
-   // console.log(qur1);
+    console.log(qur);
+   console.log(qur1);
    
   
      connection.query(qur,function(err, rows)
     {
+      if(!err){
      if(rows.length==0){
      connection.query("INSERT INTO tr_student_to_subject SET ?",[response],
     function(err, rows)
@@ -12996,7 +12972,7 @@ var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoo
     }
     else
     {
-      //console.log(err);
+      console.log(err);
       res.status(200).json({'returnval': 'Not Inserted!'});
     }
     });
@@ -13016,6 +12992,9 @@ var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoo
         
         });
         } 
+      }
+      else
+        console.log(err);
       });
  });
 
@@ -13033,7 +13012,7 @@ app.post('/FnThirdLangSubjectToStudent-service' , urlencodedParser,function (req
       student_name:req.query.studentname,
       class_id:req.query.sectionid,
        lang_pref:req.query.langugagepref,
-       flag:req.query.flag
+       flag:'active'
   
     }; 
 
@@ -15009,7 +14988,7 @@ app.post('/selectclass-service',  urlencodedParser,function (req,res)
 
 app.post('/selectallsection-service',  urlencodedParser,function (req,res)
 {
-  var qur1="select s.id,s.student_name,g.grade_name,a.admission_status,(select UPPER(section_id) from mp_grade_section ss where ss.grade_id='"+req.query.gradeid+"' and ss.class_id=s.class_id) as section from md_student s join md_school_grade_mapping g on (s.grade_id=g.grade_id) join md_admission a on(s.id=a.admission_no) where s.school_id='"+req.query.schlid1+"' and a.school_id='"+req.query.schlid1+"' and g.school_id='"+req.query.schlid1+"'and s.grade_id='"+req.query.gradeid+"' and s.academic_year='"+req.query.academic_year+"' and g.academic_year='"+req.query.academic_year+"' and s.flag='active' and a.flag='1' order by student_name";
+  var qur1="select s.id,s.student_name,g.grade_name,a.admission_status,(select UPPER(section_id) from mp_grade_section ss where ss.grade_id='"+req.query.gradeid+"' and ss.class_id=s.class_id) as section from md_student s join md_school_grade_mapping g on (s.grade_id=g.grade_id) join md_admission a on(s.id=a.admission_no) where s.school_id='"+req.query.schlid1+"' and a.school_id='"+req.query.schlid1+"' and g.school_id='"+req.query.schlid1+"'and s.grade_id='"+req.query.gradeid+"' and s.academic_year='"+req.query.academic_year+"' and g.academic_year='"+req.query.academic_year+"' and a.academic_year='AY-"+req.query.academic_year+"' and s.flag='active' and a.flag='1' order by student_name";
 
 console.log("-------Report---------");
   console.log(qur1);
@@ -17146,9 +17125,9 @@ app.post('/fetchstudinfofornewformat-service',  urlencodedParser,function (req,r
 app.post('/fetchnewformatscholasticsubjects-service',  urlencodedParser,function (req,res)
 {  
   var qur="SELECT grade,term_name,subject_id,assesment_id,student_id,sum(mark) as total FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_name in(select term_name from md_term "+
-  " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and id <=(select id from md_term where term_name='"+req.query.termname+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
+  " where academic_year='"+req.query.academicyear+"' and id <=(select id from md_term where term_name='"+req.query.termname+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')) group by term_name,assesment_id,subject_id,student_id,grade order by term_name,subject_id";
   var scalequr="SELECT * FROM scaledown_master WHERE academic_year='"+req.query.academicyear+"' and term_name in(select term_name from md_term "+
-  " where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and id <=(select id from md_term where term_name='"+req.query.termname+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'))";
+  " where academic_year='"+req.query.academicyear+"' and id <=(select id from md_term where term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"'))";
   var subqur="SELECT distinct(subject_id) FROM tr_term_fa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND term_name='"+req.query.termname+"' AND academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studentid+"' order by subject_id";
   var gradequr="SELECT * FROM newformat_scholastic_grademaster";
   console.log('----------------------------------------');
@@ -18362,7 +18341,7 @@ var qur2="SELECT * FROM md_subject";
 
 app.post('/fnparentinfomation-service',  urlencodedParser,function (req,res)
   {  
-  var qur="UPDATE parent SET parent_name='"+req.query.fathername1+"',mother_name='"+req.query.mothername1+"',mother_mobile='"+req.query.mothermob+"',mobile='"+req.query.fathermob+"',alternate_mail='"+req.query.motheremail+"',email='"+req.query.fatheremail+"',address1='"+req.query.address1+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"',city='"+req.query.city+"',pincode='"+req.query.pincode+"'  WHERE school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' ";
+  var qur="UPDATE parent SET parent_name='"+req.query.fathername1+"',mother_name='"+req.query.mothername1+"',mother_mobile='"+req.query.mothermob+"',mobile='"+req.query.fathermob+"',alternate_mail='"+req.query.motheremail+"',email='"+req.query.fatheremail+"',address1='"+req.query.address1+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"',city='"+req.query.city+"',pincode='"+req.query.pincode+"'  WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and student_id='"+req.query.studid+"' ";
     console.log('------------update return status -------------');
     console.log(qur);
     connection.query(qur,
@@ -18997,14 +18976,15 @@ app.post('/parentadd-service' , urlencodedParser,function (req, res)
     city:req.query.city,
     pincode:req.query.pincode,
     alternate_mail:req.query.matheremail,
-    mother_name:req.query.mothername
+    mother_name:req.query.mothername,
+    academic_year:req.query.academicyear
   }   
 
    console.log("student add in parent table");
   console.log("-------------------------");
   console.log(response);
 
-  connection.query("SELECT * FROM parent WHERE school_id='"+req.query.schoolid+"' and student_id='"+req.query.studnetid+"'",function(err, rows)
+  connection.query("SELECT * FROM parent WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studnetid+"'",function(err, rows)
     {
     if(rows.length==0)
     {
@@ -19249,7 +19229,7 @@ app.post('/fngetstudentallinfo-service',  urlencodedParser,function (req,res)
   {  
 var qur1="SELECT school_type,dob ,academic_year,id ,grade_id as gradeid,class_id as classid ,gender, ageinmonth, (select  grade_name from md_grade  where grade_id=gradeid)  as grade_name ,(select UPPER( section_id ) from mp_grade_section  where class_id=classid and  grade_id=gradeid and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' ) as section_name FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'  and  id='"+req.query.studentid+"'  and flag='active'";
 
-var qur2="SELECT * FROM parent where school_id='"+req.query.schoolid+"' and  student_id='"+req.query.studentid+"'";
+var qur2="SELECT * FROM parent where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and  student_id='"+req.query.studentid+"'";
 
  var qur3="SELECT * FROM tr_student_to_subject where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'  and  student_id='"+req.query.studentid+"' and flag='active'";
 
@@ -19938,7 +19918,7 @@ app.post('/deleteauditmarks1-service',  urlencodedParser,function (req, res)
 app.post('/ninetotenemail-service', urlencodedParser,function (req, res)
 { 
      
-    var qur="SELECT * from parent where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studentid+"'";
+    var qur="SELECT * from parent where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studentid+"'";
 
     console.log("-------------Parent information-----------");
     console.log(qur);

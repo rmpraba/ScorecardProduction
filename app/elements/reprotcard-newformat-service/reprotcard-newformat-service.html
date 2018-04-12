@@ -233,13 +233,15 @@
       },
       fetchnewformatremarkResponse:function(e){
         var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
         if(arr.length>0){
           if(arr[0].generic=="undefined")
             arr[0].generic="";
           if(arr[0].speccomment=="undefined")
             arr[0].speccomment="";
        document.querySelector('reprotcard-newformat-threetoeight').remark=arr[0].generic+" "+arr[0].speccomment;
-        }
+       document.querySelector('reprotcard-newformat-threetoeight').result=arr[0].result;
+       }
       },
       passstudentverifyvalues:function(id,name){
         this.passstudentverifyvaluesurl=sessionStorage.getItem("addrinfo")+"/passstudentverifyvalues-service";
@@ -389,7 +391,9 @@ undotudentverifyvalues1Response:function(e){
         // alert(JSON.stringify(arr));
         if(arr.length>0){
         document.querySelector('newformat-reportcard-nineten').remark=arr[0].generic+" "+arr[0].speccomment;
+        document.querySelector('newformat-reportcard-nineten').result=arr[0].result;
         document.querySelector('newformat-reportcard-ninth').remark=arr[0].generic+" "+arr[0].speccomment;
+        document.querySelector('newformat-reportcard-ninth').result=arr[0].result;
         }
       },
       fetchstudinfofornewformatService:function(id){
@@ -422,20 +426,20 @@ undotudentverifyvalues1Response:function(e){
         var arr=e.detail.response.returnval;
         var arr1=e.detail.response.emparr;
         // alert(JSON.stringify(arr));
-        document.querySelector('reprotcard-newformat-threetoeight').studentid=arr[0].admission_no;
-        document.querySelector('reprotcard-newformat-threetoeight').studentname=arr[0].student_name;
-        document.querySelector('reprotcard-newformat-threetoeight').fathername=arr[0].father_name;
+        document.querySelector('reprotcard-newformat-threetoeight').studentid=(arr[0].admission_no).toUpperCase();
+        document.querySelector('reprotcard-newformat-threetoeight').studentname=(arr[0].student_name).toUpperCase();
+        document.querySelector('reprotcard-newformat-threetoeight').fathername=(arr[0].father_name).toUpperCase();
         document.querySelector('reprotcard-newformat-threetoeight').dob=arr[0].dob;
        
-        document.querySelector('newformat-reportcard-nineten').studentid=arr[0].admission_no;
-        document.querySelector('newformat-reportcard-nineten').studentname=arr[0].student_name;
-        document.querySelector('newformat-reportcard-nineten').fathername=arr[0].father_name;
+        document.querySelector('newformat-reportcard-nineten').studentid=(arr[0].admission_no).toUpperCase();
+        document.querySelector('newformat-reportcard-nineten').studentname=(arr[0].student_name).toUpperCase();
+        document.querySelector('newformat-reportcard-nineten').fathername=(arr[0].father_name).toUpperCase();
         document.querySelector('newformat-reportcard-nineten').dob=arr[0].dob;
         document.querySelector('reprotcard-newformat-threetoeight').empsign=arr1[0].id+arr1[0].school_id+".jpg";
         document.querySelector('newformat-reportcard-nineten').empsign=arr1[0].id+arr1[0].school_id+".jpg";
-        document.querySelector('newformat-reportcard-ninth').studentid=arr[0].admission_no;
-        document.querySelector('newformat-reportcard-ninth').studentname=arr[0].student_name;
-        document.querySelector('newformat-reportcard-ninth').fathername=arr[0].father_name;
+        document.querySelector('newformat-reportcard-ninth').studentid=(arr[0].admission_no).toUpperCase();
+        document.querySelector('newformat-reportcard-ninth').studentname=(arr[0].student_name).toUpperCase();
+        document.querySelector('newformat-reportcard-ninth').fathername=(arr[0].father_name).toUpperCase();
         document.querySelector('newformat-reportcard-ninth').dob=arr[0].dob;
         document.querySelector('newformat-reportcard-ninth').empsign=arr1[0].id+arr1[0].school_id+".jpg";
 
@@ -492,6 +496,7 @@ undotudentverifyvalues1Response:function(e){
         for(var i=0;i<assesment.length;i++){
           for(var j=0;j<temparr.length;j++){
           if(assesment[i].subject_id==temparr[j].subject){
+            // alert(temparr[j].subject);
             // alert('yes'+assesment[i].term_name);
           if(assesment[i].term_name=="Term1"){
             // alert('in '+assesment[i].term_name+" "+assesment[i].assesment_id);
@@ -510,12 +515,17 @@ undotudentverifyvalues1Response:function(e){
             }
           }
           if(assesment[i].term_name=="Term2"){
-            if((assesment[i].assesment_id).trim()=="Periodic Test2")
+            // alert(temparr[j].subject+" "+assesment[i].assesment_id);
+            if((assesment[i].assesment_id).trim()=="Periodic Test2"){
+              // alert("in PT"+assesment[i].score);
               temparr[j].PT2=assesment[i].score;
+            }
             if((assesment[i].assesment_id).trim()=="Note Book")
               temparr[j].NB2=assesment[i].score;
-            if((assesment[i].assesment_id).trim()=="SEA2")
+            if((assesment[i].assesment_id).trim()=="SEA2"){
+              // alert("in SEA"+assesment[i].score);
               temparr[j].SEA2=assesment[i].score;
+            }
             if((assesment[i].assesment_id).trim()=="Yearly")
               temparr[j].Y=assesment[i].score;
           }
@@ -533,7 +543,7 @@ undotudentverifyvalues1Response:function(e){
             temparr[i].SEA1=0;
           if(temparr[i].HY==""||temparr[i].HY==null)
             temparr[i].HY=0;
-          temparr[i].mark1=parseFloat(parseFloat(temparr[i].PT1)+parseFloat(temparr[i].NB1)+parseFloat(temparr[i].SEA1)+parseFloat(temparr[i].HY)).toFixed(2);
+          temparr[i].mark1=Math.round(parseFloat(parseFloat(temparr[i].PT1)+parseFloat(temparr[i].NB1)+parseFloat(temparr[i].SEA1)+parseFloat(temparr[i].HY)).toFixed(2));
           if((localStorage.getItem("curr_sess_termname").trim()).toLowerCase()=="term2"){
           if(temparr[i].PT2==""||temparr[i].PT2==null)
             temparr[i].PT2=0;
@@ -543,7 +553,7 @@ undotudentverifyvalues1Response:function(e){
             temparr[i].SEA2=0;
           if(temparr[i].Y==""||temparr[i].Y==null)
             temparr[i].Y=0;
-          temparr[i].mark2=parseFloat(parseFloat(temparr[i].PT2)+parseFloat(temparr[i].NB2)+parseFloat(temparr[i].SEA2)+parseFloat(temparr[i].Y)).toFixed(2);
+          temparr[i].mark2=Math.round(parseFloat(parseFloat(temparr[i].PT2)+parseFloat(temparr[i].NB2)+parseFloat(temparr[i].SEA2)+parseFloat(temparr[i].Y)).toFixed(2));
           }
           for(var n=0;n<grade.length;n++){
             if(parseFloat(temparr[i].mark1)>=parseFloat(grade[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(grade[n].upper_limit))
@@ -801,7 +811,7 @@ undotudentverifyvalues1Response:function(e){
       }, 
       ninetotenemail:function(studentid)
       {
-          this.ninetotenemailurl=sessionStorage.getItem("addrinfo")+"/ninetotenemail-service";
+        this.ninetotenemailurl=sessionStorage.getItem("addrinfo")+"/ninetotenemail-service";
         var obj={"schoolid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -1062,7 +1072,7 @@ undotudentverifyvalues1Response:function(e){
           if(temparr[i].ANNUAL==""||temparr[i].ANNUAL==null)
             temparr[i].ANNUAL=0;
           // alert(parseFloat(temparr[i].PT1)+"  "+parseFloat(temparr[i].NB1)+"  "+parseFloat(temparr[i].SEA1)+"  "+parseFloat(temparr[i].ANNUAL));  
-          temparr[i].mark1=parseFloat(temparr[i].PT1)+parseFloat(temparr[i].NB1)+parseFloat(temparr[i].SEA1)+parseFloat(temparr[i].ANNUAL);
+          temparr[i].mark1=parseFloat(parseFloat(temparr[i].PT1)+parseFloat(temparr[i].NB1)+parseFloat(temparr[i].SEA1)+parseFloat(temparr[i].ANNUAL)).toFixed(2);
             // for(var j=0;j<scaleup.length;j++){
             //   if(localStorage.getItem("curr_sess_grade")==scaleup[j].grade_name&&temparr[i].subject==scaleup[j].subject_name){
             //   // alert(scaleup[j].subject_name+"  "+temparr[i].mark1+"  "+scaleup[j].tot);

@@ -2938,7 +2938,7 @@ finalvalueofGenerateResponse:function(e){
     callstudentinfo:function(studid){
       var obj={"schoolid":"","academicyear":"","enrno":"","name":"","pname":"","pmail":"","grade":"","section":""};
       obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
- 
+      obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
          obj.enrno=studid;
    
         // obj.termname=localStorage.getItem("curr_sess_termname");
@@ -2952,6 +2952,7 @@ finalvalueofGenerateResponse:function(e){
     callstudentparentinfo:function(studid){
       var obj={"schoolid":"","academicyear":"","enrno":"","name":"","pname":"","pmail":"","grade":"","section":""};
       obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+      obj.academicyear=localStorage.getItem("curr_sess_academicyear");
 
          obj.enrno=studid;
 

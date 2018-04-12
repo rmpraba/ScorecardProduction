@@ -1236,8 +1236,10 @@ fnstudentadd:function(enroll,fname,midname,lsname,showdate,age,fathername,mother
   fnparentadd:function(enroll,fathername,fatheremail,fathermob,address1,address2,address3,city,pincode,motheremail,mothername)
         {
   this.fnparentaddurl=sessionStorage.getItem("addrinfo")+"/parentadd-service";
+
                var obj={"schoolid":""};
                obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+               obj.academicyear=localStorage.getItem("curr_sess_academicyear");
                obj.studnetid=enroll;
                obj.fathername=fathername;
                obj.fatheremail=fatheremail;
